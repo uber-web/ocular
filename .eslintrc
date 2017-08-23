@@ -1,0 +1,25 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "eslint-config-uber-jsx",
+    "eslint-config-uber-es2015"
+  ],
+  "rules": {
+    "guard-for-in": 0,
+    "camelcase": 0,
+    "comma-dangle": 0,
+    "no-process-env": 0,
+    "operator-linebreak": [2, 'before'],
+    'brace-style': [2, '1tbs', { 'allowSingleLine': true }],
+  },
+  "globals": {
+    "document": false,
+    "process": false,
+    "window": false,
+    "fetch": false,
+    "btoa": false,
+  }
+}

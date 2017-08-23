@@ -1,0 +1,151 @@
+@import 'header';
+@import 'hero';
+@import 'toc';
+
+@import 'highlight';
+@import 'markdown';
+@import 'utils';
+@import 'variables';
+@import 'icon';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: transparent;
+}
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+#root > div {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex-grow: 1;
+  > div {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: $topbar-height;
+    margin-bottom: $footer-height;
+  }
+}
+
+body {
+  font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important;
+  font-size: 12px;
+  line-height: 1.833;
+  overflow-y: auto;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  color: $primary;
+  &:visited {
+    color: $primary;
+  }
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin: 32px 0 8px;
+}
+
+.Contributors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .Contributor {
+    width: 10rem;
+    height: 10rem;
+    position: relative;
+    background-color: rgba(black, 0.1);
+
+    span {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 0.5rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 3px 3px 3px black;
+    }
+
+    img {
+      opacity: 0.9;
+      transition: opacity 250ms ease-in;
+    }
+
+    &:hover img {
+      opacity: 1;
+    }
+  }
+}
+
+.container {
+  max-width: 80rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+hr {
+  border: none;
+  background-color: $white;
+  height: 1px;
+  &.short {
+    display: inline-block;
+    margin: 24px 0 0;
+    width: 32px;
+    height: 2px;
+    background: linear-gradient(to right, $primary 0%, $secondary 100%);
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+
+  background-image: url(data:image/gif;base64,R0lGODlhIAAgAKIAABUjMRYkMhclM0xXYU1YYgAAAAAAAAAAACwAAAAAIAAgAAADKjgjEP4wyklWmzg/IbTPwPWNZGmeaKqubOu+cCzPdG3feK7vfO//wKAwAQA7);
+  background-size: 32px;
+  background-repeat: repeat;
+  background-position: 16px -8px;
+  color: $white;
+  height: $footer-height;
+  padding: 4rem 0 4rem 2rem;
+
+  h4 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0.4;
+    margin-bottom: 1rem;
+  }
+
+  .icon-uber-logo {
+    font-size: 1.5rem;
+  }
+}
