@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const {spawn} = require('child_process');
+const {spawn, execSync} = require('child_process');
 
-const [DIR_PATH] = process.argv[1].split('/node_modules/');
+const DIR_PATH = process.env.PWD;
 
 const env = Object.assign(process.env, {
   DIR_PATH,
@@ -29,11 +29,18 @@ const commands = {
 
   },
 
-  test: () => {
+  build: () => {
 
-    spawn('./node_modules/.bin/ava', [
-      DIR_PATH,
-    ], {cwd: __dirname, stdio: 'inherit'});
+    execSync(`rm -rf ${DIR_PATH}/dist`);
+
+    spawn('./node_modules/.bin/webpack', [
+      '--config',
+      'webpack/build',
+    ], {
+      cwd: __dirname,
+      stdio: 'inherit',
+      env: Object.assign(env, {NODE_ENV: 'production'}),
+    });
 
   },
 

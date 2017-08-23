@@ -3,17 +3,6 @@ const {resolve} = require('path');
 
 const dirPath = process.env.DIR_PATH;
 
-const BABEL_CONFIG = {
-  presets: [
-    'es2015',
-    'stage-2',
-    'react'
-  ].map(name => require.resolve(`babel-preset-${name}`)),
-  plugins: [
-    'transform-decorators-legacy'
-  ].map(name => require.resolve(`babel-plugin-${name}`))
-};
-
 module.exports = {
 
   entry: ['babel-polyfill', 'whatwg-fetch', './template/main'],
@@ -25,10 +14,6 @@ module.exports = {
     }, {
       test: /\.js$/,
       loader: 'babel-loader',
-      options: BABEL_CONFIG,
-    }, {
-      test: /\.scss$/,
-      loaders: ['style-loader', 'css-loader', 'sass-loader', 'autoprefixer-loader'],
     }, {
       test: /\.(eot|svg|ttf|woff|woff2|gif|jpe?g|png)$/,
       loader: 'url-loader',
