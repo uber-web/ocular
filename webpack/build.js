@@ -23,7 +23,7 @@ module.exports = Object.assign(config, {
     }]),
   }),
 
-  plugins: config.plugins.concat([
+  plugins: [
 
     new ExtractTextPlugin('styles-[hash].css'),
 
@@ -36,6 +36,6 @@ module.exports = Object.assign(config, {
 
     new ProgressBarPlugin(),
 
-  ]),
+  ].concat(config.plugins),
 
 });

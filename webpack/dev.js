@@ -33,9 +33,9 @@ module.exports = Object.assign(config, {
     contentBase: './template/static',
   },
 
-  plugins: config.plugins.concat([
+  plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ]),
+  ].concat(config.plugins),
 
 });
