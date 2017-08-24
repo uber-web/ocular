@@ -12,11 +12,11 @@ header {
   overflow: hidden;
   user-select: none;
   white-space: nowrap;
-  z-index: 5;
+  z-index: 101;
 
-  .container {
+  .header-content {
     padding: 0 1rem;
-    display: flex;
+    width: 100%;
   }
 
   .bg {
@@ -134,7 +134,7 @@ header {
 @media screen and (max-width: $mobile) {
   header {
 
-    .container {
+    .header-content {
       padding-right: 0;
     }
 
@@ -158,6 +158,7 @@ header {
       a {
         height: initial;
         line-height: $topbar-height;
+        margin-left: 0;
         border-width: 0;
         border-style: none;
       }
@@ -169,7 +170,7 @@ header {
       }
       .links {
         display: block;
-        max-height: 12rem;
+        max-height: $topbar-maxheight;
       }
     }
   }

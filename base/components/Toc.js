@@ -3,9 +3,11 @@ import cx from 'classnames';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 
-import {docTree} from 'routes';
+import {trees} from 'routes';
 
-const renderRoute = (route, i) => (
+const getRootPath = pathname => `/${pathname.split('/')[1]}`;
+
+const renderRoute = (route, i) => route.env && process.env.NODE_ENV !== route.env ? null : (
   <div key={i}>
     {route.children ? (
       <div>
@@ -36,14 +38,20 @@ const renderRoute = (route, i) => (
   </div>
 );
 
-const Toc = ({className, pathname}) => (
-  <div className={cx('toc hide-mobile', className, {hide: !pathname.includes('/documentation')})}>
+const Toc = ({className, open, tree}) => tree ? (
+  <div className={cx('toc', {open}, className)}>
     <div>
-      {docTree.map(renderRoute)}
+      {tree.map(renderRoute)}
     </div>
   </div>
-);
+) : null;
 
-export default connect(
-  ({router}) => ({pathname: router.location.pathname}),
+export default connect(({
+  router: {location: {pathname}},
+  ui: {isMenuOpen},
+}) => ({
+  pathname,
+  open: isMenuOpen,
+  tree: trees[getRootPath(pathname)] && trees[getRootPath(pathname)].tree,
+}),
 )(Toc);

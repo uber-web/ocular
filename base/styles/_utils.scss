@@ -31,6 +31,10 @@
   flex-grow: 1;
 }
 
+.fw {
+  flex-wrap: wrap;
+}
+
 /**
  * Margins & Paddings
  */
@@ -68,6 +72,12 @@
 .mv2 {
   > * + * {
     margin-top: 2rem !important;
+  }
+}
+
+.mh1 {
+  > * + * {
+    margin-left: 1rem !important;
   }
 }
 

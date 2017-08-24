@@ -1,4 +1,4 @@
-$primary: #00ADE6;
+module.exports = () => `$primary: #00ADE6;
 $secondary: #05E3D5;
 $black: #041725;
 $black-20: #213746;
@@ -8,5 +8,7 @@ $white-40: #8D9BA3;
 
 $footer-height: 13rem;
 $topbar-height: 4rem;
-$toc-width: 15rem;
+$topbar-maxheight: 8rem;
+$toc-width: 17rem;
 $mobile: 576px;
+`;

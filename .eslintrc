@@ -1,7 +1,8 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "react"
+    "react",
+    "babel",
   ],
   "extends": [
     "eslint-config-uber-jsx",
@@ -14,6 +15,8 @@
     "no-process-env": 0,
     "operator-linebreak": [2, 'before'],
     'brace-style': [2, '1tbs', { 'allowSingleLine': true }],
+    'no-invalid-this': 0,
+    'babel/no-invalid-this': 1,
   },
   "globals": {
     "document": false,

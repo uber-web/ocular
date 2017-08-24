@@ -2,11 +2,12 @@ const webpack = require('webpack');
 const {resolve} = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplate = require('html-webpack-template');
-const OfflinePlugin = require('offline-plugin');
+const merge = require('deepmerge');
 
 const dirPath = process.env.DIR_PATH;
 
-const htmlConfig = require(`${dirPath}/html.config.js`);
+const getCustomConfig = require('./custom');
+const htmlConfig = require(`${dirPath}/html.config`);
 
 const BABEL_CONFIG = {
   presets: [
@@ -19,18 +20,28 @@ const BABEL_CONFIG = {
   ].map(name => require.resolve(`babel-plugin-${name}`))
 };
 
-module.exports = {
+module.exports = merge(getCustomConfig(dirPath), {
 
-  entry: ['babel-polyfill', 'whatwg-fetch', './template/main'],
+  entry: ['babel-polyfill', 'whatwg-fetch', './base/main'],
 
   module: {
+    noParse: /(mapbox-gl)\.js$/,
+
     rules: [{
       test: /\.md$/,
       use: 'raw-loader',
     }, {
+      test: /\.csv$/,
+      loader: 'csv-loader',
+      options: {
+        dynamicTyping: true,
+        header: true,
+        skipEmptyLines: true,
+      },
+    }, {
       test: /\.js$/,
       loader: 'babel-loader',
-      exclude: /node_modules/,
+      exclude: /node_modules\/(?!(ocular)\/).*/,
       options: BABEL_CONFIG,
     }, {
       test: /\.(eot|svg|ttf|woff|woff2|gif|jpe?g|png)$/,
@@ -41,7 +52,8 @@ module.exports = {
   resolve: {
     modules: [
       `${dirPath}/src`,
-      resolve(__dirname, '../template'),
+      `${dirPath}/node_modules`,
+      resolve(__dirname, '../base'),
       resolve(__dirname, '../node_modules'),
     ],
   },
@@ -66,10 +78,11 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        MapboxAccessToken: JSON.stringify(
+          process.env.MapboxAccessToken || process.env.MAPBOX_TOKEN
+        ),
       },
     }),
-
-    new OfflinePlugin(),
 
   ],
 
@@ -77,4 +90,4 @@ module.exports = {
     fs: 'empty',
   },
 
-};
+}, {arrayMerge: (a, b) => a.concat(b)});

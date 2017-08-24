@@ -7,6 +7,8 @@
 
   padding: 1rem;
 
+  flex-shrink: 0;
+
   z-index: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -80,9 +82,32 @@
   }
 }
 
-.toc:not(.hide) + * {
+.toc + * {
   margin-left: $toc-width;
-  @media screen and (max-width: $mobile) {
-    margin-left: 0;
+}
+
+@media screen and (max-width: $mobile) {
+  .toc {
+    position: absolute;
+    width: 100vw;
+    height: 0;
+    padding: 0;
+
+    > div {
+      padding-top: $topbar-maxheight;
+      padding-bottom: 1rem;
+    }
+
+    &.open {
+      padding: 1rem;
+      height: 100%;
+      & + * {
+        display: none;
+      }
+    }
+
+    & + * {
+      margin-left: 0;
+    }
   }
 }

@@ -16,7 +16,7 @@ export const fetchInfos = () => async dispatch => {
   try {
     const headers = getHeaders();
     const repo = await fetch(`${BASE}/repos/${PROJECT_ORG}/${PROJECT_NAME}`, {headers});
-    const c = await fetch(`${BASE}/repos/${'uber'}/${'deck.gl'}/contributors`, {headers});
+    const c = await fetch(`${BASE}/repos/${PROJECT_ORG}/${PROJECT_NAME}/contributors`, {headers});
     const contributors = c.slice(0, 16);
     dispatch(githubSuccess({repo, contributors}));
   } catch (e) {

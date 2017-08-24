@@ -2,7 +2,9 @@ const webpack = require('webpack');
 
 const config = require('./config');
 
-module.exports = Object.assign(config, {
+const dirPath = process.env.DIR_PATH;
+
+const out = Object.assign(config, {
 
   devtool: 'inline-source-maps',
 
@@ -20,7 +22,12 @@ module.exports = Object.assign(config, {
         options: {sourceMap: true},
       }, {
         loader: 'sass-loader',
-        options: {sourceMap: true},
+        options: {
+          sourceMap: true,
+          includePaths: [
+            `${dirPath}/src/styles`,
+          ],
+        },
       }, {
         loader: 'autoprefixer-loader',
       }],
@@ -30,12 +37,18 @@ module.exports = Object.assign(config, {
   devServer: {
     hot: true,
     port: 3000,
-    contentBase: './template/static',
+    contentBase: ['./static', `${dirPath}/static`],
   },
 
-  plugins: [
+  plugins: config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ].concat(config.plugins),
+  ]),
 
 });
+
+if (process.env.DEBUGGING === 'true') {
+  console.log(JSON.stringify(out, null, 2)); // eslint-disable-line
+}
+
+module.exports = out;

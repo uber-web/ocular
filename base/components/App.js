@@ -7,13 +7,13 @@ import createHistory from 'history/createHashHistory';
 
 import Markdown from 'components/Markdown';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
 import Page from 'components/Page';
 import Toc from 'components/Toc';
 
 import {fetchInfos} from 'actions/github';
 import createStore from 'store';
 import routes from 'routes';
+import {PROJECT_TYPE} from 'config';
 
 import '../styles/main.scss';
 
@@ -21,7 +21,9 @@ const history = createHistory();
 const store = createStore(history);
 
 const boot = () => {
-  store.dispatch(fetchInfos());
+  if (PROJECT_TYPE === 'github') {
+    store.dispatch(fetchInfos());
+  }
 };
 
 boot();
@@ -30,8 +32,8 @@ const getComponent = route => {
   const Component = route.markdown ? Markdown : Page;
 
   return () => (
-    <div className="p4">
-      <div className="f container">
+    <div className="fg">
+      <div className="f container page">
         <Component {...route} />
       </div>
     </div>
@@ -46,7 +48,7 @@ export default () => (
         <Header />
 
         <div>
-          <div className="f">
+          <div className="f fg">
             <Toc />
             <Switch>
               {routes.map(route => route.redirect ? (
@@ -62,7 +64,6 @@ export default () => (
           </div>
         </div>
 
-        <Footer />
       </div>
     </ConnectedRouter>
   </Provider>

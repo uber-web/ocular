@@ -11,7 +11,7 @@ class Hero extends Component {
         <div className="container">
           <h1>{PROJECT_NAME}</h1>
           <p>{PROJECT_DESC}</p>
-          <a href="#/documentation/getting-started" className="btn">{'Get started'}</a>
+          <a href="#/documentation" className="btn">{'Get started'}</a>
         </div>
 
       </div>
