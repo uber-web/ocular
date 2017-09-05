@@ -57,7 +57,7 @@ class Search extends Component {
             <div>{'No result for this query.'}</div>
           )}
 
-          {!query && (
+          {!query && !debouncing && (
             <div>{'Please start typing!'}</div>
           )}
 
