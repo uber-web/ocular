@@ -12,9 +12,20 @@ marked.setOptions({
 const INJECTION_REG = /<!-- INJECT:"(.+)\"( heading| fullscreen)? -->/g;
 
 const renderer = new marked.Renderer();
+const textRenderer = new marked.Renderer();
 
-const renderMd = content =>
-  marked(content, {renderer}).replace(/\/demo\/src\/static\/images/g, 'images');
+textRenderer.heading = () => '';
+textRenderer.code = () => '';
+textRenderer.list = () => '';
+textRenderer.listitem = () => '';
+textRenderer.link = (href, title, text) => {
+  if (text.toLowerCase().includes('view code')) { return ''; }
+  return renderer.link(href, title, text);
+};
+
+const renderMd = (content, textOnly) =>
+  marked(content, {renderer: textOnly ? textRenderer : renderer})
+    .replace(/\/demo\/src\/static\/images/g, 'images');
 
 const tags = {inline: true, heading: true, fullscreen: true};
 
@@ -22,6 +33,7 @@ class Markdown extends Component {
 
   static defaultProps = {
     markdown: '',
+    textOnly: false,
   }
 
   componentDidMount() {
@@ -37,7 +49,9 @@ class Markdown extends Component {
   }
 
   render() {
-    const html = renderMd(this.props.markdown);
+
+    const {textOnly, markdown} = this.props;
+    const html = renderMd(markdown, textOnly);
 
     const splits = html.split(INJECTION_REG);
 
@@ -47,12 +61,14 @@ class Markdown extends Component {
         if (isTag) { return o; }
 
         const Demo = demos[cur];
+
+        if (textOnly && Demo) { return o; }
         if (!Demo) {
           /* eslint-disable react/no-danger */
           return o.concat(
             <div
               key={i}
-              className="markdown-body container p2"
+              className={cx({'p2 markdown-body container': !textOnly})}
               dangerouslySetInnerHTML={{__html: cur}}
             />
           );
@@ -78,10 +94,8 @@ class Markdown extends Component {
       }, []);
 
     return (
-      <div className="fg markdown">
-
+      <div className={cx('fg', {markdown: !textOnly})}>
         {out}
-
       </div>
     );
   }

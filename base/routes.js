@@ -1,6 +1,7 @@
 import slug from 'slug';
 
 import Home from 'components/Home';
+import Search from 'components/Search';
 
 import mdRoutes from 'mdRoutes';
 
@@ -37,4 +38,8 @@ export default [{
   path: '/',
   exact: true,
   component: Home
+}, {
+  path: '/search',
+  exact: true,
+  component: Search,
 }, ...routes];

@@ -57,6 +57,8 @@ class Header extends Component {
 
           <div className="links fac">
 
+            <NavLink activeClassName="active" to="/search">{'Search'}</NavLink>
+
             {Object.keys(trees).map(p => (
               <NavLink key={p} activeClassName="active" to={p}>{trees[p].name}</NavLink>
             ))}
