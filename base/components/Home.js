@@ -18,7 +18,7 @@ class Home extends Component {
 
         <Hero />
 
-        <div className="fg p4 mv2">
+        <div className="fg p4">
 
           <div className="container f fw">
 
