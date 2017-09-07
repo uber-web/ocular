@@ -3,20 +3,23 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const merge = require('deepmerge');
 
+const getCustomConfig = require('./custom');
 const config = require('./config');
 
 const dirPath = process.env.DIR_PATH;
+const mergeOpts = {arrayMerge: (a, b) => a.concat(b)};
 
-const out = Object.assign(config, {
+const out = merge(merge(config, getCustomConfig(dirPath), mergeOpts), {
 
   output: {
     path: `${dirPath}/dist`,
     filename: 'bundle-[hash].js'
   },
 
-  module: Object.assign(config.module, {
-    rules: config.module.rules.concat([{
+  module: {
+    rules: [{
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract({
         fallback: 'style-loader',
@@ -33,10 +36,10 @@ const out = Object.assign(config, {
           loader: 'autoprefixer-loader',
         }],
       }),
-    }]),
-  }),
+    }],
+  },
 
-  plugins: config.plugins.concat([
+  plugins: [
 
     new ExtractTextPlugin('styles-[hash].css'),
 
@@ -51,15 +54,15 @@ const out = Object.assign(config, {
       debug: false,
     }),
 
-    new webpack.optimize.UglifyJsPlugin({sourceMap: true, compressor: {warnings: false}}),
+    new webpack.optimize.UglifyJsPlugin({sourceMap: false, compressor: {warnings: false}}),
 
     new ProgressBarPlugin(),
 
     new OfflinePlugin(),
 
-  ]),
+  ],
 
-});
+}, mergeOpts);
 
 if (process.env.DEBUGGING === 'true') {
   console.log(JSON.stringify(out, null, 2)); // eslint-disable-line

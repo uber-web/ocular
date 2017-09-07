@@ -40,4 +40,4 @@ And finally launch the cli
 
 ### Example
 
-https://github.com/uber-common/vis-tutorial/tree/new
+https://github.com/uber-common/vis-tutorial

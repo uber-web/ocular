@@ -2,11 +2,9 @@ const webpack = require('webpack');
 const {resolve} = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplate = require('html-webpack-template');
-const merge = require('deepmerge');
 
 const dirPath = process.env.DIR_PATH;
 
-const getCustomConfig = require('./custom');
 const htmlConfig = require(`${dirPath}/html.config`);
 
 const BABEL_CONFIG = {
@@ -20,7 +18,7 @@ const BABEL_CONFIG = {
   ].map(name => require.resolve(`babel-plugin-${name}`))
 };
 
-module.exports = merge(getCustomConfig(dirPath), {
+module.exports = {
 
   entry: ['babel-polyfill', 'whatwg-fetch', './base/main'],
 
@@ -45,7 +43,7 @@ module.exports = merge(getCustomConfig(dirPath), {
       options: BABEL_CONFIG,
     }, {
       test: /\.(eot|svg|ttf|woff|woff2|gif|jpe?g|png)$/,
-      loader: 'url-loader',
+      loader: 'url-loader?limit=100000',
     }],
   },
 
@@ -90,4 +88,4 @@ module.exports = merge(getCustomConfig(dirPath), {
     fs: 'empty',
   },
 
-}, {arrayMerge: (a, b) => a.concat(b)});
+};

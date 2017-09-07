@@ -1,19 +1,22 @@
 const webpack = require('webpack');
+const merge = require('deepmerge');
 
 const config = require('./config');
+const getCustomConfig = require('./custom');
 
 const dirPath = process.env.DIR_PATH;
+const mergeOpts = {arrayMerge: (a, b) => a.concat(b)};
 
-const out = Object.assign(config, {
+const out = merge(merge(config, getCustomConfig(dirPath), mergeOpts), {
 
   devtool: 'inline-source-maps',
 
   entry: [
     'react-hot-loader/patch',
-  ].concat(config.entry),
+  ],
 
-  module: Object.assign(config.module, {
-    rules: config.module.rules.concat([{
+  module: {
+    rules: [{
       test: /\.scss$/,
       use: [{
         loader: 'style-loader',
@@ -31,8 +34,8 @@ const out = Object.assign(config, {
       }, {
         loader: 'autoprefixer-loader',
       }],
-    }]),
-  }),
+    }],
+  },
 
   devServer: {
     hot: true,
@@ -40,12 +43,12 @@ const out = Object.assign(config, {
     contentBase: ['./static', `${dirPath}/static`],
   },
 
-  plugins: config.plugins.concat([
+  plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ]),
+  ],
 
-});
+}, mergeOpts);
 
 if (process.env.DEBUGGING === 'true') {
   console.log(JSON.stringify(out, null, 2)); // eslint-disable-line

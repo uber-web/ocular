@@ -3,7 +3,8 @@ import {Switch, Route} from 'react-router';
 import {Redirect} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
-import createHistory from 'history/createHashHistory';
+import createBrowserHistory from 'history/createBrowserHistory';
+import createHashHistory from 'history/createHashHistory';
 
 import Markdown from 'components/Markdown';
 import Header from 'components/Header';
@@ -13,11 +14,14 @@ import Toc from 'components/Toc';
 import {fetchInfos} from 'actions/github';
 import createStore from 'store';
 import routes from 'routes';
-import {PROJECT_TYPE} from 'config';
+import {BASENAME, HISTORY, PROJECT_TYPE} from 'config';
 
 import '../styles/main.scss';
 
-const history = createHistory();
+const history = HISTORY === 'browser'
+  ? createBrowserHistory({basename: BASENAME ? BASENAME : ''})
+  : createHashHistory();
+
 const store = createStore(history);
 
 const boot = () => {
