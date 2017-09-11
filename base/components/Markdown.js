@@ -3,6 +3,8 @@ import {highlightAuto} from 'highlight.js';
 import cx from 'classnames';
 import marked from 'marked';
 
+import {BASENAME} from 'config';
+import routes from 'routes';
 import demos from 'demos';
 
 marked.setOptions({
@@ -13,6 +15,16 @@ const INJECTION_REG = /<!-- INJECT:"(.+)\"( heading| fullscreen)? -->/g;
 
 const renderer = new marked.Renderer();
 const textRenderer = new marked.Renderer();
+
+renderer.link = (href, title, text) => {
+  const match = href.match(/(.*)\.md$/);
+  if (!match) { return `<a href=${href}>${text}</a>`; }
+
+  const route = routes.find(r => r.path.includes(match[1]));
+  if (!route) { return `<span>${text}</span>`; }
+
+  return `<a href="${BASENAME || ''}${route.path}">${text}</a>`;
+};
 
 textRenderer.heading = () => '';
 textRenderer.code = () => '';
