@@ -41,6 +41,7 @@ const out = merge(merge(config, getCustomConfig(dirPath), mergeOpts), {
     hot: true,
     port: 3000,
     contentBase: ['./static', `${dirPath}/static`],
+    historyApiFallback: true,
   },
 
   plugins: [

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 import {connect} from 'react-redux';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import StarIcon from 'react-icons/lib/go/star';
 import GithubIcon from 'react-icons/lib/go/mark-github';
 
@@ -32,7 +32,7 @@ class Header extends Component {
   }
 
   render() {
-    const {isMenuOpen, opacity, stargazers_count, githubLoading} = this.props;
+    const {pathname, isMenuOpen, opacity, stargazers_count, githubLoading} = this.props;
 
     return (
       <header className={cx({open: isMenuOpen})}>
@@ -46,7 +46,7 @@ class Header extends Component {
 
           <div className="site-links">
             <div className="site-link">
-              <NavLink activeClassName="active" to="/">{PROJECT_NAME}</NavLink>
+              <Link to="/">{PROJECT_NAME}</Link>
             </div>
             {Object.keys(PROJECTS).map(name => (
               <div className="site-link" key={name}>
@@ -57,10 +57,16 @@ class Header extends Component {
 
           <div className="links fac">
 
-            <NavLink activeClassName="active" to="/search">{'Search'}</NavLink>
+            <Link className={cx({active: pathname === '/search'})} to="/search">{'Search'}</Link>
 
             {Object.keys(trees).map(p => (
-              <NavLink key={p} activeClassName="active" to={p}>{trees[p].name}</NavLink>
+              <Link
+                className={cx({active: pathname.includes(p)})}
+                to={p}
+                key={p}
+              >
+                {trees[p].name}
+              </Link>
             ))}
 
             {ADDITIONAL_LINKS.map(link => (

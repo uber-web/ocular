@@ -3,7 +3,6 @@ import {highlightAuto} from 'highlight.js';
 import cx from 'classnames';
 import marked from 'marked';
 
-import {BASENAME} from 'config';
 import routes from 'routes';
 import demos from 'demos';
 
@@ -23,7 +22,7 @@ renderer.link = (href, title, text) => {
   const route = routes.find(r => r.path.includes(match[1]));
   if (!route) { return `<span>${text}</span>`; }
 
-  return `<a href="${BASENAME || ''}${route.path}">${text}</a>`;
+  return `<a useHistory href="${route.path}">${text}</a>`;
 };
 
 textRenderer.heading = () => '';

@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route} from 'react-router';
 import {Redirect} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {ConnectedRouter} from 'react-router-redux';
+import {push, ConnectedRouter} from 'react-router-redux';
 import createBrowserHistory from 'history/createBrowserHistory';
 import createHashHistory from 'history/createHashHistory';
 
@@ -43,6 +43,17 @@ const getComponent = route => {
     </div>
   );
 
+};
+
+window.onclick = e => {
+  const el = e.target || e.srcElement;
+  const useHistory = el.hasAttribute('useHistory');
+  if (!useHistory) { return; }
+
+  e.preventDefault();
+
+  const href = el.getAttribute('href');
+  store.dispatch(push(href));
 };
 
 export default () => (
