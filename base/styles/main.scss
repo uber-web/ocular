@@ -41,7 +41,6 @@ html, body {
     flex-direction: column;
     flex-grow: 1;
     margin-top: $topbar-height;
-    margin-bottom: $footer-height;
   }
 }
 
@@ -127,7 +126,7 @@ hr {
 
 footer {
   position: absolute;
-  bottom: 0;
+  bottom: -$footer-height;
   width: 100%;
   z-index: 2;
 
