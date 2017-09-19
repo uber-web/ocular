@@ -25,7 +25,7 @@ class Search extends Component {
 
     const results = query
       ? routes.filter(route =>
-        route.name && (route.name.match(query) || route.markdown.match(query))
+        (route.name && route.name.match(query)) || (route.markdown && route.markdown.match(query))
       )
       : [];
 
