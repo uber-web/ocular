@@ -45,7 +45,7 @@ window.onclick = e => {
   store.dispatch(push(href))
 }
 
-const getWrapper = props => <Wrapper {...props} />
+const getWrapper = props => () => <Wrapper {...props} />
 
 export default () => (
   <Provider store={store}>
@@ -62,7 +62,7 @@ export default () => (
                   route.redirect ? (
                     <Redirect key={route.path} from={route.path} to={route.redirect} />
                   ) : (
-                    <Route key={route.path} component={getWrapper(route)} {...route} />
+                    <Route key={route.path} {...route} component={getWrapper(route)} />
                   ),
               )}
             </Switch>

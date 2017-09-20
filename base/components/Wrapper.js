@@ -1,22 +1,27 @@
 import React, { Component } from 'react'
 
 import Markdown from 'components/Markdown'
-import Page from 'components/Page'
 
 class Wrapper extends Component {
-  componentReceiveProps() {
+  componentWillMount() {
+    if (this.props.onUpdate) {
+      this.props.onUpdate()
+    }
+  }
+
+  componentWillReceiveProps() {
     if (this.props.onUpdate) {
       this.props.onUpdate()
     }
   }
 
   render() {
-    const { markdown } = this.props
-    const Comp = markdown ? Markdown : Page
+    const { markdown, component } = this.props
+    const Comp = markdown ? Markdown : component
 
     return (
-      <div className="fg">
-        <div className="f container page">
+      <div className="f fg">
+        <div className="f fg container page">
           <Comp {...this.props} />
         </div>
       </div>
