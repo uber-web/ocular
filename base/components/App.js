@@ -33,7 +33,7 @@ const boot = () => {
 
 boot()
 
-const getComponent = route => {
+const doRender = route => {
   const Component = route.markdown ? Markdown : Page
 
   if (route.onUpdate) {
@@ -77,7 +77,7 @@ export default () => (
                   route.redirect ? (
                     <Redirect key={route.path} from={route.path} to={route.redirect} />
                   ) : (
-                    <Route key={route.path} component={getComponent(route)} {...route} />
+                    <Route key={route.path} render={doRender(route)} {...route} />
                   ),
               )}
             </Switch>
