@@ -6,9 +6,8 @@ import { push, ConnectedRouter } from 'react-router-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 import createHashHistory from 'history/createHashHistory'
 
-import Markdown from 'components/Markdown'
+import Wrapper from 'components/Wrapper'
 import Header from 'components/Header'
-import Page from 'components/Page'
 import Toc from 'components/Toc'
 
 import { fetchInfos } from 'actions/github'
@@ -32,22 +31,6 @@ const boot = () => {
 }
 
 boot()
-
-const doRender = route => {
-  const Component = route.markdown ? Markdown : Page
-
-  if (route.onUpdate) {
-    route.onUpdate()
-  }
-
-  return () => (
-    <div className="fg">
-      <div className="f container page">
-        <Component {...route} />
-      </div>
-    </div>
-  )
-}
 
 window.onclick = e => {
   const el = e.target || e.srcElement
@@ -77,7 +60,7 @@ export default () => (
                   route.redirect ? (
                     <Redirect key={route.path} from={route.path} to={route.redirect} />
                   ) : (
-                    <Route key={route.path} render={doRender(route)} {...route} />
+                    <Route key={route.path} component={<Wrapper {...route} />} {...route} />
                   ),
               )}
             </Switch>
