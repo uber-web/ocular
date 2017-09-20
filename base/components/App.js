@@ -36,6 +36,10 @@ boot()
 const getComponent = route => {
   const Component = route.markdown ? Markdown : Page
 
+  if (route.onUpdate) {
+    route.onUpdate()
+  }
+
   return () => (
     <div className="fg">
       <div className="f container page">

@@ -1,15 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 
 class Page extends Component {
-
   render() {
-    return (
-      <div>
-        ok
-      </div>
-    );
+    return <div />
   }
-
 }
 
-export default Page;
+export default Page

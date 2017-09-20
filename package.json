@@ -1,6 +1,6 @@
 {
   "name": "ocular",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "bin": {
     "ocular": "./index.js"
   },
@@ -23,6 +23,7 @@
     "d3-color": "^1.0.3",
     "deepmerge": "^1.5.1",
     "eslint": "^4.4.1",
+    "eslint-config-prettier": "^2.5.0",
     "eslint-config-uber-es2015": "^3.1.2",
     "eslint-config-uber-jsx": "^3.3.3",
     "eslint-plugin-babel": "^4.1.2",

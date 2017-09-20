@@ -5,8 +5,10 @@
     "babel",
   ],
   "extends": [
-    "eslint-config-uber-jsx",
-    "eslint-config-uber-es2015"
+    "uber-jsx",
+    "uber-es2015",
+    "prettier",
+    "prettier/react"
   ],
   "rules": {
     "guard-for-in": 0,
