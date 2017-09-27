@@ -3,6 +3,7 @@ import Prism from 'prismjs';
 import cx from 'classnames';
 import marked from 'marked';
 
+import routes from 'routes';
 import demos from 'demos';
 
 // Shim Prism to add JSX support
@@ -11,7 +12,7 @@ import 'prismjs/components/prism-jsx';
 import 'prismjs/themes/prism.css';
 
 marked.setOptions({
-  highlight: (code, language) => Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language])
+  highlight: (code, language = 'markup') => Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language])
 });
 
 const INJECTION_REG = /<!-- INJECT:"(.+)\"( heading| fullscreen)? -->/g;
