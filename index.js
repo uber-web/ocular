@@ -81,7 +81,7 @@ const commands = {
     spawn(
       `${DIR_PATH}/node_modules/.bin/webpack-dev-server`,
       [...(shouldOpen ? ['--open'] : []), '--config', 'webpack/dev'],
-      { cwd: __dirname, stdio: 'inherit', env },
+      { cwd: __dirname, stdio: 'inherit', env }
     )
   },
 
