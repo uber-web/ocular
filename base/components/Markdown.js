@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Prism from 'prismjs';
 import cx from 'classnames';
 import marked from 'marked';
@@ -12,7 +12,8 @@ import 'prismjs/components/prism-jsx';
 import 'prismjs/themes/prism.css';
 
 marked.setOptions({
-  highlight: (code, language = 'markup') => Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language])
+  highlight: (code, language = 'markup') =>
+    Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language]),
 });
 
 const INJECTION_REG = /<!-- INJECT:"(.+)\"( heading| fullscreen)? -->/g;
@@ -21,11 +22,16 @@ const renderer = new marked.Renderer();
 const textRenderer = new marked.Renderer();
 
 renderer.link = (href, title, text) => {
+  const fallback = `<a href=${href}>${text}</a>`;
   const match = href.match(/(.*)\.md$/);
-  if (!match) { return `<a href=${href}>${text}</a>`; }
+  if (!match) {
+    return fallback;
+  }
 
   const route = routes.find(r => r.path.includes(match[1]));
-  if (!route) { return `<span>${text}</span>`; }
+  if (!route) {
+    return fallback;
+  }
 
   return `<a useHistory href="${route.path}">${text}</a>`;
 };
@@ -35,22 +41,25 @@ textRenderer.code = () => '';
 textRenderer.list = () => '';
 textRenderer.listitem = () => '';
 textRenderer.link = (href, title, text) => {
-  if (text.toLowerCase().includes('view code')) { return ''; }
+  if (text.toLowerCase().includes('view code')) {
+    return '';
+  }
   return renderer.link(href, title, text);
 };
 
 const renderMd = (content, textOnly) =>
-  marked(content, {renderer: textOnly ? textRenderer : renderer})
-    .replace(/\/demo\/src\/static\/images/g, 'images');
+  marked(content, { renderer: textOnly ? textRenderer : renderer }).replace(
+    /\/demo\/src\/static\/images/g,
+    'images',
+  );
 
-const tags = {inline: true, heading: true, fullscreen: true};
+const tags = { inline: true, heading: true, fullscreen: true };
 
 class Markdown extends Component {
-
   static defaultProps = {
     markdown: '',
     textOnly: false,
-  }
+  };
 
   componentDidMount() {
     this.scrollTop();
@@ -62,60 +71,56 @@ class Markdown extends Component {
 
   scrollTop = () => {
     window.scrollTo(0, 0);
-  }
+  };
 
   render() {
-
-    const {textOnly, markdown} = this.props;
+    const { textOnly, markdown } = this.props;
     const html = renderMd(markdown, textOnly);
 
     const splits = html.split(INJECTION_REG);
 
-    const out = splits
-      .reduce((o, cur, i) => {
-        const isTag = !cur || tags[cur.trim()];
-        if (isTag) { return o; }
+    const out = splits.reduce((o, cur, i) => {
+      const isTag = !cur || tags[cur.trim()];
+      if (isTag) {
+        return o;
+      }
 
-        const Demo = demos[cur];
+      const Demo = demos[cur];
 
-        if (textOnly && Demo) { return o; }
-        if (!Demo) {
-          /* eslint-disable react/no-danger */
-          return o.concat(
-            <div
-              key={i}
-              className={cx({'p2 markdown-body container': !textOnly})}
-              dangerouslySetInnerHTML={{__html: cur}}
-            />
-          );
-          /* eslint-enable react/no-danger */
-        }
-
-        const next = !splits[i + 1] ? 'inline' : (splits[i + 1] || '').trim();
-        const tag = next && tags[next] && next;
-
+      if (textOnly && Demo) {
+        return o;
+      }
+      if (!Demo) {
+        /* eslint-disable react/no-danger */
         return o.concat(
           <div
             key={i}
-            className={cx({
-              'inline-code container': tag === 'inline',
-              fullscreen: tag === 'fullscreen',
-              demo: tag === 'heading',
-            })}
-          >
-            <Demo />
-          </div>
+            className={cx({ 'p2 markdown-body container': !textOnly })}
+            dangerouslySetInnerHTML={{ __html: cur }}
+          />,
         );
+        /* eslint-enable react/no-danger */
+      }
 
-      }, []);
+      const next = !splits[i + 1] ? 'inline' : (splits[i + 1] || '').trim();
+      const tag = next && tags[next] && next;
 
-    return (
-      <div className={cx('fg', {markdown: !textOnly})}>
-        {out}
-      </div>
-    );
+      return o.concat(
+        <div
+          key={i}
+          className={cx({
+            'inline-code container': tag === 'inline',
+            fullscreen: tag === 'fullscreen',
+            demo: tag === 'heading',
+          })}
+        >
+          <Demo />
+        </div>,
+      );
+    }, []);
+
+    return <div className={cx('fg', { markdown: !textOnly })}>{out}</div>;
   }
-
 }
 
 export default Markdown;
