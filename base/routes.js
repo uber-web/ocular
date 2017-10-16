@@ -8,7 +8,7 @@ import jsRoutes from 'jsRoutes'
 
 const generatePaths = (d, parentPath) =>
   d.map(sub => {
-    const path = `${parentPath}/${slug(sub.name, { lower: true })}`
+    const path = `${parentPath}/${sub.path || slug(sub.name, { lower: true })}`
     return sub.children
       ? { ...sub, path, children: generatePaths(sub.children, path) }
       : { ...sub, path, hasToc: true }
