@@ -5,6 +5,7 @@ import marked from 'marked';
 
 import routes from 'routes';
 import demos from 'demos';
+import { HISTORY } from 'config';
 
 // Shim Prism to add JSX support
 import 'prismjs/components/prism-jsx';
@@ -28,12 +29,12 @@ renderer.link = (href, title, text) => {
     return fallback;
   }
 
-  const route = routes.find(r => r.path.includes(match[1]));
+  const route = routes.find(r => r.path.includes(match[1].replace(/\.md$/, '')));
   if (!route) {
     return fallback;
   }
 
-  return `<a useHistory href="${route.path}">${text}</a>`;
+  return `<a useHistory href="${HISTORY !== 'browser' ? '/#' : ''}${route.path}">${text}</a>`;
 };
 
 textRenderer.heading = () => '';
