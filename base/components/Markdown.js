@@ -23,7 +23,7 @@ const textRenderer = new marked.Renderer();
 
 renderer.link = (href, title, text) => {
   const fallback = `<a href=${href}>${text}</a>`;
-  const match = href.match(/(.*)\.md$/);
+  const match = href.match(/^\/(.*)(\.md)?$/);
   if (!match) {
     return fallback;
   }
