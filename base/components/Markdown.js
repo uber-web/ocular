@@ -24,8 +24,9 @@ const textRenderer = new marked.Renderer()
 
 renderer.link = (href, title, text) => {
   const fallback = `<a href=${href}>${text}</a>`
+  const isFull = /^(https?:\/\/)/.test(href)
   const match = href.match(/.*\/(.*)(\.md)?$/)
-  if (!match) {
+  if (isFull || !match) {
     return fallback
   }
 
