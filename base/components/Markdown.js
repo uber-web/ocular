@@ -36,7 +36,7 @@ renderer.link = (href, title, text) => {
   }
 
   const addPrefix = HISTORY !== 'browser' && route.path.indexOf('/#') !== 0
-  return `<a useHistory href="${addPrefix ? '/#' : ''}${route.path}">${text}</a>`
+  return `<a useHistory href="${addPrefix ? '/#' : ''}${route.path}"><span>${text}</span></a>`
 }
 
 textRenderer.heading = () => ''
