@@ -20,8 +20,6 @@ const BABEL_CONFIG = {
 
 module.exports = {
 
-  entry: ['babel-polyfill', 'whatwg-fetch', './base/main'],
-
   module: {
     noParse: /(mapbox-gl)\.js$/,
 

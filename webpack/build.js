@@ -13,6 +13,8 @@ const mergeOpts = {arrayMerge: (a, b) => a.concat(b)};
 
 const out = merge(merge(config, getCustomConfig(dirPath), mergeOpts), {
 
+  entry: ['babel-polyfill', 'whatwg-fetch', './base/main'],
+
   output: {
     path: `${dirPath}/dist`,
     filename: 'bundle-[hash].js'

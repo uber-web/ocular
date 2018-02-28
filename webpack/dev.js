@@ -9,11 +9,14 @@ const mergeOpts = {arrayMerge: (a, b) => a.concat(b)};
 
 const out = merge(merge(config, getCustomConfig(dirPath), mergeOpts), {
 
-  devtool: 'inline-source-maps',
-
   entry: [
     'react-hot-loader/patch',
+    'babel-polyfill',
+    'whatwg-fetch',
+    './base/main'
   ],
+
+  devtool: 'inline-source-maps',
 
   module: {
     rules: [{
