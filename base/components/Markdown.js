@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Prism from 'prismjs'
 import cx from 'classnames'
 import marked from 'marked'
+import fetch from 'fetch';
 
 import routes from 'routes'
 import demos from 'demos'
@@ -58,14 +59,33 @@ const renderMd = (content, textOnly) =>
 
 const tags = { inline: true, heading: true, fullscreen: true }
 
+const fetchMarkdown = async (url) => {
+  const r = await fetch(url)
+  return r.text()
+}
+
 class Markdown extends Component {
   static defaultProps = {
     markdown: '',
     textOnly: false,
   }
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      markdown: props.markdown,
+    }
+  }
+
   componentDidMount() {
+    const { markdownUrl } = this.props
     this.scrollTop()
+
+    if (markdownUrl) {
+      fetchMarkdown()
+        .then(markdown => this.setState({ markdown }))
+    }
   }
 
   componentDidUpdate() {
@@ -77,7 +97,8 @@ class Markdown extends Component {
   }
 
   render() {
-    const { textOnly, markdown } = this.props
+    const { textOnly } = this.props
+    const { markdown } = this.state
     const html = renderMd(markdown, textOnly)
 
     const splits = html.split(INJECTION_REG)
