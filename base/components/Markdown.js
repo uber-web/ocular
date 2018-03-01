@@ -83,7 +83,7 @@ class Markdown extends Component {
     this.scrollTop()
 
     if (markdownUrl) {
-      fetchMarkdown()
+      fetchMarkdown(markdownUrl)
         .then(markdown => this.setState({ markdown }))
     }
   }
