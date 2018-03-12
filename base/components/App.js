@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { push, ConnectedRouter } from 'react-router-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 import createHashHistory from 'history/createHashHistory'
+import ReactGA from 'react-ga'
 
 import Wrapper from 'components/Wrapper'
 import Header from 'components/Header'
@@ -13,7 +14,7 @@ import Toc from 'components/Toc'
 import { fetchInfos } from 'actions/github'
 import createStore from 'store'
 import routes from 'routes'
-import { BASENAME, HISTORY, PROJECT_TYPE } from 'config'
+import { BASENAME, HISTORY, PROJECT_TYPE, GA_TRACKING } from 'config'
 
 import '../styles/main.scss'
 
@@ -21,6 +22,12 @@ const history =
   HISTORY === 'browser'
     ? createBrowserHistory({ basename: BASENAME ? BASENAME : '' })
     : createHashHistory()
+
+if (GA_TRACKING) {
+  ReactGA.initialize(GA_TRACKING)
+
+  history.listen(location => ReactGA.pageview(`${location.pathname}${location.search}`))
+}
 
 const store = createStore(history)
 
