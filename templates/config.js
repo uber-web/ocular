@@ -7,6 +7,8 @@ export const PROJECT_DESC = '${res.desc}';
 
 export const PROJECTS = {};
 
+export const HOME_PATH = '/';
+
 export const HOME_HEADING = '${res.desc}';
 
 export const HOME_RIGHT = null;
