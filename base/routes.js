@@ -6,6 +6,8 @@ import Search from 'components/Search'
 import mdRoutes from 'mdRoutes'
 import jsRoutes from 'jsRoutes'
 
+import { HOME_PATH } from 'config'
+
 const generatePaths = (d, parentPath) =>
   d.map(sub => {
     const path = `${parentPath}/${sub.path || slug(sub.name, { lower: true })}`
@@ -41,6 +43,7 @@ export default [
     path: '/',
     exact: true,
     component: Home,
+    redirect: HOME_PATH === '/' ? null : HOME_PATH
   },
   {
     path: '/search',
