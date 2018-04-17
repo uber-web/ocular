@@ -28,6 +28,10 @@ const configTemplate = require('./templates/config')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
+const { lstatSync, readdirSync } = require('fs')
+const { basename, extname } = require('path')
+const { toCamelCase, toSentenceCase } = require('to-case')
+
 const DIR_PATH = process.env.PWD
 
 const DEBUGGING = process.argv.includes('--debug')
@@ -119,6 +123,78 @@ const commands = {
       stdio: 'inherit',
       env: Object.assign(env, { NODE_ENV: 'production' }),
     })
+  },
+
+  'build-docs': () => {
+    const docs = []
+    const result = {
+      name: 'Documentation',
+      path: '/docs',
+      data: [],
+    }
+    const output = ''
+    const queue = readdirSync(`${DIR_PATH}/docs/`).map(fileName => ({ fileName, path: ['docs'] }))
+
+    while (queue.length) {
+      const { fileName, path } = queue.pop()
+      if (lstatSync(fileName).isDirectory() === false) {
+        if (extname(fileName) === 'md') {
+          const docBaseName = basename(fileName, '.md')
+          const componentName = path
+            .concat(docBaseName)
+            .join('-')
+            .toCamelCase()
+          const fullPath = path.concat(fileName).join('/')
+
+          docs.push({
+            fileName,
+            componentName,
+            fullPath,
+            path,
+          })
+        }
+        // ignore non .md files
+      } else {
+        const newPath = path.concat(fileName)
+        const fullPath = [DIR_PATH].concat(newPath)
+        readdirSync(fullPath).forEach(fileName => {
+          queue.push({ fileName, path: newPath })
+        })
+      }
+    }
+
+    docs.forEach(({ fileName, componentName, fullPath, path }) => {
+      output += `import ${componentName} from '${fullPath}';\n`
+
+      const pathSuffix = path.slice(1)
+      let destination = result.data
+      let currentPath = '/docs'
+
+      pathSuffix.forEach(p => {
+        const size = destination.length
+        const pathInSentenceCase = p.toSentenceCase()
+        currentPath = `${currentPath}/${p}`
+        let nextLevelIdx = destination.findIndex(d => d.name === pathInSentenceCase)
+        if (nextLevelIdx === -1) {
+          destination.push({
+            name: pathInSentenceCase,
+            path: currentPath,
+            data: [],
+          })
+          nextLevelIdx = size
+        }
+        destination = destination[nextLevelIdx].data
+      })
+
+      destination.push({
+        name: fileName.toSentenceCase(),
+        markDown: componentName,
+      })
+    })
+    output += '\n'
+    output += `export default [${JSON.stringify(result, null, 2)}];\n`
+
+    writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
   },
 
   help: () => {
