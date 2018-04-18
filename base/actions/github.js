@@ -19,14 +19,13 @@
 // THE SOFTWARE.
 
 import fetch from 'fetch';
-import {PROJECT_ORG, PROJECT_NAME} from 'config';
+import {PROJECT_ORG, PROJECT_NAME, GITHUB_KEY} from 'config';
 import {fetchingGithub, githubError, githubSuccess} from 'reducers/github';
 
 const BASE = 'https://api.github.com';
 
 const getHeaders = () => ({
-  // Wow such a hacker stealing a key with no scope!! :''')
-  Authorization: `Basic ${btoa('Apercu:e9b35271b05350f0dd7a33fd49ab661e0d41fd2c')}`,
+  Authorization: `Basic ${GITHUB_KEY}`,
 });
 
 export const fetchInfos = () => async dispatch => {
