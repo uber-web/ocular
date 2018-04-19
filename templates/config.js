@@ -35,7 +35,7 @@ export const HOME_RIGHT = null;
 
 export const HOME_BULLETS = [{
   text: 'Designed for React',
-  desc: 'Seemless integration.',
+  desc: 'Seamless integration.',
   img: 'images/icon-react.svg',
 }, {
   text: 'Totally ready for production',
@@ -45,4 +45,8 @@ export const HOME_BULLETS = [{
 export const ADDITIONAL_LINKS = [];
 
 export const GA_TRACKING = null;
+
+// For showing star counts and contributors.
+// Should be like btoa('YourUsername:YourKey') and should be readonly.
+export const GITHUB_KEY = null;
 `;
