@@ -25,6 +25,8 @@ const inquirer = require('inquirer')
 const slug = require('slug')
 
 const configTemplate = require('./templates/config')
+const docTemplate = require('./templates/doc')
+const mdRoutesTemplate = require('./templates/mdRoutes')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
@@ -74,7 +76,7 @@ const commands = {
         },
       ])
       .then(res => {
-        execSync('mkdir -p static src src/styles')
+        execSync('mkdir -p static src src/styles src/docs')
 
         const json = require(`${DIR_PATH}/package.json`)
 
@@ -82,15 +84,18 @@ const commands = {
         json.description = res.desc
 
         json.scripts = {
+          clean: 'rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}',
           start: 'ocular start',
           build: 'ocular build',
           lint: 'ocular lint',
+          publish: 'npm run clean && npm run build && mv dist/* ../docs'
         }
 
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(json, null, 2)}\n`)
         writeFileSync(`${DIR_PATH}/html.config.js`, htmlConfigTemplate(res))
         writeFileSync(`${DIR_PATH}/src/config.js`, configTemplate(res))
-        writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, 'export default [];\n')
+        writeFileSync(`${DIR_PATH}/src/docs/getting-started.md`, docTemplate(res))
+        writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, mdRoutesTemplate(res))
         writeFileSync(`${DIR_PATH}/src/demos.js`, 'export default {};\n')
         writeFileSync(`${DIR_PATH}/src/styles/index.scss`, '')
         writeFileSync(`${DIR_PATH}/src/styles/_variables.scss`, variablesTemplate())
@@ -110,7 +115,7 @@ const commands = {
   lint: () => {
     spawn(`${DIR_PATH}/node_modules/.bin/eslint`, [`${DIR_PATH}/src`, '-c', '.eslintrc'], {
       cwd: __dirname,
-      stdio: 'inherit',
+      stdio: 'inherit'
     })
   },
 
@@ -120,7 +125,7 @@ const commands = {
     spawn(`${DIR_PATH}/node_modules/.bin/webpack`, ['--config', 'webpack/build'], {
       cwd: __dirname,
       stdio: 'inherit',
-      env: Object.assign(env, { NODE_ENV: 'production' }),
+      env: Object.assign(env, { NODE_ENV: 'production' })
     })
   },
 
@@ -129,18 +134,17 @@ const commands = {
     const result = {
       name: 'Documentation',
       path: '/docs',
-      data: [],
+      data: []
     }
     let output = ''
-    const docsSource = `${DIR_PATH}/src/docs/`
-    const queue = readdirSync(`${docsSource}`).map(fileName => ({
+    const pathString = `${DIR_PATH}/src/docs/`
+    const queue = readdirSync(`${pathString}`).map(fileName => ({
       fileName,
-      pathString,
-      path: ['src', 'docs'],
+      path: ['src', 'docs']
     }))
 
     while (queue.length) {
-      const { fileName, pathString, path } = queue.pop()
+      const { fileName, path } = queue.pop()
       const fullPath = [DIR_PATH]
         .concat(path)
         .concat(fileName)
@@ -173,9 +177,9 @@ const commands = {
         // ignore non .md files
       } else {
         const newPath = path.concat(fileName)
-        const fullPath = [DIR_PATH].concat(newPath).join('/')
-        readdirSync(fullPath).forEach(fileName => {
-          queue.push({ fileName, path: newPath })
+        const newFullPath = [DIR_PATH].concat(newPath).join('/')
+        readdirSync(newFullPath).forEach(f => {
+          queue.push({ fileName: f, path: newPath })
         })
       }
     }
@@ -199,7 +203,7 @@ const commands = {
             destination.push({
               name: pathInSentenceCase,
               path: currentPath,
-              data: [],
+              data: []
             })
             nextLevelIdx = size
           }
@@ -208,7 +212,7 @@ const commands = {
 
         destination.push({
           name: sentence(docBaseName),
-          markDown: componentName,
+          markDown: componentName
         })
       })
 
@@ -239,7 +243,7 @@ Available commands:
 
 You can provide the --debug flag to print the computed webpack config.
 `)
-  },
+  }
 }
 
 const command = process.argv[2]
@@ -248,3 +252,4 @@ if (!commands[command]) {
 }
 
 commands[command]()
+return 1
