@@ -2,7 +2,7 @@
   "parser": "babel-eslint",
   "plugins": [
     "react",
-    "babel",
+    "babel"
   ],
   "extends": [
     "uber-jsx",
@@ -14,16 +14,17 @@
     "guard-for-in": 0,
     "camelcase": 0,
     "comma-dangle": 0,
+    "no-console": 0,
     "no-process-env": 0,
-    'brace-style': [2, '1tbs', { 'allowSingleLine': true }],
-    'no-invalid-this': 0,
-    'babel/no-invalid-this': 1,
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "no-invalid-this": 0,
+    "babel/no-invalid-this": 1
   },
   "globals": {
     "document": false,
     "process": false,
     "window": false,
     "fetch": false,
-    "btoa": false,
+    "btoa": false
   }
 }

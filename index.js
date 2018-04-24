@@ -132,8 +132,8 @@ const commands = {
       data: [],
     }
     let output = ''
-    const pathString = `${DIR_PATH}/src/docs/`
-    const queue = readdirSync(`${pathString}`).map(fileName => ({
+    const docsSource = `${DIR_PATH}/src/docs/`
+    const queue = readdirSync(`${docsSource}`).map(fileName => ({
       fileName,
       pathString,
       path: ['src', 'docs'],
