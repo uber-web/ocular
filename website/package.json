@@ -1,0 +1,19 @@
+{
+  "name": "ocular-website",
+  "version": "1.0.0",
+  "description": "A documentation website for Ocular, made with Ocular",
+  "main": "index.js",
+  "scripts": {
+    "start": "ocular start",
+    "build": "ocular build",
+    "lint": "ocular lint"
+  },
+  "keywords": [
+    "ocular"
+  ],
+  "author": "jerome@uber.com",
+  "license": "ISC",
+  "devDependencies": {
+    "ocular": "^0.4.3"
+  }
+}

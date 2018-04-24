@@ -1,4 +1,4 @@
-# Configurtion Reference
+# Configuration Reference
 
 ## PROJECT_TYPE
 
