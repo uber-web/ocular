@@ -12,7 +12,7 @@
     "ocular"
   ],
   "author": "jerome@uber.com",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "ocular": "^0.4.3"
   }
