@@ -22,12 +22,11 @@ import React, { Component } from 'react'
 import Prism from 'prismjs'
 import cx from 'classnames'
 import marked from 'marked'
-import fetch from 'fetch';
+import fetch from 'fetch'
 
 import routes from 'routes'
 import demos from 'demos'
-import { HISTORY } from 'config'
-
+import { HISTORY, PROJECT_TYPE, WEBSITE_PATH, PROJECT_URL } from 'config'
 // Shim Prism to add JSX support
 import 'prismjs/components/prism-jsx'
 
@@ -35,7 +34,7 @@ import 'prismjs/themes/prism.css'
 
 marked.setOptions({
   highlight: (code, language = 'markup') =>
-    Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language]),
+    Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language])
 })
 
 const INJECTION_REG = /<!-- INJECT:"(.+)\"( heading| fullscreen)? -->/g
@@ -57,7 +56,9 @@ renderer.link = (href, title, text) => {
   }
 
   const addPrefix = HISTORY !== 'browser' && route.path.indexOf('/#') !== 0
-  return `<a ${HISTORY === 'browser' ? 'useHistory' : ''} href="${addPrefix ? '/#' : ''}${route.path}">${text}</a>`
+  return `<a ${HISTORY === 'browser' ? 'useHistory' : ''} href="${addPrefix ? '/#' : ''}${
+    route.path
+  }">${text}</a>`
 }
 
 textRenderer.heading = () => ''
@@ -74,27 +75,37 @@ textRenderer.link = (href, title, text) => {
 const renderMd = (content, textOnly) =>
   marked(content, { renderer: textOnly ? textRenderer : renderer }).replace(
     /\/demo\/src\/static\/images/g,
-    'images',
+    'images'
   )
 
 const tags = { inline: true, heading: true, fullscreen: true }
 
-const fetchMarkdown = async (url) => {
+const fetchMarkdown = async url => {
   const r = await fetch(url)
   return r.text()
+}
+
+const makeEditMeLink = fileLocation => {
+  if (!fileLocation || PROJECT_TYPE !== 'github') {
+    return ''
+  }
+  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/');
+  return `<div class="edit-me">
+      <a href="${href}">Edit me on github</a>
+    </div>`
 }
 
 class Markdown extends Component {
   static defaultProps = {
     markdown: '',
-    textOnly: false,
+    textOnly: false
   }
 
   constructor(props) {
     super(props)
 
     this.state = {
-      markdown: props.markdown,
+      markdown: props.markdown
     }
   }
 
@@ -103,8 +114,7 @@ class Markdown extends Component {
     this.scrollTop()
 
     if (markdownUrl) {
-      fetchMarkdown(markdownUrl)
-        .then(markdown => this.setState({ markdown }))
+      fetchMarkdown(markdownUrl).then(markdown => this.setState({ markdown }))
     }
   }
 
@@ -119,7 +129,8 @@ class Markdown extends Component {
   render() {
     const { textOnly } = this.props
     const { markdown } = this.state
-    const html = renderMd(markdown, textOnly)
+    const edit = makeEditMeLink(this.props.fileLocation)
+    const html = edit + renderMd(markdown, textOnly)
 
     const splits = html.split(INJECTION_REG)
 
@@ -141,7 +152,7 @@ class Markdown extends Component {
             key={i}
             className={cx({ 'p2 markdown-body container': !textOnly })}
             dangerouslySetInnerHTML={{ __html: cur }}
-          />,
+          />
         )
         /* eslint-enable react/no-danger */
       }
@@ -155,11 +166,11 @@ class Markdown extends Component {
           className={cx({
             'inline-code container': tag === 'inline',
             fullscreen: tag === 'fullscreen',
-            demo: tag === 'heading',
+            demo: tag === 'heading'
           })}
         >
           <Demo />
-        </div>,
+        </div>
       )
     }, [])
 

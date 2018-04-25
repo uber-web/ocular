@@ -37,7 +37,7 @@ const DEBUGGING = process.argv.includes('--debug')
 
 const env = Object.assign(process.env, {
   DIR_PATH,
-  DEBUGGING,
+  DEBUGGING
 })
 
 const commands = {
@@ -47,31 +47,37 @@ const commands = {
         {
           name: 'name',
           message: 'What will be the name of your project?',
-          validate: v => Boolean(v) || 'You should provide a name.',
+          validate: v => Boolean(v) || 'You should provide a name.'
         },
         {
           type: 'list',
           choices: ['github', 'phab'],
           name: 'type',
-          message: 'Where will your project be hosted?',
+          message: 'Where will your project be hosted?'
         },
         {
           name: 'org',
           message: 'Which organisation will host the repo?',
           validate: v => Boolean(v) || 'You should provide an org.',
-          when: ({ type }) => type === 'github',
+          when: ({ type }) => type === 'github'
         },
         {
           name: 'phabUrl',
           message: 'What is the phabricator url?',
           validate: v => Boolean(v) || 'You should provide an url.',
-          when: ({ type }) => type === 'phab',
+          when: ({ type }) => type === 'phab'
+        },
+        {
+          name: 'path',
+          message: 'Where is the ocular website relative to your main project?',
+          default: '/website/',
+          validate: v => Boolean(v) || 'You should provide a path'
         },
         {
           name: 'desc',
           message: 'Provide a basic description of your project',
-          validate: v => Boolean(v) || 'You should provide a description.',
-        },
+          validate: v => Boolean(v) || 'You should provide a description.'
+        }
       ])
       .then(res => {
         execSync('mkdir -p static src src/styles')
@@ -84,7 +90,7 @@ const commands = {
         json.scripts = {
           start: 'ocular start',
           build: 'ocular build',
-          lint: 'ocular lint',
+          lint: 'ocular lint'
         }
 
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(json, null, 2)}\n`)
@@ -110,7 +116,7 @@ const commands = {
   lint: () => {
     spawn(`${DIR_PATH}/node_modules/.bin/eslint`, [`${DIR_PATH}/src`, '-c', '.eslintrc'], {
       cwd: __dirname,
-      stdio: 'inherit',
+      stdio: 'inherit'
     })
   },
 
@@ -120,7 +126,7 @@ const commands = {
     spawn(`${DIR_PATH}/node_modules/.bin/webpack`, ['--config', 'webpack/build'], {
       cwd: __dirname,
       stdio: 'inherit',
-      env: Object.assign(env, { NODE_ENV: 'production' }),
+      env: Object.assign(env, { NODE_ENV: 'production' })
     })
   },
 
@@ -129,18 +135,17 @@ const commands = {
     const result = {
       name: 'Documentation',
       path: '/docs',
-      data: [],
+      data: []
     }
     let output = ''
     const docsSource = `${DIR_PATH}/src/docs/`
     const queue = readdirSync(`${docsSource}`).map(fileName => ({
       fileName,
-      pathString,
-      path: ['src', 'docs'],
+      path: ['src', 'docs']
     }))
 
     while (queue.length) {
-      const { fileName, pathString, path } = queue.pop()
+      const { fileName, path } = queue.pop()
       const fullPath = [DIR_PATH]
         .concat(path)
         .concat(fileName)
@@ -173,9 +178,9 @@ const commands = {
         // ignore non .md files
       } else {
         const newPath = path.concat(fileName)
-        const fullPath = [DIR_PATH].concat(newPath).join('/')
-        readdirSync(fullPath).forEach(fileName => {
-          queue.push({ fileName, path: newPath })
+        const newFullPath = [DIR_PATH].concat(newPath).join('/')
+        readdirSync(newFullPath).forEach(f => {
+          queue.push({ fileName: f, path: newPath })
         })
       }
     }
@@ -199,7 +204,7 @@ const commands = {
             destination.push({
               name: pathInSentenceCase,
               path: currentPath,
-              data: [],
+              data: []
             })
             nextLevelIdx = size
           }
@@ -207,16 +212,15 @@ const commands = {
         })
 
         destination.push({
+          fileLocation: `/src${currentPath}/${fileName}`,
           name: sentence(docBaseName),
-          markDown: componentName,
+          markdown: componentName
         })
       })
 
     const stringifiedResult = JSON.stringify(result, null, 2)
-      .replace(/"name"/g, 'name')
-      .replace(/"path"/g, 'path')
-      .replace(/"data"/g, 'data')
-      .replace(/"markDown": "([^"]+)"/g, 'markDown: $1')
+      .replace(/("(name|path|data|fileLocation)")/g, '$2')
+      .replace(/"markdown": "([^"]+)"/g, 'markdown: $1')
 
     output += '\n'
     output += `export default [${stringifiedResult}];`
@@ -239,7 +243,7 @@ Available commands:
 
 You can provide the --debug flag to print the computed webpack config.
 `)
-  },
+  }
 }
 
 const command = process.argv[2]
@@ -248,3 +252,4 @@ if (!commands[command]) {
 }
 
 commands[command]()
+return 1
