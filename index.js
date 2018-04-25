@@ -25,6 +25,8 @@ const inquirer = require('inquirer')
 const slug = require('slug')
 
 const configTemplate = require('./templates/config')
+const docTemplate = require('./templates/doc')
+const mdRoutesTemplate = require('./templates/mdRoutes')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
@@ -80,7 +82,7 @@ const commands = {
         }
       ])
       .then(res => {
-        execSync('mkdir -p static src src/styles')
+        execSync('mkdir -p static src src/styles src/docs')
 
         const json = require(`${DIR_PATH}/package.json`)
 
@@ -88,15 +90,18 @@ const commands = {
         json.description = res.desc
 
         json.scripts = {
+          clean: 'rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}',
           start: 'ocular start',
           build: 'ocular build',
-          lint: 'ocular lint'
+          lint: 'ocular lint',
+          publish: 'npm run clean && npm run build && mv dist/* ../docs'
         }
 
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(json, null, 2)}\n`)
         writeFileSync(`${DIR_PATH}/html.config.js`, htmlConfigTemplate(res))
         writeFileSync(`${DIR_PATH}/src/config.js`, configTemplate(res))
-        writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, 'export default [];\n')
+        writeFileSync(`${DIR_PATH}/src/docs/getting-started.md`, docTemplate(res))
+        writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, mdRoutesTemplate(res))
         writeFileSync(`${DIR_PATH}/src/demos.js`, 'export default {};\n')
         writeFileSync(`${DIR_PATH}/src/styles/index.scss`, '')
         writeFileSync(`${DIR_PATH}/src/styles/_variables.scss`, variablesTemplate())
@@ -138,8 +143,8 @@ const commands = {
       data: []
     }
     let output = ''
-    const docsSource = `${DIR_PATH}/src/docs/`
-    const queue = readdirSync(`${docsSource}`).map(fileName => ({
+    const pathString = `${DIR_PATH}/src/docs/`
+    const queue = readdirSync(`${pathString}`).map(fileName => ({
       fileName,
       path: ['src', 'docs']
     }))
