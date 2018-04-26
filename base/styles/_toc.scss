@@ -34,7 +34,7 @@
   -webkit-overflow-scrolling: touch;
 
   background-color: #fff;
-  box-shadow: 4px 0 5px -2px rgba(black, 0.15);
+  border-right: 1px solid #e0e0e0;
   transition: all 300ms;
   white-space: nowrap;
 
@@ -70,30 +70,29 @@
       color: $primary;
       font-weight: bold;
       border-color: $primary;
-      border-image: linear-gradient(to bottom, $primary 0%, $secondary 100%);
+      border-image: $gradient-2;
       border-image-slice: 2;
     }
   }
 
   .list-header {
     position: relative;
-    font-weight: 700;
-    font-size: 0.833em;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
     padding: 24px 0 8px 24px;
     color: $white-40;
   }
 
   .list-header:not(.active):not(.expanded):before {
     content: '+';
-    font-weight: 700;
+    font-weight: 600;
     color: $white-40;
     position: absolute;
     top: 24px;
     right: 8px;
     font-size: 16px;
-    line-height: 18px;
+    line-height: 24px;
   }
 
   .list-header:not(.active):not(.expanded) + .subpages {
