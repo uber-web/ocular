@@ -22,10 +22,12 @@ module.exports = res => `export const PROJECT_TYPE = '${res.type}';
 
 export const PROJECT_NAME = '${res.name}';
 ${res.type === 'github' ? `export const PROJECT_ORG = \'${res.org}\';` : ''}
-export const PROJECT_URL = ${res.type === 'github' ? '`https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`' : `'${res.phabUrl}'`};
+export const PROJECT_URL = ${res.type === 'github' ? '`https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`' : `'${res.otherUrl}'`};
 export const PROJECT_DESC = '${res.desc}';
 
 export const PROJECTS = {};
+
+export const FOOTER_LOGO = '';
 
 export const HOME_PATH = '/';
 

@@ -39,7 +39,7 @@ const DEBUGGING = process.argv.includes('--debug')
 
 const env = Object.assign(process.env, {
   DIR_PATH,
-  DEBUGGING,
+  DEBUGGING
 })
 
 const commands = {
@@ -49,31 +49,31 @@ const commands = {
         {
           name: 'name',
           message: 'What will be the name of your project?',
-          validate: v => Boolean(v) || 'You should provide a name.',
+          validate: v => Boolean(v) || 'You should provide a name.'
         },
         {
           type: 'list',
-          choices: ['github', 'phab'],
+          choices: ['github', 'other'],
           name: 'type',
-          message: 'Where will your project be hosted?',
+          message: 'Where will your project be hosted?'
         },
         {
           name: 'org',
           message: 'Which organisation will host the repo?',
           validate: v => Boolean(v) || 'You should provide an org.',
-          when: ({ type }) => type === 'github',
+          when: ({ type }) => type === 'github'
         },
         {
-          name: 'phabUrl',
-          message: 'What is the phabricator url?',
+          name: 'otherUrl',
+          message: 'What is your project url?',
           validate: v => Boolean(v) || 'You should provide an url.',
-          when: ({ type }) => type === 'phab',
+          when: ({ type }) => type === 'other'
         },
         {
           name: 'desc',
           message: 'Provide a basic description of your project',
-          validate: v => Boolean(v) || 'You should provide a description.',
-        },
+          validate: v => Boolean(v) || 'You should provide a description.'
+        }
       ])
       .then(res => {
         execSync('mkdir -p static src src/styles src/docs')

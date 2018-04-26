@@ -17,14 +17,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+import { FOOTER_LOGO } from 'config'
 
-import React from 'react';
+import React from 'react'
 
 export default () => (
   <footer>
     <div className="container">
-      <h4>{'Made by'}</h4>
-      <i className="icon icon-uber-logo" />
+      {FOOTER_LOGO && (
+        <div>
+          <h4>{'Made by'}</h4>
+          <img src={`${FOOTER_LOGO}`} alt="logo" className="footer-logo" />
+        </div>
+      )}
     </div>
   </footer>
-);
+)
