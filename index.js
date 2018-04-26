@@ -70,6 +70,12 @@ const commands = {
           when: ({ type }) => type === 'other'
         },
         {
+          name: 'path',
+          message: 'Where is the ocular website relative to your main project?',
+          default: '/website/',
+          validate: v => Boolean(v) || 'You should provide a path'
+        },
+        {
           name: 'desc',
           message: 'Provide a basic description of your project',
           validate: v => Boolean(v) || 'You should provide a description.'
@@ -211,16 +217,15 @@ const commands = {
         })
 
         destination.push({
+          fileLocation: `/src${currentPath}/${fileName}`,
           name: sentence(docBaseName),
-          markDown: componentName
+          markdown: componentName
         })
       })
 
     const stringifiedResult = JSON.stringify(result, null, 2)
-      .replace(/"name"/g, 'name')
-      .replace(/"path"/g, 'path')
-      .replace(/"data"/g, 'data')
-      .replace(/"markDown": "([^"]+)"/g, 'markDown: $1')
+      .replace(/("(name|path|data|fileLocation)")/g, '$2')
+      .replace(/"markdown": "([^"]+)"/g, 'markdown: $1')
 
     output += '\n'
     output += `export default [${stringifiedResult}];`
