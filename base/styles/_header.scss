@@ -49,9 +49,8 @@ header {
 
   .logo {
     color: $white !important;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
+    font-weight: 500;
+    text-transform: capitalize;
   }
 
   .menu-toggle {
@@ -82,7 +81,6 @@ header {
       padding: 0 0.5rem;
       height: 100%;
       color: $white-40;
-      text-transform: uppercase;
       border-style: solid;
       border-width: 3px 0 3px 0;
       border-color: transparent;
@@ -96,7 +94,7 @@ header {
     a.active {
       color: $white;
       border-top-color: $primary;
-      border-top-image: linear-gradient(to right, $primary 0%, $secondary 100%);
+      border-top-image: $gradient-1;
       border-image-slice: 2;
     }
 
@@ -126,10 +124,8 @@ header {
   }
 
   .site-link {
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
     width: 100%;
+    text-transform: capitalize;
 
     a {
       width: 100%;

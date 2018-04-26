@@ -66,8 +66,8 @@ html, body {
 
 body {
   font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important;
-  font-size: 12px;
-  line-height: 1.833;
+  font-size: 16px;
+  line-height: 24px;
   overflow-y: auto;
 }
 
@@ -83,14 +83,16 @@ a {
 }
 
 h2 {
-  font-size: 2em;
-  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  font-weight: 400;
   margin: 0 0 8px;
 }
 
 h3 {
-  font-size: 1.2em;
-  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 400;
   margin: 32px 0 8px;
 }
 
@@ -140,7 +142,7 @@ hr {
     margin: 24px 0 0;
     width: 32px;
     height: 2px;
-    background: linear-gradient(to right, $primary 0%, $secondary 100%);
+    background: $gradient-1;
   }
 }
 
@@ -159,9 +161,9 @@ footer {
   padding: 4rem 0 4rem 2rem;
 
   h4 {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    font-weight: 300;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
     letter-spacing: 2px;
     opacity: 0.4;
     margin-bottom: 1rem;

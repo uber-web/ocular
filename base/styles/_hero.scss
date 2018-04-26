@@ -28,28 +28,27 @@
   overflow: hidden;
 
   h1 {
-    font-size: 4em;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-weight: 700;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 80px;
+    text-transform: capitalize;
   }
 
   p {
-    font-size: 1rem;
     color: $white-40;
   }
 
   .btn {
     border: 2px solid $primary;
-    border-image: linear-gradient(to right, $primary 0%, $secondary 100%);
+    border-image: $gradient-1;
     border-image-slice: 2;
     transition: background-color 150ms ease-in, color 150ms ease-in;
 
+    font-size: 20px;
+    line-height: 28px;
+
     padding: 1rem 3rem;
     margin-top: 2rem;
-
-    text-transform: uppercase;
-    letter-spacing: 2px;
 
     &:hover {
       color: $white;
