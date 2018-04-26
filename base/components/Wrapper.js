@@ -38,7 +38,6 @@ class Wrapper extends Component {
   render() {
     const { markdown, markdownUrl, component } = this.props
     const Comp = markdown || markdownUrl ? Markdown : component
-
     return (
       <div className="f fg">
         <div className="f fg container page">

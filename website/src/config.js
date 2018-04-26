@@ -4,6 +4,7 @@ export const PROJECT_NAME = 'ocular';
 export const PROJECT_ORG = 'uber-web';
 export const PROJECT_URL = `https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`;
 export const PROJECT_DESC = 'A documentation website for Ocular, made with Ocular';
+export const WEBSITE_PATH = '/website/';
 
 export const PROJECTS = {};
 

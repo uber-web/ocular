@@ -39,7 +39,7 @@ const DEBUGGING = process.argv.includes('--debug')
 
 const env = Object.assign(process.env, {
   DIR_PATH,
-  DEBUGGING,
+  DEBUGGING
 })
 
 const commands = {
@@ -49,31 +49,37 @@ const commands = {
         {
           name: 'name',
           message: 'What will be the name of your project?',
-          validate: v => Boolean(v) || 'You should provide a name.',
+          validate: v => Boolean(v) || 'You should provide a name.'
         },
         {
           type: 'list',
           choices: ['github', 'phab'],
           name: 'type',
-          message: 'Where will your project be hosted?',
+          message: 'Where will your project be hosted?'
         },
         {
           name: 'org',
           message: 'Which organisation will host the repo?',
           validate: v => Boolean(v) || 'You should provide an org.',
-          when: ({ type }) => type === 'github',
+          when: ({ type }) => type === 'github'
         },
         {
           name: 'phabUrl',
           message: 'What is the phabricator url?',
           validate: v => Boolean(v) || 'You should provide an url.',
-          when: ({ type }) => type === 'phab',
+          when: ({ type }) => type === 'phab'
+        },
+        {
+          name: 'path',
+          message: 'Where is the ocular website relative to your main project?',
+          default: '/website/',
+          validate: v => Boolean(v) || 'You should provide a path'
         },
         {
           name: 'desc',
           message: 'Provide a basic description of your project',
-          validate: v => Boolean(v) || 'You should provide a description.',
-        },
+          validate: v => Boolean(v) || 'You should provide a description.'
+        }
       ])
       .then(res => {
         execSync('mkdir -p static src src/styles src/docs')
@@ -211,16 +217,15 @@ const commands = {
         })
 
         destination.push({
+          fileLocation: `/src${currentPath}/${fileName}`,
           name: sentence(docBaseName),
-          markDown: componentName
+          markdown: componentName
         })
       })
 
     const stringifiedResult = JSON.stringify(result, null, 2)
-      .replace(/"name"/g, 'name')
-      .replace(/"path"/g, 'path')
-      .replace(/"data"/g, 'data')
-      .replace(/"markDown": "([^"]+)"/g, 'markDown: $1')
+      .replace(/("(name|path|data|fileLocation)")/g, '$2')
+      .replace(/"markdown": "([^"]+)"/g, 'markdown: $1')
 
     output += '\n'
     output += `export default [${stringifiedResult}];`

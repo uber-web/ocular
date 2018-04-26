@@ -1,10 +1,13 @@
-import configReference from 'docs/documentation/config-reference.md';
+import configReference from 'docs/config-reference.md'
 
 export default [{
-  name: 'Documentation',
-  path: '/documentation',
-  data: [{
-    name: 'Config reference',
-    markdown: configReference
-  }]
+  name: "Documentation",
+  path: "/docs",
+  data: [
+    {
+      fileLocation: "/src/docs/config-reference.md",
+      name: "Config reference",
+      markdown: configReference
+    }
+  ]
 }];
