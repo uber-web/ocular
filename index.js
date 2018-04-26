@@ -53,7 +53,7 @@ const commands = {
         },
         {
           type: 'list',
-          choices: ['github', 'phab'],
+          choices: ['github', 'other'],
           name: 'type',
           message: 'Where will your project be hosted?'
         },
@@ -64,10 +64,10 @@ const commands = {
           when: ({ type }) => type === 'github'
         },
         {
-          name: 'phabUrl',
-          message: 'What is the phabricator url?',
+          name: 'otherUrl',
+          message: 'What is your project url?',
           validate: v => Boolean(v) || 'You should provide an url.',
-          when: ({ type }) => type === 'phab'
+          when: ({ type }) => type === 'other'
         },
         {
           name: 'path',

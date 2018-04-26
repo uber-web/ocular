@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 @font-face {
-  font-family: 'uber';
+  font-family: 'icons';
   src:
     url('../../static/fonts/uber.ttf?vord67') format('truetype'),
     url('../../static/fonts/uber.woff?vord67') format('woff'),
@@ -30,8 +30,7 @@
 
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'uber' !important;
-  speak: none;
+  font-family: 'icons' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -56,9 +55,6 @@
 }
 .icon-github:before {
   content: "\e904";
-}
-.icon-uber-logo:before {
-  content: "\e905";
 }
 .icon-info:before {
   content: "\e906";
