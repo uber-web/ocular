@@ -22,13 +22,18 @@ module.exports = res => `export const PROJECT_TYPE = '${res.type}';
 
 export const PROJECT_NAME = '${res.name}';
 ${res.type === 'github' ? `export const PROJECT_ORG = \'${res.org}\';` : ''}
-export const PROJECT_URL = ${res.type === 'github' ? '`https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`' : `'${res.phabUrl}'`};
+export const PROJECT_URL = ${res.type === 'github' ? '`https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`' : `'${res.otherUrl}'`};
 export const PROJECT_DESC = '${res.desc}';
+
+expot const GITHUB = ${res.type === 'github'};
 
 export const PROJECTS = {};
 
-export const HOME_PATH = '/';
+export const FOOTER_LOGO = '';
 
+export const WEBSITE_PATH = '${res.path}';
+
+export const HOME_PATH = '/';
 export const HOME_HEADING = '${res.desc}';
 
 export const HOME_RIGHT = null;
@@ -49,4 +54,4 @@ export const GA_TRACKING = null;
 // For showing star counts and contributors.
 // Should be like btoa('YourUsername:YourKey') and should be readonly.
 export const GITHUB_KEY = null;
-`;
+`
