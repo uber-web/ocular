@@ -91,7 +91,7 @@ const makeEditMeLink = fileLocation => {
   }
   const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/');
   return `<div class="edit-me">
-      <a href="${href}">Edit me on github</a>
+      <a href="${href}">Edit me on GitHub</a>
     </div>`
 }
 
@@ -127,10 +127,10 @@ class Markdown extends Component {
   }
 
   render() {
-    const { textOnly } = this.props
+    const { fileLocation, textOnly } = this.props
     const { markdown } = this.state
-    const edit = makeEditMeLink(this.props.fileLocation)
-    const html = edit + renderMd(markdown, textOnly)
+    const edit = makeEditMeLink(fileLocation)
+    const html = `${edit}${renderMd(markdown, textOnly)}`
 
     const splits = html.split(INJECTION_REG)
 
