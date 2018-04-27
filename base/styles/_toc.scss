@@ -85,7 +85,7 @@
     padding: 24px 0 8px 24px;
     color: $white-40;
   }
-
+  
   .list-header:not(.active):not(.expanded):before {
     content: '+';
     font-weight: 600;

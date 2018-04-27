@@ -74,7 +74,9 @@ window.onclick = e => {
 
 const getWrapper = props => () => <Wrapper {...props} />
 
-export default () => (
+export default () => {
+  return (
+
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
@@ -98,4 +100,5 @@ export default () => (
       </div>
     </ConnectedRouter>
   </Provider>
-)
+);
+}

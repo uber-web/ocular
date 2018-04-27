@@ -38,8 +38,7 @@ const generatePaths = (d, parentPath) =>
 
 const getNestedPath = d => (d.children ? getNestedPath(d.children[0]) : d.path)
 
-const reduction = cur =>
-  cur.children
+const reduction = cur => cur.children
     ? [{ path: cur.path, redirect: getNestedPath(cur.children[0]) }, ...cur.children.map(reduction)]
     : cur
 
