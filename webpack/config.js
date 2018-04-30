@@ -90,7 +90,7 @@ module.exports = {
         rel: 'icon',
         type: 'img/ico',
         href: 'favicon.ico',
-      }, 'https://d1a3f4spazzrp4.cloudfront.net/uber-fonts/3.1.0/refresh.css'],
+      }],
 
     }, htmlConfig)),
 
