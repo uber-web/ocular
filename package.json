@@ -62,7 +62,9 @@
     "webpack-hot-middleware": "^2.18.2",
     "whatwg-fetch": "^2.0.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "source-sans-pro": "^2.20.2"
+  },
   "author": "Balthazar Gronon <balthazar@uber.com>",
   "license": "MIT"
 }

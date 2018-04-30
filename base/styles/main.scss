@@ -27,6 +27,7 @@
 @import 'demo';
 @import 'highlight';
 @import 'markdown';
+@import 'typography';
 @import 'utils';
 @import 'variables';
 
@@ -64,7 +65,7 @@ html, body {
 }
 
 body {
-  font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important;
+  font-family: $font-family, "Helvetica Neue", Helvetica, sans-serif !important;
   font-size: 16px;
   line-height: 24px;
   overflow-y: auto;
