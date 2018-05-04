@@ -26,7 +26,7 @@ $black-40: #5A666D;
 $white: #EDEDED;
 $white-40: #8D9BA3;
 
-$font-family: 'source-sans-pro';
+$font-family: 'Source Sans Pro';
 
 $footer-height: 13rem;
 $topbar-height: 4rem;
