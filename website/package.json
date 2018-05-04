@@ -15,5 +15,6 @@
   "license": "MIT",
   "devDependencies": {
     "ocular": "^0.4.3"
-  }
+  },
+  "dependencies": {}
 }

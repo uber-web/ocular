@@ -54,6 +54,7 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "slug": "^0.9.1",
+    "source-sans-pro": "^2.20.2",
     "style-loader": "^0.18.2",
     "to-case": "^2.0.0",
     "url-loader": "^0.5.9",
@@ -61,9 +62,6 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "^2.18.2",
     "whatwg-fetch": "^2.0.3"
-  },
-  "devDependencies": {
-    "source-sans-pro": "^2.20.2"
   },
   "author": "Balthazar Gronon <balthazar@uber.com>",
   "license": "MIT"
