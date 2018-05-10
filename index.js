@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 
 const { spawn, execSync } = require('child_process')
-const { lstatSync, readdirSync, writeFileSync } = require('fs')
+const { writeFileSync } = require('fs')
 const inquirer = require('inquirer')
 const slug = require('slug')
 
@@ -30,8 +30,7 @@ const mdRoutesTemplate = require('./templates/mdRoutes')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
-const { basename, extname } = require('path')
-const { camel, sentence } = require('to-case')
+const {listDocs, buildMdRoutes} = require('./utils/build-docs')
 
 const DIR_PATH = process.env.PWD
 
@@ -136,100 +135,9 @@ const commands = {
   },
 
   'build-docs': () => {
-    const docs = []
-    const result = {
-      name: 'Documentation',
-      path: '/docs',
-      data: []
-    }
-    let output = ''
-    const pathString = `${DIR_PATH}/src/docs/`
-    const queue = readdirSync(`${pathString}`).map(fileName => ({
-      fileName,
-      path: ['src', 'docs']
-    }))
 
-    while (queue.length) {
-      const { fileName, path } = queue.pop()
-      const fullPath = [DIR_PATH]
-        .concat(path)
-        .concat(fileName)
-        .join('/')
-
-      const componentPath = path
-        .slice(1)
-        .concat(fileName)
-        .join('/')
-
-      if (lstatSync(fullPath).isDirectory() === false) {
-        if (extname(fileName) === '.md') {
-          const docBaseName = basename(fileName, '.md')
-          const componentName = camel(
-            path
-              .slice(2)
-              .concat(docBaseName)
-              .join('-')
-          )
-
-          docs.push({
-            docBaseName,
-            fileName,
-            componentPath,
-            componentName,
-            fullPath,
-            path
-          })
-        }
-        // ignore non .md files
-      } else {
-        const newPath = path.concat(fileName)
-        const newFullPath = [DIR_PATH].concat(newPath).join('/')
-        readdirSync(newFullPath).forEach(f => {
-          queue.push({ fileName: f, path: newPath })
-        })
-      }
-    }
-
-    docs
-      .sort((a, b) => (a.fullPath > b.fullPath ? 1 : -1))
-      .forEach(({ docBaseName, fileName, componentName, componentPath, path }) => {
-        const imp = `import ${componentName} from '${componentPath}'\n`
-        output += imp
-
-        const pathSuffix = path.slice(2)
-        let destination = result.data
-        let currentPath = '/docs'
-
-        pathSuffix.forEach(p => {
-          const size = destination.length
-          const pathInSentenceCase = sentence(p)
-          currentPath = `${currentPath}/${p}`
-          let nextLevelIdx = destination.findIndex(d => d.name === pathInSentenceCase)
-          if (nextLevelIdx === -1) {
-            destination.push({
-              name: pathInSentenceCase,
-              path: currentPath,
-              data: []
-            })
-            nextLevelIdx = size
-          }
-          destination = destination[nextLevelIdx].data
-        })
-
-        destination.push({
-          fileLocation: `/src${currentPath}/${fileName}`,
-          name: sentence(docBaseName),
-          markdown: componentName
-        })
-      })
-
-    const stringifiedResult = JSON.stringify(result, null, 2)
-      .replace(/("(name|path|data|fileLocation)")/g, '$2')
-      .replace(/"markdown": "([^"]+)"/g, 'markdown: $1')
-
-    output += '\n'
-    output += `export default [${stringifiedResult}];`
-    output += '\n'
+    const docs = listDocs(DIR_PATH)
+    const output = buildMdRoutes(docs)
 
     writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
   },
