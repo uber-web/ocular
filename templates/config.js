@@ -25,7 +25,7 @@ ${res.type === 'github' ? `export const PROJECT_ORG = \'${res.org}\';` : ''}
 export const PROJECT_URL = ${res.type === 'github' ? '`https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`' : `'${res.otherUrl}'`};
 export const PROJECT_DESC = '${res.desc}';
 
-expot const GITHUB = ${res.type === 'github'};
+export const GITHUB = ${res.type === 'github'};
 
 export const PROJECTS = {};
 

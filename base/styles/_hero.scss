@@ -40,7 +40,7 @@
 
   .btn {
     border: 2px solid $primary;
-    border-image: $gradient-1;
+    border-image: linear-gradient(to right, $primary 0%, $secondary 100%);
     border-image-slice: 2;
     transition: background-color 150ms ease-in, color 150ms ease-in;
 
@@ -57,7 +57,6 @@
   }
 
   @media screen and (max-width: $mobile) {
-
     padding: 3rem 2rem;
 
     h1 {
@@ -67,6 +66,5 @@
     p {
       font-size: 0.75rem;
     }
-
   }
 }

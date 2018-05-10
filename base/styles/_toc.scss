@@ -70,6 +70,7 @@
       color: $primary;
       font-weight: bold;
       border-color: $primary;
+      border-image: linear-gradient(to bottom, $primary 0%, $secondary 100%);
       border-image: $gradient-2;
       border-image-slice: 2;
     }

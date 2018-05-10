@@ -94,8 +94,11 @@ header {
     a.active {
       color: $white;
       border-top-color: $primary;
-      border-top-image: $gradient-1;
+      border-image: linear-gradient(to right, $primary 0%, $secondary 100%);
       border-image-slice: 2;
+      border-left: 0;
+      border-bottom: 0;
+      border-right: 0;
     }
 
     .icon {
