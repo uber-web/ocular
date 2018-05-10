@@ -1,4 +1,5 @@
-import configReference from 'docs/config-reference.md'
+import configurationReference from 'docs/config-reference.md'
+
 
 export default [{
   name: "Documentation",
@@ -6,8 +7,8 @@ export default [{
   data: [
     {
       fileLocation: "/src/docs/config-reference.md",
-      name: "Config reference",
-      markdown: configReference
+      name: "Configuration reference",
+      markdown: configurationReference
     }
   ]
 }];

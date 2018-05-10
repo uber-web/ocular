@@ -18,14 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, {PureComponent} from 'react';
-import cx from 'classnames';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import React, { PureComponent } from 'react'
+import cx from 'classnames'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import {trees} from 'routes';
+import { trees } from 'routes'
 
-const getRootPath = pathname => `/${pathname.split('/')[1]}`;
+const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
 const renderRoute = (route, i, pathname) => (
   <div key={i}>
@@ -35,53 +35,48 @@ const renderRoute = (route, i, pathname) => (
           to={route.path}
           className={cx('list-header', {
             expanded: route.expanded,
-            active: pathname.includes(route.path),
+            active: pathname.includes(route.path)
           })}
         >
           {route.name}
         </Link>
-        <div className="subpages" style={{maxHeight: 40 * route.children.length}}>
-          <ul>
-            {route.children.map((route, i) => renderRoute(route, i, pathname))}
-          </ul>
+        <div className="subpages" style={{ maxHeight: getHeight(route) }}>
+          >
+          <ul>{route.children.map((r, idx) => renderRoute(r, idx, pathname))}</ul>
         </div>
       </div>
     ) : (
       <li>
-        <Link
-          to={route.path}
-          className={cx('link', {active: pathname.includes(route.path)})}
-        >
+        <Link to={route.path} className={cx('link', { active: pathname.includes(route.path) })}>
           {route.name}
         </Link>
       </li>
     )}
   </div>
-);
+)
 
-@connect(({
-  router: {location: {pathname}},
-  ui: {isMenuOpen},
-}) => ({
+@connect(({ router: { location: { pathname } }, ui: { isMenuOpen } }) => ({
   pathname,
   open: isMenuOpen,
   tree: trees[getRootPath(pathname)] && trees[getRootPath(pathname)].tree
 }))
 class Toc extends PureComponent {
-
   render() {
-    const {className, open, tree, pathname} = this.props;
+    const { className, open, tree, pathname } = this.props
 
-    if (!tree) { return null; }
+    if (!tree) {
+      return null
+    }
     return (
-      <div className={cx('toc', {open}, className)}>
-        <div>
-          {tree.map((route, i) => renderRoute(route, i, pathname))}
-        </div>
+      <div className={cx('toc', { open }, className)}>
+        <div>{tree.map((route, i) => renderRoute(route, i, pathname))}</div>
       </div>
-    );
+    )
   }
-
 }
 
-export default Toc;
+export default Toc
+
+function getHeight(route) {
+  return route.children.reduce((prev, curr) => prev + (curr.children ? getHeight(curr) : 40), 0)
+}

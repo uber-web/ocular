@@ -63,6 +63,7 @@
     border-style: solid;
     border-width: 0 0 0 4px;
     border-color: transparent;
+    font-size: 14px;
     &:hover {
       color: $white-40;
     }
@@ -78,9 +79,9 @@
 
   .list-header {
     position: relative;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
     padding: 24px 0 8px 24px;
     color: $white-40;
   }
@@ -90,8 +91,8 @@
     font-weight: 600;
     color: $white-40;
     position: absolute;
-    top: 24px;
-    right: 8px;
+    top: 21px;
+    left: 0;
     font-size: 16px;
     line-height: 24px;
   }
