@@ -41,7 +41,6 @@ const renderRoute = (route, i, pathname) => (
           {route.name}
         </Link>
         <div className="subpages" style={{ maxHeight: getHeight(route) }}>
-          >
           <ul>{route.children.map((r, idx) => renderRoute(r, idx, pathname))}</ul>
         </div>
       </div>
