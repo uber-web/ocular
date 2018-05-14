@@ -1,4 +1,4 @@
-const { lstatSync, readdirSync, readFileSync } = require('fs')
+const { existsSync, lstatSync, readdirSync, readFileSync } = require('fs')
 const { basename, extname } = require('path')
 const { camel, sentence } = require('to-case')
 
@@ -78,13 +78,18 @@ function buildMdRoutes(docs) {
 
       pathSuffix.forEach(p => {
         const size = destination.length
-        const pathInSentenceCase = sentence(p)
         currentPath = `${currentPath}/${p}`
-        let nextLevelIdx = destination.findIndex(d => d.name === pathInSentenceCase)
+
+        const name = existsSync(`src/${currentPath}/TITLE`)
+          ? readFileSync(`src/${currentPath}/TITLE`, 'UTF-8')
+          : sentence(p)
+
+        let nextLevelIdx = destination.findIndex(d => d.fullPath === currentPath)
         if (nextLevelIdx === -1) {
           destination.push({
-            name: pathInSentenceCase,
-            path: currentPath,
+            name,
+            path: p,
+            fullPath: currentPath,
             children: []
           })
           nextLevelIdx = size
@@ -100,7 +105,7 @@ function buildMdRoutes(docs) {
     })
 
   const stringifiedResult = JSON.stringify(result, null, 2)
-    .replace(/("(children|data|fileLocation|name|path)")/g, '$2')
+    .replace(/("(children|data|fileLocation|fullPath|name|path)")/g, '$2')
     .replace(/"markdown": "([^"]+)"/g, 'markdown: $1')
 
   output.push('')
