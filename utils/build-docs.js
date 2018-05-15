@@ -62,14 +62,14 @@ function listDocs(DIR_PATH) {
 function buildMdRoutes(docs) {
   const result = {
     name: 'Documentation',
-    path: '/docs',
+    path: '/documentation',
     data: []
   }
   const output = []
   docs
     .sort((a, b) => (a.fullPath > b.fullPath ? 1 : -1))
     .forEach(({ docBaseName, fileName, componentName, componentPath, path }) => {
-      const imp = `import ${componentName} from '${componentPath}'\n`
+      const imp = `import ${componentName} from '${componentPath}'`
       output.push(imp)
 
       const pathSuffix = path.slice(2)
@@ -105,7 +105,8 @@ function buildMdRoutes(docs) {
     })
 
   const stringifiedResult = JSON.stringify(result, null, 2)
-    .replace(/("(children|data|fileLocation|fullPath|name|path)")/g, '$2')
+    .replace(/ *"fullPath".*\n/g, '')
+    .replace(/("(children|data|fileLocation|name|path)")/g, '$2')
     .replace(/"markdown": "([^"]+)"/g, 'markdown: $1')
 
   output.push('')

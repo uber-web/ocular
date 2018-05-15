@@ -37,7 +37,7 @@ marked.setOptions({
     Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language])
 })
 
-const INJECTION_REG = /<!-- INJECT:"(.+)\"( heading| fullscreen)? -->/g
+const INJECTION_REG = /<!-- INJECT:"([^\[]+)\"( heading| fullscreen)? -->/g
 
 const renderer = new marked.Renderer()
 const textRenderer = new marked.Renderer()
@@ -89,7 +89,7 @@ const makeEditMeLink = fileLocation => {
   if (!fileLocation || PROJECT_TYPE !== 'github') {
     return ''
   }
-  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/');
+  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/')
   return `<div class="edit-me">
       <a href="${href}">Edit me on GitHub</a>
     </div>`
