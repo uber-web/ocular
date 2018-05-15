@@ -1,6 +1,6 @@
 {
   "name": "ocular-website",
-  "version": "1.0.0",
+  "version": "0.5.0",
   "description": "A documentation website for Ocular, made with Ocular",
   "main": "index.js",
   "scripts": {
