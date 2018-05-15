@@ -42,8 +42,8 @@ const reduction = cur => cur.children
     ? [{ path: cur.path, redirect: getNestedPath(cur.children[0]) }, ...cur.children.map(reduction)]
     : cur
 
-export const trees = mdRoutes.reduce((out, { name, path, data = [] }) => {
-  out[path] = { name, tree: generatePaths(data, path) }
+export const trees = mdRoutes.reduce((out, { name, path, children = [], data = [] }) => {
+  out[path] = { name, tree: generatePaths([...children, ...data], path) }
   return out
 }, {})
 

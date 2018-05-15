@@ -1,5 +1,4 @@
-# Getting started with Ocular
-
+# Quick start
 ## Installing Ocular
 From the project you want to create a website for, create a new folder:
 
@@ -9,7 +8,7 @@ mkdir website && $_
 
 Initialize that folder as a new project with its own package.json.
 
-From now on, we'll call that folder you've just created the ocular folder. 
+From now on, we'll call that folder you've just created the Ocular folder. 
 
 ```
 npm init -y

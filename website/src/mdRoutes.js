@@ -1,8 +1,6 @@
 import basicsIntroduction from 'docs/basics/1-introduction.md'
 
-import basicsGettingStartedWithOcular from 'docs/basics/2-getting-started.md'
-
-import gettingStarted from 'docs/getting-started.md'
+import basicsQuickStart from 'docs/basics/2-getting-started.md'
 
 import referenceBuildYourOwnComponentsPresentingOcularSBaseComponents from 'docs/reference/build-your-own-components/1-presenting-base-components.md'
 
@@ -18,7 +16,27 @@ import referenceBuildYourOwnComponents3HomeHeroJs from 'docs/reference/build-you
 
 import referenceBuildYourOwnComponents3HomeFooterJs from 'docs/reference/build-your-own-components/3-home/3-Footer.md'
 
-import referenceConfigurationReference from 'docs/reference/config-reference.md'
+import referenceBuildYourOwnComponentsMarkdownComponent from 'docs/reference/build-your-own-components/4-markdown.md'
+
+import referenceBuildYourOwnComponentsSearch from 'docs/reference/build-your-own-components/5-search.md'
+
+import referenceConfiguratingOcularConfigurationReference from 'docs/reference/configurating-ocular/config-reference.md'
+
+import referenceRoutesAndLinksInOcularIntroductionToRoutes from 'docs/reference/routes-and-links-in-ocular/1-introduction.md'
+
+import referenceRoutesAndLinksInOcularDocumentationRoutes from 'docs/reference/routes-and-links-in-ocular/2-documentation-routes.md'
+
+import referenceRoutesAndLinksInOcularCustomPages from 'docs/reference/routes-and-links-in-ocular/3-custom-pages.md'
+
+import referenceRoutesAndLinksInOcularDefaultLinks from 'docs/reference/routes-and-links-in-ocular/4-default-links.md'
+
+import referenceRoutesAndLinksInOcularAdditionalLinks from 'docs/reference/routes-and-links-in-ocular/5-additional-links.md'
+
+import referenceStylingOcularIntroductionToStyling from 'docs/reference/styling-ocular/1-introduction.md'
+
+import referenceStylingOcularTheDefaultStyleModules from 'docs/reference/styling-ocular/2-default-style-modules.md'
+
+import referenceStylingOcularCustomizingFonts from 'docs/reference/styling-ocular/3-customizing-fonts.md'
 
 
 export default [{
@@ -27,7 +45,8 @@ export default [{
   data: [
     {
       name: "Basics",
-      path: "/docs/basics",
+      path: "basics",
+      fullPath: "/docs/basics",
       children: [
         {
           fileLocation: "/src/docs/basics/1-introduction.md",
@@ -36,23 +55,20 @@ export default [{
         },
         {
           fileLocation: "/src/docs/basics/2-getting-started.md",
-          name: "Getting started with ocular",
-          markdown: basicsGettingStartedWithOcular
+          name: "Quick start",
+          markdown: basicsQuickStart
         }
       ]
     },
     {
-      fileLocation: "/src/docs/getting-started.md",
-      name: "Getting started",
-      markdown: gettingStarted
-    },
-    {
       name: "Reference",
-      path: "/docs/reference",
+      path: "reference",
+      fullPath: "/docs/reference",
       children: [
         {
           name: "Build your own components",
-          path: "/docs/reference/build-your-own-components",
+          path: "build-your-own-components",
+          fullPath: "/docs/reference/build-your-own-components",
           children: [
             {
               fileLocation: "/src/docs/reference/build-your-own-components/1-presenting-base-components.md",
@@ -60,8 +76,9 @@ export default [{
               markdown: referenceBuildYourOwnComponentsPresentingOcularSBaseComponents
             },
             {
-              name: "2 App",
-              path: "/docs/reference/build-your-own-components/2-app",
+              name: "App components",
+              path: "2-app",
+              fullPath: "/docs/reference/build-your-own-components/2-app",
               children: [
                 {
                   fileLocation: "/src/docs/reference/build-your-own-components/2-app/1-App.md",
@@ -81,8 +98,9 @@ export default [{
               ]
             },
             {
-              name: "3 Home",
-              path: "/docs/reference/build-your-own-components/3-home",
+              name: "Home components",
+              path: "3-home",
+              fullPath: "/docs/reference/build-your-own-components/3-home",
               children: [
                 {
                   fileLocation: "/src/docs/reference/build-your-own-components/3-home/1-Home.md",
@@ -100,13 +118,84 @@ export default [{
                   markdown: referenceBuildYourOwnComponents3HomeFooterJs
                 }
               ]
+            },
+            {
+              fileLocation: "/src/docs/reference/build-your-own-components/4-markdown.md",
+              name: "Markdown component",
+              markdown: referenceBuildYourOwnComponentsMarkdownComponent
+            },
+            {
+              fileLocation: "/src/docs/reference/build-your-own-components/5-search.md",
+              name: "Search",
+              markdown: referenceBuildYourOwnComponentsSearch
             }
           ]
         },
         {
-          fileLocation: "/src/docs/reference/config-reference.md",
-          name: "Configuration reference",
-          markdown: referenceConfigurationReference
+          name: "Configurating ocular",
+          path: "configurating-ocular",
+          fullPath: "/docs/reference/configurating-ocular",
+          children: [
+            {
+              fileLocation: "/src/docs/reference/configurating-ocular/config-reference.md",
+              name: "Configuration reference",
+              markdown: referenceConfiguratingOcularConfigurationReference
+            }
+          ]
+        },
+        {
+          name: "Routes and links in ocular",
+          path: "routes-and-links-in-ocular",
+          fullPath: "/docs/reference/routes-and-links-in-ocular",
+          children: [
+            {
+              fileLocation: "/src/docs/reference/routes-and-links-in-ocular/1-introduction.md",
+              name: "Introduction to routes",
+              markdown: referenceRoutesAndLinksInOcularIntroductionToRoutes
+            },
+            {
+              fileLocation: "/src/docs/reference/routes-and-links-in-ocular/2-documentation-routes.md",
+              name: "Documentation routes",
+              markdown: referenceRoutesAndLinksInOcularDocumentationRoutes
+            },
+            {
+              fileLocation: "/src/docs/reference/routes-and-links-in-ocular/3-custom-pages.md",
+              name: "Custom pages",
+              markdown: referenceRoutesAndLinksInOcularCustomPages
+            },
+            {
+              fileLocation: "/src/docs/reference/routes-and-links-in-ocular/4-default-links.md",
+              name: "Default links",
+              markdown: referenceRoutesAndLinksInOcularDefaultLinks
+            },
+            {
+              fileLocation: "/src/docs/reference/routes-and-links-in-ocular/5-additional-links.md",
+              name: "Additional links",
+              markdown: referenceRoutesAndLinksInOcularAdditionalLinks
+            }
+          ]
+        },
+        {
+          name: "Styling Ocular\n",
+          path: "styling-ocular",
+          fullPath: "/docs/reference/styling-ocular",
+          children: [
+            {
+              fileLocation: "/src/docs/reference/styling-ocular/1-introduction.md",
+              name: "Introduction to styling",
+              markdown: referenceStylingOcularIntroductionToStyling
+            },
+            {
+              fileLocation: "/src/docs/reference/styling-ocular/2-default-style-modules.md",
+              name: "The default style modules",
+              markdown: referenceStylingOcularTheDefaultStyleModules
+            },
+            {
+              fileLocation: "/src/docs/reference/styling-ocular/3-customizing-fonts.md",
+              name: "Customizing fonts",
+              markdown: referenceStylingOcularCustomizingFonts
+            }
+          ]
         }
       ]
     }
