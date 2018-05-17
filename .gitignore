@@ -1,5 +1,7 @@
 node_modules/
 .idea/
+package-lock.json
 yarn-error.log
 website/node_modules
 website/yarn-error.log
+website//package-lock.json
