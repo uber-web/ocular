@@ -13,9 +13,10 @@
   ],
   "author": "jerome@uber.com",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "ocular": "^0.5.0"
+  },
   "dependencies": {
-    "ocular": "^0.4.8",
     "save-dev": "^2.0.0"
   }
 }
