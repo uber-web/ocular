@@ -2,6 +2,8 @@ node_modules/
 .idea/
 package-lock.json
 yarn-error.log
+.DS_Store
+website/dist
 website/node_modules
 website/yarn-error.log
-website//package-lock.json
+website/package-lock.json
