@@ -89,7 +89,7 @@ const makeEditMeLink = fileLocation => {
   if (!fileLocation || PROJECT_TYPE !== 'github') {
     return ''
   }
-  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/')
+  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/').replace(/^https:\//, 'https://')
   return `<div class="edit-me">
       <a href="${href}">Edit me on GitHub</a>
     </div>`
