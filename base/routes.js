@@ -38,7 +38,8 @@ const generatePaths = (d, parentPath) =>
 
 const getNestedPath = d => (d.children ? getNestedPath(d.children[0]) : d.path)
 
-const reduction = cur => cur.children
+const reduction = cur =>
+  cur.children
     ? [{ path: cur.path, redirect: getNestedPath(cur.children[0]) }, ...cur.children.map(reduction)]
     : cur
 
@@ -57,6 +58,19 @@ const routes = Object.keys(trees).reduce((out, key) => {
   return out.concat(final)
 }, [])
 
+const flatRoutes = routes.map(route => {
+  if (route.redirect) {
+    const directRoute = routes.find(r => r.path === route.redirect)
+    if (directRoute && directRoute.redirect) {
+      return {
+        ...route,
+        redirect: directRoute.redirect
+      }
+    }
+  }
+  return route
+})
+
 export default [
   {
     path: '/',
@@ -70,7 +84,7 @@ export default [
     component: Search
   },
   ...jsRoutes,
-  ...routes
+  ...flatRoutes
 ]
 
 function flatten(arr) {

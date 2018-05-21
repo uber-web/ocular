@@ -72,33 +72,35 @@ window.onclick = e => {
   store.dispatch(push(href))
 }
 
-const getWrapper = props => () => <Wrapper {...props} />
+const getWrapper = props =>
+  function HOC() {
+    return <Wrapper {...props} />
+  }
 
-export default () => {
+export default function App() {
   return (
-
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <div>
-        <Header />
-
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
         <div>
-          <div className="f fg main-container">
-            <Toc />
-            <Switch>
-              {routes.map(
-                route =>
-                  route.redirect ? (
-                    <Redirect key={route.path} from={route.path} to={route.redirect} />
-                  ) : (
-                    <Route key={route.path} {...route} component={getWrapper(route)} />
-                  ),
-              )}
-            </Switch>
+          <Header />
+
+          <div>
+            <div className="f fg main-container">
+              <Toc />
+              <Switch>
+                {routes.map(
+                  route =>
+                    route.redirect ? (
+                      <Redirect key={route.path} from={route.path} to={route.redirect} />
+                    ) : (
+                      <Route key={route.path} {...route} component={getWrapper(route)} />
+                    )
+                )}
+              </Switch>
+            </div>
           </div>
         </div>
-      </div>
-    </ConnectedRouter>
-  </Provider>
-);
+      </ConnectedRouter>
+    </Provider>
+  )
 }
