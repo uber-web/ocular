@@ -53,7 +53,6 @@ class Header extends Component {
 
   render() {
     const {pathname, isMenuOpen, opacity, stargazers_count, githubLoading} = this.props;
-
     return (
       <header className={cx({open: isMenuOpen})}>
         <div className="bg" style={{opacity}} />

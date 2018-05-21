@@ -21,15 +21,17 @@ import { FOOTER_LOGO } from 'config'
 
 import React from 'react'
 
-export default () => (
-  <footer>
-    <div className="container">
-      {FOOTER_LOGO && (
-        <div>
-          <h4>{'Made by'}</h4>
-          <img src={`${FOOTER_LOGO}`} alt="logo" className="footer-logo" />
-        </div>
-      )}
-    </div>
-  </footer>
-)
+export default function Footer() {
+  return (
+    <footer>
+      <div className="container">
+        {FOOTER_LOGO && (
+          <div>
+            <h4>{'Made by'}</h4>
+            <img src={`${FOOTER_LOGO}`} alt="logo" className="footer-logo" />
+          </div>
+        )}
+      </div>
+    </footer>
+  )
+}

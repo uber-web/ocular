@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "ocular start",
-    "build": "ocular build",
-    "lint": "ocular lint"
+    "build": "ocular build-docs && ocular build",
+    "lint": "ocular lint",
+    "clean": "rm -rf ./dist/* && rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}",
+    "publish": "npm run clean && npm run build && mv dist/* ../docs"
   },
-  "keywords": [
-    "ocular"
-  ],
+  "keywords": ["ocular"],
   "author": "jerome@uber.com",
   "license": "MIT",
   "devDependencies": {
