@@ -1,6 +1,6 @@
 {
   "name": "ocular",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "bin": {
     "ocular": "./index.js"
   },
@@ -62,6 +62,5 @@
     "webpack-hot-middleware": "^2.18.2",
     "whatwg-fetch": "^2.0.3"
   },
-  "author": "Balthazar Gronon <balthazar@uber.com>",
   "license": "MIT"
 }
