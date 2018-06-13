@@ -85,7 +85,7 @@
     padding: 24px 0 8px 24px;
     color: $white-40;
   }
-  
+
   .list-header:not(.active):not(.expanded):before {
     content: '+';
     font-weight: 600;
@@ -104,6 +104,65 @@
 
 .toc + * {
   margin-left: $toc-width;
+}
+
+.navigation {
+  position: relative;
+  max-width: 100%;
+  .next,
+  .prev {
+    background: #f7f7f7;
+    border-radius: 4px;
+    width: 200px;
+    height: fit-content;
+    padding: 10px 30px;
+    position: absolute;
+    margin-bottom: 1rem;
+    transition: background 0.2s;
+    .label {
+      color: #ccc;
+      font-size: 14px;
+    }
+    &:hover {
+      background: #f0f0f0;
+    }
+    * {
+      position: relative;
+    }
+  }
+  .next {
+    right: 2rem;
+    .label {
+      text-align: right;
+      left: 16px;
+      &:after {
+        border: 0 solid currentColor;
+        border-width: 2px 2px 0 0;
+        content: '';
+        display: inline-block;
+        margin: 0 0 0 6px;
+        transform: rotate(45deg);
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+  .prev {
+    left: 2rem;
+    .label {
+      left: -16px;
+      &:before {
+        border: 0 solid currentColor;
+        border-width: 0 0 2px 2px;
+        content: '';
+        display: inline-block;
+        margin: 0 6px 0 0;
+        transform: rotate(45deg);
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: $mobile) {

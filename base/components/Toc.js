@@ -27,32 +27,49 @@ import { trees } from 'routes'
 
 const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
-const renderRoute = (route, i, pathname) => (
-  <div key={i}>
+const SafeLink = ({className, name, path, pathname}) => {
+  if (path === pathname) {
+    return (<div className={className}>{name}</div>);
+  }
+  return (<Link
+    to={path}
+  className={className}>{name}</Link>)
+}
+
+const renderRoute = (route, i, pathname, depth) => {
+  let path;
+  const queue = [route];
+  while (queue.length) {
+    const r = queue.shift();
+    path = r.path;
+    if (r.children) {
+      queue.push(r.children[0]);
+    }
+  }
+
+  return (<div key={i} style={{marginLeft: 10 * depth}}>
     {route.children ? (
       <div>
-        <Link
-          to={route.path}
+        <SafeLink
           className={cx('list-header', {
             expanded: route.expanded,
             active: pathname.includes(route.path)
           })}
-        >
-          {route.name}
-        </Link>
+          name={route.name}
+          path={path}
+          pathname={pathname}
+        />
         <div className="subpages" style={{ maxHeight: getHeight(route) }}>
-          <ul>{route.children.map((r, idx) => renderRoute(r, idx, pathname))}</ul>
+          <ul>{route.children.map((r, idx) => renderRoute(r, idx, pathname, depth + 1))}</ul>
         </div>
       </div>
     ) : (
       <li>
-        <Link to={route.path} className={cx('link', { active: pathname.includes(route.path) })}>
-          {route.name}
-        </Link>
+        <SafeLink className={cx('link', { active: pathname.includes(path) })} name={route.name} path={path} pathname={pathname} />
       </li>
     )}
-  </div>
-)
+  </div>)
+}
 
 @connect(({ router: { location: { pathname } }, ui: { isMenuOpen } }) => ({
   pathname,
@@ -68,7 +85,7 @@ class Toc extends PureComponent {
     }
     return (
       <div className={cx('toc', { open }, className)}>
-        <div>{tree.map((route, i) => renderRoute(route, i, pathname))}</div>
+        <div>{tree.map((route, i) => renderRoute(route, i, pathname, 0))}</div>
       </div>
     )
   }

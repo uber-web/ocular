@@ -28,13 +28,27 @@ import jsRoutes from 'jsRoutes'
 
 import { HOME_PATH } from 'config'
 
-const generatePaths = (d, parentPath) =>
-  d.map(sub => {
-    const path = `${parentPath}/${sub.path || slug(sub.name, { lower: true })}`
-    return sub.children
-      ? { ...sub, path, children: generatePaths(sub.children, path) }
-      : { ...sub, path, hasToc: true }
+const generatePaths = (children, parentPath, order = []) =>
+  children.map((child, rank) => {
+    const path = `${parentPath}/${child.path || slug(child.name, { lower: true })}`
+    const newOrder = [...order, rank]
+    return child.children
+      ? { ...child, path, order: newOrder, children: generatePaths(child.children, path, newOrder) }
+      : { ...child, path, order: newOrder, hasToc: true }
   })
+
+const compareOrders = (route1, route2) => {
+  const minLength = Math.min(route1.order.length, route2.order.length)
+  for (let i = 0; i < minLength; i++) {
+    if (route1.order[i] < route2.order[i]) {
+      return -1
+    }
+    if (route1.order[i] > route2.order[i]) {
+      return 1
+    }
+  }
+  return 0
+}
 
 const getNestedPath = d => (d.children ? getNestedPath(d.children[0]) : d.path)
 
@@ -48,17 +62,48 @@ export const trees = mdRoutes.reduce((out, { name, path, children = [], data = [
   return out
 }, {})
 
-const routes = Object.keys(trees).reduce((out, key) => {
-  const { tree } = trees[key]
-  const reduced = tree.reduce((acc, cur) => acc.concat(flatten(reduction(cur))), [])
-  const final = [...reduced, reduced[0] && { path: key, redirect: reduced[0].path }]
-    .filter(d => d)
-    .sort((a, b) => (b.redirect ? -1 : a.redirect ? 1 : 0))
+const routes = Object.keys(trees)
+  .reduce((out, key) => {
+    const { tree } = trees[key]
+    const reduced = tree.reduce((acc, cur) => acc.concat(flatten(reduction(cur))), [])
+    const final = [...reduced, reduced[0] && { path: key, redirect: reduced[0].path }].filter(
+      d => d
+    )
+    return out.concat(final)
+  }, [])
+  .sort((a, b) => {
+    if (b.redirect) {
+      return -1
+    }
+    if (a.redirect) {
+      return 1
+    }
+    if (a.markdown && b.markdown) {
+      return compareOrders(a, b)
+    }
+    return 0
+  })
 
-  return out.concat(final)
+let lastRouteWithDocs
+const routesPrevNext = routes.reduce((prev, route, i) => {
+  prev.push(route)
+  if (route.markdown) {
+    if (lastRouteWithDocs !== undefined) {
+      prev[lastRouteWithDocs].next = {
+        name: route.name,
+        path: route.path
+      }
+      prev[i].prev = {
+        name: prev[lastRouteWithDocs].name,
+        path: prev[lastRouteWithDocs].path
+      }
+    }
+    lastRouteWithDocs = i
+  }
+  return prev
 }, [])
 
-const flatRoutes = routes.map(route => {
+const flatRoutes = routesPrevNext.map(route => {
   if (route.redirect) {
     const directRoute = routes.find(r => r.path === route.redirect)
     if (directRoute && directRoute.redirect) {

@@ -24,6 +24,7 @@ import cx from 'classnames'
 import marked from 'marked'
 import fetch from 'fetch'
 
+import Navigation from './Navigation'
 import routes from 'routes'
 import demos from 'demos'
 import { HISTORY, PROJECT_TYPE, WEBSITE_PATH, PROJECT_URL } from 'config'
@@ -89,7 +90,9 @@ const makeEditMeLink = fileLocation => {
   if (!fileLocation || PROJECT_TYPE !== 'github') {
     return ''
   }
-  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`.replace(/(\/+)/g, '/').replace(/^https:\//, 'https://')
+  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`
+    .replace(/(\/+)/g, '/')
+    .replace(/^https:\//, 'https://')
   return `<div class="edit-me">
       <a href="${href}">Edit me on GitHub</a>
     </div>`
@@ -174,7 +177,8 @@ class Markdown extends Component {
       )
     }, [])
 
-    return <div className={cx('fg', { markdown: !textOnly })}>{out}</div>
+    return <div className={cx('fg', { markdown: !textOnly })}>{out}
+    <Navigation next={this.props.next} prev={this.props.prev} /></div>
   }
 }
 
