@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "ocular": "^0.5.3"
+    "ocular": "^0.5.4"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
