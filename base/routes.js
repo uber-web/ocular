@@ -33,10 +33,11 @@ const generatePaths = (children, parentPath, order = []) =>
     const path = `${parentPath}/${child.path || slug(child.name, { lower: true })}`
     // order represents the rank of each path in all of its parents.
     // ie the 2nd child of the 3rd child of the 1st tree would be [0, 2, 1]
-    const updatedChild = {...child, path, order: [...order, rank]}
+    const updatedOrder = [...order, rank]
+    const updatedChild = {...child, path, order: updatedOrder}
     
     return child.children
-      ? { ...updatedChild, children: generatePaths(child.children, path, newOrder) }
+      ? { ...updatedChild, children: generatePaths(child.children, path, updatedOrder) }
       : { ...updatedChild, hasToc: true }
   })
 
