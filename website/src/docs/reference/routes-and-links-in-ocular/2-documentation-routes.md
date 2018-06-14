@@ -13,6 +13,7 @@ ocular build-docs
 ``` 
 
 in the CLI and this will create a mdRoutes file based on the contents of the __/src/docs/__ folder. Each markdown (.md) file will become an entry in the table of content, grouped hierarchically by folders. 
+If you have a BASEURL file in your src folder, which contains the url of the your documentation file, ocular build-docs will also generate a sitemap (__sitemap.xml__) based on these files.
 
 ### controlling order and names of entries in the table of contents
 
