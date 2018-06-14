@@ -28,13 +28,37 @@ import jsRoutes from 'jsRoutes'
 
 import { HOME_PATH } from 'config'
 
-const generatePaths = (d, parentPath) =>
-  d.map(sub => {
-    const path = `${parentPath}/${sub.path || slug(sub.name, { lower: true })}`
-    return sub.children
-      ? { ...sub, path, children: generatePaths(sub.children, path) }
-      : { ...sub, path, hasToc: true }
+const generatePaths = (children, parentPath, order = []) =>
+  children.map((child, rank) => {
+    const path = `${parentPath}/${child.path || slug(child.name, { lower: true })}`
+    // order represents the rank of each path in all of its parents.
+    // ie the 2nd child of the 3rd child of the 1st tree would be [0, 2, 1]
+    const updatedChild = {...child, path, order: [...order, rank]}
+    
+    return child.children
+      ? { ...updatedChild, children: generatePaths(child.children, path, newOrder) }
+      : { ...updatedChild, hasToc: true }
   })
+
+const compareOrders = (route1, route2) => {
+  // this comparison function determines if one route comes after the other
+  // in the table of content.
+  // to do that, it uses the 'order' property computed above.
+  // example: one route is the 2nd child of the 3rd child of the 1st tree - [0, 2, 1]
+  // the other one is the 3rd child of the 2nd child of the 1st tree - [0, 1, 2]
+  // the second route should come first, because it's in the 2nd child not the 3d.
+
+  const minLength = Math.min(route1.order.length, route2.order.length)
+  for (let i = 0; i < minLength; i++) {
+    if (route1.order[i] < route2.order[i]) {
+      return -1
+    }
+    if (route1.order[i] > route2.order[i]) {
+      return 1
+    }
+  }
+  return 0
+}
 
 const getNestedPath = d => (d.children ? getNestedPath(d.children[0]) : d.path)
 
@@ -48,17 +72,57 @@ export const trees = mdRoutes.reduce((out, { name, path, children = [], data = [
   return out
 }, {})
 
-const routes = Object.keys(trees).reduce((out, key) => {
-  const { tree } = trees[key]
-  const reduced = tree.reduce((acc, cur) => acc.concat(flatten(reduction(cur))), [])
-  const final = [...reduced, reduced[0] && { path: key, redirect: reduced[0].path }]
-    .filter(d => d)
-    .sort((a, b) => (b.redirect ? -1 : a.redirect ? 1 : 0))
+const routes = Object.keys(trees)
+  .reduce((out, key) => {
+    const { tree } = trees[key]
+    const reduced = tree.reduce((acc, cur) => acc.concat(flatten(reduction(cur))), [])
+    const final = [...reduced, reduced[0] && { path: key, redirect: reduced[0].path }].filter(
+      d => d
+    )
+    return out.concat(final)
+  }, [])
+  .sort((a, b) => {
+    // routes which are just redirections to documentation pages are pushed towards the bottom.
+    if (b.redirect) {
+      return -1
+    }
+    if (a.redirect) {
+      return 1
+    }
+    // documentation routes are sorted in the same order as in the table of contents.
+    // that order is not guaranteed without sorting them.
+    if (a.markdown && b.markdown) {
+      return compareOrders(a, b)
+    }
+    return 0
+  })
 
-  return out.concat(final)
+let lastRouteWithDocs
+const routesPrevNext = routes.reduce((prev, route, i) => {
+  // this adds to each route with documentation (.markdown property) the reference
+  // of the previous and next routes with documentation 
+  prev.push(route)
+  if (route.markdown) {
+    if (lastRouteWithDocs !== undefined) {
+      prev[lastRouteWithDocs].next = {
+        name: route.name,
+        path: route.path
+      }
+      prev[i].prev = {
+        name: prev[lastRouteWithDocs].name,
+        path: prev[lastRouteWithDocs].path
+      }
+    }
+    lastRouteWithDocs = i
+  }
+  return prev
 }, [])
 
-const flatRoutes = routes.map(route => {
+const flatRoutes = routesPrevNext.map(route => {
+  // this makes routes that have a redirect point to a route without one
+  // instead of having chain redirects.
+  // we don't use redirects in TOC anymore but these links may exist somewhere in the wild.
+  // will be deprecated in a few versions.
   if (route.redirect) {
     const directRoute = routes.find(r => r.path === route.redirect)
     if (directRoute && directRoute.redirect) {

@@ -4387,9 +4387,9 @@ obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
 
-ocular@^0.4.8:
-  version "0.4.8"
-  resolved "https://unpm.uberinternal.com/ocular/-/ocular-0.4.8.tgz#fbe99e47668825fa2730a09f6e78b4a6e1406a89"
+ocular@^0.5.3:
+  version "0.5.3"
+  resolved "https://unpm.uberinternal.com/ocular/-/ocular-0.5.3.tgz#50861b16ea7633b0dc8656257c9c0a7edae9f778"
   dependencies:
     autoprefixer-loader "^3.2.0"
     babel-core "^6.26.0"
