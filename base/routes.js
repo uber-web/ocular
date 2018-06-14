@@ -135,7 +135,6 @@ const flatRoutes = routesPrevNext.map(route => {
   }
   return route
 })
-
 export default [
   {
     path: '/',
