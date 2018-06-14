@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 
 const { spawn, execSync } = require('child_process')
-const { writeFileSync } = require('fs')
+const { existsSync, readFileSync, writeFileSync } = require('fs')
 const inquirer = require('inquirer')
 const slug = require('slug')
 
@@ -30,7 +30,11 @@ const mdRoutesTemplate = require('./templates/mdRoutes')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
+<<<<<<< HEAD
 const { listDocs, buildMdRoutes } = require('./utils/build-docs')
+=======
+const { listDocs, buildMdRoutes, buildSitemap } = require('./utils/build-docs')
+>>>>>>> add build sitemaps script
 
 const DIR_PATH = process.env.PWD
 
@@ -96,11 +100,14 @@ const commands = {
           publish: 'npm run clean && npm run build && mv dist/* ../docs'
         }
 
+        const url = res.type === 'github' ? `https://${res.org}.github.io/${res.name}` : res.otherUrl
+
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(json, null, 2)}\n`)
         writeFileSync(`${DIR_PATH}/html.config.js`, htmlConfigTemplate(res))
         writeFileSync(`${DIR_PATH}/src/config.js`, configTemplate(res))
         writeFileSync(`${DIR_PATH}/src/docs/getting-started.md`, docTemplate(res))
         writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, mdRoutesTemplate(res))
+        writeFileSync(`${DIR_PATH}/src/BASEURL`, url)       
         writeFileSync(`${DIR_PATH}/src/demos.js`, 'export default {};\n')
         writeFileSync(`${DIR_PATH}/src/styles/index.scss`, '')
         writeFileSync(`${DIR_PATH}/src/styles/_variables.scss`, variablesTemplate())
@@ -135,10 +142,20 @@ const commands = {
   },
 
   'build-docs': () => {
+<<<<<<< HEAD
     const docsSrcPath = process.argv[3] || `${DIR_PATH}/src/docs/`
     const docs = listDocs(docsSrcPath)
+=======
+    const docs = listDocs(DIR_PATH)
+>>>>>>> add build sitemaps script
     const output = buildMdRoutes(docs)
-
+    if (existsSync(`${DIR_PATH}/src/BASEURL`)) {
+      const base = readFileSync(`${DIR_PATH}/src/BASEURL`)
+      const sitemap = buildSitemap(base, docs)
+      writeFileSync(`${DIR_PATH}/dist/sitemap.xml`, sitemap)
+      writeFileSync(`${DIR_PATH}/dist/robots.txt`, `Sitemap: ${base}/sitemap.xml`)
+    }
+    writeFileSync(`${DIR_PATH}/src/docs.txt`, JSON.stringify(docs, null, 2))
     writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
   },
 

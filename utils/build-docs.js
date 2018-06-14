@@ -1,6 +1,7 @@
 const { existsSync, lstatSync, readdirSync, readFileSync } = require('fs')
 const { basename, extname, resolve } = require('path')
 const { camel, sentence } = require('to-case')
+const slug = require('slug')
 
 function listDocs(docsSrcPath) {
   const absoluteDocsSrcPath = `${resolve(docsSrcPath)}/`
@@ -111,7 +112,31 @@ function buildMdRoutes(docs) {
   return output.join('\n')
 }
 
+function entry(base, path, priority) {
+  return ['  <url>', `    <loc>${base}/#${path}</loc>`]
+    .concat(priority ? [`    <priority>${priority}</priority>`] : [])
+    .concat(['  </url>'])
+}
+
+function buildSitemap(base, docs) {
+  
+  const sitemapStub = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+  ].concat(entry(base, '/', 1))
+
+  const output = docs
+    .reduce((prev, curr) => {
+      const path = [''].concat(curr.path.slice(2)).concat(slug(curr.docBaseName, { lower: true })).join('/')
+      return prev.concat(entry(base, path))
+    }, sitemapStub)
+    .concat(['</urlset>'])
+  
+  return output.join('\n')
+}
+
 module.exports = {
   buildMdRoutes,
+  buildSitemap,
   listDocs
 }
