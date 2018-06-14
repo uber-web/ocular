@@ -27,6 +27,11 @@ import { trees } from 'routes'
 
 const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
+// This component only creates a Link component if clicking on that Link will
+// effectively change routes. It avoids creating a Link with a 'to' property
+// which will point to the same route, because the history module would
+// generate warnings when such a link is clicked
+ 
 const SafeLink = ({className, name, path, pathname}) => {
   if (path === pathname) {
     return (<div className={className}>{name}</div>);

@@ -21,6 +21,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+// This creates buttons at the bottom of a documentation page to go to
+// the previous and the next page
+
 export default function Navigation({ prev, next }) {
   return (
     <div className="navigation">

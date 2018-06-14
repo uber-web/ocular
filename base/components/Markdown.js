@@ -176,9 +176,11 @@ class Markdown extends Component {
         </div>
       )
     }, [])
-
-    return <div className={cx('fg', { markdown: !textOnly })}>{out}
-    <Navigation next={this.props.next} prev={this.props.prev} /></div>
+    
+    // output of the component: markdown of the page transcribed to HTML,
+    // with components if needed, and prev/next page buttons at the bottom
+    return (<div className={cx('fg', { markdown: !textOnly })}>{out}
+    <Navigation next={this.props.next} prev={this.props.prev} /></div>)
   }
 }
 
