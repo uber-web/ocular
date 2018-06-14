@@ -146,7 +146,6 @@ const commands = {
       writeFileSync(`${DIR_PATH}/dist/sitemap.xml`, sitemap)
       writeFileSync(`${DIR_PATH}/dist/robots.txt`, `Sitemap: ${base}/sitemap.xml`)
     }
-    writeFileSync(`${DIR_PATH}/src/docs.txt`, JSON.stringify(docs, null, 2))
     writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
   },
 
