@@ -34,8 +34,8 @@ const generatePaths = (children, parentPath, order = []) =>
     // order represents the rank of each path in all of its parents.
     // ie the 2nd child of the 3rd child of the 1st tree would be [0, 2, 1]
     const updatedOrder = [...order, rank]
-    const updatedChild = {...child, path, order: updatedOrder}
-    
+    const updatedChild = { ...child, path, order: updatedOrder }
+
     return child.children
       ? { ...updatedChild, children: generatePaths(child.children, path, updatedOrder) }
       : { ...updatedChild, hasToc: true }
@@ -68,10 +68,13 @@ const reduction = cur =>
     ? [{ path: cur.path, redirect: getNestedPath(cur.children[0]) }, ...cur.children.map(reduction)]
     : cur
 
-export const trees = mdRoutes.reduce((out, { name, path, children = [], data = [] }) => {
-  out[path] = { name, tree: generatePaths([...children, ...data], path) }
-  return out
-}, {})
+export const trees = [...(mdRoutes || []), ...(jsRoutes || [])].reduce(
+  (out, { name, path, children = [], data = [] }) => {
+    out[path] = { name, tree: generatePaths([...children, ...data], path) }
+    return out
+  },
+  {}
+)
 
 const routes = Object.keys(trees)
   .reduce((out, key) => {
@@ -98,23 +101,23 @@ const routes = Object.keys(trees)
     return 0
   })
 
-let lastRouteWithDocs
+let lastRouteWithContent
 const routesPrevNext = routes.reduce((prev, route, i) => {
   // this adds to each route with documentation (.markdown property) the reference
-  // of the previous and next routes with documentation 
+  // of the previous and next routes with documentation
   prev.push(route)
-  if (route.markdown) {
-    if (lastRouteWithDocs !== undefined) {
-      prev[lastRouteWithDocs].next = {
+  if (route.markdown || route.component) {
+    if (lastRouteWithContent !== undefined) {
+      prev[lastRouteWithContent].next = {
         name: route.name,
         path: route.path
       }
       prev[i].prev = {
-        name: prev[lastRouteWithDocs].name,
-        path: prev[lastRouteWithDocs].path
+        name: prev[lastRouteWithContent].name,
+        path: prev[lastRouteWithContent].path
       }
     }
-    lastRouteWithDocs = i
+    lastRouteWithContent = i
   }
   return prev
 }, [])
@@ -148,7 +151,6 @@ export default [
     exact: true,
     component: Search
   },
-  ...jsRoutes,
   ...flatRoutes
 ]
 
