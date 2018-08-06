@@ -1,26 +1,26 @@
 const { existsSync, lstatSync, readdirSync, readFileSync } = require('fs')
-const { basename, extname } = require('path')
+const { basename, extname, resolve } = require('path')
 const { camel, sentence } = require('to-case')
 
-function listDocs(DIR_PATH) {
-  const pathString = `${DIR_PATH}/src/docs/`
-  const queue = readdirSync(`${pathString}`).map(fileName => ({
+function listDocs(docsSrcPath) {
+  const absoluteDocsSrcPath = `${resolve(docsSrcPath)}/`
+  const queue = readdirSync(absoluteDocsSrcPath).map(fileName => ({
     fileName,
-    path: ['src', 'docs']
+    path: []
   }))
   const docs = []
   while (queue.length) {
     const { fileName, path } = queue.pop()
-    const fullPath = [DIR_PATH]
+    const fullPath = [absoluteDocsSrcPath]
       .concat(path)
       .concat(fileName)
       .join('/')
+      .replace('//', '/')
 
     const componentPath = path
       .slice(1)
       .concat(fileName)
       .join('/')
-
     if (lstatSync(fullPath).isDirectory() === false) {
       if (extname(fileName) === '.md') {
         const docBaseNameFromFileName = basename(fileName, '.md')
@@ -31,12 +31,7 @@ function listDocs(DIR_PATH) {
 
         const docBaseName = docTitleFromContent || docBaseNameFromFileName
 
-        const componentName = camel(
-          path
-            .slice(2)
-            .concat(docBaseName)
-            .join('-')
-        )
+        const componentName = `_${camel(path.concat(docBaseName).join('-'))}`
 
         docs.push({
           docBaseName,
@@ -50,7 +45,7 @@ function listDocs(DIR_PATH) {
       // ignore non .md files
     } else {
       const newPath = path.concat(fileName)
-      const newFullPath = [DIR_PATH].concat(newPath).join('/')
+      const newFullPath = [absoluteDocsSrcPath].concat(newPath).join('/')
       readdirSync(newFullPath).forEach(f => {
         queue.push({ fileName: f, path: newPath })
       })

@@ -3,5 +3,6 @@ node_modules/
 yarn-error.log
 .DS_Store
 website/dist
+website/.DS_Store
 website/node_modules
 website/yarn-error.log
