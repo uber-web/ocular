@@ -30,7 +30,7 @@ const mdRoutesTemplate = require('./templates/mdRoutes')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
-const {listDocs, buildMdRoutes} = require('./utils/build-docs')
+const { listDocs, buildMdRoutes } = require('./utils/build-docs')
 
 const DIR_PATH = process.env.PWD
 
@@ -135,8 +135,8 @@ const commands = {
   },
 
   'build-docs': () => {
-
-    const docs = listDocs(DIR_PATH)
+    const docsSrcPath = process.argv[3] || `${DIR_PATH}/src/docs/`
+    const docs = listDocs(docsSrcPath)
     const output = buildMdRoutes(docs)
 
     writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
@@ -153,6 +153,7 @@ Available commands:
 - start: launch webpack in dev mode (accepts 'open' arg)
 - lint: run eslint on the current project
 - build: generate the bundle and dist files
+- build-docs: generate routes for markdown files (optional argument - markdown files location)
 
 You can provide the --debug flag to print the computed webpack config.
 `)
