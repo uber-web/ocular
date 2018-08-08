@@ -1,26 +1,25 @@
 const { existsSync, lstatSync, readdirSync, readFileSync } = require('fs')
-const { basename, extname, resolve } = require('path')
+const { basename, extname, join, normalize, relative } = require('path')
 const { camel, sentence } = require('to-case')
+const slug = require('slug')
+
+const defaultDocumentationPath = '/documentation'
 
 function listDocs(docsSrcPath) {
-  const absoluteDocsSrcPath = `${resolve(docsSrcPath)}/`
-  const queue = readdirSync(absoluteDocsSrcPath).map(fileName => ({
+  const queue = readdirSync(docsSrcPath).map(fileName => ({
     fileName,
     path: []
   }))
   const docs = []
   while (queue.length) {
     const { fileName, path } = queue.pop()
-    const fullPath = [absoluteDocsSrcPath]
-      .concat(path)
-      .concat(fileName)
-      .join('/')
-      .replace('//', '/')
+    const fullPath = normalize(
+      [docsSrcPath]
+        .concat(path)
+        .concat(fileName)
+        .join('/')
+    )
 
-    const componentPath = path
-      .slice(1)
-      .concat(fileName)
-      .join('/')
     if (lstatSync(fullPath).isDirectory() === false) {
       if (extname(fileName) === '.md') {
         const docBaseNameFromFileName = basename(fileName, '.md')
@@ -36,7 +35,6 @@ function listDocs(docsSrcPath) {
         docs.push({
           docBaseName,
           fileName,
-          componentPath,
           componentName,
           fullPath,
           path
@@ -45,7 +43,7 @@ function listDocs(docsSrcPath) {
       // ignore non .md files
     } else {
       const newPath = path.concat(fileName)
-      const newFullPath = [absoluteDocsSrcPath].concat(newPath).join('/')
+      const newFullPath = [docsSrcPath].concat(newPath).join('/')
       readdirSync(newFullPath).forEach(f => {
         queue.push({ fileName: f, path: newPath })
       })
@@ -54,20 +52,25 @@ function listDocs(docsSrcPath) {
   return docs
 }
 
-function buildMdRoutes(docs) {
+function buildMdRoutes(docs, docsSrcPath, websitePath) {
+  const fileLocationBase = normalize(join(websitePath, docsSrcPath))
+  const componentPathBase = relative(join(websitePath, '/src'), fileLocationBase)
+
   const result = {
     name: 'Documentation',
-    path: '/documentation',
+    path: defaultDocumentationPath,
     data: []
   }
+
   const output = []
   docs
     .sort((a, b) => (a.fullPath > b.fullPath ? 1 : -1))
-    .forEach(({ docBaseName, fileName, componentName, componentPath, path }) => {
+    .forEach(({ docBaseName, fileName, componentName, path }) => {
+      const componentPath = normalize(join(componentPathBase, path.join('/'), fileName))
       const imp = `import ${componentName} from '${componentPath}'`
       output.push(imp)
 
-      const pathSuffix = path.slice(2)
+      const pathSuffix = path
       let destination = result.data
       let currentPath = '/docs'
 
@@ -93,7 +96,7 @@ function buildMdRoutes(docs) {
       })
 
       destination.push({
-        fileLocation: `/src${currentPath}/${fileName}`,
+        fileLocation: normalize(join(fileLocationBase, path.join('/'), fileName)),
         name: sentence(docBaseName),
         markdown: componentName
       })
@@ -111,7 +114,33 @@ function buildMdRoutes(docs) {
   return output.join('\n')
 }
 
+function entry(base, path, priority) {
+  return ['  <url>', `    <loc>${base}/?p=/#${path}</loc>`]
+    .concat(priority ? [`    <priority>${priority}</priority>`] : [])
+    .concat(['  </url>'])
+}
+
+function buildSitemap(base, docs) {
+  const sitemapStub = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+  ].concat(entry(base, '/', 1))
+
+  const output = docs
+    .reduce((prev, curr) => {
+      const path = [defaultDocumentationPath]
+        .concat(curr.path)
+        .concat(slug(curr.docBaseName, { lower: true }))
+        .join('/')
+      return prev.concat(entry(base, path))
+    }, sitemapStub)
+    .concat(['</urlset>'])
+
+  return output.join('\n')
+}
+
 module.exports = {
   buildMdRoutes,
+  buildSitemap,
   listDocs
 }

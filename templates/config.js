@@ -31,8 +31,6 @@ export const PROJECTS = {};
 
 export const FOOTER_LOGO = '';
 
-export const WEBSITE_PATH = '${res.path}';
-
 export const HOME_PATH = '/';
 export const HOME_HEADING = '${res.desc}';
 
