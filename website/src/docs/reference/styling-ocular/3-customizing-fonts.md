@@ -1,6 +1,6 @@
 # Customizing fonts
 
-By default, Ocular imports the Source Sans Pro, an Adobe open-source font, from Google fonts. This is done in the __\_typography.scss__ file (that's all it does).
+By default, Ocular imports the Source Sans Pro, an Adobe open-source font, from Google fonts. This is done in the __/_typography.scss__ file.
 
 If you want to use another font, you should replace this file either by an empty file (so that you don't import a resource you won't use) or by statements that will import another one, such as @import or @font-face. 
 
@@ -26,14 +26,12 @@ _typography.scss
 
 You can provide as many @font-face statements as you need, for instance if you need to load several files for different weights or styles. 
 
-In the __\_variables.scss__ file, you should also change the $font-family variable (default: "Source Sans Pro") if you don't want ot use that font, whether you're loading a custom one in __\_typography.scss__ or not. 
-
-For instance:
+__/_typography.scss__ also contains the default font size and line height of the website. Feel free to over ride it: 
 
 ```
-$font-family: "my cool online font";
-```
-
-```
-$font-family: sans-serif;
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, sans-serif !important;
+  font-size: 16px;
+  line-height: 24px;
+}
 ```
