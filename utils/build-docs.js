@@ -1,27 +1,29 @@
 const { existsSync, lstatSync, readdirSync, readFileSync } = require('fs')
-const { basename, extname, resolve } = require('path')
+const { basename, extname } = require('path')
 const { camel, sentence } = require('to-case')
 const slug = require('slug')
 
-function listDocs(docsSrcPath) {
-  const absoluteDocsSrcPath = `${resolve(docsSrcPath)}/`
-  const queue = readdirSync(absoluteDocsSrcPath).map(fileName => ({
+const defaultDocumentationPath = '/documentation'
+
+function listDocs(DIR_PATH) {
+  const pathString = `${DIR_PATH}/src/docs/`
+  const queue = readdirSync(`${pathString}`).map(fileName => ({
     fileName,
-    path: []
+    path: ['src', 'docs']
   }))
   const docs = []
   while (queue.length) {
     const { fileName, path } = queue.pop()
-    const fullPath = [absoluteDocsSrcPath]
+    const fullPath = [DIR_PATH]
       .concat(path)
       .concat(fileName)
       .join('/')
-      .replace('//', '/')
 
     const componentPath = path
       .slice(1)
       .concat(fileName)
       .join('/')
+
     if (lstatSync(fullPath).isDirectory() === false) {
       if (extname(fileName) === '.md') {
         const docBaseNameFromFileName = basename(fileName, '.md')
@@ -32,7 +34,12 @@ function listDocs(docsSrcPath) {
 
         const docBaseName = docTitleFromContent || docBaseNameFromFileName
 
-        const componentName = `_${camel(path.concat(docBaseName).join('-'))}`
+        const componentName = camel(
+          path
+            .slice(2)
+            .concat(docBaseName)
+            .join('-')
+        )
 
         docs.push({
           docBaseName,
@@ -46,7 +53,7 @@ function listDocs(docsSrcPath) {
       // ignore non .md files
     } else {
       const newPath = path.concat(fileName)
-      const newFullPath = [absoluteDocsSrcPath].concat(newPath).join('/')
+      const newFullPath = [DIR_PATH].concat(newPath).join('/')
       readdirSync(newFullPath).forEach(f => {
         queue.push({ fileName: f, path: newPath })
       })
@@ -58,7 +65,7 @@ function listDocs(docsSrcPath) {
 function buildMdRoutes(docs) {
   const result = {
     name: 'Documentation',
-    path: '/documentation',
+    path: defaultDocumentationPath,
     data: []
   }
   const output = []
@@ -113,13 +120,12 @@ function buildMdRoutes(docs) {
 }
 
 function entry(base, path, priority) {
-  return ['  <url>', `    <loc>${base}/#${path}</loc>`]
+  return ['  <url>', `    <loc>${base}/?p=/#${path}</loc>`]
     .concat(priority ? [`    <priority>${priority}</priority>`] : [])
     .concat(['  </url>'])
 }
 
 function buildSitemap(base, docs) {
-  
   const sitemapStub = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
@@ -127,11 +133,14 @@ function buildSitemap(base, docs) {
 
   const output = docs
     .reduce((prev, curr) => {
-      const path = [''].concat(curr.path.slice(2)).concat(slug(curr.docBaseName, { lower: true })).join('/')
+      const path = [`${defaultDocumentationPath}`]
+        .concat(curr.path.slice(2))
+        .concat(slug(curr.docBaseName, { lower: true }))
+        .join('/')
       return prev.concat(entry(base, path))
     }, sitemapStub)
     .concat(['</urlset>'])
-  
+
   return output.join('\n')
 }
 

@@ -30,11 +30,7 @@ const mdRoutesTemplate = require('./templates/mdRoutes')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
-<<<<<<< HEAD
-const { listDocs, buildMdRoutes } = require('./utils/build-docs')
-=======
 const { listDocs, buildMdRoutes, buildSitemap } = require('./utils/build-docs')
->>>>>>> add build sitemaps script
 
 const DIR_PATH = process.env.PWD
 
@@ -142,15 +138,12 @@ const commands = {
   },
 
   'build-docs': () => {
-<<<<<<< HEAD
     const docsSrcPath = process.argv[3] || `${DIR_PATH}/src/docs/`
     const docs = listDocs(docsSrcPath)
-=======
-    const docs = listDocs(DIR_PATH)
->>>>>>> add build sitemaps script
     const output = buildMdRoutes(docs)
-    if (existsSync(`${DIR_PATH}/src/BASEURL`)) {
-      const base = readFileSync(`${DIR_PATH}/src/BASEURL`)
+
+    if (existsSync(`${docsSrcPath}/BASEURL`)) {
+      const base = readFileSync(`${docsSrcPath}/BASEURL`)
       const sitemap = buildSitemap(base, docs)
       writeFileSync(`${DIR_PATH}/dist/sitemap.xml`, sitemap)
       writeFileSync(`${DIR_PATH}/dist/robots.txt`, `Sitemap: ${base}/sitemap.xml`)
