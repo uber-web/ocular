@@ -27,7 +27,7 @@ import fetch from 'fetch'
 import Navigation from './Navigation'
 import routes from 'routes'
 import demos from 'demos'
-import { HISTORY, PROJECT_TYPE, WEBSITE_PATH, PROJECT_URL } from 'config'
+import { HISTORY, PROJECT_TYPE, PROJECT_URL } from 'config'
 // Shim Prism to add JSX support
 import 'prismjs/components/prism-jsx'
 
@@ -90,7 +90,7 @@ const makeEditMeLink = fileLocation => {
   if (!fileLocation || PROJECT_TYPE !== 'github') {
     return ''
   }
-  const href = `${PROJECT_URL}/edit/master/${WEBSITE_PATH}${fileLocation}`
+  const href = `${PROJECT_URL}/edit/master/${fileLocation}`
     .replace(/(\/+)/g, '/')
     .replace(/^https:\//, 'https://')
   return `<div class="edit-me">

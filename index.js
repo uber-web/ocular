@@ -27,6 +27,7 @@ const slug = require('slug')
 const configTemplate = require('./templates/config')
 const docTemplate = require('./templates/doc')
 const mdRoutesTemplate = require('./templates/mdRoutes')
+const optionsTemplate = require('./templates/build-routes-options')
 const variablesTemplate = require('./templates/variables.scss')
 const htmlConfigTemplate = require('./templates/html.config')
 
@@ -96,14 +97,12 @@ const commands = {
           publish: 'npm run clean && npm run build && mv dist/* ../docs'
         }
 
-        const url = res.type === 'github' ? `https://${res.org}.github.io/${res.name}` : res.otherUrl
-
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(json, null, 2)}\n`)
         writeFileSync(`${DIR_PATH}/html.config.js`, htmlConfigTemplate(res))
         writeFileSync(`${DIR_PATH}/src/config.js`, configTemplate(res))
         writeFileSync(`${DIR_PATH}/src/docs/getting-started.md`, docTemplate(res))
         writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, mdRoutesTemplate(res))
-        writeFileSync(`${DIR_PATH}/src/BASEURL`, url)       
+        writeFileSync(`${DIR_PATH}/src/build-routes-options.json`, optionsTemplate(res))
         writeFileSync(`${DIR_PATH}/src/demos.js`, 'export default {};\n')
         writeFileSync(`${DIR_PATH}/src/styles/index.scss`, '')
         writeFileSync(`${DIR_PATH}/src/styles/_variables.scss`, variablesTemplate())
@@ -138,16 +137,25 @@ const commands = {
   },
 
   'build-docs': () => {
-    const docsSrcPath = process.argv[3] || `${DIR_PATH}/src/docs/`
-    const docs = listDocs(docsSrcPath)
-    const output = buildMdRoutes(docs)
-
-    if (existsSync(`${docsSrcPath}/BASEURL`)) {
-      const base = readFileSync(`${docsSrcPath}/BASEURL`)
-      const sitemap = buildSitemap(base, docs)
-      writeFileSync(`${DIR_PATH}/dist/sitemap.xml`, sitemap)
-      writeFileSync(`${DIR_PATH}/dist/robots.txt`, `Sitemap: ${base}/sitemap.xml`)
+    let options = {
+      websitePath: '/website'
     }
+    if (existsSync(`${DIR_PATH}/src/build-routes-options.json`)) {
+      options = JSON.parse(readFileSync(`${DIR_PATH}/src/build-routes-options.json`))
+    }
+    const { websitePath, baseurl } = options
+    const docsSrcPath = process.argv[3] || options.docsSrcPath || `src/docs/`
+
+    const docs = listDocs(docsSrcPath, websitePath)
+    const output = buildMdRoutes(docs, docsSrcPath, websitePath)
+
+    if (baseurl) {
+      console.log('generating sitemap')
+      const sitemap = buildSitemap(baseurl, docs)
+      writeFileSync(`${DIR_PATH}/dist/sitemap.xml`, sitemap)
+      writeFileSync(`${DIR_PATH}/dist/robots.txt`, `sitemap: ${baseurl}/sitemap.xml`)
+    }
+    console.log('upating documentation routes')
     writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
   },
 

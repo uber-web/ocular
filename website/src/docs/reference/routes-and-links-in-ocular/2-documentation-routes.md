@@ -12,7 +12,17 @@ In your Ocular folder, type
 ocular build-docs
 ``` 
 
-in the CLI and this will create a mdRoutes file based on the contents of the __/src/docs/__ folder. Each markdown (.md) file will become an entry in the table of content, grouped hierarchically by folders. 
+in the CLI and this will create a mdRoutes file based on the contents of the __src/docs/__ folder. Each markdown (.md) file will become an entry in the table of content, grouped hierarchically by folders. 
+
+__ocular build-docs__ takes the location of your markdown files as an optional parameter.
+
+For instance: 
+
+```
+ocular build-docs ../docs
+```
+
+This 
 If you have a BASEURL file in your src folder, which contains the url of the your documentation file, ocular build-docs will also generate a sitemap (__sitemap.xml__) based on these files.
 
 ### controlling order and names of entries in the table of contents
@@ -38,6 +48,8 @@ Each node of the documentation tree has:
 - then, either a __document__ or children - other nodes. 
 
 When accessing a node from a tree, either from its url path or from the table of contents, the table of contents for that tree is going to be displayed on the left. That table of contents doesn't go beyond a given tree (ie it won't show nodes of other documentation trees)
+
+```ocular build-docs``` will group all documentation files into one single tree. 
 
 ### Anatomy of mdRoutes.js
 
