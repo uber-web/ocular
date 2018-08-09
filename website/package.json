@@ -1,6 +1,6 @@
 {
   "name": "ocular-website",
-  "version": "0.5.5",
+  "version": "0.6.1",
   "description": "A documentation website for Ocular, made with Ocular",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "ocular": "^0.5.5"
+    "ocular": "^0.6.1"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
