@@ -140,7 +140,7 @@ hr {
     margin: 24px 0 0;
     width: 32px;
     height: 2px;
-    background: $gradient-1;
+    background: linear-gradient(to right, $primary 0%, $secondary 100%);
   }
 }
 
