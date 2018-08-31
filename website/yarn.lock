@@ -4389,7 +4389,7 @@ obuf@^1.0.0, obuf@^1.1.1:
 
 ocular@^0.5.3:
   version "0.5.3"
-  resolved "https://unpm.uberinternal.com/ocular/-/ocular-0.5.3.tgz#50861b16ea7633b0dc8656257c9c0a7edae9f778"
+  resolved "https://registry.yarnpkg.com/ocular/-/ocular-0.5.3.tgz#50861b16ea7633b0dc8656257c9c0a7edae9f778"
   dependencies:
     autoprefixer-loader "^3.2.0"
     babel-core "^6.26.0"
@@ -5686,7 +5686,7 @@ sass-loader@^6.0.6:
 
 save-dev@^2.0.0:
   version "2.0.0"
-  resolved "https://unpm.uberinternal.com/save-dev/-/save-dev-2.0.0.tgz#4f8c06703d62a3f76571596237005b11d56df50e"
+  resolved "https://registry.yarnpkg.com/save-dev/-/save-dev-2.0.0.tgz#4f8c06703d62a3f76571596237005b11d56df50e"
 
 sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"

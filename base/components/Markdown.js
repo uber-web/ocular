@@ -43,19 +43,47 @@ const INJECTION_REG = /<!-- INJECT:"([^\[]+)\"( heading| fullscreen)? -->/g
 const renderer = new marked.Renderer()
 const textRenderer = new marked.Renderer()
 
-renderer.link = (href, title, text) => {
+/**
+ * Find the best route from a list, prioritizing the ones that are closest (by path)
+ * to the document that needs it.
+ * @param String matchedText
+ * @param Array routeList
+ * @param String searchPath
+ */
+const findClosestRoute = (matchedText, routeList, searchPath) => {
+  if (routeList.length === 1) {
+    // if there's only one route, that's the one
+    return routeList[0];
+  }
+
+  if (!searchPath) {
+    // Recursion base case
+    // If searchPath is empty, return the first route that has "/" before the text.
+    // If that also fails, return the first route of the list.
+    return routeList.find(r => r.path.includes(`/${matchedText}`)) || routeList[0];
+  }
+
+  // If a route exist on the currentPath, return that one.
+  // If not, iterate one step up on the path
+  const reducedSearchPath = searchPath.replace(/^(.*)\/.*$/, '$1');
+  return routeList.find(r => r.path.includes(`${reducedSearchPath}/${matchedText}`)) ||
+    findClosestRoute(matchedText, routeList, reducedSearchPath);
+};
+
+const rendererLink = routePath => (href, title, text) => {
   const fallback = `<a href=${href}>${text}</a>`
   const isFull = /^(https?:\/\/)/.test(href)
-  const match = href.match(/.*\/(.*)(\.md)?$/)
+  const match = href.replace(/.*\/(.*)$/, '$1').replace(/\.md$/, '');
   if (isFull || !match) {
     return fallback
   }
 
-  const route = routes.find(r => r.path.includes(match[1].replace(/\.md$/, '')))
-  if (!route) {
+  const matchingRoutes = routes.filter(r => r.path.includes(match));
+  if (!matchingRoutes.length) {
     return fallback
   }
 
+  const route = findClosestRoute(match, matchingRoutes, routePath);
   const addPrefix = HISTORY !== 'browser' && route.path.indexOf('/#') !== 0
   return `<a ${HISTORY === 'browser' ? 'useHistory' : ''} href="${addPrefix ? '/#' : ''}${
     route.path
@@ -73,11 +101,13 @@ textRenderer.link = (href, title, text) => {
   return renderer.link(href, title, text)
 }
 
-const renderMd = (content, textOnly) =>
-  marked(content, { renderer: textOnly ? textRenderer : renderer }).replace(
+const renderMd = (content, textOnly, path) => {
+  renderer.link = rendererLink(path);
+  return marked(content, {renderer: textOnly ? textRenderer : renderer}).replace(
     /\/demo\/src\/static\/images/g,
     'images'
   )
+}
 
 const tags = { inline: true, heading: true, fullscreen: true }
 
@@ -130,10 +160,10 @@ class Markdown extends Component {
   }
 
   render() {
-    const { fileLocation, textOnly } = this.props
+    const { fileLocation, textOnly, path } = this.props
     const { markdown } = this.state
     const edit = makeEditMeLink(fileLocation)
-    const html = `${edit}${renderMd(markdown, textOnly)}`
+    const html = `${edit}${renderMd(markdown, textOnly, path)}`
 
     const splits = html.split(INJECTION_REG)
 
