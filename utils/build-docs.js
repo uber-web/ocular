@@ -28,7 +28,7 @@ function listDocs(docsSrcPath) {
         const docTitleFromContent =
           docFirstLine.startsWith('#') && docFirstLine.replace(/^#+\s*/, '')
 
-        const docBaseName = docTitleFromContent || docBaseNameFromFileName
+        const docBaseName = docTitleFromContent || sentence(docBaseNameFromFileName)
 
         const componentName = `_${camel(path.concat(docBaseName).join('-'))}`
 
@@ -72,14 +72,15 @@ function buildMdRoutes(docs, docsSrcPath, websitePath) {
 
       const pathSuffix = path
       let destination = result.data
-      let currentPath = '/docs'
-
+      let currentPath = fileLocationBase
+      let titlePath = docsSrcPath
       pathSuffix.forEach(p => {
         const size = destination.length
         currentPath = `${currentPath}/${p}`
+        titlePath = `${titlePath}/${p}`
 
-        const name = existsSync(`src/${currentPath}/TITLE`)
-          ? readFileSync(`src/${currentPath}/TITLE`, 'UTF-8')
+        const name = existsSync(`${titlePath}/TITLE`)
+          ? readFileSync(`${titlePath}/TITLE`, 'UTF-8')
           : sentence(p)
 
         let nextLevelIdx = destination.findIndex(d => d.fullPath === currentPath)
@@ -97,7 +98,7 @@ function buildMdRoutes(docs, docsSrcPath, websitePath) {
 
       destination.push({
         fileLocation: normalize(join(fileLocationBase, path.join('/'), fileName)),
-        name: sentence(docBaseName),
+        name: docBaseName,
         markdown: componentName
       })
     })
