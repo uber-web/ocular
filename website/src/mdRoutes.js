@@ -15,6 +15,7 @@ import _referenceRoutesAndLinksInOcularDocumentationRoutes from 'docs/reference/
 import _referenceRoutesAndLinksInOcularCustomPages from 'docs/reference/routes-and-links-in-ocular/3-custom-pages.md'
 import _referenceRoutesAndLinksInOcularDefaultLinks from 'docs/reference/routes-and-links-in-ocular/4-default-links.md'
 import _referenceRoutesAndLinksInOcularAdditionalLinks from 'docs/reference/routes-and-links-in-ocular/5-additional-links.md'
+import _referenceRoutesAndLinksInOcularLinksBetweenDocumentationPages from 'docs/reference/routes-and-links-in-ocular/6-links-between-documentation-pages.md'
 import _referenceStylingOcularIntroductionToStyling from 'docs/reference/styling-ocular/1-introduction.md'
 import _referenceStylingOcularTheDefaultStyleModules from 'docs/reference/styling-ocular/2-default-style-modules.md'
 import _referenceStylingOcularCustomizingFonts from 'docs/reference/styling-ocular/3-customizing-fonts.md'
@@ -49,7 +50,7 @@ export default [{
           children: [
             {
               fileLocation: "/website/src/docs/reference/build-your-own-components/1-presenting-base-components.md",
-              name: "Presenting ocular's base components",
+              name: "Presenting Ocular's base components",
               markdown: _referenceBuildYourOwnComponentsPresentingOcularSBaseComponents
             },
             {
@@ -58,17 +59,17 @@ export default [{
               children: [
                 {
                   fileLocation: "/website/src/docs/reference/build-your-own-components/2-app/1-App.md",
-                  name: "App js",
+                  name: "App.js",
                   markdown: _referenceBuildYourOwnComponents2AppAppJs
                 },
                 {
                   fileLocation: "/website/src/docs/reference/build-your-own-components/2-app/2-Header.md",
-                  name: "Header js",
+                  name: "Header.js",
                   markdown: _referenceBuildYourOwnComponents2AppHeaderJs
                 },
                 {
                   fileLocation: "/website/src/docs/reference/build-your-own-components/2-app/3-Toc.md",
-                  name: "Toc js",
+                  name: "Toc.js",
                   markdown: _referenceBuildYourOwnComponents2AppTocJs
                 }
               ]
@@ -79,17 +80,17 @@ export default [{
               children: [
                 {
                   fileLocation: "/website/src/docs/reference/build-your-own-components/3-home/1-Home.md",
-                  name: "Home js",
+                  name: "Home.js",
                   markdown: _referenceBuildYourOwnComponents3HomeHomeJs
                 },
                 {
                   fileLocation: "/website/src/docs/reference/build-your-own-components/3-home/2-Hero.md",
-                  name: "Hero js",
+                  name: "Hero.js",
                   markdown: _referenceBuildYourOwnComponents3HomeHeroJs
                 },
                 {
                   fileLocation: "/website/src/docs/reference/build-your-own-components/3-home/3-Footer.md",
-                  name: "Footer js",
+                  name: "Footer.js",
                   markdown: _referenceBuildYourOwnComponents3HomeFooterJs
                 }
               ]
@@ -112,7 +113,7 @@ export default [{
           children: [
             {
               fileLocation: "/website/src/docs/reference/configurating-ocular/config-reference.md",
-              name: "Configuration reference",
+              name: "Configuration Reference",
               markdown: _referenceConfiguratingOcularConfigurationReference
             }
           ]
@@ -133,7 +134,7 @@ export default [{
             },
             {
               fileLocation: "/website/src/docs/reference/routes-and-links-in-ocular/3-custom-pages.md",
-              name: "Custom pages",
+              name: "Custom Pages",
               markdown: _referenceRoutesAndLinksInOcularCustomPages
             },
             {
@@ -145,6 +146,11 @@ export default [{
               fileLocation: "/website/src/docs/reference/routes-and-links-in-ocular/5-additional-links.md",
               name: "Additional links",
               markdown: _referenceRoutesAndLinksInOcularAdditionalLinks
+            },
+            {
+              fileLocation: "/website/src/docs/reference/routes-and-links-in-ocular/6-links-between-documentation-pages.md",
+              name: "Links between documentation pages",
+              markdown: _referenceRoutesAndLinksInOcularLinksBetweenDocumentationPages
             }
           ]
         },
