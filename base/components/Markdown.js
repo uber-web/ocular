@@ -39,7 +39,7 @@ marked.setOptions({
     Prism.highlight(code, Prism.languages[language === 'js' ? 'jsx' : language])
 })
 
-const INJECTION_REG = /<!-- INJECT:"([^\[]+)\"( heading| fullscreen)? -->/g
+const INJECTION_REG = /<!-- INJECT:"([^\[<]+)\"( heading| fullscreen)? -->/g
 
 const renderer = new marked.Renderer()
 const textRenderer = new marked.Renderer()
