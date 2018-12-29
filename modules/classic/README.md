@@ -1,15 +1,5 @@
 # Ocular
 
-Ocular is a tool primarily designed for building documentation websites for github-based javascript frameworks, built using the gatsbyjs documentation generation system.
-
-This documentation is for the newer gatsby-based version of ocular. In addition to the gatsbyjs-based generator, Ocular also support a "classic" variant for backwards compatibility. The classic version is not maintained and new sites should be built using the gatsbyjs-based generator. See documentation on [github]().
-
-
-Using ocular in your framework requires:
-* a directory with github markdown
-* examples...
-
-
 ### Install
 
     yarn add ocular -D
@@ -28,10 +18,7 @@ Generate the dist
 
 Starts linting process
 
-
 ### Create
-
-> These instructions refer to the classic versions
 
 To create a project using ocular, a command fits this purpose.
 
@@ -57,7 +44,6 @@ And finally launch the cli
 - [vis-tutorial](https://github.com/uber-common/vis-tutorial)
 - [vis-academy](https://github.com/uber-common/vis-academy)
 - [math.gl](https://github.com/uber-web/math.gl)
-
 
 ### Why
 
