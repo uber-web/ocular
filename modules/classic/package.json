@@ -1,6 +1,11 @@
 {
   "name": "ocular",
   "version": "0.6.2",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/ocular/"
+  },
   "bin": {
     "ocular": "./index.js"
   },
@@ -62,10 +67,5 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "^2.18.2",
     "whatwg-fetch": "^2.0.3"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/uber-web/ocular/"
   }
 }
