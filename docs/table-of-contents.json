@@ -1,0 +1,16 @@
+{
+  "id": "table-of-contents",
+  "chapters": [
+    {
+      "title": "Overview",
+      "entries": [
+        {
+          "entry": "docs/basics/1-introduction"
+        },
+        {
+          "entry": "docs/basics/2-getting-started"
+        }
+      ]
+    }
+  ]
+}
