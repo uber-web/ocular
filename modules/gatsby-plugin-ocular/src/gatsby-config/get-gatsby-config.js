@@ -57,7 +57,16 @@ module.exports = function getGatsbyConfig(config) {
       },
       */
 
-      // Generates gatsby nodes for files in the static folder
+      // Generates gatsby nodes for files in the ocular static folder
+      {
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: 'assets',
+          path: `${__dirname}/../../static/`
+        }
+      },
+      // Generates gatsby nodes for files in the website's static folder
+      // Generates gatsby nodes for files in the website's static folder
       {
         resolve: 'gatsby-source-filesystem',
         options: {

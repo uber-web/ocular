@@ -99,7 +99,7 @@ export default class Header extends Component {
             <Link className={cx({active: pathname === '/examples'})} to="/examples">Examples</Link>
             <Link className={cx({active: pathname === '/docs'})} to="/docs">Documentation</Link>
             <Link className={cx({active: pathname === '/blog'})} to="https://medium.com/@vis.gl">Blog</Link>
-
+            <a className={cx({active: pathname === '/blog'})} href="https://medium.com/@vis.gl">Blog</a>
             {/*
             <Link className={cx({active: pathname === '/search'})} to="/search">Search</Link>
             Object.keys(trees).map(p => (

@@ -1,1 +1,1 @@
-module.exports = require('gatsby-plugin-ocular/gatsby-browser');
+module.exports = require('ocular/gatsby-browser');

@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "gatsby": "2.0.77",
-    "gatsby-plugin-ocular": "../modules/gatsby-plugin-ocular"
+    "ocular": "../modules/gatsby"
   },
   "devDependencies": {}
 }

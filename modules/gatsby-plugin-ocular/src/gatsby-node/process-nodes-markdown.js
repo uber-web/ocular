@@ -168,7 +168,7 @@ function addSourceInstanceName(
   // Add node field
   createNodeField({
     node,
-    name: 'sourceInstanceName',
+    name: 'sourceName',
     value: sourceInstanceName
   })
 
@@ -182,12 +182,12 @@ function addSourceInstanceName(
   // }
 
   if (parent) {
-    addMissingFrontmatter(node);
+    addMissingFrontmatter(node, sourceInstanceName);
   }
 }
 
 
-function addMissingFrontmatter(node) {
+function addMissingFrontmatter(node, sourceInstanceName) {
   // Populate frontmatter
   if (node.frontmatter) {
     if (node.rawMarkdownBody) {
@@ -198,6 +198,6 @@ function addMissingFrontmatter(node) {
     node.frontmatter.tags = ['default'];
     node.frontmatter.category = 'docs';
     node.frontmatter.cover = 'cover';
-    node.frontmatter.type = node.fields.sourceInstanceName;
+    node.frontmatter.type = sourceInstanceName;
   }
 }

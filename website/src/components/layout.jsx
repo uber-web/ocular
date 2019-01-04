@@ -7,10 +7,10 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { StaticQuery, graphql } from 'gatsby'
 
-import {TopLevelLayout} from 'gatsby-plugin-ocular/components';
+import {TopLevelLayout} from 'ocular/components';
 
 // Note: gatsby-plugin-sass will process these files automatically when it sees this import
-import 'gatsby-plugin-ocular/styles/main.scss'
+import 'ocular/styles/main.scss'
 
 // All common metadata, table-of-contents etc are queried here and put in React context
 const QUERY = graphql`

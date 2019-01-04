@@ -5,9 +5,9 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
-import { StaticQuery, graphql } from 'gatsby'
+import {StaticQuery, graphql} from 'gatsby'
 
-import {TopLevelLayout} from 'gatsby-plugin-ocular/components';
+import TopLevelLayout from './top-level-layout';
 
 // Note: gatsby-plugin-sass will process these files automatically when it sees this import
 import '../../../styles/main.scss'
