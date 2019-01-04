@@ -4,7 +4,7 @@ import { graphql } from 'gatsby'
 
 import ExampleTableOfContents from '../components/layout/example-table-of-contents'
 
-import {getReactComponent} from '../gatsby-config/component-registry';
+import {getReactComponent} from '../utils/component-registry';
 
 /* eslint no-undef: "off" */
 export const query = graphql`
@@ -82,20 +82,20 @@ export default class ExampleTemplate extends React.Component {
     const {pathContext} = this.props;
     const {slug} = pathContext;
 
-    // Get app website's demo runner
+    // Get app website's example runner
     const DemoRunner = getReactComponent('ExampleRunner');
     const EXAMPLES = getReactComponent('EXAMPLES');
 
-    const demo = EXAMPLES[slug];
-    if (!demo) {
-      console.warn(`No demo found: ${slug}`);
+    const example = EXAMPLES[slug];
+    if (!example) {
+      console.warn(`No example found: ${slug}`);
     }
 
-    console.log(demo);
+    console.log(example);
 
     return (
       <main>
-        { demo && <DemoRunner demo={demo.demo} sourceLink={demo.path} /> }
+        { example && <DemoRunner example={example} sourceLink={example.path} /> }
       </main>
     )
   }

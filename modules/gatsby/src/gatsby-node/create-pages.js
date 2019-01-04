@@ -99,16 +99,16 @@ function createExamplePages({ graphql, actions }) {
       }
     });
 
-    for (const demo of EXAMPLES) {
-      const demoName = demo.title;
+    for (const example of EXAMPLES) {
+      const exampleName = example.title;
 
-      log.log({color: COLOR.CYAN}, `Creating example page ${JSON.stringify(demo)}`)();
+      log.log({color: COLOR.CYAN}, `Creating example page ${JSON.stringify(example)}`)();
 
       createPage({
-        path: demo.path,
+        path: example.path,
         component: EXAMPLE_PAGE,
         context: {
-          slug: demoName,
+          slug: exampleName,
           toc: 'examples'
         }
       });

@@ -4,7 +4,9 @@ module.exports = {
   DOC_FOLDER: `${__dirname}/../docs/`,
   ROOT_FOLDER: `${__dirname}/../`,
 
-  EXAMPLES: [],
+  EXAMPLES: [
+    {title: 'ForceDirectedLayout', path: '...'}
+  ],
   DOCS,
 
   // TODO/ib - from ocular, deduplicate with above settings

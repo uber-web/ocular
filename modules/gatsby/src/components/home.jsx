@@ -20,7 +20,7 @@
 
 import React, {Component} from 'react';
 import WebsiteConfigConsumer from '../components/layout/website-config';
-import {getReactComponent} from '../gatsby-config/component-registry';
+import {getReactComponent} from '../utils/component-registry';
 import DefaultHero from './hero';
 
 

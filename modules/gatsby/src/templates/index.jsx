@@ -1,7 +1,7 @@
 import React from 'react'
 import WebsiteConfigConsumer from '../components/layout/website-config';
 import DefaultHome from '../components/home';
-import {getReactComponent} from '../gatsby-config/component-registry';
+import {getReactComponent} from '../utils/component-registry';
 
 export default class IndexPage extends React.Component {
   renderPage({config}) {

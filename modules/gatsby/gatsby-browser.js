@@ -1,4 +1,4 @@
-import {registerReactComponent} from './src/gatsby-config/component-registry';
+import {registerReactComponent} from './src/utils/component-registry';
 
 import Home from './src/components/home';
 import Hero from './src/components/hero';

@@ -5,8 +5,8 @@ import {setPathPrefix} from 'luma.gl';
 import InfoPanel from './info-panel';
 
 const propTypes = {
-  demo: PropTypes.object,
-  canvas: PropTypes.string
+  example: PropTypes.object.isRequired,
+  canvas: PropTypes.string // optional
 };
 
 const defaultProps = {};
@@ -23,8 +23,8 @@ export default class ExampleRunner extends Component {
 
     // Start the actual example
     // TODO/ib - should this be kept in default component?
-    if (this.props.demo.start) {
-      this.props.demo.start({
+    if (this.props.example.start) {
+      this.props.example.start({
         canvas: this.props.canvas
       });
     }
@@ -32,17 +32,17 @@ export default class ExampleRunner extends Component {
 
   componentWillUnmount() {
     // TODO/ib - should this be kept in default component?
-    this.props.demo.stop && this.props.demo.stop();
+    this.props.example.stop && this.props.example.stop();
   }
 
   render() {
-    const {width, height, name, demo, noPanel, sourceLink} = this.props;
-    const controls = demo.getInfo && demo.getInfo();
+    const {width, height, name, example, noPanel, sourceLink} = this.props;
+    const controls = example.getInfo && example.getInfo();
 
-    const notSupported = demo.isSupported && !demo.isSupported();
+    const notSupported = example.isSupported && !example.isSupported();
 
     if (notSupported) {
-      const altText = demo.getAltText ? demo.getAltText() : DEFAULT_ALT_TEXT;
+      const altText = example.getAltText ? example.getAltText() : DEFAULT_ALT_TEXT;
       return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
           <h2> {altText} </h2>
@@ -50,7 +50,7 @@ export default class ExampleRunner extends Component {
       );
     }
 
-    const Example = demo;
+    const Example = example;
 
     return (
       <div className="fg" style={{width, height, padding: 0, border: 0}}>
