@@ -1,4 +1,4 @@
-const {getGatsbyConfig, registerReactComponent} = require('ocular/api');
+const {getGatsbyConfig, registerReactComponent} = require('ocular-gatsby/api');
 
 const config = require('./ocular-config');
 

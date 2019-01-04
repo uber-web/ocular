@@ -70,8 +70,12 @@ export default class Header extends Component {
     const {
       // ADDITIONAL_LINKS,
       PROJECT_TYPE, PROJECT_NAME, PROJECT_URL,
-      // PROJECTS
+      // PROJECTS,
+      EXAMPLES
     } = config;
+
+    // If the no examples marker, return without creating pages
+    const hasExamples = !(EXAMPLES.length === 0 || EXAMPLES[0].title === 'none');
 
     return (
       <header className={cx({open: isMenuOpen})}>
@@ -96,9 +100,10 @@ export default class Header extends Component {
 
           <div className="links fac">
 
-            <Link className={cx({active: pathname === '/examples'})} to="/examples">Examples</Link>
+            { hasExamples &&
+              <Link className={cx({active: pathname === '/examples'})} to="/examples">Examples</Link>
+            }
             <Link className={cx({active: pathname === '/docs'})} to="/docs">Documentation</Link>
-            <Link className={cx({active: pathname === '/blog'})} to="https://medium.com/@vis.gl">Blog</Link>
             <a className={cx({active: pathname === '/blog'})} href="https://medium.com/@vis.gl">Blog</a>
             {/*
             <Link className={cx({active: pathname === '/search'})} to="/search">Search</Link>

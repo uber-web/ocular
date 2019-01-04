@@ -86,6 +86,10 @@ function createExamplePages({ graphql, actions }) {
 
     const {EXAMPLES} = result.data.site.siteMetadata.config;
 
+    // If the no examples marker, return without creating pages
+    if (EXAMPLES.length === 0 || EXAMPLES[0].title === 'none') {
+      return;
+    }
 
     createPage({
       component: EXAMPLES_PAGE,

@@ -1,5 +1,5 @@
 const config = require('./ocular-config');
-const {getGatsbyNodeCallbacks} = require('ocular/api');
+const {getGatsbyNodeCallbacks} = require('ocular-gatsby/api');
 
 module.exports = getGatsbyNodeCallbacks(config);
 

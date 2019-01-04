@@ -11,15 +11,9 @@
     "clean": "rm -rf ./.cache ./public",
     "develop": "rm -fr .cache && gatsby develop --port=8001"
   },
-  "ocularScripts": {
-    "start": "ocular start",
-    "build": "ocular build-docs && ocular build",
-    "lint": "ocular lint",
-    "publish": "npm run clean && npm run build && mv dist/* ../docs"
-  },
   "dependencies": {
     "gatsby": "2.0.77",
-    "ocular": "../modules/gatsby"
+    "ocular-gatsby": "^1.0.0-alpha.1"
   },
   "devDependencies": {}
 }

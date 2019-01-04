@@ -99,10 +99,14 @@ export default class Layout extends React.Component {
       }];
 
       for (const example of EXAMPLES) {
-        const exampleEntry = Object.assign({
-          entry: example.title
-        }, example);
-        examplesTOC[0].entries.push(exampleEntry);
+
+        // ignore empty list placeholder (makes graphql queryies not fail)
+        if (example.title !== 'none') {
+          const exampleEntry = Object.assign({
+            entry: example.title
+          }, example);
+          examplesTOC[0].entries.push(exampleEntry);
+        }
       }
 
       return <ExampleTableOfContents chapters={examplesTOC} />;

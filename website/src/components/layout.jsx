@@ -1,3 +1,5 @@
+// NOTE: Dummy component, just to get gatsby to compile the StaticQuery
+
 // This is the top-level "Layout" component that doesn't get unmounted between
 // page loads. This component is wrapped around the react component returned by
 // each page using the gatsby browser/SSR `wrapPage` callback.

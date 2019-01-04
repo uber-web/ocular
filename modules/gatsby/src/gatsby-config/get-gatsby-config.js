@@ -4,13 +4,23 @@ const {log, COLOR} = require('../utils/log');
 
 module.exports = function getGatsbyConfig(config) {
 
-  // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig.DOC_FOLDER, null, 3)}`)();
+  log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`)();
+
+  // Fixup config
+
+  // Entry cannot be empty, since graphql then cannot autoinfer schemas
+  // which means queries will fail (sigh...)
+  if (!config.EXAMPLES || config.EXAMPLES.length === 0) {
+    config.EXAMPLES = [{title: 'none', path: 'none'}];
+  }
+
 
   const gatsbyConfig = {
     pathPrefix: config.pathPrefix,
 
     // Site Metadata is populated from config (and react-helmet, see gatsby-plugin-react-helmet)
     siteMetadata: {
+      config,
       siteUrl: urljoin(config.siteUrl, config.pathPrefix),
       rssMetadata: {
         site_url: urljoin(config.siteUrl, config.pathPrefix),
@@ -23,8 +33,7 @@ module.exports = function getGatsbyConfig(config) {
           '/logos/logo-512.png'),
         author: config.userName,
         copyright: config.copyright
-      },
-      config
+      }
     },
 
     plugins: [
@@ -182,13 +191,6 @@ module.exports = function getGatsbyConfig(config) {
         //   typeName: ({ node, object, isArray }) =>
         //     console.log('json', node, object, isArray) && object.level,
         // },
-      },
-
-      {
-        resolve: 'gatsby-plugin-ocular',
-        options: {
-          webpack: config.webpack
-        }
       },
 
       /*

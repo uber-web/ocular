@@ -11,10 +11,13 @@ export default class Hero extends Component {
     const EXAMPLES = getReactComponent('EXAMPLES');
     const exampleNames = Object.keys(EXAMPLES);
     const DefaultHeroExample = exampleNames.length && EXAMPLES[0];
+    if (DefaultHeroExample.title === 'none') {
+      DefaultHeroExample = null;
+    }
 
     let HeroExample = getReactComponent('HERO_EXAMPLE', DefaultHeroExample);
     if (!HeroExample) {
-      debugger
+      console.warn('ocular: No hero example found', EXAMPLES);
     }
     return HeroExample;
   }
