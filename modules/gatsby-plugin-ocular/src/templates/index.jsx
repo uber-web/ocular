@@ -1,10 +1,13 @@
 import React from 'react'
 import WebsiteConfigConsumer from '../components/layout/website-config';
-import Home from '../components/home';
+import DefaultHome from '../components/home';
+import {getReactComponent} from '../gatsby-config/component-registry';
 
 export default class IndexPage extends React.Component {
   renderPage({config}) {
     // Note: The Layout "wrapper" component adds header and footer etc
+
+    const Home = getReactComponent('Home', DefaultHome);
     return (
       <main>
         <Home config={config} />

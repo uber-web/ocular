@@ -5,10 +5,72 @@
       "title": "Overview",
       "entries": [
         {
-          "entry": "docs/basics/1-introduction"
+          "entry": "docs/README"
+        }
+      ]
+    },
+    {
+      "title": "Gatby Version Reference",
+      "entries": [
+        {
+          "entry": "docs/reference-gatsby/README"
+        }
+      ]
+    },
+    {
+      "title": "Common Reference",
+      "entries": [
+        {
+            "entry": "docs/reference-common/configuring-ocular/config-reference"
+        }
+      ]
+    },
+    {
+      "title": "Classic Version Reference",
+      "chapters": [
+        {
+          "title": "Basics",
+          "entries": [
+            {"entry": "docs/basics/1-introduction"},
+            {"entry": "docs/basics/2-getting-started"}
+          ]
         },
         {
-          "entry": "docs/basics/2-getting-started"
+          "title": "Build your own Components",
+          "entries": [
+            {"entry": "docs/reference-classic/build-your-own-components/1-presenting-base-components"},
+            {"entry": "docs/reference-classic/build-your-own-components/2-app"},
+            {"entry": "docs/reference-classic/build-your-own-components/3-home"},
+            {"entry": "docs/reference-classic/build-your-own-components/4-markdown"},
+            {"entry": "docs/reference-classic/build-your-own-components/5-search"},
+
+            {"entry": "docs/reference-classic/build-your-own-components/2-app/1-App"},
+            {"entry": "docs/reference-classic/build-your-own-components/2-app/2-Header"},
+            {"entry": "docs/reference-classic/build-your-own-components/2-app/3-Toc"},
+
+            {"entry": "docs/reference-classic/build-your-own-components/3-home/1-Home"},
+            {"entry": "docs/reference-classic/build-your-own-components/3-home/2-Hero"},
+            {"entry": "docs/reference-classic/build-your-own-components/3-home/3-Footer"}
+          ]
+        },
+        {
+          "title": "Routes and Links",
+          "entries": [
+            {"entry": "docs/reference-classic/routes-and-links-in-ocular/1-introduction"},
+            {"entry": "docs/reference-classic/routes-and-links-in-ocular/2-documentation-routes"},
+            {"entry": "docs/reference-classic/routes-and-links-in-ocular/3-custom-pages"     },
+            {"entry": "docs/reference-classic/routes-and-links-in-ocular/4-default-links"},
+            {"entry": "docs/reference-classic/routes-and-links-in-ocular/5-additional-links"},
+            {"entry": "docs/reference-classic/routes-and-links-in-ocular/6-links-between-documentation-pages"}
+          ]
+        },
+        {
+          "title": "Styling",
+          "entries": [
+            {"entry": "docs/reference-classic/styling-ocular/1-introduction"},
+            {"entry": "docs/reference-classic/styling-ocular/2-default-style-modules"},
+            {"entry": "docs/reference-classic/styling-ocular/3-customizing-fonts"}
+          ]
         }
       ]
     }

@@ -21,6 +21,8 @@
 import React, {Component} from 'react';
 import WebsiteConfigConsumer from '../components/layout/website-config';
 import {getReactComponent} from '../gatsby-config/component-registry';
+import DefaultHero from './hero';
+
 
 export default class Home extends Component {
   renderPage({config}) {
@@ -33,7 +35,7 @@ export default class Home extends Component {
       PROJECT_TYPE
     } = config;
 
-    const Hero = getReactComponent('Hero');
+    const Hero = getReactComponent('Hero', DefaultHero);
 
     // Note: The Layout "wrapper" component adds header and footer etc
     return (

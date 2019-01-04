@@ -1,8 +1,11 @@
 const urljoin = require('url-join');
 
-// const {log, COLOR} = require('../utils/log');
+const {log, COLOR} = require('../utils/log');
 
 module.exports = function getGatsbyConfig(config) {
+
+  // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig.DOC_FOLDER, null, 3)}`)();
+
   const gatsbyConfig = {
     pathPrefix: config.pathPrefix,
 

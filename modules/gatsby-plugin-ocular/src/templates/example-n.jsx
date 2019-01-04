@@ -83,10 +83,10 @@ export default class ExampleTemplate extends React.Component {
     const {slug} = pathContext;
 
     // Get app website's demo runner
-    const DemoRunner = getReactComponent('DemoRunner');
-    const DEMOS = getReactComponent('DEMOS');
+    const DemoRunner = getReactComponent('ExampleRunner');
+    const EXAMPLES = getReactComponent('EXAMPLES');
 
-    const demo = DEMOS[slug];
+    const demo = EXAMPLES[slug];
     if (!demo) {
       console.warn(`No demo found: ${slug}`);
     }

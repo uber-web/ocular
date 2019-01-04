@@ -1,0 +1,25 @@
+{
+  "name": "ocular-website-gatsby",
+  "version": "0.0.0",
+  "description": "A website for Ocular, built with Ocular (Gatsby version)",
+  "license": "MIT",
+  "keywords": [
+    "ocular"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf ./.cache ./public",
+    "develop": "rm -fr .cache && gatsby develop --port=8001"
+  },
+  "ocularScripts": {
+    "start": "ocular start",
+    "build": "ocular build-docs && ocular build",
+    "lint": "ocular lint",
+    "publish": "npm run clean && npm run build && mv dist/* ../docs"
+  },
+  "dependencies": {
+    "gatsby": "2.0.77",
+    "gatsby-plugin-ocular": "../modules/gatsby-plugin-ocular"
+  },
+  "devDependencies": {}
+}
