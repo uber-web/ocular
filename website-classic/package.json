@@ -1,0 +1,23 @@
+{
+  "name": "ocular-website-classic",
+  "version": "0.6.1",
+  "description": "A documentation website for Ocular, built with Ocular (Classic version)",
+  "main": "index.js",
+  "scripts": {
+    "start": "ocular start",
+    "build": "ocular build-docs && ocular build",
+    "lint": "ocular lint",
+    "clean": "rm -rf ./dist/* && rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}",
+    "publish": "npm run clean && npm run build && mv dist/* ../docs"
+  },
+  "keywords": [
+    "ocular"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "ocular": "^0.6.1"
+  },
+  "dependencies": {
+    "save-dev": "^2.0.0"
+  }
+}

@@ -6,3 +6,5 @@ website/dist
 website/.DS_Store
 website/node_modules
 website/yarn-error.log
+
+package-lock.json
