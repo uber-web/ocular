@@ -12,8 +12,8 @@
     "develop": "rm -fr .cache && gatsby develop --port=8001"
   },
   "dependencies": {
-    "gatsby": "2.0.77",
-    "ocular-gatsby": "^1.0.0-alpha.1"
+    "gatsby": "2.0.85",
+    "ocular-gatsby": "../modules/gatsby"
   },
   "devDependencies": {}
 }

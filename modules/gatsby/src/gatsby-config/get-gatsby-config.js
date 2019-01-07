@@ -3,10 +3,11 @@ const urljoin = require('url-join');
 const {log, COLOR} = require('../utils/log');
 
 module.exports = function getGatsbyConfig(config) {
+  const {logLevel = 0} = config;
+  log.priority = logLevel;
 
-  log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`)();
-
-  // Fixup config
+  log.log({color: COLOR.CYAN, priority: 0}, 'Loading gatsby config')();
+  log.log({color: COLOR.CYAN, priority: 2}, `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`)();
 
   // Entry cannot be empty, since graphql then cannot autoinfer schemas
   // which means queries will fail (sigh...)

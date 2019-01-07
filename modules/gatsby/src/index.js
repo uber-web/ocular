@@ -1,5 +1,5 @@
 
-module.exports.getGatsbyNodeCallbacks = require('./gatsby-node/get-gatsby-node-callbacks');
+module.exports.getGatsbyNodeCallbacks = require('./gatsby-node');
 
 module.exports.getGatsbyConfig = require('./gatsby-config/get-gatsby-config');
 

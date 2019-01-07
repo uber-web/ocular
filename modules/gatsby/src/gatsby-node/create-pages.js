@@ -21,9 +21,12 @@ assert(INDEX_PAGE && DOC_PAGE && EXAMPLES_PAGE && EXAMPLE_PAGE);
 // Here we get to programmatically create pages after all nodes are created
 // by gatsby.
 // We use graphgl to query for nodes and iterate
-module.exports = function createPages({ graphql, actions }, pluginOptions, x, y) {
-  log.log({color: COLOR.CYAN}, 'ocular generating pages', pluginOptions, x, y)();
+module.exports = function createPages({ graphql, actions }, pluginOptions) {
+  log.log({color: COLOR.CYAN}, 'ocular generating pages')();
+  // log.log({color: COLOR.CYAN}, 'ocular generating pages', pluginOptions)();
 
+  // TODO/ib - plugin options no longer provided when we are not a plugin
+  // We seem to be getting site metadata instead?
   const {
     docPages = true,
     examplePages = true // TODO - autodetect based on DEMOS config
@@ -102,7 +105,8 @@ function createExamplePages({ graphql, actions }) {
     for (const example of EXAMPLES) {
       const exampleName = example.title;
 
-      log.log({color: COLOR.CYAN}, `Creating example page ${JSON.stringify(example)}`)();
+      log.log({color: COLOR.CYAN, priority: 1},
+        `Creating example page ${JSON.stringify(example)}`)();
 
       createPage({
         path: example.path,
