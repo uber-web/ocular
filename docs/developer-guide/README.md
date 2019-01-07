@@ -1,7 +1,4 @@
-# ocular (gatsby version)
-
-> Note: This documentation is for the newer gatsby-based version of ocular. In addition to the gatsbyjs-based generator, Ocular also support a "classic" variant for backwards compatibility. This version is not maintained and new sites should be built using the gatsbyjs-based generator. See documentation on [github]().
-
+# Overview
 
 Ocular is a tool primarily designed for building documentation websites for github-based javascript frameworks, built using the gatsbyjs documentation generation system.
 

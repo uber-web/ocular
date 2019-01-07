@@ -1,16 +1,8 @@
 const {log, COLOR} = require('../utils/log');
-
-const createPages = require('./create-pages');
-const {processNewMarkdownNode, cleanupMarkdownNode, addSiblingNodes} = require('./process-nodes-markdown');
-const {processNewDocsJsonNode} = require('./process-nodes-json');
-
-// TODO/ib - avoid globals
-const docNodes = {};
-
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
 // https://github.com/gatsbyjs/gatsby/issues/3052
-function onCreateWebpackConfig(opts, ocularPluginOptions) {
+module.exports = function onCreateWebpackConfig(opts, ocularPluginOptions = {}) {
   const {
     stage,     // build stage: ‘develop’, ‘develop-html’, ‘build-javascript’, or ‘build-html’
     getConfig, // Function that returns the current webpack config
@@ -19,6 +11,11 @@ function onCreateWebpackConfig(opts, ocularPluginOptions) {
     plugins,    // Object (map): A set of preconfigured webpack config plugins
     actions
   } = opts;
+
+  const {logLevel = 0} = ocularPluginOptions;
+  log.priority = logLevel;
+
+  log.log({color: COLOR.CYAN}, `Ocular - rewriting gatsby webpack config`)();
 
   let config = getConfig();
 
@@ -42,7 +39,7 @@ function onCreateWebpackConfig(opts, ocularPluginOptions) {
     // Exclude all node_modules from transpilation, except for ocular
     exclude: modulePath =>
       /node_modules/.test(modulePath) &&
-      !/node_modules\/(ocular|gatsby-plugin-ocular)/.test(modulePath),
+      !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(modulePath),
   };
 
   const newConfig = {};
@@ -59,63 +56,30 @@ function onCreateWebpackConfig(opts, ocularPluginOptions) {
 
   Object.assign(newConfig, ocularPluginOptions.webpack);
 
+  log.log({priority: 2, color: COLOR.MAGENTA},
+    `Webpack options ${JSON.stringify(ocularPluginOptions.webpack, null, 2)}`)();
+
   // Completely replace the webpack config for the current stage.
   // This can be dangerous and break Gatsby if certain configuration options are changed.
   // Generally only useful for cases where you need to handle config merging logic yourself,
   // in which case consider using webpack-merge.
   actions.setWebpackConfig(newConfig);
 
+  log.log({color: COLOR.CYAN, priority: 2}, `Webpack delta config ${JSON.stringify(newConfig, null, 2)}`)();
+
   /* UNCOMMENT TO DEBUG THE CONFUG
+  */
   config = getConfig();
   const jsRules = config.module.rules.filter(rule => String(rule.test) === String(/\.jsx?$/))
   const oldJSRule = jsRules[0];
 
-  log.log({color: COLOR.CYAN},
+  log.log({color: COLOR.CYAN, priority: 1},
+    `Webpack started with aliases ${JSON.stringify(config.resolve.alias, null, 2)}`)();
+
+  log.log({color: COLOR.MAGENTA, priority: 3},
     `Webpack config ${JSON.stringify(jsRules[0])} => ${JSON.stringify(newJSRule)}
 ${oldJSRule.test} => ${newJSRule.test}
 ${oldJSRule.include} => ${newJSRule.include}
 ${oldJSRule.exclude} => ${newJSRule.exclude}`
-  // config,
   )(); //, ocularPluginOptions.webpack\)();
-  */
-}
-
-function onCreateNode({ node, actions, getNode }) {
-  // log.log({color: COLOR.CYAN}, `Processed node`)();
-
-  // Add missing fields to markdown nodes
-  cleanupMarkdownNode({ node, actions, getNode });
-
-  switch (node.internal.type) {
-  case "MarkdownRemark":
-    // Note: MarkdownRemark nodes are created by the gatsby-transformer-remark
-    // markdown parser. These are different from the original file nodes
-    // for the markdown files created by the gatsby-source-filesystem plugin.
-    processNewMarkdownNode({ node, actions, getNode }, docNodes);
-    break;
-
-  case 'DocsJson':
-    processNewDocsJsonNode({ node, actions, getNode }, docNodes);
-    break;
-
-  default:
-  }
-}
-
-function setFieldsOnGraphQLNodeType({ type, actions }) {
-  const { name } = type;
-  const { createNodeField } = actions;
-  if (name === "MarkdownRemark") {
-    addSiblingNodes(createNodeField);
-  }
-};
-
-// gatsby-node default implementation, user can just export these from gatsby-node
-module.exports = function getGatsbyNodeCallbacks() {
-  return {
-    onCreateWebpackConfig,
-    onCreateNode,
-    setFieldsOnGraphQLNodeType,
-    createPages
-  };
 }

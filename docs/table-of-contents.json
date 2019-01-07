@@ -6,22 +6,28 @@
       "entries": [
         {
           "entry": "docs/README"
+        },
+        {
+          "entry": "docs/whats-new"
         }
       ]
     },
     {
-      "title": "Gatby Version Reference",
+      "title": "Developer Guide",
       "entries": [
         {
-          "entry": "docs/reference-gatsby/README"
+          "entry": "docs/developer-guide/README"
+        },
+        {
+          "entry": "docs/developer-guide/debugging"
         }
       ]
     },
     {
-      "title": "Common Reference",
+      "title": "Reference",
       "entries": [
         {
-            "entry": "docs/reference-common/configuring-ocular/config-reference"
+          "entry": "docs/reference/configuration"
         }
       ]
     },
@@ -31,16 +37,14 @@
         {
           "title": "Basics",
           "entries": [
-            {"entry": "docs/basics/1-introduction"},
-            {"entry": "docs/basics/2-getting-started"}
+            {"entry": "docs/reference-classic/basics/1-introduction"},
+            {"entry": "docs/reference-classic/basics/2-getting-started"}
           ]
         },
         {
           "title": "Build your own Components",
           "entries": [
             {"entry": "docs/reference-classic/build-your-own-components/1-presenting-base-components"},
-            {"entry": "docs/reference-classic/build-your-own-components/2-app"},
-            {"entry": "docs/reference-classic/build-your-own-components/3-home"},
             {"entry": "docs/reference-classic/build-your-own-components/4-markdown"},
             {"entry": "docs/reference-classic/build-your-own-components/5-search"},
 

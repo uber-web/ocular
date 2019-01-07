@@ -9,7 +9,7 @@ module.exports.processNewDocsJsonNode = function processNewDocsJsonNode({
 }, docNodes) {
   traverseTableOfContents(node.chapters, docNodes, 1);
   tableOfContents = node;
-  log.log({color: COLOR.CYAN}, `Processed tableOfContents \
+  log.log({color: COLOR.CYAN, priority: 1}, `Processing tableOfContents \
 ${Object.keys(docNodes).length}
 ${Object.keys(tableOfContents.chapters).length}
 //${JSON.stringify(Object.keys(docNodes), null, 0)}
@@ -53,6 +53,6 @@ function processEntry(chapter, entry, docNodes) {
     entry.id = [ docNode.id ];
     entry.markdown = [ docNode.id ];
     entry.childMarkdownRemark = docNode;
-    log.log({color: COLOR.CYAN}, 'doc page', chapter.title, entry.entry)();
+    log.log({color: COLOR.CYAN, priority: 2}, 'doc page', chapter.title, entry.entry)();
   }
 }

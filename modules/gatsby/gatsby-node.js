@@ -1,5 +1,5 @@
 const {getGatsbyNodeCallbacks} = require('./src');
-module.exports = getGatsbyNodeCallbacks();
+module.exports = getGatsbyNodeCallbacks;
 
 // NOTE: It is possible to override the ocular-provided callbacks
 // and this take control any aspect of gatsby:
