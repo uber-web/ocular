@@ -1,0 +1,19 @@
+{
+  "description": "A website built with ocular",
+  "license": "MIT",
+  "keywords": [
+    "ocular"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf ./.cache ./public",
+    "develop": "gatsby develop",
+    "build": "gatsby develop",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "gatsby": "2.0.85",
+    "ocular-gatsby": "1.0.0-alpha.4"
+  },
+  "devDependencies": {}
+}

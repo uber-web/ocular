@@ -3655,7 +3655,7 @@ ini@^1.3.4, ini@~1.3.0:
   resolved "https://unpm.uberinternal.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
 
-inquirer@^6.1.0:
+inquirer@^6.1.0, inquirer@^6.2.1:
   version "6.2.1"
   resolved "https://unpm.uberinternal.com/inquirer/-/inquirer-6.2.1.tgz#9943fc4882161bdb0b0c9276769c75b32dbfcd52"
   integrity sha512-088kl3DRT2dLU5riVMKKr1DlImd6X7smDhpXUCkJDCKvTEJeRiXh0G132HG9u5a+6Ylw9plFRY7RuTnwohYSpg==
@@ -7153,6 +7153,13 @@ sliced@^1.0.1:
   resolved "https://unpm.uberinternal.com/sliced/-/sliced-1.0.1.tgz#0b3a662b5d04c3177b1926bea82b03f837a2ef41"
   integrity sha1-CzpmK10Ewxd7GSa+qCsD+Dei70E=
 
+slug@^0.9.3:
+  version "0.9.3"
+  resolved "https://unpm.uberinternal.com/slug/-/slug-0.9.3.tgz#8c9c773d79367c0188733316cf49fd2b8db40f6a"
+  integrity sha512-DddSQQnUdAofjFOKRT+zsMNrdzdte04G5DUA+NeaUJlPAqR1bWQ22qVfayRxHFiRGR3bUV0wt5VSj4849pGKSw==
+  dependencies:
+    unicode ">= 0.3.1"
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://unpm.uberinternal.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -8087,6 +8094,11 @@ unherit@^1.0.4:
   dependencies:
     inherits "^2.0.1"
     xtend "^4.0.1"
+
+"unicode@>= 0.3.1":
+  version "11.0.1"
+  resolved "https://unpm.uberinternal.com/unicode/-/unicode-11.0.1.tgz#735bd422ec75cf28d396eb224d535d168d5f1db6"
+  integrity sha512-+cHtykLb+eF1yrSLWTwcYBrqJkTfX7Quoyg7Juhe6uylF43ZbMdxMuSHNYlnyLT8T7POAvavgBthzUF9AIaQvQ==
 
 unified-args@^6.0.0:
   version "6.0.0"

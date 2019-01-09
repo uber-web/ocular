@@ -8,3 +8,5 @@ website/node_modules
 website/yarn-error.log
 
 package-lock.json
+
+website-test/*

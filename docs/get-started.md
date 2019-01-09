@@ -17,7 +17,7 @@ npm init -y
 then install Ocular as a devDependency.
 
 ```
-npm install ocular --save-dev
+yarn add -D ocular-gatsby
 ```
 
 ## Creating and running your Ocular website
@@ -30,10 +30,18 @@ ocular init
 
 This will create a number of files and folders in the ocular folder.
 
+
+Now install any remaining packages:
+```
+yarn
+```
+
 At this stage, you can see your website by typing:
 
 ```
-ocular start
+ocular develop
+# or
+gatsby develop
 ```
 
 ## Writing content

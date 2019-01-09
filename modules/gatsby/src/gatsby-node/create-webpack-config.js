@@ -15,7 +15,7 @@ module.exports = function onCreateWebpackConfig(opts, ocularPluginOptions = {}) 
   const {logLevel = 0} = ocularPluginOptions;
   log.priority = logLevel;
 
-  log.log({color: COLOR.CYAN}, `Ocular - rewriting gatsby webpack config`)();
+  log.log({color: COLOR.CYAN}, `rewriting gatsby webpack config`)();
 
   let config = getConfig();
 
