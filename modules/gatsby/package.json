@@ -4,6 +4,9 @@
   "version": "1.0.0-alpha.4",
   "license": "MIT",
   "main": "gatsby-browser.js",
+  "bin": {
+    "ocular": "./bin/ocular.js"
+  },
   "scripts": {
     "start": "rm -fr .cache && gatsby develop --port 8001",
     "develop": "gatsby develop --port 8001",
@@ -18,7 +21,7 @@
     "write-good": "write-good $(glob 'content/posts/**/*.md')",
     "format:js": "prettier '**/*.{js,jsx}' --write"
   },
-  "peerDependenciesComment": "Ensure app website is using this exact version of gatsby",
+  "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
   "peerDependencies": {
     "gatsby": ">= 2.0.85"
   },
@@ -49,6 +52,7 @@
     "gatsby-transformer-json": "^2.1.6",
     "gatsby-transformer-remark": "2.1.17",
     "gatsby-transformer-sharp": "2.1.8",
+    "inquirer": "^6.2.1",
     "lodash": "^4.17.4",
     "moment": "^2.22.2",
     "node-sass": "^4.11.0",
@@ -62,6 +66,7 @@
     "react-icons": "^2.2.7",
     "react-share": "^2.0.0",
     "react-twitter-widgets": "^1.7.1",
+    "slug": "^0.9.3",
     "stats.js": "^0.17.0",
     "styled-components": "^4.1.0",
     "url-join": "^4.0.0"

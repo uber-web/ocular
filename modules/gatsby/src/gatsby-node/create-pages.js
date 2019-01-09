@@ -22,8 +22,7 @@ assert(INDEX_PAGE && DOC_PAGE && EXAMPLES_PAGE && EXAMPLE_PAGE);
 // by gatsby.
 // We use graphgl to query for nodes and iterate
 module.exports = function createPages({ graphql, actions }, pluginOptions) {
-  log.log({color: COLOR.CYAN}, 'ocular generating pages')();
-  // log.log({color: COLOR.CYAN}, 'ocular generating pages', pluginOptions)();
+  log.log({color: COLOR.CYAN}, 'generating pages')();
 
   // TODO/ib - plugin options no longer provided when we are not a plugin
   // We seem to be getting site metadata instead?
