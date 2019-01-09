@@ -2,6 +2,9 @@
 
 ocular-gatsby is still in experimental pre-release
 
+## 1.0.0-alpha.5
+- CLI added (`ocular init` creates working page).
+
 ## 1.0.0-alpha.4
 - Bump to `gatsby` 2.0.85.
 - Add `logLevel` support for debugging ocular. Hide verbose logging under `logLevel`.

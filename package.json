@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "publish-beta": "(cd modules/gatsby; npm run  publish-beta)"
+  }  
+}
