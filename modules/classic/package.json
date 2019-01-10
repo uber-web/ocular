@@ -64,7 +64,7 @@
     "to-case": "^2.0.0",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1",
+    "webpack-dev-server": "^3.1.1",
     "webpack-hot-middleware": "^2.18.2",
     "whatwg-fetch": "^2.0.3"
   }
