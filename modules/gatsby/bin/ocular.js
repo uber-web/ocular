@@ -46,6 +46,7 @@ const FILENAMES = [
   'gatsby-ssr.js',
   'package.json',
   '.gitignore',
+  '.eslintignore', // Better if we can avoid this
   'src/components/layout.jsx'
 ];
 

@@ -21,6 +21,7 @@
     "write-good": "write-good $(glob 'content/posts/**/*.md')",
     "format:js": "prettier '**/*.{js,jsx}' --write",
     "publish-beta": "yarn test && npm publish --tag beta",
+    "publish-prod": "yarn test && npm publish",
     "test": "echo Please add tests"
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
