@@ -1,8 +1,12 @@
 const {log, COLOR} = require('../utils/log');
+
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
 // https://github.com/gatsbyjs/gatsby/issues/3052
-module.exports = function onCreateWebpackConfig(opts, ocularPluginOptions = {}) {
+module.exports = function onCreateWebpackConfig(opts) {
+
+  const {ocularConfig} = global || {};
+
   const {
     stage,     // build stage: ‘develop’, ‘develop-html’, ‘build-javascript’, or ‘build-html’
     getConfig, // Function that returns the current webpack config
@@ -12,10 +16,16 @@ module.exports = function onCreateWebpackConfig(opts, ocularPluginOptions = {}) 
     actions
   } = opts;
 
-  const {logLevel = 0} = ocularPluginOptions;
-  log.priority = logLevel;
 
-  log.log({color: COLOR.CYAN}, `rewriting gatsby webpack config`)();
+  if (ocularConfig.webpack) {
+    log.log({color: COLOR.CYAN}, `rewriting gatsby webpack config (using website config)`)();
+    log.log({priority: 2, color: COLOR.MAGENTA},
+      `Webpack options ${JSON.stringify(ocularConfig.webpack, null, 2)}`)();
+  } else {
+    log.log({color: COLOR.CYAN},
+      `rewriting gatsby webpack config (no website webpack config supplied)`)();
+  }
+
 
   let config = getConfig();
 
@@ -42,22 +52,21 @@ module.exports = function onCreateWebpackConfig(opts, ocularPluginOptions = {}) 
       !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(modulePath),
   };
 
-  const newConfig = {};
-  newConfig.module = newConfig.module = {};
-  newConfig.module.rules = [
-    // Omit the default rule where test === '\.jsx?$'
-    newJSRule
-  ];
+  const newConfig = {
+    module: {
+      rules: [
+        // Omit the default rule where test === '\.jsx?$'
+        newJSRule
+      ]
+    }
+  };
 
   // nulling out `fs` avoids issues with certain node modules getting bundled,
   // e.g. headless-gl gets bundled by luma.gl if installed in root folder
   newConfig.node = newConfig.node || {};
   newConfig.node.fs = 'empty';
 
-  Object.assign(newConfig, ocularPluginOptions.webpack);
-
-  log.log({priority: 2, color: COLOR.MAGENTA},
-    `Webpack options ${JSON.stringify(ocularPluginOptions.webpack, null, 2)}`)();
+  Object.assign(newConfig, ocularConfig.webpack);
 
   // Completely replace the webpack config for the current stage.
   // This can be dangerous and break Gatsby if certain configuration options are changed.
@@ -77,9 +86,10 @@ module.exports = function onCreateWebpackConfig(opts, ocularPluginOptions = {}) 
     `Webpack started with aliases ${JSON.stringify(config.resolve.alias, null, 2)}`)();
 
   log.log({color: COLOR.MAGENTA, priority: 3},
-    `Webpack config ${JSON.stringify(jsRules[0])} => ${JSON.stringify(newJSRule)}
-${oldJSRule.test} => ${newJSRule.test}
-${oldJSRule.include} => ${newJSRule.include}
-${oldJSRule.exclude} => ${newJSRule.exclude}`
-  )(); //, ocularPluginOptions.webpack\)();
+    `Webpack config
+rules ${JSON.stringify(jsRules[0])} => ${JSON.stringify(newJSRule)}
+test ${oldJSRule.test} => ${newJSRule.test}
+include ${oldJSRule.include} => ${newJSRule.include}
+exclude ${oldJSRule.exclude} => ${newJSRule.exclude}`
+  )();
 }

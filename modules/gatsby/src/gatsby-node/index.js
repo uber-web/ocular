@@ -46,7 +46,8 @@ const GATSBY_NODE_CALLBACKS = {
 };
 
 // gatsby-node default implementation, user can just export these from gatsby-node
-module.exports = function getGatsbyNodeCallbacks() {
+module.exports = function getGatsbyNodeCallbacks(config) {
+  global.ocularConfig = config;
   return GATSBY_NODE_CALLBACKS;
 }
 
