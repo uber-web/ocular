@@ -3,6 +3,10 @@
   "description": "GatsbyJS plugin for rendering markdown docs for frameworks.",
   "version": "1.0.0-alpha.6",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/ocular/"
+  },
   "main": "gatsby-browser.js",
   "bin": {
     "ocular": "./bin/ocular.js"

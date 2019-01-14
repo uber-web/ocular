@@ -1,0 +1,71 @@
+{
+  "name": "ocular-dev-tools",
+  "description": "Dev tools for our Javascript frameworks",
+  "license": "MIT",
+  "version": "0.0.4",
+  "keywords": [
+    "javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/ocular/"
+  },
+  "files": [
+    "config",
+    "scripts",
+    "templates"
+  ],
+  "bin": {
+    "ocular-clean": "./scripts/clean.sh",
+    "ocular-build": "./scripts/build.sh",
+    "ocular-lint": "./scripts/lint.sh",
+    "ocular-test": "./scripts/test.sh",
+    "ocular-metrics": "./scripts/metrics.sh",
+    "ocular-publish": "./scripts/publish.sh",
+    "ocular-lint-monorepo": "./scripts/lint-monorepo.sh",
+    "ocular-publish-monorepo": "./scripts/publish-monorepo.sh"
+  },
+  "scripts": {
+    "clean": "echo No build needed",
+    "build": "echo No build needed",
+    "lint": "npm run lint-yarn",
+    "lint-yarn": "!(grep -q unpm.u yarn.lock) || (echo 'Please rebuild yarn file using public npmrc' && false)",
+    "publish-prod": "npm run build && npm run test && npm run test dist && npm publish",
+    "publish-beta": "npm run build && npm run test && npm run test dist && npm publish --tag beta",
+    "test": "echo Please help add tests"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "puppeteer": "^1.11.0",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-istanbul": "^5.0.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-plugin-version-inline": "^1.0.0",
+    "coveralls": "^2.13.0",
+    "eslint": "^3.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-uber-es2015": "^3.0.0",
+    "faucet": "0.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "module-alias": "^2.0.0",
+    "nyc": "^10.2.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "1.14.3",
+    "prettier-check": "2.0.0",
+    "probe.gl": "^2.0.1",
+    "reify": "^0.4.4",
+    "source-map-loader": "^0.2.3",
+    "tap-browser-color": "^0.1.2",
+    "tape": "^4.9.2",
+    "tape-catch": "^1.0.4",
+    "webpack": "^4.28.4",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
