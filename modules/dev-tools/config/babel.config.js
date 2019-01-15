@@ -18,7 +18,6 @@ module.exports = {
         }]
       ],
       plugins: [
-        ['transform-builtin-extend', {globals: ['Array']}],
         '@babel/transform-runtime',
         'version-inline'
       ]
@@ -31,7 +30,6 @@ module.exports = {
         }]
       ],
       plugins: [
-        ['transform-builtin-extend', {globals: ['Array']}],
         ['@babel/transform-runtime', {useESModules: true}],
         'version-inline'
       ]
@@ -44,7 +42,6 @@ module.exports = {
         }]
       ],
       plugins: [
-        ['transform-builtin-extend', {globals: ['Array']}],
         ['@babel/transform-runtime', {useESModules: true}],
         'version-inline'
       ]
