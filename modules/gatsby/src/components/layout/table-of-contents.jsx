@@ -20,7 +20,7 @@
 
 import React, { PureComponent } from 'react'
 import cx from 'classnames'
-import {Link} from 'gatsby';
+import { Link } from 'gatsby';
 
 const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
@@ -33,11 +33,12 @@ function getHeight(route) {
 // which will point to the same route, because the history module would
 // generate warnings when such a link is clicked
 
-const SafeLink = ({className, name, path, pathname}) => {
-  if (path === pathname) {
-    return (<div className={className}>{name}</div>);
+const SafeLink = ({ className, name, path, pathname }) => {
+  if (!path || path === pathname) {
+    return (<div className={className} title={name}>{name}</div>);
   }
-  return (<Link to={path} className={className}>{name}</Link>)
+
+  return (<Link to={path} className={className} title={name}>{name}</Link>)
 }
 
 const renderRoute = (route, i, pathname, depth) => {
@@ -55,7 +56,7 @@ const renderRoute = (route, i, pathname, depth) => {
   if (route.chapters) {
     const name = route.title;
     return (
-      <div key={i} style={{marginLeft: 10 * depth}}>
+      <div key={i} style={{ marginLeft: 10 * depth }}>
         <div>
           <SafeLink
             className={cx('list-header', {
@@ -77,7 +78,7 @@ const renderRoute = (route, i, pathname, depth) => {
   if (route.entries) {
     const name = route.title;
     return (
-      <div key={i} style={{marginLeft: 10 * depth}}>
+      <div key={i} style={{ marginLeft: 10 * depth }}>
         <div>
           <SafeLink
             className={cx('list-header', {
@@ -100,7 +101,7 @@ const renderRoute = (route, i, pathname, depth) => {
   const name = remark && remark.frontmatter && remark.frontmatter.title;
   const slug = remark && remark.fields && remark.fields.slug;
   return (
-    <div key={i} style={{marginLeft: 10 * depth}}>
+    <div key={i} style={{ marginLeft: 10 * depth }}>
       <li>
         <SafeLink
           className={cx('link', { active: false /* pathname.includes(path) */ })}
@@ -115,6 +116,7 @@ const renderRoute = (route, i, pathname, depth) => {
 
 export default class TableOfContents extends PureComponent {
   render() {
+
     const tree = this.props.chapters;
     const { className, open, pathname } = this.props
 

@@ -36,8 +36,6 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   font: inherit;
   color: inherit;
   border: none;
@@ -69,6 +67,7 @@ html, body {
 
 body {
   font-size: 16px;
+  font-weight: 400;
   line-height: 24px;
   overflow-y: auto;
 }
@@ -94,7 +93,7 @@ h1 {
 h2 {
   font-size: 28px;
   line-height: 40px;
-  font-weight: 400;
+  font-weight: 600;
   margin: 32px 0 16px;
 }
 
@@ -117,6 +116,10 @@ h3 {
   line-height: 36px;
   font-weight: 400;
   margin: 32px 0 8px;
+}
+
+strong {
+  font-weight: 700;
 }
 
 .Contributors {
