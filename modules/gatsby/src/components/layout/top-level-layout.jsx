@@ -7,7 +7,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { StaticQuery, graphql } from 'gatsby'
 
-import {WebsiteConfigProvider} from './website-config';
+import { WebsiteConfigProvider } from './website-config';
 
 import SEO from '../common/SEO'
 
@@ -52,9 +52,8 @@ const BodyContainerFull = styled.div`
 const BodyContainerToC = styled.div`
   grid-column: 2 / 3;
   grid-row: 2 / 3;
-  overflow: scroll;
-  justify-self: center;
   width: 100%;
+  max-width: 600px;
   padding: ${props => props.theme.sitePadding};
   @media screen and (max-width: 600px) {
     order: 2;
@@ -63,6 +62,9 @@ const BodyContainerToC = styled.div`
   & > div {
     max-width: ${props => props.theme.contentWidthLaptop};
     margin: auto;
+  }
+  & p {
+    margin-bottom: 1em;
   }
 
   & > h1 {
@@ -84,41 +86,41 @@ const ToCContainer = styled.div`
 export default class Layout extends React.Component {
 
   renderTOC(config, tableOfContents) {
-    const {pageContext} = this.props;
+    const { pageContext } = this.props;
 
     switch (pageContext.toc) {
-    case 'docs':
-      return <TableOfContents chapters={tableOfContents.chapters} />;
+      case 'docs':
+        return <TableOfContents chapters={tableOfContents.chapters} />;
 
-    case 'examples':
-      const {EXAMPLES} = config;
+      case 'examples':
+        const { EXAMPLES } = config;
 
-      const examplesTOC = [{
-        title: 'Examples',
-        entries: []
-      }];
+        const examplesTOC = [{
+          title: 'Examples',
+          entries: []
+        }];
 
-      for (const example of EXAMPLES) {
+        for (const example of EXAMPLES) {
 
-        // ignore empty list placeholder (makes graphql queryies not fail)
-        if (example.title !== 'none') {
-          const exampleEntry = Object.assign({
-            entry: example.title
-          }, example);
-          examplesTOC[0].entries.push(exampleEntry);
+          // ignore empty list placeholder (makes graphql queryies not fail)
+          if (example.title !== 'none') {
+            const exampleEntry = Object.assign({
+              entry: example.title
+            }, example);
+            examplesTOC[0].entries.push(exampleEntry);
+          }
         }
-      }
 
-      return <ExampleTableOfContents chapters={examplesTOC} />;
+        return <ExampleTableOfContents chapters={examplesTOC} />;
 
-    default:
-      console.warn(`Unknown toc type ${pageContext.toc}`);
-      break;
+      default:
+        console.warn(`Unknown toc type ${pageContext.toc}`);
+        break;
     }
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const {children} = this.props;
+    const { children } = this.props;
 
     return (
       <BodyGrid>
@@ -127,21 +129,21 @@ export default class Layout extends React.Component {
         </HeaderContainer>
 
         <ToCContainer>
-          { this.renderTOC(config, tableOfContents) }
+          {this.renderTOC(config, tableOfContents)}
         </ToCContainer>
 
         <BodyContainerToC>
-          { children }
+          {children}
         </BodyContainerToC>
 
-        { /* <Footer /> */ }
+        { /* <Footer /> */}
 
       </BodyGrid>
     );
   }
 
   renderBodyFull(config) {
-    const {children} = this.props;
+    const { children } = this.props;
 
     return (
       <div>
@@ -150,7 +152,7 @@ export default class Layout extends React.Component {
         </HeaderContainer>
 
         <BodyContainerFull>
-          { children }
+          {children}
         </BodyContainerFull>
 
         {/* <Footer /> */}
@@ -162,21 +164,20 @@ export default class Layout extends React.Component {
   render() {
     // Since gatsby's StaticQueries can't run in a plugin, we rely on the app website's
     // Layout wrapper component to query for us and pass in the data.
-    const {pageContext, config, tableOfContents, allMarkdown} = this.props;
-
+    const { pageContext, config, tableOfContents, allMarkdown } = this.props;
     return (
-      <WebsiteConfigProvider value={{config, tableOfContents, allMarkdown}}>
+      <WebsiteConfigProvider value={{ config, tableOfContents, allMarkdown }}>
 
         <div>
-          { allMarkdown
+          {allMarkdown
             ? <SEO postEdges={allMarkdown} />
             : (
-                <Helmet>
-                  <title>{config.PROJECT_NAME}</title>
-                </Helmet>
-              )
+              <Helmet>
+                <title>{config.PROJECT_NAME}</title>
+              </Helmet>
+            )
           }
-          { pageContext.toc
+          {pageContext.toc
             ? this.renderBodyWithTOC(config, tableOfContents)
             : this.renderBodyFull(config)
           }
