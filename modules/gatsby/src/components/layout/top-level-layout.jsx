@@ -14,6 +14,7 @@ import SEO from '../common/SEO'
 import TableOfContents from './table-of-contents'
 import ExampleTableOfContents from './example-table-of-contents'
 import Header from './header'
+import { CompositeDisposable } from 'rx';
 // TODO/ib - restore footer
 // import Footer from './footer';
 
@@ -87,10 +88,9 @@ export default class Layout extends React.Component {
 
   renderTOC(config, tableOfContents) {
     const { pageContext } = this.props;
-
     switch (pageContext.toc) {
       case 'docs':
-        return <TableOfContents chapters={tableOfContents.chapters} />;
+        return <TableOfContents chapters={tableOfContents.chapters} slug={pageContext.slug} />;
 
       case 'examples':
         const { EXAMPLES } = config;
@@ -111,7 +111,7 @@ export default class Layout extends React.Component {
           }
         }
 
-        return <ExampleTableOfContents chapters={examplesTOC} />;
+        return <ExampleTableOfContents chapters={examplesTOC} slug={pageContext.slug}/>;
 
       default:
         console.warn(`Unknown toc type ${pageContext.toc}`);

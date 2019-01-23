@@ -33,6 +33,7 @@
     "gatsby": ">= 2.0.85"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "gatsby-image": "2.0.25",
     "gatsby-plugin-catch-links": "2.0.9",
     "gatsby-plugin-feed": "2.0.11",
@@ -73,6 +74,7 @@
     "react-icons": "^2.2.7",
     "react-share": "^2.0.0",
     "react-twitter-widgets": "^1.7.1",
+    "rx": "^4.1.0",
     "slug": "^0.9.3",
     "stats.js": "^0.17.0",
     "styled-components": "^4.1.0",
