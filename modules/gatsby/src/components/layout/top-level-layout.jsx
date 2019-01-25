@@ -2,19 +2,17 @@
 // page loads. This component is wrapped around the react component returned by
 // each page by 'gatsby-plugin-layout'
 
-import React from 'react'
-import Helmet from 'react-helmet'
-import styled from 'styled-components'
-import { StaticQuery, graphql } from 'gatsby'
+import React from 'react';
+import Helmet from 'react-helmet';
+import styled from 'styled-components';
 
 import { WebsiteConfigProvider } from './website-config';
 
-import SEO from '../common/SEO'
+import SEO from '../common/SEO';
 
-import TableOfContents from './table-of-contents'
-import ExampleTableOfContents from './example-table-of-contents'
-import Header from './header'
-import { CompositeDisposable } from 'rx';
+import TableOfContents from './table-of-contents';
+import ExampleTableOfContents from './example-table-of-contents';
+import Header from './header';
 // TODO/ib - restore footer
 // import Footer from './footer';
 
@@ -29,7 +27,7 @@ const BodyGrid = styled.div`
     flex-direction: column;
     height: inherit;
   }
-`
+`;
 
 const HeaderContainer = styled.div`
   grid-column: 1 / 3;
@@ -38,7 +36,7 @@ const HeaderContainer = styled.div`
   @media screen and (max-width: 600px) {
     order: 1;
   }
-`
+`;
 
 const BodyContainerFull = styled.div`
   padding: ${props => props.theme.sitePadding};
@@ -49,7 +47,7 @@ const BodyContainerFull = styled.div`
     max-width: 400px;
     margin: 100px auto 0;
   }
-`
+`;
 const BodyContainerToC = styled.div`
   grid-column: 2 / 3;
   grid-row: 2 / 3;
@@ -71,7 +69,7 @@ const BodyContainerToC = styled.div`
   & > h1 {
     color: ${props => props.theme.accentDark};
   }
-`
+`;
 
 const ToCContainer = styled.div`
   grid-column: 1 / 2;
@@ -82,40 +80,53 @@ const ToCContainer = styled.div`
     order: 3;
     overflow: inherit;
   }
-`
+`;
 
 export default class Layout extends React.Component {
-
   renderTOC(config, tableOfContents) {
     const { pageContext } = this.props;
     switch (pageContext.toc) {
       case 'docs':
-        return <TableOfContents chapters={tableOfContents.chapters} slug={pageContext.slug} />;
+        return (
+          <TableOfContents
+            chapters={tableOfContents.chapters}
+            slug={pageContext.slug}
+          />
+        );
 
       case 'examples':
         const { EXAMPLES } = config;
 
-        const examplesTOC = [{
-          title: 'Examples',
-          entries: []
-        }];
+        const examplesTOC = [
+          {
+            title: 'Examples',
+            entries: []
+          }
+        ];
 
         for (const example of EXAMPLES) {
-
           // ignore empty list placeholder (makes graphql queryies not fail)
           if (example.title !== 'none') {
-            const exampleEntry = Object.assign({
-              entry: example.title
-            }, example);
+            const exampleEntry = Object.assign(
+              {
+                entry: example.title
+              },
+              example
+            );
             examplesTOC[0].entries.push(exampleEntry);
           }
         }
 
-        return <ExampleTableOfContents chapters={examplesTOC} slug={pageContext.slug}/>;
+        return (
+          <ExampleTableOfContents
+            chapters={examplesTOC}
+            slug={pageContext.slug}
+          />
+        );
 
       default:
         console.warn(`Unknown toc type ${pageContext.toc}`);
-        break;
+        return null;
     }
   }
 
@@ -128,16 +139,11 @@ export default class Layout extends React.Component {
           <Header config={config} />
         </HeaderContainer>
 
-        <ToCContainer>
-          {this.renderTOC(config, tableOfContents)}
-        </ToCContainer>
+        <ToCContainer>{this.renderTOC(config, tableOfContents)}</ToCContainer>
 
-        <BodyContainerToC>
-          {children}
-        </BodyContainerToC>
+        <BodyContainerToC>{children}</BodyContainerToC>
 
-        { /* <Footer /> */}
-
+        {/* <Footer /> */}
       </BodyGrid>
     );
   }
@@ -151,12 +157,9 @@ export default class Layout extends React.Component {
           <Header config={config} />
         </HeaderContainer>
 
-        <BodyContainerFull>
-          {children}
-        </BodyContainerFull>
+        <BodyContainerFull>{children}</BodyContainerFull>
 
         {/* <Footer /> */}
-
       </div>
     );
   }
@@ -167,23 +170,19 @@ export default class Layout extends React.Component {
     const { pageContext, config, tableOfContents, allMarkdown } = this.props;
     return (
       <WebsiteConfigProvider value={{ config, tableOfContents, allMarkdown }}>
-
         <div>
-          {allMarkdown
-            ? <SEO postEdges={allMarkdown} />
-            : (
-              <Helmet>
-                <title>{config.PROJECT_NAME}</title>
-              </Helmet>
-            )
-          }
+          {allMarkdown ? (
+            <SEO postEdges={allMarkdown} />
+          ) : (
+            <Helmet>
+              <title>{config.PROJECT_NAME}</title>
+            </Helmet>
+          )}
           {pageContext.toc
             ? this.renderBodyWithTOC(config, tableOfContents)
-            : this.renderBodyFull(config)
-          }
+            : this.renderBodyFull(config)}
         </div>
-
       </WebsiteConfigProvider>
-    )
+    );
   }
 }

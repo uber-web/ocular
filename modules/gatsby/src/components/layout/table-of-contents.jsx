@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import React, { PureComponent } from 'react';
-import cx from 'classnames';
+import classNames from 'classnames';
 import { Link } from 'gatsby';
 
 function getRouteInfo({ route, slug }) {
@@ -111,7 +111,7 @@ const renderRoute = ({
       <div key={index} style={{ marginLeft: 10 * depth }}>
         <div>
           <SafeLink
-            className={cx('list-header', {
+            className={classNames('list-header', {
               expanded: fullyExpanded || routeInfo.routeContainsSlug,
               active: routeInfo.routeContainsSlug
             })}
@@ -142,7 +142,7 @@ const renderRoute = ({
       <div key={index} style={{ marginLeft: 10 * depth }}>
         <div>
           <SafeLink
-            className={cx('list-header', {
+            className={classNames('list-header', {
               expanded: fullyExpanded || routeInfo.routeContainsSlug,
               active: routeInfo.routeContainsSlug
             })}
@@ -174,7 +174,7 @@ const renderRoute = ({
     <div key={index} style={{ marginLeft: 10 * depth }}>
       <li>
         <SafeLink
-          className={cx('link', {
+          className={classNames('link', {
             active: target === slug
           })}
           name={name}
@@ -205,9 +205,9 @@ export default class TableOfContents extends PureComponent {
       return null;
     }
     return (
-      <div className={cx('toc', { open }, className)}>
+      <div className={classNames('toc', { open }, className)}>
         <div>
-          <div className={cx('toggle-expanded', { expanded: fullyExpanded })}>
+          <div className={classNames('toggle-expanded', { expanded: fullyExpanded })}>
             <button
               onClick={this.toggleExpanded.bind(this)}
               onKeyPress={this.toggleExpanded.bind(this)}
