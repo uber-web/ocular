@@ -18,57 +18,118 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { PureComponent } from 'react'
-import cx from 'classnames'
+import React, { PureComponent } from 'react';
+import classNames from 'classnames';
 import { Link } from 'gatsby';
 
-const getRootPath = pathname => `/${pathname.split('/')[1]}`
+function getRouteInfo({ route, slug }) {
+  if (route.childMarkdownRemark) {
+    // if route corresponds to an entry with markdown
+    const { fields = { slug: '' } } = route.childMarkdownRemark;
+    return {
+      // if this route has the same slug that we're testing then
+      // all of the chapters/entries that contain it should be open.
+      routeContainsSlug: fields.slug === slug,
+      // also we will pass the slug to that route up, so we can find
+      // the first entry with markdown for a given chapter.
+      pathToFirstChild: fields.slug
+    };
+  }
+
+  // else, we're going to go through children of that route to see
+  // if the active route (ie slug of current page) is one of these
+  // children.
+
+  // note - why actually go down the route as opposed to just do
+  // string operations on slugs? ie checking if '/docs/my-chapter'
+  // is included in '/docs/my-chapter/first-article' ? because this
+  // is fairly unreliable. ie it's also included in 
+  // '/docs/my-chapter-2'. This ambiguity has caused issues in ocular.
+  
+  const children = route.entries || route.chapters || [];
+  return children.reduce(
+    (routeInfo, entry) => {
+      const { routeContainsSlug, pathToFirstChild } = getRouteInfo({
+        route: entry,
+        slug
+      });
+      return {
+        // if we haven't found the slug among the children yet,
+        // and we find it now, then this route contains the slug:
+        routeContainsSlug: routeInfo.routeContainsSlug || routeContainsSlug,
+        // the first time we find a route which has markdown, pathToFirstChild
+        // will get a truthy value (ie the slug of that route). That value
+        // won't change during the reduce
+        pathToFirstChild: routeInfo.pathToFirstChild || pathToFirstChild
+      };
+    },
+    {
+      routeContainsSlug: false,
+      pathToFirstChild: undefined
+    }
+  );
+}
 
 function getHeight(route) {
-  return route.entries.reduce((prev, curr) => prev + (curr.entries ? getHeight(curr) : 40), 0)
+  return route.entries.reduce(
+    (prev, curr) => prev + (curr.entries ? getHeight(curr) : 40),
+    0
+  );
 }
 
 // This component only creates a Link component if clicking on that Link will
-// effectively change routes. It avoids creating a Link with a 'to' property
-// which will point to the same route, because the history module would
-// generate warnings when such a link is clicked
+// effectively change routes. If no path is passed or if the path is not
+// usable then it just renders a div. That should not be the case
 
-const SafeLink = ({ className, name, path, pathname }) => {
-  if (!path || path === pathname) {
-    return (<div className={className} title={name}>{name}</div>);
+const SafeLink = ({ className, name, path }) => {
+  if (!path || typeof path !== 'string') {
+    return (
+      <div className={className} title={name}>
+        {name}
+      </div>
+    );
   }
+  return (
+    <Link to={path} className={className} title={name}>
+      {name}
+    </Link>
+  );
+};
 
-  return (<Link to={path} className={className} title={name}>{name}</Link>)
-}
-
-const renderRoute = (route, i, pathname, depth) => {
-  let path;
-  const queue = [route];
-  while (queue.length) {
-    const r = queue.shift();
-    path = r.path;
-    if (r.children) {
-      queue.push(r.children[0]);
-    }
-  }
-
+const renderRoute = ({
+  route,
+  index,
+  depth,
+  slug,
+  fullyExpanded
+}) => {
+  const routeInfo = getRouteInfo({ route, slug });
 
   if (route.chapters) {
     const name = route.title;
     return (
-      <div key={i} style={{ marginLeft: 10 * depth }}>
+      <div key={index} style={{ marginLeft: 10 * depth }}>
         <div>
           <SafeLink
-            className={cx('list-header', {
-              expanded: true, // TODO - route.expanded,
-              active: true, // pathname.includes(route.path)
+            className={classNames('list-header', {
+              expanded: fullyExpanded || routeInfo.routeContainsSlug,
+              active: routeInfo.routeContainsSlug
             })}
             name={name}
-            path={path}
-            pathname={pathname}
+            path={routeInfo.pathToFirstChild}
           />
           <div className="subpages">
-            <ul>{route.chapters.map((r, idx) => renderRoute(r, idx, pathname, depth + 1))}</ul>
+            <ul>
+              {route.chapters.map((r, idx) =>
+                renderRoute({
+                  route: r,
+                  index: idx,
+                  depth: depth + 1,
+                  slug,
+                  fullyExpanded
+                })
+              )}
+            </ul>
           </div>
         </div>
       </div>
@@ -78,56 +139,97 @@ const renderRoute = (route, i, pathname, depth) => {
   if (route.entries) {
     const name = route.title;
     return (
-      <div key={i} style={{ marginLeft: 10 * depth }}>
+      <div key={index} style={{ marginLeft: 10 * depth }}>
         <div>
           <SafeLink
-            className={cx('list-header', {
-              expanded: true, // TODO - route.expanded,
-              active: false, // pathname.includes(route.path)
+            className={classNames('list-header', {
+              expanded: fullyExpanded || routeInfo.routeContainsSlug,
+              active: routeInfo.routeContainsSlug
             })}
             name={name}
-            path={path}
-            pathname={pathname}
+            path={routeInfo.pathToFirstChild}
           />
           <div className="subpages" style={{ maxHeight: getHeight(route) }}>
-            <ul>{route.entries.map((r, idx) => renderRoute(r, idx, pathname, depth + 1))}</ul>
+            <ul>
+              {route.entries.map((r, idx) =>
+                renderRoute({
+                  route: r,
+                  fullyExpanded,
+                  index: idx,
+                  depth: depth + 1,
+                  slug
+                })
+              )}
+            </ul>
           </div>
         </div>
       </div>
     );
   }
 
-  const remark = route.childMarkdownRemark
+  const remark = route.childMarkdownRemark;
   const name = remark && remark.frontmatter && remark.frontmatter.title;
-  const slug = remark && remark.fields && remark.fields.slug;
+  const target = remark && remark.fields && remark.fields.slug;
   return (
-    <div key={i} style={{ marginLeft: 10 * depth }}>
+    <div key={index} style={{ marginLeft: 10 * depth }}>
       <li>
         <SafeLink
-          className={cx('link', { active: false /* pathname.includes(path) */ })}
+          className={classNames('link', {
+            active: target === slug
+          })}
           name={name}
-          path={slug}
-          pathname={pathname}
+          path={target}
         />
       </li>
     </div>
   );
-}
+};
 
 export default class TableOfContents extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullyExpanded: false
+    };
+  }
+
+  toggleExpanded() {
+    const { fullyExpanded } = this.state;
+    this.setState({ fullyExpanded: !fullyExpanded });
+  }
+
   render() {
-
-    const tree = this.props.chapters;
-    const { className, open, pathname } = this.props
-
+    const { chapters: tree, className, open, slug } = this.props;
+    const { fullyExpanded } = this.state;
     if (!tree) {
-      return null
+      return null;
     }
     return (
-      <div className={cx('toc', { open }, className)}>
-        <div>{tree.map((route, i) => renderRoute(route, i, pathname, 0))}</div>
+      <div className={classNames('toc', { open }, className)}>
+        <div>
+          <div className={classNames('toggle-expanded', { expanded: fullyExpanded })}>
+            <button
+              onClick={this.toggleExpanded.bind(this)}
+              onKeyPress={this.toggleExpanded.bind(this)}
+              type="button"
+            >
+              {fullyExpanded
+                ? 'Collapse table of contents'
+                : 'Expand table of contents'}
+            </button>
+          </div>
+          {tree.map((route, index) =>
+            renderRoute({
+              route,
+              index,
+              depth: 0,
+              slug,
+              fullyExpanded
+            })
+          )}
+        </div>
       </div>
-    )
+    );
   }
 }
 
