@@ -18,17 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StarIcon from 'react-icons/lib/go/star';
 import GithubIcon from 'react-icons/lib/go/mark-github';
-
-import cx from 'classnames';
+import classNames from 'classnames';
 // import {trees} from 'routes';
 // import {toggleMenu, setHeaderOpacity} from 'reducers/ui';
 
-import {Link} from 'gatsby';
-import {StaticQuery, graphql} from 'gatsby';
+import { Link } from 'gatsby';
+import { StaticQuery, graphql } from 'gatsby';
 
 const propTypes = {
   config: PropTypes.object.isRequired
@@ -53,36 +52,106 @@ import {Link} from 'react-router-dom';
 })
 */
 
-export default class Header extends Component {
+function hasExamples(props) {
+  const { config = {} } = props;
+  const { EXAMPLES } = config;
+  return !(EXAMPLES.length === 0 || EXAMPLES[0].title === 'none');
+}
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.pathname === nextProps.pathname) {
-      return;
+function HeaderLink({ to, href, label, classnames }) {
+  if (to) {
+    return (
+      <Link to={to} className={classnames}>
+        {label}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} className={classnames}>
+      {label}
+    </a>
+  );
+}
+
+export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    // we need to know the number of links before render.
+    // this is not an ideal solution.
+    // some of the links which are hardcoded should come from configuration
+
+    {
+      /*
+            <Link className={classNames({active: pathname === '/search'})} to="/search">Search</Link>
+            Object.keys(trees).map(p => (
+              <Link
+                className={classNames({active: pathname.includes(p)})}
+                to={p}
+                key={p}
+              >
+                {trees[p].name}
+              </Link>
+            )) */
     }
-    // this.props.setHeaderOpacity(1);
-    // this.props.toggleMenu(false);
+
+    {
+      /* ADDITIONAL_LINKS.map(link => (
+              <a key={link.href} href={link.href}>{link.name}</a>
+            )) */
+    }
+
+    this.state = {
+      links: [
+        ...(hasExamples(props) ? [{ label: 'Examples', to: '/examples' }] : []),
+        { label: 'Documentation', to: '/docs' },
+        { label: 'Blog', href: 'https://medium.com/@vis.gl' },
+        ...(props.config && props.config.PROJECT_TYPE === 'github'
+          ? [
+              {
+                classnames: 'z',
+                href: props.config.PROJECT_URL,
+                label: (
+                  <div className="github-link">
+                    <span>Github</span>
+                    <GithubIcon
+                      style={{ marginLeft: '0.5rem', display: 'inline' }}
+                    />
+                    {/* <span className="Stars fac fje">
+                      {props.githubLoading ? '...' : props.stargazers_count}
+                      <StarIcon style={{ marginLeft: '0.5rem', display: 'inline' }} />
+                    </span> */}
+                  </div>
+                )
+              }
+            ]
+          : [])
+      ]
+    };
   }
 
   renderHeader() {
     // TODO/ib - replace data with config
-    const {config = {}, pathname, isMenuOpen, opacity, stargazers_count, githubLoading} = this.props;
+    const {
+      config = {},
+      pathname,
+      isSmallScreen,
+      isMenuOpen,
+      opacity
+    } = this.props;
 
     const {
       // ADDITIONAL_LINKS,
-      PROJECT_TYPE, PROJECT_NAME, PROJECT_URL,
+      PROJECT_NAME
       // PROJECTS,
-      EXAMPLES
     } = config;
 
-    // If the no examples marker, return without creating pages
-    const hasExamples = !(EXAMPLES.length === 0 || EXAMPLES[0].title === 'none');
+    const { links } = this.state;
 
     return (
-      <header className={cx({open: isMenuOpen})}>
-        <div className="bg" style={{opacity}} />
+      <header className={classNames({ open: isMenuOpen })}>
+        <div className="bg" style={{ opacity }} />
 
         <div className="f header-content">
-
           <a className="logo" href="#/">
             {PROJECT_NAME}
           </a>
@@ -91,60 +160,45 @@ export default class Header extends Component {
             <div className="site-link">
               <Link to="/">{PROJECT_NAME}</Link>
             </div>
-            { /* Object.keys(PROJECTS).map(name => (
+            {/* Object.keys(PROJECTS).map(name => (
               <div className="site-link" key={name}>
                 <a href={PROJECTS[name]}>{name}</a>
               </div>
-            )) */ }
-          </div>
-
-          <div className="links fac">
-
-            { hasExamples &&
-              <Link className={cx({active: pathname === '/examples'})} to="/examples">Examples</Link>
-            }
-            <Link className={cx({active: pathname === '/docs'})} to="/docs">Documentation</Link>
-            <a className={cx({active: pathname === '/blog'})} href="https://medium.com/@vis.gl">Blog</a>
-            {/*
-            <Link className={cx({active: pathname === '/search'})} to="/search">Search</Link>
-            Object.keys(trees).map(p => (
-              <Link
-                className={cx({active: pathname.includes(p)})}
-                to={p}
-                key={p}
-              >
-                {trees[p].name}
-              </Link>
             )) */}
-
-            { /* ADDITIONAL_LINKS.map(link => (
-              <a key={link.href} href={link.href}>{link.name}</a>
-            )) */ }
-
-            {PROJECT_TYPE === 'github' && (
-              <div className="z">
-                <a href={PROJECT_URL}>
-                  {'Github'}
-                  <GithubIcon style={{marginLeft: '0.5rem'}} />
-                </a>
-                <span className="Stars fac fje">
-                  {githubLoading ? '...' : stargazers_count}
-                  <StarIcon style={{marginLeft: '0.5rem'}} />
-                </span>
-              </div>
-            )}
           </div>
 
-          <div className="menu-toggle" onClick={() => this.props.toggleMenu(!isMenuOpen)}>
+          <div
+            className="links fac"
+            style={{
+              maxHeight:
+                isSmallScreen && isMenuOpen
+                  ? `${4 * links.length}rem`
+                  : undefined
+            }}
+          >
+            {/* If the no examples marker, return without creating pages */}
+            {links.map((link, index) => (
+              <HeaderLink
+                {...link}
+                key={index}
+                classnames={classNames({
+                  ...link.classnames,
+                  active: link.to && pathname === link.to
+                })}
+              />
+            ))}
+          </div>
+
+          <div
+            className="menu-toggle"
+            onClick={() => this.props.toggleMenu(!isMenuOpen)}
+          >
             <i className={`icon icon-${isMenuOpen ? 'close' : 'menu'}`} />
           </div>
-
         </div>
-
       </header>
     );
   }
-
 
   render() {
     return this.renderHeader();
