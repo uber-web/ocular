@@ -16,6 +16,7 @@
     "templates"
   ],
   "bin": {
+    "ocular-bootstrap-monorepo": "./scripts/bootstrap-monorepo.sh",
     "ocular-clean": "./scripts/clean.sh",
     "ocular-build": "./scripts/build.sh",
     "ocular-lint": "./scripts/lint.sh",
