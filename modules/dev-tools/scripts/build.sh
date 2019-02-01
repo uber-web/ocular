@@ -11,14 +11,25 @@ build_module() {
 }
 
 if [ -d "modules" ]; then
-  # monorepo
+  # Monorepo
   cd modules
-  for D in *; do (
+
+  if [ -z "$1" ]; then
+    # Build all modules
+    MODULES=(*)
+  else
+    # Build selected modules
+    # build.sh MODULE1,MODULE2
+    IFS=',' read -r -a MODULES <<< "$1"
+  fi
+
+  for D in "${MODULES[@]}"; do (
     echo "\033[1mBuilding modules/$D\033[0m"
     cd $D
     build_module ../../babel.config.js
     echo ""
   ); done
 else
+  # Not monorepo, run build at root
   build_module ./babel.config.js
 fi
