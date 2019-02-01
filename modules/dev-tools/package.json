@@ -16,15 +16,13 @@
     "templates"
   ],
   "bin": {
-    "ocular-bootstrap-monorepo": "./scripts/bootstrap-monorepo.sh",
+    "ocular-bootstrap": "./scripts/bootstrap.sh",
     "ocular-clean": "./scripts/clean.sh",
     "ocular-build": "./scripts/build.sh",
     "ocular-lint": "./scripts/lint.sh",
     "ocular-test": "./scripts/test.sh",
     "ocular-metrics": "./scripts/metrics.sh",
-    "ocular-publish": "./scripts/publish.sh",
-    "ocular-lint-monorepo": "./scripts/lint-monorepo.sh",
-    "ocular-publish-monorepo": "./scripts/publish-monorepo.sh"
+    "ocular-publish": "./scripts/publish.sh"
   },
   "scripts": {
     "clean": "echo No build needed",
