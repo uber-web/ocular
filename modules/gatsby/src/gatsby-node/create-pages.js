@@ -224,6 +224,9 @@ function createDocPages({ graphql, actions }) {
       }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> replace reduce by foreach
       let relativeLinks = {};
       pathToSlug.forEach(({ source, target }) => {
         relativeLinks = addToRelativeLinks({
@@ -234,6 +237,7 @@ function createDocPages({ graphql, actions }) {
           relativeLinks
         });
       });
+<<<<<<< HEAD
 =======
       const relativeLinks = pathToSlug.reduce((prev, { source, target }) => {
         // what we are doing here: for each markdown file, we create a mapping of different ways to
@@ -279,6 +283,8 @@ function createDocPages({ graphql, actions }) {
         };
       }, {});
 >>>>>>> rewrite local links
+=======
+>>>>>>> replace reduce by foreach
 
       // console.log('Creating doc page at', edge.node.fields.path);
 
