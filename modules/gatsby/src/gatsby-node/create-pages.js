@@ -119,6 +119,54 @@ function createExamplePages({ graphql, actions }) {
   });
 }
 
+function addToRelativeLinks({
+  source,
+  target,
+  rootFolder,
+  edge,
+  relativeLinks
+}) {
+  // what we are doing here: for each markdown file, we create a mapping of different ways to
+  // link to another markdown file that we will honor.
+
+  // let's suppose that we want to go from a file:
+  // - physical location: /docs/my-files/source.md, slug: /docs/chapter-1/source
+  // to this file:
+  // - phyiscal location: /docs/developer-guide/target.md, slug: /docs/advanced-usage/api-reference/target
+
+  // by default, '../../advanced-usage/api/reference/target' would work (target file slug, relative to original slug)
+  // '/docs/advanced-usage/api-reference/target' would also work (absolute target slug)
+  // however, on github, those links wouldn't work as there is no phyiscal file behind that link.
+  // in github however: '/docs/developer-guide/target.md' (file name relative to root) or
+  // '../developer-guide/target.md' (relative file name) would work. Those links wouldn't work on the gatsby rendered
+  // page however (until that).
+
+  // we are creating a mapping so that ANY OF THESE 4 SYNTAXES would be honored.
+  // So, authors can use links that refer to physical files, and gatsby will render a link that works - the same link
+  // can work on github and gatsby
+
+  // note that often, the physical location and the slug are the same!
+  // However there is no guarantee that this will be the case.
+
+  const relativeToCurrentFile = path.relative(
+    edge.node.fileAbsolutePath,
+    source
+  );
+  const relativeToRootFolder = path.relative(rootFolder, source);
+  const relativeToCurrentSlug = path.relative(edge.node.fields.path, target);
+
+  const absoluteTarget = `/${target}`;
+
+  return {
+    ...relativeLinks,
+    [relativeToCurrentFile]: absoluteTarget,
+    [relativeToCurrentFile]: absoluteTarget,
+    [relativeToRootFolder]: absoluteTarget,
+    [relativeToCurrentSlug]: absoluteTarget,
+    [target]: absoluteTarget
+  };
+}
+
 // Walks all markdown nodes and creates a doc page for each node
 function createDocPages({ graphql, actions }) {
   const { createPage } = actions;
@@ -175,49 +223,16 @@ function createDocPages({ graphql, actions }) {
         categorySet.add(edge.node.frontmatter.category);
       }
 
-      const relativeLinks = pathToSlug.reduce((prev, { source, target }) => {
-        // what we are doing here: for each markdown file, we create a mapping of different ways to
-        // link to another markdown file that we will honor.
-
-        // let's suppose that we want to go from a file:
-        // - physical location: /docs/my-files/source.md, slug: /docs/chapter-1/source
-        // to this file:
-        // - phyiscal location: /docs/developer-guide/target.md, slug: /docs/advanced-usage/api-reference/target
-
-        // by default, '../../advanced-usage/api/reference/target' would work (target file slug, relative to original slug)
-        // '/docs/advanced-usage/api-reference/target' would also work (absolute target slug)
-        // however, on github, those links wouldn't work as there is no phyiscal file behind that link.
-        // in github however: '/docs/developer-guide/target.md' (file name relative to root) or
-        // '../developer-guide/target.md' (relative file name) would work. Those links wouldn't work on the gatsby rendered
-        // page however (until that).
-
-        // we are creating a mapping so that ANY OF THESE 4 SYNTAXES would be honored.
-        // So, authors can use links that refer to physical files, and gatsby will render a link that works - the same link
-        // can work on github and gatsby
-
-        // note that often, the physical location and the slug are the same!
-        // However there is no guarantee that this will be the case.
-
-        const relativeToCurrentFile = path.relative(
-          edge.node.fileAbsolutePath,
-          source
-        );
-        const relativeToRootFolder = path.relative(rootFolder, source);
-        const relativeToCurrentSlug = path.relative(
-          edge.node.fields.path,
-          target
-        );
-
-        const absoluteTarget = `/${target}`;
-
-        return {
-          ...prev,
-          [relativeToCurrentFile]: absoluteTarget,
-          [relativeToRootFolder]: absoluteTarget,
-          [relativeToCurrentSlug]: absoluteTarget,
-          [target]: absoluteTarget
-        };
-      }, {});
+      let relativeLinks = {};
+      pathToSlug.forEach(({ source, target }) => {
+        relativeLinks = addToRelativeLinks({
+          source,
+          target,
+          rootFolder,
+          edge,
+          relativeLinks
+        });
+      });
 
       // console.log('Creating doc page at', edge.node.fields.path);
 
