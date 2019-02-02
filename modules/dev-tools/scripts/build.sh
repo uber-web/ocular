@@ -10,8 +10,11 @@ build_module() {
   BABEL_ENV=es5 npx babel src --config-file $CONFIG --out-dir dist/es5 --source-maps
 }
 
-if [ -d "modules" ]; then
-  # Monorepo
+build_unirepo() {
+  build_module ./babel.config.js
+}
+
+build_monorepo() {
   cd modules
 
   if [ -z "$1" ]; then
@@ -29,7 +32,10 @@ if [ -d "modules" ]; then
     build_module ../../babel.config.js
     echo ""
   ); done
+}
+
+if [ -d "modules" ]; then
+  build_monorepo $1
 else
-  # Not monorepo, run build at root
-  build_module ./babel.config.js
+  build_unirepo
 fi
