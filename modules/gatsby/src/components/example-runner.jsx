@@ -1,6 +1,5 @@
 import React, {Component} from 'react'; // eslint-disable-line
 import PropTypes from 'prop-types';
-import {setPathPrefix} from 'luma.gl';
 
 import InfoPanel from './info-panel';
 
@@ -15,24 +14,41 @@ const DEFAULT_ALT_TEXT = 'THIS EXAMPLE IS NOT SUPPORTED';
 
 export default class ExampleRunner extends Component {
   componentDidMount() {
-    // const {sourceLink} = this.props;
-    // // Ensure the example can find its images
-    // // TODO - ideally we should extract images from example source?
-    // const RAW_GITHUB = 'https://raw.githubusercontent.com/uber/luma.gl/master';
-    // setPathPrefix(`${RAW_GITHUB}/${sourceLink}`);
+    const {onStart, example, canvas} = this.props;
 
-    // Start the actual example
-    // TODO/ib - should this be kept in default component?
-    if (this.props.example.start) {
-      this.props.example.start({
-        canvas: this.props.canvas
+    // Can e.g. be used to ensure the example can find its images
+
+    if (onStart) {
+      onStart({
+        example,
+        canvas
+      });
+    }
+
+    if (example && example.start) {
+      example.start({
+        example,
+        canvas
       });
     }
   }
 
   componentWillUnmount() {
-    // TODO/ib - should this be kept in default component?
-    this.props.example.stop && this.props.example.stop();
+    const {onStop, example, canvas} = this.props;
+
+    if (onStop) {
+      onStop({
+        example,
+        canvas
+      });
+    }
+
+    if (example && example.stop) {
+      example.stop({
+        example,
+        canvas
+      });
+    }
   }
 
   render() {

@@ -2,6 +2,11 @@
 
 ocular-gatsby is still in experimental pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and this module will be deprecated.
 
+## 1.0.0-alpha.7
+    remove stray luma.gl import
+    rewrite local links (#83)
+    Collapsible toc (#81)
+    Styles more similar to luma.gl (#80)
 
 ## 1.0.0-alpha.6
 - Fix webpack config support and logging
