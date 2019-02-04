@@ -135,7 +135,7 @@ header {
       color: $white;
     }
 
-    &:nth-child(n+2) {
+    &:nth-child(n + 2) {
       opacity: 0.5;
     }
     &:hover {
@@ -147,12 +147,10 @@ header {
     background: $black;
     max-height: $topbar-height * 5;
   }
-
 }
 
 @media screen and (max-width: $mobile) {
   header {
-
     .header-content {
       padding-right: 0;
     }
@@ -162,6 +160,12 @@ header {
       align-items: center;
       justify-content: center;
     }
+    .icon-menu::before {
+      content: '\2630';
+    }
+    .icon-close::before {
+      content: '\2715';
+     }
 
     .links {
       display: block;

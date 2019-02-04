@@ -5,6 +5,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
+import MediaQuery from 'react-responsive';
 
 import { WebsiteConfigProvider } from './website-config';
 
@@ -71,6 +72,19 @@ const BodyContainerToC = styled.div`
   }
 `;
 
+function ResponsiveHeader(props) {
+  return (
+    <div>
+      <MediaQuery maxWidth={575}>
+        <Header {...props} isSmallScreen />
+      </MediaQuery>
+      <MediaQuery minWidth={576}>
+        <Header {...props} />
+      </MediaQuery>
+    </div>
+  );
+}
+
 const ToCContainer = styled.div`
   grid-column: 1 / 2;
   grid-row: 2 / 3;
@@ -83,6 +97,14 @@ const ToCContainer = styled.div`
 `;
 
 export default class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMenuOpen: false
+    };
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+
   renderTOC(config, tableOfContents) {
     const { pageContext } = this.props;
     switch (pageContext.toc) {
@@ -132,11 +154,16 @@ export default class Layout extends React.Component {
 
   renderBodyWithTOC(config, tableOfContents) {
     const { children } = this.props;
+    const { isMenuOpen } = this.state;
 
     return (
       <BodyGrid>
         <HeaderContainer>
-          <Header config={config} />
+          <ResponsiveHeader
+            config={config}
+            isMenuOpen={isMenuOpen}
+            toggleMenu={this.toggleMenu}
+          />
         </HeaderContainer>
 
         <ToCContainer>{this.renderTOC(config, tableOfContents)}</ToCContainer>
@@ -150,11 +177,16 @@ export default class Layout extends React.Component {
 
   renderBodyFull(config) {
     const { children } = this.props;
+    const { isMenuOpen } = this.state;
 
     return (
       <div>
         <HeaderContainer>
-          <Header config={config} />
+          <ResponsiveHeader
+            config={config}
+            isMenuOpen={isMenuOpen}
+            toggleMenu={this.toggleMenu}
+          />
         </HeaderContainer>
 
         <BodyContainerFull>{children}</BodyContainerFull>
@@ -162,6 +194,11 @@ export default class Layout extends React.Component {
         {/* <Footer /> */}
       </div>
     );
+  }
+
+  toggleMenu() {
+    const { isMenuOpen } = this.state;
+    this.setState({ isMenuOpen: !isMenuOpen });
   }
 
   render() {
