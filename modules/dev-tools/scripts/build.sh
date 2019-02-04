@@ -19,14 +19,14 @@ build_monorepo() {
 
   if [ -z "$1" ]; then
     # Build all modules
-    MODULES=(*)
+    MODULES=`ls`
   else
     # Build selected modules
     # build.sh MODULE1,MODULE2
-    IFS=',' read -r -a MODULES <<< "$1"
+    MODULES=`echo $1 | sed -e 's/,/ /g'`
   fi
 
-  for D in "${MODULES[@]}"; do (
+  for D in ${MODULES}; do (
     echo "\033[1mBuilding modules/$D\033[0m"
     cd $D
     build_module ../../babel.config.js
