@@ -2,9 +2,8 @@
 // Per recommendations in
 // https://www.gatsbyjs.org/packages/gatsby-plugin-layout/
 
-
 // Context.js
-import React from 'react';
+import React from "react";
 
 const defaultContextValue = {
   initialized: false,
@@ -13,19 +12,20 @@ const defaultContextValue = {
 
   // For passing data upwards
   data: {},
-  set: () => {},
-}
+  set: () => {}
+};
 
-const { Provider, Consumer } = React.createContext(defaultContextValue)
+const { Provider, Consumer } = React.createContext(defaultContextValue);
 
 export class WebsiteConfigProvider extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
 
-    this.setData = this.setData.bind(this)
+    this.setData = this.setData.bind(this);
     this.state = {
       ...defaultContextValue,
-      set: this.setData,
+      ...props.value,
+      set: this.setData
     };
   }
 
@@ -33,13 +33,13 @@ export class WebsiteConfigProvider extends React.Component {
     this.setState(state => ({
       data: {
         ...state.data,
-        ...newData,
-      },
+        ...newData
+      }
     }));
   }
 
   render() {
-    const {children} = this.props;
+    const { children } = this.props;
     return <Provider value={this.state}>{children}</Provider>;
   }
 }
