@@ -2,25 +2,25 @@
 // page loads. This component is wrapped around the react component returned by
 // each page by 'gatsby-plugin-layout'
 
-import React from 'react';
-import Helmet from 'react-helmet';
-import styled from 'styled-components';
-import MediaQuery from 'react-responsive';
+import React from "react";
+import Helmet from "react-helmet";
+import styled from "styled-components";
+import MediaQuery from "react-responsive";
 
-import { WebsiteConfigProvider } from './website-config';
+import { WebsiteConfigProvider } from "./website-config";
 
-import SEO from '../common/SEO';
+import SEO from "../common/SEO";
 
-import TableOfContents from './table-of-contents';
-import ExampleTableOfContents from './example-table-of-contents';
-import Header from './header';
+import TableOfContents from "./table-of-contents";
+import ExampleTableOfContents from "./example-table-of-contents";
+import Header from "./header";
 // TODO/ib - restore footer
 // import Footer from './footer';
 
 const BodyGrid = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 75px 1fr;
+  grid-template-rows: 64px 1fr;
   grid-template-columns: 300px 1fr;
 
   @media screen and (max-width: 600px) {
@@ -53,8 +53,8 @@ const BodyContainerToC = styled.div`
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   width: 100%;
-  max-width: 600px;
-  padding: ${props => props.theme.sitePadding};
+  max-width: ${props => props.isExample ? null : '600px'};
+  padding: 12px;
   @media screen and (max-width: 600px) {
     order: 2;
   }
@@ -108,7 +108,7 @@ export default class Layout extends React.Component {
   renderTOC(config, tableOfContents) {
     const { pageContext } = this.props;
     switch (pageContext.toc) {
-      case 'docs':
+      case "docs":
         return (
           <TableOfContents
             chapters={tableOfContents.chapters}
@@ -116,19 +116,19 @@ export default class Layout extends React.Component {
           />
         );
 
-      case 'examples':
+      case "examples":
         const { EXAMPLES } = config;
 
         const examplesTOC = [
           {
-            title: 'Examples',
+            title: "Examples",
             entries: []
           }
         ];
 
         for (const example of EXAMPLES) {
           // ignore empty list placeholder (makes graphql queryies not fail)
-          if (example.title !== 'none') {
+          if (example.title !== "none") {
             const exampleEntry = Object.assign(
               {
                 entry: example.title
@@ -153,9 +153,10 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const { children } = this.props;
+    const { children, pathContext } = this.props;
     const { isMenuOpen } = this.state;
-
+    const isExample = pathContext.toc === "examples";
+    console.log(this.props);
     return (
       <BodyGrid>
         <HeaderContainer>
@@ -168,7 +169,7 @@ export default class Layout extends React.Component {
 
         <ToCContainer>{this.renderTOC(config, tableOfContents)}</ToCContainer>
 
-        <BodyContainerToC>{children}</BodyContainerToC>
+        <BodyContainerToC isExample={isExample}>{children}</BodyContainerToC>
 
         {/* <Footer /> */}
       </BodyGrid>

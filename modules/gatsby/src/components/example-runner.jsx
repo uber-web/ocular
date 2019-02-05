@@ -52,6 +52,7 @@ export default class ExampleRunner extends Component {
   }
 
   render() {
+    console.log(this.props);
     const {width, height, name, example, noPanel, sourceLink} = this.props;
     const controls = example.getInfo && example.getInfo();
 
