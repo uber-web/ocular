@@ -20,7 +20,7 @@ import Header from './header';
 const BodyGrid = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 75px 1fr;
+  grid-template-rows: 64px 1fr;
   grid-template-columns: 300px 1fr;
 
   @media screen and (max-width: 600px) {
@@ -53,8 +53,8 @@ const BodyContainerToC = styled.div`
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   width: 100%;
-  max-width: 600px;
-  padding: ${props => props.theme.sitePadding};
+  max-width: ${props => (props.isExample ? null : '600px')};
+  padding: 12px;
   @media screen and (max-width: 600px) {
     order: 2;
   }
@@ -153,9 +153,10 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const { children } = this.props;
+    const { children, pathContext } = this.props;
     const { isMenuOpen } = this.state;
-
+    const isExample = pathContext.toc === 'examples';
+    console.log(this.props);
     return (
       <BodyGrid>
         <HeaderContainer>
@@ -168,7 +169,7 @@ export default class Layout extends React.Component {
 
         <ToCContainer>{this.renderTOC(config, tableOfContents)}</ToCContainer>
 
-        <BodyContainerToC>{children}</BodyContainerToC>
+        <BodyContainerToC isExample={isExample}>{children}</BodyContainerToC>
 
         {/* <Footer /> */}
       </BodyGrid>
