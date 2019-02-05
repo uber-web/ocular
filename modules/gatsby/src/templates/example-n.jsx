@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { graphql } from "gatsby";
-import { AutoSizer } from "react-virtualized";
+import React from 'react';
+import styled from 'styled-components';
+import { graphql } from 'gatsby';
+import { AutoSizer } from 'react-virtualized';
 
-import ExampleTableOfContents from "../components/layout/example-table-of-contents";
+import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 
-import { getReactComponent } from "../utils/component-registry";
+import { getReactComponent } from '../utils/component-registry';
 
 /* eslint no-undef: "off" */
 export const query = graphql`
@@ -37,8 +37,8 @@ export default class ExampleTemplate extends React.Component {
     const { slug } = pathContext;
 
     // Get app website's example runner
-    const DemoRunner = getReactComponent("ExampleRunner");
-    const EXAMPLES = getReactComponent("EXAMPLES");
+    const DemoRunner = getReactComponent('ExampleRunner');
+    const EXAMPLES = getReactComponent('EXAMPLES');
 
     const example = EXAMPLES[slug];
     if (!example) {
