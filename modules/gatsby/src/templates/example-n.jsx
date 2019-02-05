@@ -25,7 +25,10 @@ export const query = graphql`
 `;
 
 const Main = styled.main`
-  height: 100%;
+  height: calc(100vh - 96px);
+  @media screen and (max-width: 600px) {
+    margin-top: 64px;
+  }
 `;
 
 export default class ExampleTemplate extends React.Component {
