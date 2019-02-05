@@ -98,8 +98,9 @@ const renderRoute = (route, i, pathname, depth) => {
 
   // const remark = route.childMarkdownRemark;
   const name = route.title || route.entry;
-  const slug = route.path;
-  console.log(route, slug, pathname)
+  // SafeLink only handles local links, add leading slash
+  const slug = `/${route.path}`;
+  // console.log(route, slug, pathname)
   return (
     <div key={i} style={{marginLeft: 10 * depth}}>
       <li>
