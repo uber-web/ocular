@@ -105,7 +105,7 @@ export default class Layout extends React.Component {
     const {config} = data.site.siteMetadata;
     const {tableOfContents, allMarkdown} = data;
 
-    console.log('StaticQuery result', config, tableOfContents, allMarkdown);
+    // console.log('StaticQuery result', config, tableOfContents, allMarkdown);
 
     return (
       <TopLevelLayout {...this.props}
