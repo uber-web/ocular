@@ -21,6 +21,8 @@
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import { Link } from 'gatsby';
+import chevronDown from '../images/chevron-down_small-filled.svg';
+import chevronRight from '../images/chevron-right_small-filled.svg';
 
 function getRouteInfo({ route, slug }) {
   if (route.childMarkdownRemark) {
@@ -43,9 +45,9 @@ function getRouteInfo({ route, slug }) {
   // note - why actually go down the route as opposed to just do
   // string operations on slugs? ie checking if '/docs/my-chapter'
   // is included in '/docs/my-chapter/first-article' ? because this
-  // is fairly unreliable. ie it's also included in 
+  // is fairly unreliable. ie it's also included in
   // '/docs/my-chapter-2'. This ambiguity has caused issues in ocular.
-  
+
   const children = route.entries || route.chapters || [];
   return children.reduce(
     (routeInfo, entry) => {
@@ -71,66 +73,85 @@ function getRouteInfo({ route, slug }) {
 }
 
 function getHeight(route) {
+  // TODO - we must expose the height of TOC items through config.
   return route.entries.reduce(
-    (prev, curr) => prev + (curr.entries ? getHeight(curr) : 40),
+    (prev, curr) => prev + (curr.entries ? getHeight(curr) : 56),
     0
   );
 }
+
+// Creates the image of a chevron, facing right or down as needed
+
+const Chevron = ({ collapsed, expanded, style }) => {
+  if (expanded) {
+    return <img alt="chevron-down" src={chevronDown} style={style} />;
+  }
+  if (collapsed) {
+    return <img alt="chevron-right" src={chevronRight} style={style} />;
+  }
+  return null;
+};
 
 // This component only creates a Link component if clicking on that Link will
 // effectively change routes. If no path is passed or if the path is not
 // usable then it just renders a div. That should not be the case
 
-const SafeLink = ({ className, name, path }) => {
-  if (!path || typeof path !== 'string') {
-    return (
-      <div className={className} title={name}>
-        {name}
-      </div>
-    );
-  }
+const SafeLink = ({
+  active,
+  className,
+  collapsed,
+  depth,
+  expanded,
+  name,
+  path
+}) => {
+  const style = {
+    marginLeft: depth * 30
+  };
+
   return (
-    <Link to={path} className={className} title={name}>
-      {name}
-    </Link>
+    <div className={classNames(className, { active, expanded })} title={name}>
+      <Chevron collapsed={collapsed} expanded={expanded} style={style} />
+      {!path || typeof path !== 'string' ? (
+        <span style={style}>name</span>
+      ) : (
+        <Link to={path} title={name} style={style}>
+          {name}
+        </Link>
+      )}
+    </div>
   );
 };
 
-const renderRoute = ({
-  route,
-  index,
-  depth,
-  slug,
-  fullyExpanded
-}) => {
+const renderRoute = ({ route, index, depth, slug, fullyExpanded }) => {
   const routeInfo = getRouteInfo({ route, slug });
 
   if (route.chapters) {
     const name = route.title;
+    const active = routeInfo.routeContainsSlug;
     return (
-      <div key={index} style={{ marginLeft: 10 * depth }}>
-        <div>
-          <SafeLink
-            className={classNames('list-header', {
-              expanded: fullyExpanded || routeInfo.routeContainsSlug,
-              active: routeInfo.routeContainsSlug
-            })}
-            name={name}
-            path={routeInfo.pathToFirstChild}
-          />
-          <div className="subpages">
-            <ul>
-              {route.chapters.map((r, idx) =>
-                renderRoute({
-                  route: r,
-                  index: idx,
-                  depth: depth + 1,
-                  slug,
-                  fullyExpanded
-                })
-              )}
-            </ul>
-          </div>
+      <div key={index} className="section">
+        <SafeLink
+          depth={depth}
+          active={active}
+          collapsed={!fullyExpanded && !active}
+          expanded={fullyExpanded || active}
+          className="list-header"
+          name={name}
+          path={routeInfo.pathToFirstChild}
+        />
+        <div className="subpages">
+          <ul>
+            {route.chapters.map((r, idx) =>
+              renderRoute({
+                route: r,
+                index: idx,
+                depth: depth + 1,
+                slug,
+                fullyExpanded
+              })
+            )}
+          </ul>
         </div>
       </div>
     );
@@ -138,30 +159,33 @@ const renderRoute = ({
 
   if (route.entries) {
     const name = route.title;
+    const active = routeInfo.routeContainsSlug;
     return (
-      <div key={index} style={{ marginLeft: 10 * depth }}>
-        <div>
-          <SafeLink
-            className={classNames('list-header', {
-              expanded: fullyExpanded || routeInfo.routeContainsSlug,
-              active: routeInfo.routeContainsSlug
-            })}
-            name={name}
-            path={routeInfo.pathToFirstChild}
-          />
-          <div className="subpages" style={{ maxHeight: getHeight(route) }}>
-            <ul>
-              {route.entries.map((r, idx) =>
-                renderRoute({
-                  route: r,
-                  fullyExpanded,
-                  index: idx,
-                  depth: depth + 1,
-                  slug
-                })
-              )}
-            </ul>
-          </div>
+      <div key={index} className="section">
+        <SafeLink
+          className="list-header"
+          collapsed={!fullyExpanded && !active}
+          expanded={fullyExpanded || active}
+          active={active}
+          depth={depth}
+          name={name}
+          path={routeInfo.pathToFirstChild}
+        />
+        <div
+          className="subpages subpages-entries"
+          style={{ maxHeight: getHeight(route) }}
+        >
+          <ul>
+            {route.entries.map((r, idx) =>
+              renderRoute({
+                route: r,
+                fullyExpanded,
+                index: idx,
+                depth: depth + 1,
+                slug
+              })
+            )}
+          </ul>
         </div>
       </div>
     );
@@ -171,12 +195,12 @@ const renderRoute = ({
   const name = remark && remark.frontmatter && remark.frontmatter.title;
   const target = remark && remark.fields && remark.fields.slug;
   return (
-    <div key={index} style={{ marginLeft: 10 * depth }}>
+    <div key={index}>
       <li>
         <SafeLink
-          className={classNames('link', {
-            active: target === slug
-          })}
+          active={target === slug}
+          depth={depth}
+          className="link"
           name={name}
           path={target}
         />
@@ -207,7 +231,11 @@ export default class TableOfContents extends PureComponent {
     return (
       <div className={classNames('toc', { open }, className)}>
         <div>
-          <div className={classNames('toggle-expanded', { expanded: fullyExpanded })}>
+          <div
+            className={classNames('toggle-expanded', {
+              expanded: fullyExpanded
+            })}
+          >
             <button
               onClick={this.toggleExpanded.bind(this)}
               onKeyPress={this.toggleExpanded.bind(this)}

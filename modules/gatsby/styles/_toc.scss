@@ -24,8 +24,8 @@
   position: fixed;
   width: $toc-width;
   height: calc(100% - #{$topbar-height});
-
-  padding: 1rem;
+  font-weight: 500;
+  padding: 1rem 0;
 
   flex-shrink: 0;
 
@@ -34,11 +34,22 @@
   -webkit-overflow-scrolling: touch;
 
   background-color: #fff;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid $white;
   transition: all 300ms;
   white-space: nowrap;
 
+  .toggle-expanded {
+    display:flex;
+    align-content: center;
+    justify-items: center;
+    > button {
+      display: flex;
+    }
+    border-bottom: 1px solid $white;
+  }  
+
   > div {
+    
     padding-bottom: 80px;
   }
 
@@ -49,24 +60,35 @@
       margin-bottom: 0;
       margin-top: 0;
       padding-left: 0;
+      > div:not(.section) {
+        line-height: 55px;
+        border-top: 1px solid $white;
+        &:first-of-type {
+          border-top: none;
+        }
+        &:last-of-type {
+          border-bottom: 1px solid $white;
+        }
+      }
     }
   }
 
   li {
     list-style: none;
-    line-height: 40px;
+    
   }
 
-  a {
+  a, a:visited, a:hover {
     display: block;
+    color: $light-mono;
   }
 
   .link {
     padding-left: 28px;
-    color: $black-20;
+    color: $light-mono;
     background: transparent;
     border-style: solid;
-    border-width: 0 0 0 4px;
+    border-width: 0 0 0 1px;
     border-color: transparent;
     font-size: 14px;
     overflow-x: hidden;
@@ -76,32 +98,28 @@
       color: $white-40;
     }
     &.active {
-      color: $primary;
-      font-weight: bold;
-      border-color: $primary;
-      border-image: linear-gradient(to bottom, $primary 0%, $secondary 100%);
-      border-image-slice: 2;
+      border-left: 1px solid $core-500;
+      background: $gray-6;
     }
   }
 
   .list-header {
+    border-bottom: 1px solid $white;    
     position: relative;
     font-weight: 500;
     font-size: 14px;
-    line-height: 20px;
-    padding: 24px 0 8px 24px;
+    line-height: 56px;
     color: $white-40;
-  }
-
-  .list-header:not(.active):not(.expanded):before {
-    content: '+';
-    font-weight: 600;
-    color: $white-40;
-    position: absolute;
-    top: 21px;
-    left: 0;
-    font-size: 16px;
-    line-height: 24px;
+    &.expanded {
+       background: $gray-6;
+    }
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translate(-30px, -50%);
+    }
+    padding-left: 40px;
+  
   }
 
   .list-header:not(.active):not(.expanded) + .subpages {
