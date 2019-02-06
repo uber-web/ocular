@@ -23,12 +23,16 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   outline: none;
 }
-
+.results {
+  margin-top: 1rem;
+}
 .search-item {
   .search-title {
     font-weight: 700;
     margin-bottom: 0.5rem;
-    a, a:visited, a:hover {
+    a,
+    a:visited,
+    a:hover {
       color: $light-mono;
     }
   }
@@ -43,7 +47,8 @@
   }
 
   > div:last-child {
-    img, table {
+    img,
+    table {
       display: none;
     }
   }

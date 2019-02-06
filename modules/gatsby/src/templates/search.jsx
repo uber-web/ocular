@@ -62,7 +62,7 @@ export default class SearchPage extends React.Component {
       ? pathContext.data.filter(
           node =>
             (node.title && node.title.match(currentQuery)) ||
-            (node.html && node.html.match(currentQuery))
+            (node.rawMarkdownBody && node.rawMarkdownBody.match(currentQuery))
         )
       : [];
     this.setState({ results, lastQuery: currentQuery });
@@ -77,6 +77,7 @@ export default class SearchPage extends React.Component {
   renderPage() {
     // Note: The Layout "wrapper" component adds header and footer etc
     const { debouncing, results, currentQuery } = this.state;
+    const { pathContext } = this.props;
     return (
       <Main>
         <div className="fcol f fg container p2">
@@ -95,19 +96,26 @@ export default class SearchPage extends React.Component {
             </div>
           </SearchContainer>
 
+          {debouncing ? <div>Searching...</div> : null}
           <div>
             {currentQuery && !debouncing && (
               <div>
                 {results.length
-                  ? `${results.length} articles found`
+                  ? `${results.length} articles found.`
                   : `No result for this query.`}
               </div>
             )}
 
-            {!currentQuery && !debouncing && <div>Please start typing!</div>}
+            {!currentQuery && !debouncing && (
+              <div>
+                {pathContext.data
+                  ? `${pathContext.data.length} articles indexed.`
+                  : ''}
+              </div>
+            )}
             <div className="results">
               {results.map(result => (
-                <div className="search-item" key={result.path}>
+                <div className="search-item" key={result.slug}>
                   <div className="search-title">
                     <Link to={result.slug}>{result.title}</Link>
                   </div>

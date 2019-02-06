@@ -31,6 +31,42 @@ function createIndexPage({ actions }) {
   });
 }
 
+function createSearchPage({ graphql, actions }) {
+  const { createPage } = actions;
+
+  return graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            excerpt
+            frontmatter {
+              title
+            }
+            rawMarkdownBody
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `).then(results =>
+    createPage({
+      path: '/search',
+      component: SEARCH_PAGE,
+      context: {
+        data: results.data.allMarkdownRemark.edges.map(e => ({
+          excerpt: e.node.excerpt,
+          rawMarkdownBody: e.node.rawMarkdownBody,
+          slug: e.node.fields.slug,
+          title: e.node.frontmatter.title
+        }))
+      }
+    })
+  );
+}
+
 function createExamplePages({ graphql, actions }) {
   const { createPage } = actions;
 
@@ -227,46 +263,16 @@ function createDocPages({ graphql, actions }) {
 // We use graphgl to query for nodes and iterate
 module.exports = function createPages({ graphql, actions }, pluginOptions) {
   log.log({ color: COLOR.CYAN }, 'generating pages')();
-  const { createPage } = actions;
   // TODO/ib - plugin options no longer provided when we are not a plugin
   // We seem to be getting site metadata instead?
   const {
     docPages = true,
-    examplePages = true // TODO - autodetect based on DEMOS config
+    examplePages = true,
+    searchPage = true // TODO - autodetect based on DEMOS config
   } = pluginOptions;
 
   createIndexPage({ graphql, actions });
-  const searchPromise = graphql(`
-    {
-      allMarkdownRemark {
-        edges {
-          node {
-            excerpt
-            frontmatter {
-              title
-            }
-            html
-            fields {
-              slug
-            }
-          }
-        }
-      }
-    }
-  `).then(results =>
-    createPage({
-      path: '/search',
-      component: SEARCH_PAGE,
-      context: {
-        data: results.data.allMarkdownRemark.edges.map(e => ({
-          excerpt: e.node.excerpt,
-          html: e.node.html,
-          slug: e.node.fields.slug,
-          title: e.node.frontmatter.title
-        }))
-      }
-    })
-  );
+
   let docPromise;
   if (docPages) {
     docPromise = createDocPages({ graphql, actions });
@@ -275,6 +281,11 @@ module.exports = function createPages({ graphql, actions }, pluginOptions) {
   let examplesPromise;
   if (examplePages) {
     examplesPromise = createExamplePages({ graphql, actions });
+  }
+
+  let searchPromise;
+  if (searchPage) {
+    searchPromise = createSearchPage({ graphql, actions });
   }
 
   return Promise.all([docPromise, examplesPromise, searchPromise]);
