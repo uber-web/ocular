@@ -49,7 +49,10 @@ export default class DocTemplate extends React.Component {
     const { html } = this.state;
     return (
       <div>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+        <div
+          className="markdown-body"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       </div>
     );
   }
