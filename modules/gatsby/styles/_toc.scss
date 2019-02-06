@@ -25,7 +25,7 @@
   width: $toc-width;
   height: calc(100% - #{$topbar-height});
   font-weight: 500;
-  padding: 1rem;
+  padding: 1rem 0;
 
   flex-shrink: 0;
 
@@ -34,11 +34,22 @@
   -webkit-overflow-scrolling: touch;
 
   background-color: #fff;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid $white;
   transition: all 300ms;
   white-space: nowrap;
 
+  .toggle-expanded {
+    display:flex;
+    align-content: center;
+    justify-items: center;
+    > button {
+      display: flex;
+    }
+    border-bottom: 1px solid $white;
+  }  
+
   > div {
+    
     padding-bottom: 80px;
   }
 
@@ -49,10 +60,9 @@
       margin-bottom: 0;
       margin-top: 0;
       padding-left: 0;
-      > div {
+      > div:not(.section) {
         line-height: 55px;
-        border: 1px solid $white;
-        border-bottom: none;
+        border-top: 1px solid $white;
         &:first-of-type {
           border-top: none;
         }
@@ -94,7 +104,7 @@
   }
 
   .list-header {
-    border: 1px solid $white;
+    border-bottom: 1px solid $white;    
     position: relative;
     font-weight: 500;
     font-size: 14px;
@@ -106,7 +116,7 @@
     img {
       position: absolute;
       top: 50%;
-      transform: translate(-40px, -50%);
+      transform: translate(-30px, -50%);
     }
     padding-left: 40px;
   

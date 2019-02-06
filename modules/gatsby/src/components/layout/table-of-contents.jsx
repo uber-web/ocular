@@ -104,7 +104,7 @@ const SafeLink = ({
   path
 }) => {
   const style = {
-    marginLeft: depth * 20
+    marginLeft: depth * 30
   };
 
   return (
@@ -128,7 +128,7 @@ const renderRoute = ({ route, index, depth, slug, fullyExpanded }) => {
     const name = route.title;
     const active = routeInfo.routeContainsSlug;
     return (
-      <div key={index} className="chapter">
+      <div key={index} className="section">
         <SafeLink
           depth={depth}
           active={active}
@@ -138,7 +138,7 @@ const renderRoute = ({ route, index, depth, slug, fullyExpanded }) => {
           name={name}
           path={routeInfo.pathToFirstChild}
         />
-        <div className="subpages subpages-chapter">
+        <div className="subpages">
           <ul>
             {route.chapters.map((r, idx) =>
               renderRoute({
@@ -159,7 +159,7 @@ const renderRoute = ({ route, index, depth, slug, fullyExpanded }) => {
     const name = route.title;
     const active = routeInfo.routeContainsSlug;
     return (
-      <div key={index} className="entries">
+      <div key={index} className="section">
         <SafeLink
           className="list-header"
           collapsed={!fullyExpanded && !active}
