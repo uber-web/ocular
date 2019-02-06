@@ -80,19 +80,21 @@ function getHeight(route) {
   );
 }
 
-// This component only creates a Link component if clicking on that Link will
-// effectively change routes. If no path is passed or if the path is not
-// usable then it just renders a div. That should not be the case
+// Creates the image of a chevron, facing right or down as needed
 
-const Img = ({ collapsed, expanded, style }) => {
+const Chevron = ({ collapsed, expanded, style }) => {
   if (expanded) {
-    return <img src={chevronDown} style={style} />;
+    return <img alt="chevron-down" src={chevronDown} style={style} />;
   }
   if (collapsed) {
-    return <img src={chevronRight} style={style} />;
+    return <img alt="chevron-right" src={chevronRight} style={style} />;
   }
   return null;
 };
+
+// This component only creates a Link component if clicking on that Link will
+// effectively change routes. If no path is passed or if the path is not
+// usable then it just renders a div. That should not be the case
 
 const SafeLink = ({
   active,
@@ -109,7 +111,7 @@ const SafeLink = ({
 
   return (
     <div className={classNames(className, { active, expanded })} title={name}>
-      <Img collapsed={collapsed} expanded={expanded} style={style} />
+      <Chevron collapsed={collapsed} expanded={expanded} style={style} />
       {!path || typeof path !== 'string' ? (
         <span style={style}>name</span>
       ) : (
