@@ -156,7 +156,6 @@ export default class Layout extends React.Component {
     const { children, pathContext } = this.props;
     const { isMenuOpen } = this.state;
     const isExample = pathContext.toc === 'examples';
-    console.log(this.props);
     return (
       <BodyGrid>
         <HeaderContainer>
