@@ -5,6 +5,7 @@ const { log, COLOR } = require('../utils/log');
 
 // PATHS TO REACT PAGES
 const INDEX_PAGE = path.resolve(__dirname, '../templates/index.jsx');
+const SEARCH_PAGE = path.resolve(__dirname, '../templates/search.jsx');
 
 const DOC_PAGE = path.resolve(__dirname, '../templates/doc-n.jsx');
 
@@ -17,40 +18,11 @@ assert(INDEX_PAGE && DOC_PAGE && EXAMPLES_PAGE && EXAMPLE_PAGE);
 // const TAG_PAGE = path.resolve(__dirname, '../src/templates/tag.jsx');
 // const CATEGORY_PAGE = path.resolve(__dirname, '../src/templates/category.jsx');
 
-// This is a main gatsby entry point
-// Here we get to programmatically create pages after all nodes are created
-// by gatsby.
-// We use graphgl to query for nodes and iterate
-module.exports = function createPages({ graphql, actions }, pluginOptions) {
-  log.log({ color: COLOR.CYAN }, 'generating pages')();
-
-  // TODO/ib - plugin options no longer provided when we are not a plugin
-  // We seem to be getting site metadata instead?
-  const {
-    docPages = true,
-    examplePages = true // TODO - autodetect based on DEMOS config
-  } = pluginOptions;
-
-  createStaticPages({ graphql, actions });
-
-  let docPromise;
-  if (docPages) {
-    docPromise = createDocPages({ graphql, actions });
-  }
-
-  let examplesPromise;
-  if (examplePages) {
-    examplesPromise = createExamplePages({ graphql, actions });
-  }
-
-  return Promise.all([docPromise, examplesPromise]);
-};
-
 // Create static pages
 // NOTE: gatsby does automatically build pages from **top level** `/pages`, folder
 // but in ocular we keep those pages in the installed structure so gatsby can't see them
 
-function createStaticPages({ graphql, actions }) {
+function createIndexPage({ actions }) {
   const { createPage } = actions;
 
   createPage({
@@ -248,3 +220,62 @@ function createDocPages({ graphql, actions }) {
     });
   });
 }
+
+// This is a main gatsby entry point
+// Here we get to programmatically create pages after all nodes are created
+// by gatsby.
+// We use graphgl to query for nodes and iterate
+module.exports = function createPages({ graphql, actions }, pluginOptions) {
+  log.log({ color: COLOR.CYAN }, 'generating pages')();
+  const { createPage } = actions;
+  // TODO/ib - plugin options no longer provided when we are not a plugin
+  // We seem to be getting site metadata instead?
+  const {
+    docPages = true,
+    examplePages = true // TODO - autodetect based on DEMOS config
+  } = pluginOptions;
+
+  createIndexPage({ graphql, actions });
+  const searchPromise = graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            excerpt
+            frontmatter {
+              title
+            }
+            html
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `).then(results =>
+    createPage({
+      path: '/search',
+      component: SEARCH_PAGE,
+      context: {
+        data: results.data.allMarkdownRemark.edges.map(e => ({
+          excerpt: e.node.excerpt,
+          html: e.node.html,
+          slug: e.node.fields.slug,
+          title: e.node.frontmatter.title
+        }))
+      }
+    })
+  );
+  let docPromise;
+  if (docPages) {
+    docPromise = createDocPages({ graphql, actions });
+  }
+
+  let examplesPromise;
+  if (examplePages) {
+    examplesPromise = createExamplePages({ graphql, actions });
+  }
+
+  return Promise.all([docPromise, examplesPromise, searchPromise]);
+};

@@ -25,6 +25,7 @@ module.exports.getTableOfContents = function getTableOfContents() {
 }
 
 function traverseTableOfContents(chapters, docNodes, level) {
+  debugger;
   for (const chapter of chapters || []) {
     chapter.level = level;
     if (chapter.chapters) {

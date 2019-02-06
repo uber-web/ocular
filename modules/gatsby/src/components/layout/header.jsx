@@ -27,7 +27,6 @@ import classNames from 'classnames';
 // import {toggleMenu, setHeaderOpacity} from 'reducers/ui';
 
 import { Link } from 'gatsby';
-import { StaticQuery, graphql } from 'gatsby';
 
 const propTypes = {
   config: PropTypes.object.isRequired
@@ -99,11 +98,12 @@ export default class Header extends Component {
               <a key={link.href} href={link.href}>{link.name}</a>
             )) */
     }
-
+    // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
       links: [
         ...(hasExamples(props) ? [{ label: 'Examples', to: '/examples' }] : []),
         { label: 'Documentation', to: '/docs' },
+        { label: 'Search', to: '/search' },
         { label: 'Blog', href: 'https://medium.com/@vis.gl' },
         ...(props.config && props.config.PROJECT_TYPE === 'github'
           ? [
