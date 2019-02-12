@@ -76,9 +76,18 @@ function createExamplePages({ graphql, actions }) {
         siteMetadata {
           config {
             EXAMPLES {
+              image
               title
               path
             }
+          }
+        }
+      }
+      allFile {
+        edges {
+          node {
+            relativePath
+            publicURL
           }
         }
       }
@@ -91,19 +100,34 @@ function createExamplePages({ graphql, actions }) {
       console.log(result.errors);
       throw new Error(result.errors);
     }
-
     const { EXAMPLES } = result.data.site.siteMetadata.config;
+    // build a lookup map that matches relative paths of images with their public URLs
+    const imagesPublicUrls = result.data.allFile.edges.reduce(
+      (hash, { node }) => {
+        /* eslint-disable no-param-reassign */
+        hash[node.relativePath] = node.publicURL;
+        /* eslint-enable no-param-reassign */
+        return hash;
+      },
+      {}
+    );
 
     // If the no examples marker, return without creating pages
     if (EXAMPLES.length === 0 || EXAMPLES[0].title === 'none') {
       return;
     }
+    // matches public urls to paths of images
+    const examplesWithImage = EXAMPLES.map(example => ({
+      ...example,
+      imageSrc: imagesPublicUrls[example.image]
+    }));
 
     createPage({
       component: EXAMPLES_PAGE,
       path: '/examples',
       context: {
-        toc: 'examples'
+        toc: 'examples',
+        examples: examplesWithImage
       }
     });
 

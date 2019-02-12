@@ -75,7 +75,14 @@ module.exports = function getGatsbyConfig(config) {
           path: `${__dirname}/../../static/`
         }
       },
-      // Generates gatsby nodes for files in the website's static folder
+      // Generates gatsby nodes for files in the website's src folder
+      {
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: 'src',
+          path: `${config.DIR_NAME}/src/`
+        }
+      },
       // Generates gatsby nodes for files in the website's static folder
       {
         resolve: 'gatsby-source-filesystem',
