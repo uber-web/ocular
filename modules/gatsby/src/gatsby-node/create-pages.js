@@ -155,12 +155,16 @@ function addToRelativeLinks({
 
   // note that often, the physical location and the slug are the same!
   // However there is no guarantee that this will be the case.
+  
+  if (!source || !target) {
+    return {};
+  }
 
   const relativeToCurrentFile = path.relative(
     edge.node.fileAbsolutePath,
     source
   );
-  const relativeToRootFolder = path.relative(rootFolder, source);
+  const relativeToRootFolder = rootFolder && path.relative(rootFolder, source);
   const relativeToCurrentSlug = path.relative(edge.node.fields.path, target);
 
   const absoluteTarget = `/${target}`;
