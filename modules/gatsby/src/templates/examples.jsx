@@ -6,24 +6,42 @@ import { graphql } from 'gatsby';
 
 import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 
-const Gallery = styled.main`
+const colors = {
+  black: '#000',
+  gray6: '#f6f6f6',
+  white: '#fff'
+};
+
+const Main = styled.main`
+  background: ${colors.white};
   display: flex;
   flex-wrap: wrap;
-  height: calc(100vh - 96px);
   @media screen and (max-width: 600px) {
     margin-top: 64px;
   }
 `;
 
 const ExampleCard = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #f7f7f7;
-  border-radius: 4px;
-  width: 180px;
-  height: 180px;
+  border: 1px solid ${colors.gray6};
+  cursor: pointer;
   margin: 10px;
+  padding: 20px 16px;
+  transition: background 0.3s border-color 0.3s;
+  &:hover {
+    background: ${colors.gray6};
+    border-color: transparent;
+  }
+`;
+
+const ExampleTitle = styled.div`
+  color: ${colors.black};
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
 `;
 
 /* eslint no-undef: "off" */
@@ -49,18 +67,20 @@ class Gallery extends Component {
 
 export default class Examples extends Component {
   render() {
-    const { examples } = this.props.pageContext;
+    const {
+      pageContext: { examples }
+    } = this.props;
     return (
-      <Gallery>
+      <Main>
         {examples.map(exampleData => (
           <ExampleCard>
             <Link to={exampleData.path}>
-              <img src={exampleData.imageSrc} height={150} width={150} />
-              {exampleData.title}
+              <img src={exampleData.imageSrc} alt={exampleData.title} />
+              <ExampleTitle>{exampleData.title}</ExampleTitle>
             </Link>
           </ExampleCard>
         ))}
-      </Gallery>
+      </Main>
     );
   }
 }
