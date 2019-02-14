@@ -10,9 +10,10 @@
 
 module.exports = init => `
 module.exports = {
+  DIR_NAME: '${init.websiteFolder}',
   DOC_FOLDER: '${init.websiteFolder}/../docs/',
   ROOT_FOLDER: '${init.websiteFolder}/../',
-
+  
   EXAMPLES: [],
   DOCS: [],
 
