@@ -79,14 +79,7 @@ module.exports = function getGatsbyConfig(config) {
           path: `${__dirname}/../../static/`
         }
       },
-      // Generates gatsby nodes for files in the website's src folder
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: 'src',
-          path: `${config.DIR_NAME}/src/`
-        }
-      },
+      
       // Generates gatsby nodes for files in the website's static folder
       {
         resolve: 'gatsby-source-filesystem',
@@ -319,6 +312,19 @@ module.exports = function getGatsbyConfig(config) {
       */
     ]
   };
+
+  // conditional plug-ins - only added depending on options on config
+
+  if (config.DIR_NAME) {
+    // Generates gatsby nodes for files in the website's src folder
+    gatsbyConfig.plugins.push({
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'src',
+        path: `${config.DIR_NAME}/src/`
+      }
+    });
+  }
 
   // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig, null, 3)}`)();
   return gatsbyConfig;

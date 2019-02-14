@@ -75,7 +75,9 @@ export default class Examples extends Component {
         {examples.map(exampleData => (
           <ExampleCard>
             <Link to={exampleData.path}>
-              <img src={exampleData.imageSrc} alt={exampleData.title} />
+              {exampleData.imageSrc ? (
+                <img src={exampleData.imageSrc} alt={exampleData.title} />
+              ) : null}
               <ExampleTitle>{exampleData.title}</ExampleTitle>
             </Link>
           </ExampleCard>
