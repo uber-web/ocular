@@ -2,13 +2,12 @@ const path = require('path');
 const assert = require('assert');
 
 const { log, COLOR } = require('../utils/log');
-
+const prepareExamplePages = require('./create-example-pages');
 // PATHS TO REACT PAGES
 const INDEX_PAGE = path.resolve(__dirname, '../templates/index.jsx');
 const SEARCH_PAGE = path.resolve(__dirname, '../templates/search.jsx');
 
 const DOC_PAGE = path.resolve(__dirname, '../templates/doc-n.jsx');
-
 const EXAMPLES_PAGE = path.resolve(__dirname, '../templates/examples.jsx');
 const EXAMPLE_PAGE = path.resolve(__dirname, '../templates/example-n.jsx');
 
@@ -65,66 +64,6 @@ function createSearchPage({ graphql, actions }) {
       }
     })
   );
-}
-
-function createExamplePages({ graphql, actions }) {
-  const { createPage } = actions;
-
-  return graphql(`
-    {
-      site {
-        siteMetadata {
-          config {
-            EXAMPLES {
-              title
-              path
-            }
-          }
-        }
-      }
-    }
-  `).then(result => {
-    console.log(result);
-
-    if (result.errors) {
-      /* eslint no-console: "off" */
-      console.log(result.errors);
-      throw new Error(result.errors);
-    }
-
-    const { EXAMPLES } = result.data.site.siteMetadata.config;
-
-    // If the no examples marker, return without creating pages
-    if (EXAMPLES.length === 0 || EXAMPLES[0].title === 'none') {
-      return;
-    }
-
-    createPage({
-      component: EXAMPLES_PAGE,
-      path: '/examples',
-      context: {
-        toc: 'examples'
-      }
-    });
-
-    for (const example of EXAMPLES) {
-      const exampleName = example.title;
-
-      log.log(
-        { color: COLOR.CYAN, priority: 1 },
-        `Creating example page ${JSON.stringify(example)}`
-      )();
-
-      createPage({
-        path: example.path,
-        component: EXAMPLE_PAGE,
-        context: {
-          slug: exampleName,
-          toc: 'examples'
-        }
-      });
-    }
-  });
 }
 
 function addToRelativeLinks({
@@ -288,7 +227,7 @@ module.exports = function createPages({ graphql, actions }, pluginOptions) {
 
   let examplesPromise;
   if (examplePages) {
-    examplesPromise = createExamplePages({ graphql, actions });
+    examplesPromise = prepareExamplePages({ graphql, actions });
   }
 
   let searchPromise;

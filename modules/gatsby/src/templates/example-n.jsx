@@ -33,7 +33,7 @@ const Main = styled.main`
 
 export default class ExampleTemplate extends React.Component {
   render() {
-    const { pathContext } = this.props;
+    const { pathContext, pageResources } = this.props;
     const { slug } = pathContext;
 
     // Get app website's example runner
@@ -55,7 +55,7 @@ export default class ExampleTemplate extends React.Component {
               <DemoRunner
                 height={height}
                 example={example}
-                sourceLink={example.path}
+                sourceLink={pageResources && pageResources.page && pageResources.page.path}
                 width={width}
               />
             )

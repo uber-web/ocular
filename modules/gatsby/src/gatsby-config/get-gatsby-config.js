@@ -1,20 +1,22 @@
 const urljoin = require('url-join');
 
-const {log, COLOR} = require('../utils/log');
+const { log, COLOR } = require('../utils/log');
 
 module.exports = function getGatsbyConfig(config) {
-  const {logLevel = 0} = config;
+  const { logLevel = 0 } = config;
   log.priority = logLevel;
 
-  log.log({color: COLOR.CYAN, priority: 0}, 'Loading gatsby config')();
-  log.log({color: COLOR.CYAN, priority: 2}, `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`)();
+  log.log({ color: COLOR.CYAN, priority: 0 }, 'Loading gatsby config')();
+  log.log(
+    { color: COLOR.CYAN, priority: 2 },
+    `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
+  )();
 
   // Entry cannot be empty, since graphql then cannot autoinfer schemas
   // which means queries will fail (sigh...)
   if (!config.EXAMPLES || config.EXAMPLES.length === 0) {
-    config.EXAMPLES = [{title: 'none', path: 'none'}];
+    config.EXAMPLES = [{ title: 'none', path: 'none' }];
   }
-
 
   const gatsbyConfig = {
     pathPrefix: config.pathPrefix,
@@ -31,7 +33,8 @@ module.exports = function getGatsbyConfig(config) {
         image_url: urljoin(
           config.siteUrl,
           config.pathPrefix,
-          '/logos/logo-512.png'),
+          '/logos/logo-512.png'
+        ),
         author: config.userName,
         copyright: config.copyright
       }
@@ -43,10 +46,11 @@ module.exports = function getGatsbyConfig(config) {
 
       // A Gatsby plugin for styled-components with built-in server-side rendering support.
       'gatsby-plugin-styled-components',
-
+      'gatsby-plugin-sharp',
+      'gatsby-transformer-sharp',
       // Drop-in support for SASS/SCSS stylesheets
       {
-        resolve: `gatsby-plugin-sass`,
+        resolve: `gatsby-plugin-sass`
         /*
         options: {
           includePaths: [
@@ -75,7 +79,7 @@ module.exports = function getGatsbyConfig(config) {
           path: `${__dirname}/../../static/`
         }
       },
-      // Generates gatsby nodes for files in the website's static folder
+      
       // Generates gatsby nodes for files in the website's static folder
       {
         resolve: 'gatsby-source-filesystem',
@@ -187,12 +191,12 @@ module.exports = function getGatsbyConfig(config) {
 
       // Transforms JSON files in the data source into JSON nodes
       {
-        resolve: `gatsby-transformer-json`,
+        resolve: `gatsby-transformer-json`
         // options: {
         //   typeName: ({ node, object, isArray }) =>
         //     console.log('json', node, object, isArray) && object.level,
         // },
-      },
+      }
 
       /*
       // Gatsby’s manifest plugin creates a manifest.webmanifest file on every build.
@@ -309,6 +313,21 @@ module.exports = function getGatsbyConfig(config) {
     ]
   };
 
+  // conditional plug-ins - only added depending on options on config
+
+  if (config.DIR_NAME) {
+    // Generates gatsby nodes for files in the website's src folder
+    gatsbyConfig.plugins.push({
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'src',
+        path: `${config.DIR_NAME}/src/`
+      }
+    });
+  } else {
+    log.log({ color: COLOR.YELLOW }, `DIR_NAME not found in ocular-gatsby config}`)();
+  }
+
   // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig, null, 3)}`)();
   return gatsbyConfig;
-}
+};
