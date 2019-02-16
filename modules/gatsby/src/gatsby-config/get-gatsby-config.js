@@ -324,6 +324,8 @@ module.exports = function getGatsbyConfig(config) {
         path: `${config.DIR_NAME}/src/`
       }
     });
+  } else {
+    log.log({ color: COLOR.YELLOW }, `DIR_NAME not found in ocular-gatsby config}`)();
   }
 
   // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig, null, 3)}`)();
