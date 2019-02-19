@@ -2,12 +2,11 @@ import React from 'react';
 
 import { graphql } from 'gatsby';
 import { AutoSizer } from 'react-virtualized';
-import theme from '../components/styled/theme';
 
 import ExampleTableOfContents from '../components/layout/example-table-of-contents';
-
 import { getReactComponent } from '../utils/component-registry';
 import { MainExample } from '../components/styled';
+import WithConfig from '../components/layout/website-config';
 
 /* eslint no-undef: "off" */
 export const query = graphql`
@@ -26,7 +25,6 @@ export const query = graphql`
   }
 `;
 
-
 export default class ExampleTemplate extends React.Component {
   render() {
     const { pathContext, pageResources } = this.props;
@@ -40,24 +38,32 @@ export default class ExampleTemplate extends React.Component {
     if (!example) {
       console.warn(`No example found: ${slug}`);
     }
-
+    console.log(this.props);
     // console.log(example);
 
     return (
-      <MainExample theme={theme}>
-        <AutoSizer>
-          {({ height, width }) =>
-            example && (
-              <DemoRunner
-                height={height}
-                example={example}
-                sourceLink={pageResources && pageResources.page && pageResources.page.path}
-                width={width}
-              />
-            )
-          }
-        </AutoSizer>
-      </MainExample>
+      <WithConfig>
+        {({ theme }) => (
+          <MainExample theme={theme}>
+            <AutoSizer>
+              {({ height, width }) =>
+                  example && (
+                    <DemoRunner
+                      height={height}
+                      example={example}
+                      sourceLink={
+                        pageResources &&
+                        pageResources.page &&
+                        pageResources.page.path
+                      }
+                      width={width}
+                    />
+                  )
+                }
+            </AutoSizer>
+          </MainExample>
+          )}
+      </WithConfig>
     );
   }
 }

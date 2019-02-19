@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'gatsby';
-import theme from '../components/styled/theme';
 
 import { graphql } from 'gatsby';
 
 import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 import { MainExamples, ExampleCard, ExampleTitle } from '../components/styled';
+import WithConfig from '../components/layout/website-config';
 
 /* eslint no-undef: "off" */
 
@@ -34,18 +34,22 @@ export default class Examples extends Component {
       pageContext: { examples }
     } = this.props;
     return (
-      <MainExamples theme={theme}>
-        {examples.map(exampleData => (
-          <ExampleCard theme={theme}>
-            <Link to={exampleData.path}>
-              {exampleData.imageSrc ? (
-                <img src={exampleData.imageSrc} alt={exampleData.title} />
-              ) : null}
-              <ExampleTitle theme={theme}>{exampleData.title}</ExampleTitle>
-            </Link>
-          </ExampleCard>
-        ))}
-      </MainExamples>
+      <WithConfig>
+        {({ theme }) => (
+          <MainExamples theme={theme}>
+            {examples.map(exampleData => (
+              <ExampleCard theme={theme}>
+                <Link to={exampleData.path}>
+                  {exampleData.imageSrc ? (
+                    <img src={exampleData.imageSrc} alt={exampleData.title} />
+                  ) : null}
+                  <ExampleTitle theme={theme}>{exampleData.title}</ExampleTitle>
+                </Link>
+              </ExampleCard>
+            ))}
+          </MainExamples>
+        )}
+      </WithConfig>
     );
   }
 }

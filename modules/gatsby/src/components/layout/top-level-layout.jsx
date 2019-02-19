@@ -5,7 +5,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
-import theme from '../styled/theme';
 
 import { WebsiteConfigProvider } from './website-config';
 
@@ -49,7 +48,7 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const { children, pathContext } = this.props;
+    const { children, pathContext, theme } = this.props;
     const { isMenuOpen } = this.state;
     const isExample = pathContext.toc === 'examples';
     return (
@@ -72,7 +71,7 @@ export default class Layout extends React.Component {
   }
 
   renderBodyFull(config) {
-    const { children } = this.props;
+    const { children, theme } = this.props;
     const { isMenuOpen } = this.state;
 
     return (
@@ -99,7 +98,7 @@ export default class Layout extends React.Component {
   }
 
   renderTOC(config, tableOfContents) {
-    const { pageContext } = this.props;
+    const { pageContext, theme } = this.props;
     switch (pageContext.toc) {
       case 'docs':
         return (
@@ -150,9 +149,8 @@ export default class Layout extends React.Component {
     // Since gatsby's StaticQueries can't run in a plugin, we rely on the app website's
     // Layout wrapper component to query for us and pass in the data.
     const { pageContext, config, theme, tableOfContents, allMarkdown } = this.props;
-    console.log(theme);
     return (
-      <WebsiteConfigProvider value={{ config, tableOfContents, allMarkdown }}>
+      <WebsiteConfigProvider value={{ config, theme, tableOfContents, allMarkdown }}>
         <div>
           {allMarkdown ? (
             <SEO postEdges={allMarkdown} />
