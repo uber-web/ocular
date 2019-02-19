@@ -1,11 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+
 import { graphql } from 'gatsby';
 import { AutoSizer } from 'react-virtualized';
+import theme from '../components/styled/theme';
 
 import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 
 import { getReactComponent } from '../utils/component-registry';
+import { MainExample } from '../components/styled';
 
 /* eslint no-undef: "off" */
 export const query = graphql`
@@ -24,12 +26,6 @@ export const query = graphql`
   }
 `;
 
-const Main = styled.main`
-  height: calc(100vh - 96px);
-  @media screen and (max-width: 600px) {
-    margin-top: 64px;
-  }
-`;
 
 export default class ExampleTemplate extends React.Component {
   render() {
@@ -48,7 +44,7 @@ export default class ExampleTemplate extends React.Component {
     // console.log(example);
 
     return (
-      <Main>
+      <MainExample theme={theme}>
         <AutoSizer>
           {({ height, width }) =>
             example && (
@@ -61,7 +57,7 @@ export default class ExampleTemplate extends React.Component {
             )
           }
         </AutoSizer>
-      </Main>
+      </MainExample>
     );
   }
 }

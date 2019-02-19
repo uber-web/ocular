@@ -1,44 +1,18 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
-import styled from 'styled-components';
 import { Link } from 'gatsby';
 import SearchIcon from '../components/images/search-filled.svg';
+import theme from '../components/styled/theme';
 
 import WebsiteConfigConsumer from '../components/layout/website-config';
+import {
+  MainSearch,
+  SearchContainer,
+  IconContainer,
+  InputSearch
+} from '../components/styled';
+// import { setHeaderOpacity } from '../../../classic/base/reducers/ui';
 
-const SearchContainer = styled.div`
-  position: relative;
-  height: 40px;
-  margin-bottom: 20px;
-  background: #f7f7f7;
-`;
-const IconContainer = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-`;
-const Input = styled.input`
-  box-shadow: rgba(0, 0, 0, 0) 0px 2px 6px;
-  border: 1px solid transparent;
-  transition: 0.3s;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  padding: 10px 10px 10px 40px;
-  :focus {
-    box-shadow: rgba(39, 110, 241, 0.32) 0px 2px 6px;
-    border-color: rgb(39, 110, 241);
-    outline: none;
-  }
-`;
-
-const Main = styled.main`
-  max-width: 600px;
-  margin: 104px auto 0px;
-`;
 export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
@@ -79,18 +53,19 @@ export default class SearchPage extends React.Component {
     const { debouncing, results, currentQuery } = this.state;
     const { pathContext } = this.props;
     return (
-      <Main>
+      <MainSearch theme={theme}>
         <div className="fcol f fg container p2">
-          <SearchContainer>
-            <IconContainer>
+          <SearchContainer theme={theme}>
+            <IconContainer theme={theme}>
               <img src={SearchIcon} alt="search" height="16" width="16" />
             </IconContainer>
             <div className="fg">
-              <Input
+              <InputSearch
                 type="text"
                 placeholder="Search"
                 onChange={this.handleChange}
                 value={currentQuery}
+                theme={theme}
                 style={{ width: '100%' }}
               />
             </div>
@@ -125,7 +100,7 @@ export default class SearchPage extends React.Component {
             </div>
           </div>
         </div>
-      </Main>
+      </MainSearch>
     );
   }
 

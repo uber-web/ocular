@@ -3,7 +3,8 @@
 // https://www.gatsbyjs.org/packages/gatsby-plugin-layout/
 
 // Context.js
-import React from "react";
+import React from 'react';
+import { lightThemePrimitives, createTheme } from '../styled/theme';
 
 const defaultContextValue = {
   initialized: false,
@@ -20,10 +21,18 @@ const { Provider, Consumer } = React.createContext(defaultContextValue);
 export class WebsiteConfigProvider extends React.Component {
   constructor(props) {
     super(props);
-
+    const themeFromConfig = (
+      (props.value &&
+        props.value.config &&
+        props.value.config.THEME_OVERIDES) ||
+      []
+    ).reduce((prev, curr) => ({ ...prev, [curr.key]: curr.value }), {});
+    
+    const theme = createTheme({ ...lightThemePrimitives, ...themeFromConfig });
     this.setData = this.setData.bind(this);
     this.state = {
       ...defaultContextValue,
+      ...theme,
       ...props.value,
       set: this.setData
     };
