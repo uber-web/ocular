@@ -4,7 +4,8 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import styled from 'styled-components'
+import { lightThemePrimitives, createTheme } from '../styled/theme';
+
 import {StaticQuery, graphql} from 'gatsby'
 
 import TopLevelLayout from './top-level-layout';
@@ -107,12 +108,21 @@ export default class Layout extends React.Component {
 
     // console.log('StaticQuery result', config, tableOfContents, allMarkdown);
 
+    const themeFromConfig = (
+      (this.props.value &&
+        this.props.value.config &&
+        this.props.value.config.THEME_OVERIDES) ||
+      []
+    ).reduce((prev, curr) => ({ ...prev, [curr.key]: curr.value }), {});
+
+    const theme = createTheme({ ...lightThemePrimitives, ...themeFromConfig });
+
     return (
       <TopLevelLayout {...this.props}
         config={config}
         tableOfContents={tableOfContents}
-        allMarkdown={allMarkdown} >
-
+        allMarkdown={allMarkdown}
+        theme={theme} >
         { children }
 
       </TopLevelLayout>

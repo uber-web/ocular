@@ -4,7 +4,6 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
-import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 
 import { WebsiteConfigProvider } from './website-config';
@@ -14,63 +13,17 @@ import SEO from '../common/SEO';
 import TableOfContents from './table-of-contents';
 import ExampleTableOfContents from './example-table-of-contents';
 import Header from './header';
+
+import {
+  ToCContainer,
+  BodyGrid,
+  HeaderContainer,
+  BodyContainerFull,
+  BodyContainerToC
+} from '../styled';
+
 // TODO/ib - restore footer
 // import Footer from './footer';
-
-const BodyGrid = styled.div`
-  height: 100vh;
-  display: grid;
-  grid-template-rows: 64px 1fr;
-  grid-template-columns: 300px 1fr;
-
-  @media screen and (max-width: 600px) {
-    display: flex;
-    flex-direction: column;
-    height: inherit;
-  }
-`;
-
-const HeaderContainer = styled.div`
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
-  z-index: 2;
-  @media screen and (max-width: 600px) {
-    order: 1;
-  }
-`;
-
-const BodyContainerFull = styled.div`
-  padding: ${props => props.theme.sitePadding};
-  max-width: ${props => props.theme.contentWidthLaptop};
-  margin: 0 auto;
-
-  .contributors {
-    max-width: 400px;
-    margin: 100px auto 0;
-  }
-`;
-const BodyContainerToC = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  width: 100%;
-  max-width: ${props => (props.isExample ? null : '600px')};
-  padding: 12px;
-  @media screen and (max-width: 600px) {
-    order: 2;
-  }
-
-  & > div {
-    max-width: ${props => props.theme.contentWidthLaptop};
-    margin: auto;
-  }
-  & p {
-    margin-bottom: 1em;
-  }
-
-  & > h1 {
-    color: ${props => props.theme.accentDark};
-  }
-`;
 
 function ResponsiveHeader(props) {
   return (
@@ -85,17 +38,6 @@ function ResponsiveHeader(props) {
   );
 }
 
-const ToCContainer = styled.div`
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  background: ${props => props.theme.lightGrey};
-  overflow: scroll;
-  @media screen and (max-width: 600px) {
-    order: 3;
-    overflow: inherit;
-  }
-`;
-
 export default class Layout extends React.Component {
   constructor(props) {
     super(props);
@@ -105,14 +47,65 @@ export default class Layout extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
   }
 
+  renderBodyWithTOC(config, tableOfContents) {
+    const { children, pathContext, theme } = this.props;
+    const { isMenuOpen } = this.state;
+    const isExample = pathContext.toc === 'examples';
+    return (
+      <BodyGrid theme={theme}>
+        <HeaderContainer theme={theme}>
+          <ResponsiveHeader
+            config={config}
+            isMenuOpen={isMenuOpen}
+            toggleMenu={this.toggleMenu}
+          />
+        </HeaderContainer>
+
+        <ToCContainer theme={theme}>{this.renderTOC(config, tableOfContents)}</ToCContainer>
+
+        <BodyContainerToC isExample={isExample} theme={theme}>{children}</BodyContainerToC>
+
+        {/* <Footer /> */}
+      </BodyGrid>
+    );
+  }
+
+  renderBodyFull(config) {
+    const { children, theme } = this.props;
+    const { isMenuOpen } = this.state;
+
+    return (
+      <div>
+        <HeaderContainer theme={theme}>
+          <ResponsiveHeader
+            config={config}
+            isMenuOpen={isMenuOpen}
+            theme={theme}
+            toggleMenu={this.toggleMenu}
+          />
+        </HeaderContainer>
+
+        <BodyContainerFull theme={theme}>{children}</BodyContainerFull>
+
+        {/* <Footer /> */}
+      </div>
+    );
+  }
+
+  toggleMenu() {
+    const { isMenuOpen } = this.state;
+    this.setState({ isMenuOpen: !isMenuOpen });
+  }
+
   renderTOC(config, tableOfContents) {
-    const { pageContext } = this.props;
+    const { pageContext, theme } = this.props;
     switch (pageContext.toc) {
       case 'docs':
         return (
           <TableOfContents
             chapters={tableOfContents.chapters}
             slug={pageContext.slug}
+            theme={theme}
           />
         );
 
@@ -152,61 +145,12 @@ export default class Layout extends React.Component {
     }
   }
 
-  renderBodyWithTOC(config, tableOfContents) {
-    const { children, pathContext } = this.props;
-    const { isMenuOpen } = this.state;
-    const isExample = pathContext.toc === 'examples';
-    return (
-      <BodyGrid>
-        <HeaderContainer>
-          <ResponsiveHeader
-            config={config}
-            isMenuOpen={isMenuOpen}
-            toggleMenu={this.toggleMenu}
-          />
-        </HeaderContainer>
-
-        <ToCContainer>{this.renderTOC(config, tableOfContents)}</ToCContainer>
-
-        <BodyContainerToC isExample={isExample}>{children}</BodyContainerToC>
-
-        {/* <Footer /> */}
-      </BodyGrid>
-    );
-  }
-
-  renderBodyFull(config) {
-    const { children } = this.props;
-    const { isMenuOpen } = this.state;
-
-    return (
-      <div>
-        <HeaderContainer>
-          <ResponsiveHeader
-            config={config}
-            isMenuOpen={isMenuOpen}
-            toggleMenu={this.toggleMenu}
-          />
-        </HeaderContainer>
-
-        <BodyContainerFull>{children}</BodyContainerFull>
-
-        {/* <Footer /> */}
-      </div>
-    );
-  }
-
-  toggleMenu() {
-    const { isMenuOpen } = this.state;
-    this.setState({ isMenuOpen: !isMenuOpen });
-  }
-
   render() {
     // Since gatsby's StaticQueries can't run in a plugin, we rely on the app website's
     // Layout wrapper component to query for us and pass in the data.
-    const { pageContext, config, tableOfContents, allMarkdown } = this.props;
+    const { pageContext, config, theme, tableOfContents, allMarkdown } = this.props;
     return (
-      <WebsiteConfigProvider value={{ config, tableOfContents, allMarkdown }}>
+      <WebsiteConfigProvider value={{ config, theme, tableOfContents, allMarkdown }}>
         <div>
           {allMarkdown ? (
             <SEO postEdges={allMarkdown} />

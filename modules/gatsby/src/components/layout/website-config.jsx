@@ -3,13 +3,13 @@
 // https://www.gatsbyjs.org/packages/gatsby-plugin-layout/
 
 // Context.js
-import React from "react";
+import React from 'react';
 
 const defaultContextValue = {
   initialized: false,
   config: {},
   tableOfContents: null,
-
+  theme: {},
   // For passing data upwards
   data: {},
   set: () => {}
