@@ -65,8 +65,15 @@ const MAIN_FIELDS = {
   es5: ['main']
 };
 
-// Replace the entry point for webpack-dev-server
+function getBundleEntryPoints() {
+  let entry = resolve(config.entry['size']);
+  if (typeof entry === 'string') {
+    entry = {bundle: entry};
+  }
+  return entry;
+}
 
+// Replace the entry point for webpack-dev-server
 module.exports = (env = {}) => {
   switch (env.mode) {
   case 'bench':
@@ -85,13 +92,15 @@ module.exports = (env = {}) => {
 
   case 'bundle':
     return Object.assign({}, COMMON_CONFIG, {
-      entry: {
-        bundle: resolve(config.entry['size'])
-      },
+      mode: 'production',
+
+      entry: getBundleEntryPoints(),
 
       resolve: Object.assign({}, COMMON_CONFIG.resolve, {
         mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
       }),
+
+      devtool: false,
 
       plugins: []
     });
@@ -100,9 +109,7 @@ module.exports = (env = {}) => {
     return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
-      entry: {
-        bundle: resolve(config.entry['size'])
-      },
+      entry: getBundleEntryPoints(),
 
       devtool: false,
 

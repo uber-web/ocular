@@ -6,6 +6,8 @@
 export PATH=$PATH:node_modules/.bin
 
 MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+WORKING_DIR=`pwd`
+TMP_DIR=$WORKING_DIR/tmp
 
 # Get name from package.json
 module=$(jq '.name' ./package.json)
@@ -29,46 +31,48 @@ print_size_header() {
 
 print_size() {
   DIST=$1
-  EXAMPLE=$2
+  cd $TMP_DIR
 
-  # Size it
-  size=$(wc -c /tmp/bundle.js | awk '{ print int($1 / 1024) "KB (" $1 ")" }')
-  # Zip it
-  gzip -9f /tmp/bundle.js
-  # Size it again
-  zipsize=$(wc -c /tmp/bundle.js.gz | awk '{ print int($1 / 1024) "KB (" $1 ")" }')  # Size it
-  # Remove our copy
-  rm /tmp/bundle.js.gz
-  # Print version, size, compressed size with markdown
+  for f in *; do (
+    # Size it
+    size=$(wc -c $f | awk '{ print int($1 / 1024) "KB (" $1 ")" }')
+    # Zip it
+    gzip -9f $f
+    # Size it again
+    zipsize=$(wc -c $f.gz | awk '{ print int($1 / 1024) "KB (" $1 ")" }')  # Size it
+    # Remove our copy
+    rm $f.gz
+    # Print version, size, compressed size with markdown
 
-  echo "| $version | $DIST  | $size KB  | $zipsize KB     | $EXAMPLE "
+    echo "| $version | $DIST  | $size KB  | $zipsize KB     | $f "
+  ); done
+
+  cd $WORKING_DIR
 }
 
 build_bundle() {
   DIST=$1
-  EXAMPLE=$2
-  NODE_ENV=production webpack --config $MODULE_DIR/config/webpack.config.js --hide-modules --env.$EXAMPLE --env.mode=bundle --env.dist=$DIST > /dev/null
-  cp dist/bundle.js /tmp/bundle.js
+  NODE_ENV=production webpack --config $MODULE_DIR/config/webpack.config.js --output-path "$TMP_DIR" --hide-modules --env.mode=bundle --env.dist=$DIST > /dev/null
 }
 
 print_bundle_size() {
-  build_bundle $1 $2
-  print_size $1 $2
+  build_bundle $1
+  print_size $1
 }
 
-print_all_loop() {
-  ROOT_NODE_MODULES_DIR=`pwd`
-
-  print_size_header
-
-  print_bundle_size es5 all
-  print_bundle_size esm all
-  print_bundle_size es6 all
-}
 # Main Script
 
 echo
 echo "\033[93mAutomatically collecting metrics for $module\033[0m"
 echo
 
-print_all_loop
+rm -rf $TMP_DIR
+mkdir $TMP_DIR
+
+print_size_header
+
+print_bundle_size es5
+print_bundle_size esm
+print_bundle_size es6
+
+rm -rf $TMP_DIR
