@@ -1,8 +1,16 @@
+const fs = require('fs');
 const {resolve} = require('path');
+
+const IS_MONOREPO = fs.existsSync(resolve('./modules'));
 
 const DEFAULT_CONFIG = {
   babel: {
     plugins: ['version-inline']
+  },
+
+  lint: {
+    paths: IS_MONOREPO ? ['modules'] : ['src'],
+    extensions: ['js', 'md']
   },
 
   aliases: {},
@@ -18,13 +26,20 @@ const DEFAULT_CONFIG = {
 
 let userConfig;
 try {
-  userConfig = require(resolve('./ocular.config.js'));
+  userConfig = require(resolve('./ocular-dev-tools.config.js'));
 } catch (err) {
   userConfig = {};
 }
 
-module.exports = {
-  babel: Object.assign(DEFAULT_CONFIG.babel, userConfig.aliases),
-  aliases: Object.assign(DEFAULT_CONFIG.aliases, userConfig.aliases),
-  entry: Object.assign(DEFAULT_CONFIG.entry, userConfig.entry)
-};
+function shallowMerge(obj1, obj2) {
+  const result = {};
+  const keys = new Set(Object.keys(obj1).concat(Object.keys(obj2)));
+
+  keys.forEach(key => {
+    result[key] = Object.assign({}, obj1[key], obj2[key]);    
+  });
+
+  return result;
+}
+
+module.exports = shallowMerge(DEFAULT_CONFIG, userConfig);

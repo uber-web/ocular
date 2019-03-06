@@ -5,17 +5,26 @@ set -e
 
 # Lint selected directories
 # lint.sh DIR1,DIR2
-DIRECTORIES=$1
-MODE=$2
+MODE=$1
 
-if [ -z "$1" ]; then
-  echo "Lint: must specify directories"
-  exit 1
+DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+
+DIRECTORIES=`node -e "console.log(require('ocular-dev-tools/config/ocular.config').lint.paths.join(','))"`
+if [[ $DIRECTORIES == *","* ]]; then
+  DIRECTORIES={$DIRECTORIES}
 fi
+
+EXTENSIONS=`node -e "console.log(require('ocular-dev-tools/config/ocular.config').lint.extensions.join(','))"`
+if [[ $EXTENSIONS == *","* ]]; then
+  EXTENSIONS={$EXTENSIONS}
+fi
+
+DIR_PATTERN="$DIRECTORIES/**/*.$EXTENSIONS"
+ROOT_PATTERN="*.$EXTENSIONS"
 
 case $MODE in
   "fast")
-    echo "Running prettier & eslint..."
+    echo "\033[93mRunning prettier & eslint on changed files...\033[0m"
 
     # only check changed files
     set +e
@@ -37,16 +46,13 @@ case $MODE in
     break;;
 
   *)
-    echo "Checking prettier code styles..."
-
-    DIR_PATTERN="{$DIRECTORIES}/**/*.{js,md}"
-    ROOT_PATTERN="*.md"
+    echo "\033[93mChecking prettier code style in $DIRECTORIES...\033[0m"
     npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN" \
-        || echo "Running prettier." \
-        && npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
+     || echo "\033[91mRunning prettier...\033[0m" \
+     && npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
 
-    echo "Running eslint..."
-    npx eslint "{$DIRECTORIES}"
+    echo "\033[93mRunning eslint in $DIRECTORIES...\033[0m"
+    npx eslint "$DIRECTORIES"
     ;;
   esac
 
