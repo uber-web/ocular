@@ -128,6 +128,11 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     // this means toc node has been created. Any markdown file processed beyond this point wouldn't have its info
     // in the toc.
     // but we can inject it afterwards
+
+    // the regular toc node generation process adds the full content of each markdown node to the toc.
+    // we don't need as much. The app will only use the title and slug of the corresponding markdown
+    // node for each toc entry.
+    
     const nodeToEdit = parseToc([tocNode], relPath);
     if (nodeToEdit) {
       nodeToEdit.childMarkdownRemark = {
