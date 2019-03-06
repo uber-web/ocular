@@ -5,6 +5,10 @@ set -e
 
 BASEDIR=$(dirname "$0")
 
+npm run bootstrap
+npm run test
+npm run test dist
+
 # beta or prod
 MODE=$1
 
@@ -25,11 +29,11 @@ if [ -d "modules" ]; then
 else
   case $MODE in
     "beta")
-      npm run build && npm run test && npm run tester dist && npm publish --tag beta
+      npm publish --tag beta
       break;;
 
     "prod")
-      npm run build && npm run test && npm run tester dist && npm publish
+      npm publish
       break;;
 
     *) ;;
