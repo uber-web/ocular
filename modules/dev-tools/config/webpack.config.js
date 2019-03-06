@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Uber Technologies, Inc.
+// Copyright (c) 2019 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,46 +22,24 @@ const {resolve} = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// const webpack = require('webpack');
+const config = require('./ocular.config');
+const ALIASES = require('../node/aliases')('src');
 
 const COMMON_CONFIG = {
   mode: 'development',
 
-  stats: {
-    warnings: false
+  devServer: {
+    stats: {
+      warnings: false
+    },
+    quiet: true
   },
 
-  module: {
-    rules: []
+  resolve: {
+    alias: ALIASES
   },
 
-  plugins: [],
-
-  node: {
-    fs: 'empty'
-  }
-};
-
-const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
-  // Bundle the tests for running in the browser
-  entry: {
-    'test-browser': resolve('./test/browser.js')
-  },
-
-  // Generate a bundle in dist folder
-  output: {
-    path: resolve('./dist'),
-    filename: 'bundle.js'
-  },
-
-  devtool: '#source-maps',
-
-  // devServer: {
-  //   stats: {
-  //     warnings: false
-  //   },
-  //   quiet: true
-  // },
+  devtool: 'inline-source-maps',
 
   module: {
     rules: [
@@ -74,101 +52,48 @@ const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
     ]
   },
 
-  resolve: {
-    alias: {}
-  }
-});
+  node: {
+    fs: 'empty'
+  },
+
+  plugins: [new HtmlWebpackPlugin()]
+};
 
 // Replace the entry point for webpack-dev-server
 
-function getFirstKey(object) {
-  for (const key in object) {
-    return key;
-  }
-  return null;
-}
-
-function getDist(env) {
-  if ('es6' in env) {
-    return 'dist/es6';
-  }
-  if ('esm' in env) {
-    return 'dist/esm';
-  }
-  if ('es5' in env) {
-    return 'dist/es5';
-  }
-  return 'src';
-}
-
-module.exports = (env, {getAliases = () => {}, rootDir}) => {
-  env = env || {};
-
-  let config = COMMON_CONFIG;
-  const key = getFirstKey(env);
-  switch (key) {
+module.exports = (env = {}) => {
+  switch (env.mode) {
   case 'bench':
-    config = TEST_CONFIG;
-    config = Object.assign({}, config, {
+    return Object.assign({}, config, {
       entry: {
-        'test-browser': resolve('./test/bench/browser.js')
+        bench: resolve(config.entry['bench-browser'])
       }
     });
-    break;
 
-  case 'benchBrowser':
-    config = TEST_CONFIG;
-    config = Object.assign({}, config, {
-      entry: {
-        'test-browser': resolve('./test/bench/browser.js')
-      },
-      plugins: [new HtmlWebpackPlugin()]
-    });
-    break;
-
-  case 'testBrowser':
-  case 'browser':
   case 'test':
-    config = TEST_CONFIG;
-    config = Object.assign({}, config, {
-      plugins: [new HtmlWebpackPlugin()]
+    return Object.assign({}, COMMON_CONFIG, {
+      entry: {
+        test: resolve(config.entry['test-browser'])
+      }
     });
-    break;
 
   case 'analyze':
-    config = TEST_CONFIG;
-    config = Object.assign(config, {
+    return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
-      // Replace the entry point for webpack-dev-server
       entry: {
-        'test-browser': resolve(rootDir, './size', `${key}.js`)
+        size: resolve(config.entry['bundle-size'])
       },
+
+      devtool: false,
+
       plugins: [new BundleAnalyzerPlugin()]
     });
-    delete config.devtool;
     break;
 
   default:
-    config = TEST_CONFIG;
-    config = Object.assign({}, config, {
-      mode: 'production',
-
-      // Replace the entry point for webpack-dev-server
-      entry: {
-        'test-browser': resolve(rootDir, './test/size', `${key}.js`)
-      }
-    });
-    delete config.devtool;
+    throw new Error `Unknown bundle mode ${env.mode}`;
   }
 
-  // Add any non-overridden aliases
-  const dist = getDist(env);
-  console.log('webpack dist', JSON.stringify(dist));
-  config.resolve.alias = Object.assign({}, getAliases(dist), config.resolve.alias);
-  // console.log('webpack env', JSON.stringify(env));
-  // console.log('webpack config', JSON.stringify(config, null, 2));
-
-  return config;
 };
 
