@@ -8,7 +8,6 @@ set -e
 MODE=$1
 
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
-CONFIG=$DEV_TOOLS_DIR/config/eslintrc.js
 
 DIRECTORIES=`node -e "console.log(require('ocular-dev-tools/config/ocular.config').lint.paths.join(','))"`
 if [[ $DIRECTORIES == *","* ]]; then
@@ -37,7 +36,7 @@ case $MODE in
         do
           if [ -e "${f}" ]; then
             npx prettier --write $f --loglevel warn
-            npx eslint --config $CONFIG $f
+            npx eslint $f
           fi
       done
     fi
@@ -53,7 +52,7 @@ case $MODE in
      && npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
 
     echo "\033[93mRunning eslint in $DIRECTORIES...\033[0m"
-    npx eslint --config $CONFIG "$DIRECTORIES"
+    npx eslint "$DIRECTORIES"
     ;;
   esac
 

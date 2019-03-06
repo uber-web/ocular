@@ -26,7 +26,7 @@ const DEFAULT_CONFIG = {
 
 let userConfig;
 try {
-  userConfig = require(resolve('./ocular.config.js'));
+  userConfig = require(resolve('./ocular-dev-tools.config.js'));
 } catch (err) {
   userConfig = {};
 }
