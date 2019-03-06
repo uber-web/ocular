@@ -54,6 +54,7 @@
     "module-alias": "^2.0.0",
     "nyc": "^10.2.0",
     "prettier": "1.14.3",
+    "prettier-check": "2.0.0",
     "probe.gl": "^2.0.1",
     "reify": "^0.4.4",
     "source-map-loader": "^0.2.3",
