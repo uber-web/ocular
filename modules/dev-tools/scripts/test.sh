@@ -7,45 +7,37 @@ BASEDIR=$(dirname "$0")
 
 MODE=$1
 
-run_lint() {
-  npm run lint
-  # markdownlint docs
+MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+
+run_test_script() {
+  node $MODULE_DIR/node/test.js $1
 }
 
 run_full_test() {
-  run_lint
-  node test/start.js src
-  node test/start.js browser-headless
+  npm run lint
+  run_test_script node
+  run_test_script browser-headless
 }
 
 case $MODE in
   "")
-    echo "test [ 'full' | fast' | 'bench' | 'ci' | 'cover' | 'examples' | 'lint' | size-es6' ]"
+    echo "test [ 'full' | 'fast' | 'dist' | 'bench' | 'ci' | 'cover' ]"
     echo "Running 'full' test by default"
-    run_full_test;
+    run_full_test
     break;;
 
   "full")
-    run_full_test;
-    break;;
-
-  "lint")
-    run_lint
+    run_full_test
     break;;
 
   "fast")
-    run_lint
-    node test/start.js fast
+    npm run lint fast
+    run_test_script node
     break;;
 
   "dist")
     npm run build
-    node test/start.js dist
-    break;;
-
-  "bench")
-    node test/start.js bench
-    node test/start.js bench-browser
+    run_test_script dist
     break;;
 
   "cover")
@@ -55,31 +47,18 @@ case $MODE in
     npx nyc report
     break;;
 
-  "bundle")
-    # $BASEDIR/metrics.sh
-    npm run metrics
-    break;;
-
-  "examples")
-    node test/node-examples.js
-    break;;
-
-  "size-es6")
-    npm run build
-    NODE_ENV=production webpack --config test/webpack.config.js --env.import-nothing --env.es6
-    break;;
-
   "ci")
     # run by Travis CI
-    node test/start.js test
-    node test/start.js bench
+    npm run lint
+    run_test_script node
+    run_test_script browser-headless
+    # node test/start.js bench
     # npm run metrics
     # npm run cover
-    # (cd $BASEDIR/../modules/core && npm run build-es6)
     break;;
 
   *)
     # default test
-    node test/start.js $MODE
+    run_test_script $MODE
     break;;
   esac
