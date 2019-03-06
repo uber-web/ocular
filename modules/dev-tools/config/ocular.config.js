@@ -12,7 +12,7 @@ const DEFAULT_CONFIG = {
     'test-browser': 'test/browser',
     'bench-node': 'test/bench/node',
     'bench-browser': 'test/bench/browser',
-    'bundle-size': 'test/size'
+    'size': 'test/size'
   }
 };
 
