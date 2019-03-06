@@ -40,8 +40,6 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "@probe.gl/test-utils": "^3.0.0-alpha.5",
     "babel-eslint": "^9.0.0",
     "babel-plugin-istanbul": "^5.0.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
@@ -55,18 +53,22 @@
     "lerna": "^2.9.1",
     "module-alias": "^2.0.0",
     "nyc": "^10.2.0",
-    "pre-commit": "^1.2.2",
     "prettier": "1.14.3",
     "prettier-check": "2.0.0",
     "probe.gl": "^2.0.1",
     "reify": "^0.4.4",
     "source-map-loader": "^0.2.3",
-    "tap-browser-color": "^0.1.2",
     "tape": "^4.9.2",
     "tape-catch": "^1.0.4",
     "webpack": "^4.28.4",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
+  },
+  "devDependencies": {
+    "@probe.gl/test-utils": "3.0.0-alpha.5"
+  },
+  "peerDependencies": {
+    "@probe.gl/test-utils": ">=3.0.0-alpha"
   }
 }
