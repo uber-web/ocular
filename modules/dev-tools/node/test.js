@@ -27,6 +27,7 @@ switch (mode) {
     require(resolveEntry('test-node')); // Run the tests
     break;
 
+  case 'cover':
   case 'dist':
     // Load deck.gl itself from the dist folder
     moduleAlias.addAliases(getAliases('dist'));

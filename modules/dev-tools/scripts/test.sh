@@ -41,10 +41,8 @@ case $MODE in
     break;;
 
   "cover")
-    # Seems to need to be run from each package.json root...
-    # (cd $BASEDIR/../modules/core && NODE_ENV=test BABEL_ENV=cover npx nyc node $BASEDIR/../test/start.js cover)
-    NODE_ENV=test BABEL_ENV=cover npx nyc node test/start.js cover
-    npx nyc report
+    NODE_ENV=test BABEL_ENV=test npx nyc --config $MODULE_DIR/config/nycrc.json node $MODULE_DIR/node/test.js cover 
+    npx nyc report --reporter=lcov
     break;;
 
   "ci")
@@ -53,6 +51,10 @@ case $MODE in
     # node test/start.js bench
     ocular-metrics
     # npm run cover
+    
+    # Report coverage
+    # NODE_ENV=test BABEL_ENV=test npx nyc --config $MODULE_DIR/config/nycrc.json node $MODULE_DIR/node/test.js cover 
+    # npx nyc report --reporter=text-lcov | coveralls
     break;;
 
   *)

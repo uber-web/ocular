@@ -58,7 +58,9 @@ module.exports = {
       ]
     }),
     test: mergeEnvSettings('test', {
-      presets: [],
+      presets: [
+        '@babel/preset-env'
+      ],
       plugins: [
         'istanbul'
       ]
