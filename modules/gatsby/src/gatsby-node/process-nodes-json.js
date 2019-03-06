@@ -9,6 +9,7 @@ module.exports.processNewDocsJsonNode = function processNewDocsJsonNode({
 }, docNodes) {
   traverseTableOfContents(node.chapters, docNodes, 1);
   tableOfContents = node;
+  return node;
   log.log({color: COLOR.CYAN, priority: 1}, `Processing tableOfContents \
 ${Object.keys(docNodes).length}
 ${Object.keys(tableOfContents.chapters).length}

@@ -7,6 +7,7 @@ const {processNewDocsJsonNode} = require('./process-nodes-json');
 
 // TODO/ib - avoid globals
 const docNodes = {};
+let tocNode = null;
 
 function onCreateNode({ node, actions, getNode }) {
   // log.log({color: COLOR.CYAN}, `Processed node`)();
@@ -19,11 +20,11 @@ function onCreateNode({ node, actions, getNode }) {
     // Note: MarkdownRemark nodes are created by the gatsby-transformer-remark
     // markdown parser. These are different from the original file nodes
     // for the markdown files created by the gatsby-source-filesystem plugin.
-    processNewMarkdownNode({ node, actions, getNode }, docNodes);
+    processNewMarkdownNode({ node, actions, getNode }, docNodes, tocNode);
     break;
 
   case 'DocsJson':
-    processNewDocsJsonNode({ node, actions, getNode }, docNodes);
+    tocNode = processNewDocsJsonNode({ node, actions, getNode }, docNodes);
     break;
 
   default:
