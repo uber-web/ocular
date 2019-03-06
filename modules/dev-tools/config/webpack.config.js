@@ -59,6 +59,12 @@ const COMMON_CONFIG = {
   plugins: [new HtmlWebpackPlugin()]
 };
 
+const MAIN_FIELDS = {
+  es6: ['esnext', 'browser', 'module', 'main'],
+  esm: ['module', 'main'],
+  es5: ['main']
+};
+
 // Replace the entry point for webpack-dev-server
 
 module.exports = (env = {}) => {
@@ -77,12 +83,25 @@ module.exports = (env = {}) => {
       }
     });
 
+  case 'bundle':
+    return Object.assign({}, COMMON_CONFIG, {
+      entry: {
+        bundle: resolve(config.entry['size'])
+      },
+
+      resolve: Object.assign({}, COMMON_CONFIG.resolve, {
+        mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
+      }),
+
+      plugins: []
+    });
+
   case 'analyze':
     return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
       entry: {
-        size: resolve(config.entry['bundle-size'])
+        bundle: resolve(config.entry['size'])
       },
 
       devtool: false,

@@ -49,11 +49,9 @@ case $MODE in
 
   "ci")
     # run by Travis CI
-    npm run lint
-    run_test_script node
-    run_test_script browser-headless
+    run_full_test
     # node test/start.js bench
-    # npm run metrics
+    ocular-metrics
     # npm run cover
     break;;
 

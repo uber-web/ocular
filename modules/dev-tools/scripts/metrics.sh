@@ -5,15 +5,25 @@
 
 export PATH=$PATH:node_modules/.bin
 
+MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+
 # Get name from package.json
 module=$(jq '.name' ./package.json)
+# Get version
+if [ -d "modules" ]; then
+  # Use lerna version if monorepo
+  packageInfo=./lerna.json
+else
+  # Use package.json version if monorepo
+  packageInfo=./package.json
+fi
 # Get version from packag.json and remove quotes
-version=$(jq '.version' ./package.json | awk '{ gsub(/"/,"",$1); printf "%-14s", $1 }')
+version=$(jq '.version' $packageInfo | awk '{ gsub(/"/,"",$1); printf "%-14s", $1 }')
 
 # Helper functions
 
 print_size_header() {
-  echo "| Version        | Dist | Bundle Size      | Compressed     | Imports   |"
+  echo "\033[1m| Version        | Dist | Bundle Size      | Compressed     | Imports   |\033[0m"
   echo "| ---            | ---  | ---              | ---            | ---       |"
 }
 
@@ -37,7 +47,7 @@ print_size() {
 build_bundle() {
   DIST=$1
   EXAMPLE=$2
-  NODE_ENV=production webpack --config test/webpack.config.js --hide-modules --env.$EXAMPLE --env.bundle --env.$DIST > /dev/null
+  NODE_ENV=production webpack --config $MODULE_DIR/config/webpack.config.js --hide-modules --env.$EXAMPLE --env.mode=bundle --env.dist=$DIST > /dev/null
   cp dist/bundle.js /tmp/bundle.js
 }
 
@@ -53,22 +63,12 @@ print_all_loop() {
 
   print_bundle_size es5 all
   print_bundle_size esm all
-  # print_bundle_size es6 all
-
-  for FILE in test/size/*; do (
-    # [ -d $D ]
-    print_bundle_size es6 $(basename $FILE)
-  ); done
+  print_bundle_size es6 all
 }
 # Main Script
 
 echo
-echo "\033[1mAutomatically collecting metrics for $module"
+echo "\033[93mAutomatically collecting metrics for $module\033[0m"
 echo
 
 print_all_loop
-
-# Disable bold terminal font
-echo "\033[0m"
-
-
