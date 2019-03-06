@@ -66,9 +66,12 @@ const MAIN_FIELDS = {
 };
 
 function getBundleEntryPoints() {
-  let entry = resolve(config.entry['size']);
+  let entry = config.entry['size'];
   if (typeof entry === 'string') {
     entry = {bundle: entry};
+  }
+  for (const key in entry) {
+    entry[key] = resolve(entry[key]);
   }
   return entry;
 }
