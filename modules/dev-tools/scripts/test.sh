@@ -41,7 +41,7 @@ case $MODE in
     break;;
 
   "cover")
-    NODE_ENV=test BABEL_ENV=test npx nyc --config $MODULE_DIR/config/nycrc.json node $MODULE_DIR/node/test.js cover 
+    NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover 
     npx nyc report --reporter=lcov
     break;;
 

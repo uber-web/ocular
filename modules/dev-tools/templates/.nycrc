@@ -3,8 +3,7 @@
   "sourceMap": false,
   "instrument": true,
   "include": [
-    "modules/**/dist/es5/**/*.js",
-    "dist/es5/**/*.js"
+    "modules/**/dist/es5/**/*.js"
   ],
   "exclude": [
     "**/deprecated"
