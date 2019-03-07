@@ -1,5 +1,5 @@
 #!/bin/sh
-# Script to collect build size information
+# Prints resolved config values
 
 # set -e
 

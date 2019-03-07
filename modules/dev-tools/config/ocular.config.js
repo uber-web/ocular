@@ -7,7 +7,7 @@ const DEFAULT_CONFIG = {
   babel: {
     configPath: getValidPath([
       resolve('./babel.config.js'),
-      resolve('./babelrc'),
+      resolve('./.babelrc'),
       resolve(__dirname, './babel.config.js')
     ])
   },
