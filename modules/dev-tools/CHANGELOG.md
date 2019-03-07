@@ -1,7 +1,7 @@
 # CHANGELOG (ocular-dev-tools)
 
-## v0.0.9
-- Bump reify version
+## v0.0.10
+- Move reify to peerDependency
 
 ## v0.0.8
 - Fix publish script (#106)

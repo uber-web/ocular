@@ -80,7 +80,7 @@ function getBundleEntryPoints() {
 module.exports = (env = {}) => {
   switch (env.mode) {
   case 'bench':
-    return Object.assign({}, config, {
+    return Object.assign({}, COMMON_CONFIG, {
       entry: {
         bench: resolve(config.entry['bench-browser'])
       }
