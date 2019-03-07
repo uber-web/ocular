@@ -1,13 +1,16 @@
 #!/bin/sh
 # Script to collect build size information
 
-# set -e
+# set -ex
 
 export PATH=$PATH:node_modules/.bin
 
-MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 WORKING_DIR=`pwd`
 TMP_DIR=$WORKING_DIR/tmp
+
+# Get webpack config path
+WEBPACK_CONFIG=`$DEV_TOOLS_DIR/scripts/print-config.sh ".webpack.configPath"`
 
 # Get name from package.json
 module=$(jq '.name' ./package.json)
@@ -20,7 +23,7 @@ else
   packageInfo=./package.json
 fi
 # Get version from packag.json and remove quotes
-version=$(jq '.version' $packageInfo | awk '{ gsub(/"/,"",$1); printf "%-14s", $1 }')
+version=$(jq -r '.version' $packageInfo)
 
 # Helper functions
 
@@ -52,7 +55,7 @@ print_size() {
 
 build_bundle() {
   DIST=$1
-  NODE_ENV=production webpack --config $MODULE_DIR/config/webpack.config.js --output-path "$TMP_DIR" --hide-modules --env.mode=bundle --env.dist=$DIST > /dev/null
+  NODE_ENV=production webpack --config $WEBPACK_CONFIG --output-path "$TMP_DIR" --display errors-only --env.mode=size --env.dist=$DIST
 }
 
 print_bundle_size() {
