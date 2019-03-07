@@ -25,4 +25,4 @@ if [ -d "modules" ]; then
 fi
 
 # build the submodules
-npm run build
+ocular-build
