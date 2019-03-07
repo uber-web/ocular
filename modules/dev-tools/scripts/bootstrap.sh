@@ -6,7 +6,8 @@ set -e
 # install dependencies
 yarn
 
-ROOT_NODE_MODULES_DIR=`pwd`/node_modules
+PACKAGE_DIR=`pwd`
+ROOT_NODE_MODULES_DIR=$PACKAGE_DIR/node_modules
 
 if [ -d "modules" ]; then
   # monorepo
@@ -22,7 +23,9 @@ if [ -d "modules" ]; then
     rm -rf ./node_modules/.bin
     ln -sf $ROOT_NODE_MODULES_DIR/.bin ./node_modules
   ); done
+
+  cd $PACKAGE_DIR
 fi
 
 # build the submodules
-ocular-build
+npm run build

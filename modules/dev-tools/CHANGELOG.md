@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.12
+- Fix bootstrap script
+
 ## v0.0.11
 - Run coverage on ci (#112)
 - Support babel/webpack config files in package (#113)

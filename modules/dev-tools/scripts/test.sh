@@ -14,7 +14,7 @@ run_test_script() {
 }
 
 run_full_test() {
-  ocular-lint
+  npm run lint
   run_test_script node
   run_test_script browser-headless
 }
@@ -46,7 +46,7 @@ case $MODE in
 
   "ci")
     # run by Travis CI
-    ocular-lint
+    npm run lint
     run_test_script browser-headless
     ocular-test cover
     # node test/start.js bench

@@ -34,7 +34,7 @@ After installing you can set up your build scripts in package.json as follows:
 
 ```json
   "scripts": {
-    "bootstrap": "ocular-bootstrap",
+    "bootstrap": "yarn && ocular-bootstrap",
     "build": "ocular-clean && ocular-build",
     "lint": "ocular-lint",
     "metrics": "ocular-metrics",
