@@ -14,7 +14,7 @@ run_test_script() {
 }
 
 run_full_test() {
-  npm run lint
+  ocular-lint
   run_test_script node
   run_test_script browser-headless
 }
@@ -31,12 +31,11 @@ case $MODE in
     break;;
 
   "fast")
-    npm run lint fast
+    ocular-lint fast
     run_test_script node
     break;;
 
   "dist")
-    npm run build
     run_test_script dist
     break;;
 
@@ -47,7 +46,7 @@ case $MODE in
 
   "ci")
     # run by Travis CI
-    npm run lint
+    ocular-lint
     run_test_script browser-headless
     ocular-test cover
     # node test/start.js bench
