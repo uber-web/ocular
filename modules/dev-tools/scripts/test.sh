@@ -41,20 +41,18 @@ case $MODE in
     break;;
 
   "cover")
-    NODE_ENV=test BABEL_ENV=test npx nyc --config $MODULE_DIR/config/nycrc.json node $MODULE_DIR/node/test.js cover 
+    NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover 
     npx nyc report --reporter=lcov
     break;;
 
   "ci")
     # run by Travis CI
-    run_full_test
+    npm run lint
+    run_test_script browser-headless
+    ocular-test cover
     # node test/start.js bench
     ocular-metrics
-    # npm run cover
-    
-    # Report coverage
-    # NODE_ENV=test BABEL_ENV=test npx nyc --config $MODULE_DIR/config/nycrc.json node $MODULE_DIR/node/test.js cover 
-    # npx nyc report --reporter=text-lcov | coveralls
+
     break;;
 
   *)
