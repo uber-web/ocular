@@ -2,7 +2,7 @@
   "name": "ocular-dev-tools",
   "description": "Dev tools for our Javascript frameworks",
   "license": "MIT",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "keywords": [
     "javascript"
   ],
@@ -53,7 +53,7 @@
     "nyc": "^13.3.0",
     "prettier": "1.14.3",
     "prettier-check": "2.0.0",
-    "reify": "^0.4.4",
+    "reify": "^0.18.1",
     "source-map-loader": "^0.2.3",
     "tape": "^4.9.2",
     "tape-catch": "^1.0.4",

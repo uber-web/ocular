@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.9
+- Bump reify version
+
 ## v0.0.8
 - Fix publish script (#106)
 - use prettier on markdowns (#102)
@@ -7,7 +10,7 @@
 - Add test harness (#105)
 - Fix metrics collection (#107)
 - Add user config for lint (#108)
--  Fix coverage script (#111)
+- Fix coverage script (#111)
 
 ## v0.0.7
 - Fix build script in Linux (#87)
