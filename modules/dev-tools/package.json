@@ -42,7 +42,6 @@
     "babel-eslint": "^9.0.0",
     "babel-plugin-istanbul": "^5.0.0",
     "babel-plugin-version-inline": "^1.0.0",
-    "coveralls": "^2.13.0",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-uber-es2015": "^3.0.0",
