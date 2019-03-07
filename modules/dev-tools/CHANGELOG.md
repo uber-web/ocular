@@ -1,5 +1,10 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.11
+- Run coverage on ci (#112)
+- Support babel/webpack config files in package (#113)
+- Update documentation (#114)
+
 ## v0.0.10
 - Move reify to peerDependency
 
