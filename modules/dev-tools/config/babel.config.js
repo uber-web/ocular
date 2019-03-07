@@ -1,5 +1,3 @@
-const config = require('./ocular.config');
-
 const TARGETS = {
   chrome: '60',
   edge: '15',
@@ -9,10 +7,10 @@ const TARGETS = {
   node: '8'
 };
 
-function mergeEnvSettings(env, defaultSettings) {
-  const envConfig = config.babel[env] || {};
-  const presets = envConfig.presets || config.presets || [];
-  const plugins = envConfig.plugins || config.plugins || [];
+function mergeEnvSettings(env, defaultSettings, userSettings) {
+  const envConfig = userSettings[env] || {};
+  const presets = envConfig.presets || userSettings.presets || [];
+  const plugins = envConfig.plugins || userSettings.plugins || [];
 
   return Object.assign({}, defaultSettings, {
     presets: defaultSettings.presets.concat(presets),
@@ -20,10 +18,10 @@ function mergeEnvSettings(env, defaultSettings) {
   });
 }
 
-module.exports = {
+const DEFAULT_CONFIG = {
   comments: false,
   env: {
-    es5: mergeEnvSettings('es5', {
+    es5: {
       presets: [
         [ '@babel/env', {
           forceAllTransforms: true,
@@ -33,8 +31,8 @@ module.exports = {
       plugins: [
         '@babel/transform-runtime'
       ]
-    }),
-    esm: mergeEnvSettings('esm', {
+    },
+    esm: {
       presets: [
         [ '@babel/env', {
           forceAllTransforms: true,
@@ -44,8 +42,8 @@ module.exports = {
       plugins: [
         ['@babel/transform-runtime', {useESModules: true}]
       ]
-    }),
-    es6: mergeEnvSettings('es6', {
+    },
+    es6: {
       presets: [
         [ '@babel/env', {
           targets: TARGETS,
@@ -53,17 +51,33 @@ module.exports = {
         }]
       ],
       plugins: [
-        ['@babel/transform-runtime', {useESModules: true}],
-        'version-inline'
+        ['@babel/transform-runtime', {useESModules: true}]
       ]
-    }),
-    test: mergeEnvSettings('test', {
+    },
+    test: {
       presets: [
         '@babel/preset-env'
       ],
       plugins: [
         'istanbul'
       ]
-    })
+    }
   }
+};
+
+module.exports = (api, overrides) => {
+  api.cache(true);
+
+  if (!overrides) {
+    return DEFAULT_CONFIG;
+  }
+
+  return Object.assign({}, DEFAULT_CONFIG, {
+    env: {
+      es5: mergeEnvSettings('es5', DEFAULT_CONFIG.env.es5, overrides),
+      es6: mergeEnvSettings('es6', DEFAULT_CONFIG.env.es6, overrides),
+      esm: mergeEnvSettings('esm', DEFAULT_CONFIG.env.esm, overrides),
+      test: mergeEnvSettings('test', DEFAULT_CONFIG.env.test, overrides)
+    }
+  });
 };

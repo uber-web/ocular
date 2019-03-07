@@ -5,7 +5,11 @@ const IS_MONOREPO = fs.existsSync(resolve('./modules'));
 
 const DEFAULT_CONFIG = {
   babel: {
-    plugins: ['version-inline']
+    configPath: getValidPath([
+      resolve('./babel.config.js'),
+      resolve('./.babelrc'),
+      resolve(__dirname, './babel.config.js')
+    ])
   },
 
   lint: {
@@ -16,11 +20,18 @@ const DEFAULT_CONFIG = {
   aliases: {},
 
   entry: {
-    'test-node': 'test/node',
+    'test': 'test/index',
     'test-browser': 'test/browser',
-    'bench-node': 'test/bench/node',
+    'bench': 'test/bench/index',
     'bench-browser': 'test/bench/browser',
     'size': 'test/size'
+  },
+
+  webpack: {
+    configPath: getValidPath([
+      resolve('./webpack.config.js'),
+      resolve(__dirname, './webpack.config.js')
+    ])
   }
 };
 
@@ -40,6 +51,10 @@ function shallowMerge(obj1, obj2) {
   });
 
   return result;
+}
+
+function getValidPath(resolveOrder) {
+  return resolveOrder.find(path => fs.existsSync(path));
 }
 
 module.exports = shallowMerge(DEFAULT_CONFIG, userConfig);

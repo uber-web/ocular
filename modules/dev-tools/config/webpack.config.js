@@ -65,10 +65,10 @@ const MAIN_FIELDS = {
   es5: ['main']
 };
 
-function getBundleEntryPoints() {
-  let entry = config.entry['size'];
+function getEntryPoints(key) {
+  let entry = config.entry[key] || {};
   if (typeof entry === 'string') {
-    entry = {bundle: entry};
+    entry = {[key]: entry};
   }
   for (const key in entry) {
     entry[key] = resolve(entry[key]);
@@ -79,25 +79,12 @@ function getBundleEntryPoints() {
 // Replace the entry point for webpack-dev-server
 module.exports = (env = {}) => {
   switch (env.mode) {
-  case 'bench':
-    return Object.assign({}, COMMON_CONFIG, {
-      entry: {
-        bench: resolve(config.entry['bench-browser'])
-      }
-    });
 
-  case 'test':
-    return Object.assign({}, COMMON_CONFIG, {
-      entry: {
-        test: resolve(config.entry['test-browser'])
-      }
-    });
-
-  case 'bundle':
+  case 'size':
     return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
-      entry: getBundleEntryPoints(),
+      entry: getEntryPoints('size'),
 
       resolve: Object.assign({}, COMMON_CONFIG.resolve, {
         mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
@@ -112,7 +99,7 @@ module.exports = (env = {}) => {
     return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
-      entry: getBundleEntryPoints(),
+      entry: getEntryPoints('size'),
 
       devtool: false,
 
@@ -120,8 +107,12 @@ module.exports = (env = {}) => {
     });
     break;
 
+  case 'bench':
+  case 'test':
   default:
-    throw new Error `Unknown bundle mode ${env.mode}`;
+    return Object.assign({}, COMMON_CONFIG, {
+      entry: getEntryPoints(`${env.mode}-browser`)
+    });
   }
 
 };
