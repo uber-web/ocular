@@ -25,7 +25,7 @@ Your `package.json` should looks something like:
 ```json
   "devDependencies": {
     "ocular-dev-tools": "*",
-    "reify": "^0.18.1"
+    "reify": "^0.18.1",
     "@probe.gl/test-utils": "^3.0.0"
   }
 ```
