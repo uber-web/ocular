@@ -22,21 +22,16 @@ const {resolve} = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const config = require('./ocular.config');
-const ALIASES = require('../node/aliases')('src');
-
 const COMMON_CONFIG = {
   mode: 'development',
 
   devServer: {
     stats: {
       warnings: false
-    },
-    quiet: true
+    }
   },
 
   resolve: {
-    alias: ALIASES
   },
 
   devtool: 'inline-source-maps',
@@ -65,7 +60,7 @@ const MAIN_FIELDS = {
   es5: ['main']
 };
 
-function getEntryPoints(key) {
+function getEntryPoints(key, config) {
   let entry = config.entry[key] || {};
   if (typeof entry === 'string') {
     entry = {[key]: entry};
@@ -77,14 +72,18 @@ function getEntryPoints(key) {
 }
 
 // Replace the entry point for webpack-dev-server
-module.exports = (env = {}) => {
+module.exports = (env = {}, opts = {}) => {
+  const config = require('./ocular.config')(opts);
+
+  COMMON_CONFIG.resolve.alias = config.aliases;
+
   switch (env.mode) {
 
   case 'size':
     return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
-      entry: getEntryPoints('size'),
+      entry: getEntryPoints('size', config),
 
       resolve: Object.assign({}, COMMON_CONFIG.resolve, {
         mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
@@ -99,7 +98,7 @@ module.exports = (env = {}) => {
     return Object.assign({}, COMMON_CONFIG, {
       mode: 'production',
 
-      entry: getEntryPoints('size'),
+      entry: getEntryPoints('size', config),
 
       devtool: false,
 
@@ -111,7 +110,7 @@ module.exports = (env = {}) => {
   case 'test':
   default:
     return Object.assign({}, COMMON_CONFIG, {
-      entry: getEntryPoints(`${env.mode}-browser`)
+      entry: getEntryPoints(`${env.mode}-browser`, config)
     });
   }
 

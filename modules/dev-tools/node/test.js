@@ -7,10 +7,9 @@ const {resolve} = require('path');
 /* global process */
 const moduleAlias = require('module-alias');
 
-const getAliases = require('./aliases');
-moduleAlias.addAliases(getAliases('src'));
-
-const config = require('../config/ocular.config');
+const getConfig = require('../config/ocular.config');
+const config = getConfig();
+moduleAlias.addAliases(config.aliases);
 
 // Browser test is opt-in by installing @probe.gl/test-utils
 let BrowserTestDriver = null;
@@ -42,8 +41,9 @@ switch (mode) {
 
   case 'cover':
   case 'dist':
+    const distConfig = getConfig({aliasMode: 'dist'});
     // Load deck.gl itself from the dist folder
-    moduleAlias.addAliases(getAliases('dist'));
+    moduleAlias.addAliases(distConfig.aliases);
     require(resolveEntry('test')); // Run the tests
     break;
 

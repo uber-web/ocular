@@ -1,7 +1,6 @@
 // Registers an alias for this module
 const {resolve} = require('path');
 const fs = require('fs');
-const config = require('../config/ocular.config');
 
 function getModuleInfo(path) {
   if (fs.lstatSync(path).isDirectory()) {
@@ -20,9 +19,9 @@ function getModuleInfo(path) {
 }
 
 // Get information of all submodules
-function getSubmodules() {
+function getSubmodules(packageRoot) {
   const submodules = {};
-  const parentPath = resolve('./modules');
+  const parentPath = resolve(packageRoot, './modules');
 
   if (fs.existsSync(parentPath)) {
     //monorepo
@@ -35,24 +34,24 @@ function getSubmodules() {
       }
     });
   } else {
-    const moduleInfo = getModuleInfo('.');
+    const moduleInfo = getModuleInfo(packageRoot);
     submodules[moduleInfo.name] = moduleInfo;
   }
 
   return submodules;
 }
 
-function getAliases(mode = 'src') {
-  const aliases = config.aliases;
-  const submodules = getSubmodules();
+function getAliases(mode = 'src', packageRoot = process.env.PWD) {
+  const aliases = {};
+  const submodules = getSubmodules(packageRoot);
 
   for (const moduleName in submodules) {
     const {path, packageInfo} = submodules[moduleName];
     if (mode === 'src') {
       aliases[moduleName] = resolve(path, 'src');
     } else {
-      const subPath = packageInfo.main.replace('/index.js', '');
-      aliases[moduleName] = resolve(path, subPath);
+      const subPath = packageInfo.main && packageInfo.main.replace('/index.js', '');
+      aliases[moduleName] = subPath ? resolve(path, subPath) : path;
     }
   }
 
