@@ -136,11 +136,9 @@ You may extend the default babel config as follows:
 const getBabelConfig = require('ocular-dev-tools/config/babel.config');
 
 module.exports = api => {
-  return getBabelConfig(api, {
-    // additional settings
-    presets: [],
-    plugins: []
-  });
+  const config = getBabelConfig(api);
+  // add custom settings
+  return config;
 };
 ```
 

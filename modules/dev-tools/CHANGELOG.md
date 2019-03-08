@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.13
+- remove babel config override logic (#116)
+- allow configs to be used outside of package root (#115)
+
 ## v0.0.12
 - Fix bootstrap script
 
