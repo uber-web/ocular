@@ -47,6 +47,7 @@ function getAliases(mode = 'src', packageRoot = process.env.PWD) {
 
   for (const moduleName in submodules) {
     const {path, packageInfo} = submodules[moduleName];
+    aliases[`${moduleName}/test`] = resolve(path, 'test');
     if (mode === 'src') {
       aliases[moduleName] = resolve(path, 'src');
     } else {
