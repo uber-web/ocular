@@ -46,8 +46,9 @@ const FILENAMES = [
   'gatsby-ssr.js',
   'package.json',
   '.gitignore',
-  '.eslintignore', // Better if we can avoid this
-  'src/components/layout.jsx'
+  '.eslintignore',
+  // Better if we can avoid this
+  ['src/components/query-layer.jsx'
 ];
 
 const PACKAGE_JSON = require(`${TEMPLATE_DIR}/package.json`)
