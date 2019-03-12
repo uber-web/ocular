@@ -1,4 +1,11 @@
-// NOTE: Dummy component, just to get gatsby to compile the StaticQuery
+// This component contains the StaticQuery needed to provide data for the layout components.
+// These layout components will then pass some of that information down to the rest of the site
+// ie to the table of content, header, etc.
+
+// because this is a StaticQuery it needs to be in the local tree so that its graphQl can be
+// run by gatsby. Rather, a file of the same name must have the same query in the local tree.
+// During the init process, ocular copies this file over to the local tree. 
+
 
 import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
@@ -91,7 +98,7 @@ const QUERY = graphql`
 
 // The Layout instance is shared between pages. It queries common, static data
 // and makes it available on React context
-export default class QueryLayer extends React.Component {
+export default class SiteQuery extends React.Component {
   render() {
     const { onComplete } = this.props;
     return <StaticQuery query={QUERY} render={onComplete} />;

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { lightThemePrimitives, createTheme } from '../styled/theme';
-import QueryLayer from '../query-layer';
+import SiteQuery from '../query-layer';
 import TopLevelLayout from './top-level-layout';
 
 // Note: gatsby-plugin-sass will process these files automatically when it sees this import
@@ -45,6 +45,6 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    return <QueryLayer onComplete={this.queryComplete} />;
+    return <SiteQuery onComplete={this.queryComplete} />;
   }
 }
