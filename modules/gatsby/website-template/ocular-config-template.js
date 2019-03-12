@@ -7,20 +7,30 @@
 // export const GITHUB = ${init.type === 'github'};
 // export const HOME_HEADING = '${init.desc}';
 
-
 module.exports = init => `
 module.exports = {
   DOC_FOLDER: '${init.websiteFolder}/../docs/',
   ROOT_FOLDER: '${init.websiteFolder}/../',
 
-  EXAMPLES: [],
+  EXAMPLES: [
+    // {title: 'my example', path: 'examples/my-example/', image: 'images/my-example.jpg'}
+  ],
   DOCS: [],
+
+  THEME_OVERRIDES: [
+    //  {key: 'primaryFontFamily', value: 'serif'}
+  ],
 
   PROJECT_TYPE: '${init.type || 'github'}',
   PROJECT_NAME: '${init.name || 'untitled'}',
   PROJECT_ORG: '${init.org || 'unknown'}',
-  PROJECT_URL: '${init.type === 'github' ? `https://github.com/${init.org}/${init.name}` : init.otherUrl}',
-  PROJECT_DESC: '${init.desc || 'A documentation website for Ocular, made with Ocular'}',
+  PROJECT_URL: '${
+    init.type === 'github'
+      ? `https://github.com/${init.org}/${init.name}`
+      : init.otherUrl
+  }',
+  PROJECT_DESC: '${init.desc ||
+    'A documentation website for Ocular, made with Ocular'}',
   WEBSITE_PATH: '${init.path || '/website/'}',
 
   FOOTER_LOGO: '',
