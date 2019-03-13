@@ -21,7 +21,7 @@ if [ -d "modules" ]; then
       ;;
 
     "prod")
-      lerna publish --cd-version minor
+      lerna publish --cd-version patch
       ;;
 
     *)
@@ -31,10 +31,12 @@ if [ -d "modules" ]; then
 else
   case $MODE in
     "beta")
+      npm version prerelease
       npm publish --tag beta
       break;;
 
     "prod")
+      npm version patch
       npm publish
       break;;
 
