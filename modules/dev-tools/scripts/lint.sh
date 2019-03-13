@@ -22,9 +22,13 @@ fi
 DIR_PATTERN="$DIRECTORIES/**/*.$EXTENSIONS"
 ROOT_PATTERN="*.$EXTENSIONS"
 
+print_yellow() {
+  echo -e "\033[93m${1}\033[0m"
+}
+
 case $MODE in
-  "fast")
-    echo "\033[93mRunning prettier & eslint on changed files...\033[0m"
+  "pre-commit")
+    print_yellow "Running prettier & eslint on changed files..."
 
     # only check changed files
     set +e
@@ -43,18 +47,24 @@ case $MODE in
 
     # add changes to commit
     git add .
-    break;;
+    ;;
+
+  "fix")
+    print_yellow "Running prettier in $DIRECTORIES..."
+    npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
+
+    print_yellow "Running eslint in $DIRECTORIES..."
+    npx eslint --fix "$DIRECTORIES"
+    ;;
 
   *)
-    echo "\033[93mChecking prettier code style in $DIRECTORIES...\033[0m"
-    npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN" \
-     || echo "\033[91mRunning prettier...\033[0m" \
-     && npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
+    print_yellow "Checking prettier code style in $DIRECTORIES..."
+    npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN"
 
-    echo "\033[93mRunning eslint in $DIRECTORIES...\033[0m"
+    print_yellow "Running eslint in $DIRECTORIES..."
     npx eslint "$DIRECTORIES"
     ;;
   esac
 
 # check if yarn.lock contains private registry information
-!(grep -q unpm.u yarn.lock) && echo 'Lockfile valid.' || (echo 'Please rebuild yarn file using public npmrc' && false)
+!(grep -q unpm.u yarn.lock) && echo "Lockfile valid." || (echo -e "\033[91mPlease rebuild yarn file using public npmrc\033[0m" && false)
