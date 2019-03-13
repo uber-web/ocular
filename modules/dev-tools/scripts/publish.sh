@@ -18,14 +18,14 @@ if [ -d "modules" ]; then
       # npm-tag argument: npm publish --tag <beta>
       # cd-version argument: increase <prerelease> version
       lerna publish --npm-tag beta --cd-version prerelease
-      break;;
+      ;;
 
     "prod")
       lerna publish --cd-version minor
-      break;;
+      ;;
 
     *)
-      echo "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta']\033[0m"
+      echo -e "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta']\033[0m"
       exit 1;;
   esac
 else
@@ -39,7 +39,7 @@ else
       break;;
 
     *)
-      echo "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta']\033[0m"
+      echo -e "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta']\033[0m"
       exit 1;;
   esac
 fi

@@ -71,6 +71,7 @@ Modes:
 
 - `full` (default) - run on all files.
 - `pre-commit` - only run on changed files since the last commit.
+- `fix` - run prettier and eslint --fix on all files.
 
 [Configurations](#ocular-dev-tools-1): `lint`
 

@@ -28,7 +28,7 @@ version=$(jq -r '.version' $packageInfo)
 # Helper functions
 
 print_size_header() {
-  echo "\033[1m| Version        | Dist | Bundle Size      | Compressed     | Imports   |\033[0m"
+  echo -e "\033[1m| Version        | Dist | Bundle Size      | Compressed     | Imports   |\033[0m"
   echo "| ---            | ---  | ---              | ---            | ---       |"
 }
 
@@ -66,7 +66,7 @@ print_bundle_size() {
 # Main Script
 
 echo
-echo "\033[93mAutomatically collecting metrics for $module\033[0m"
+echo -e "\033[93mAutomatically collecting metrics for $module\033[0m"
 echo
 
 rm -rf $TMP_DIR

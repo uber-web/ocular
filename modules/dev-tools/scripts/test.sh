@@ -24,25 +24,25 @@ case $MODE in
     echo "test [ 'full' | 'fast' | 'dist' | 'bench' | 'ci' | 'cover' ]"
     echo "Running 'full' test by default"
     run_full_test
-    break;;
+    ;;
 
   "full")
     run_full_test
-    break;;
+    ;;
 
   "fast")
-    ocular-lint fast
+    ocular-lint pre-commit
     run_test_script node
-    break;;
+    ;;
 
   "dist")
     run_test_script dist
-    break;;
+    ;;
 
   "cover")
     NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover 
     npx nyc report --reporter=lcov
-    break;;
+    ;;
 
   "ci")
     # run by Travis CI
@@ -52,10 +52,10 @@ case $MODE in
     # node test/start.js bench
     ocular-metrics
 
-    break;;
+    ;;
 
   *)
     # default test
     run_test_script $MODE
-    break;;
+    ;;
   esac

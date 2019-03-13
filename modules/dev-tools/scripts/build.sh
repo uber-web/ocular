@@ -28,7 +28,7 @@ build_monorepo() {
   fi
 
   for D in ${MODULES}; do (
-    echo "\033[1mBuilding modules/$D\033[0m"
+    echo -e "\033[1mBuilding modules/$D\033[0m"
     cd $D
     build_module
     echo ""
