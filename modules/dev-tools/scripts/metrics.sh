@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script to collect build size information
 
 # set -ex
