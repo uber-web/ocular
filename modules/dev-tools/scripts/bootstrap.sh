@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script to bootstrap repo for development
 
 set -e

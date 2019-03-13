@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Prints resolved config values
 
 # set -e
