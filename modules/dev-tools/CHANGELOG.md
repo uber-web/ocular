@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.15
+- Fix script shebangs (#120)
+
 ## v0.0.14
 - Add auto aliases to module/test (#117)
 
