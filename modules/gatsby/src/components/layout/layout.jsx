@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { lightThemePrimitives, createTheme } from '../styled/theme';
-import SiteQuery from '../query-layer';
+import SiteQuery from '../site-query';
 import TopLevelLayout from './top-level-layout';
 
 // Note: gatsby-plugin-sass will process these files automatically when it sees this import
