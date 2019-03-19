@@ -62,7 +62,7 @@ case $MODE in
     npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN"
 
     print_yellow "Running eslint in $DIRECTORIES..."
-    npx eslint "$DIRECTORIES"
+    npx eslint $DIRECTORIES/**/*.js
     ;;
   esac
 

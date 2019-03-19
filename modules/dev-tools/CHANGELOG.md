@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.16
+- Update lint script (#121)
+- update publish script for unirepo (#122)
+
 ## v0.0.15
 - Fix script shebangs (#120)
 
