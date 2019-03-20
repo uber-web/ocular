@@ -1,40 +1,63 @@
-const urljoin = require('url-join');
+const urljoin = require("url-join");
 
-const { log, COLOR } = require('../utils/log');
+const {log, COLOR} = require("../utils/log");
 
 module.exports = function getGatsbyConfig(config) {
-  const { logLevel = 0 } = config;
+  const {logLevel = 0} = config;
   log.priority = logLevel;
 
-  log.log({ color: COLOR.CYAN, priority: 0 }, 'Loading gatsby config')();
+  log.log({color: COLOR.CYAN, priority: 0}, "Loading gatsby config")();
   log.log(
-    { color: COLOR.CYAN, priority: 2 },
+    {color: COLOR.CYAN, priority: 2},
     `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
   )();
 
-  // Entry cannot be empty, since graphql then cannot autoinfer schemas
-  // which means queries will fail (sigh...)
-  if (!config.EXAMPLES || config.EXAMPLES.length === 0) {
-    config.EXAMPLES = [{ title: 'none', path: 'none' }];
-  }
+  // config padding
+  // those values are required to support the query in ../site-query.jsx
+  // if they don't exist, we provide empty values so that the query won't fail
+
+  const paddedConfig = {
+    PROJECT_TYPE: config.PROJECT_TYPE || "",
+    PROJECT_DESC: config.PROJECT_DESC || "",
+    HOME_HEADING: config.HOME_HEADING || "",
+    EXAMPLES:
+      config.EXAMPLES && config.EXAMPLES.length
+        ? config.EXAMPLES
+        : [{title: "none", path: "none"}],
+    HOME_BULLETS:
+      config.HOME_BULLETS && config.HOME_BULLETS.length
+        ? config.HOME_BULLETS
+        : [{text: "", desc: "", img: ""}],
+    THEME_OVERRIDES:
+      config.THEME_OVERRIDES && config.THEME_OVERRIDES.length
+        ? config.THEME_OVERRIDES
+        : [{key: "none", value: "none"}]
+  };
+
+  // there are default values for these in the ocular-config file we generate on init but
+  // if they are deleted, the urlJoin calls below will fail
+
+  ['siteUrl', 'pathPrefix', 'siteRss'].forEach(key => {
+    if (!config[key]) {
+      log.log({color: COLOR.CYAN, priority: 2}, `please provide a value for ${key} in ocular-config.js`)();
+    }
+  })
+  
 
   const gatsbyConfig = {
     pathPrefix: config.pathPrefix,
 
     // Site Metadata is populated from config (and react-helmet, see gatsby-plugin-react-helmet)
     siteMetadata: {
-      config,
+      config: {...config, ...paddedConfig},
+
       siteUrl: urljoin(config.siteUrl, config.pathPrefix),
       rssMetadata: {
         site_url: urljoin(config.siteUrl, config.pathPrefix),
         feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
-        title: config.PROJECT_NAME,
-        description: config.PROJECT_DESC,
-        image_url: urljoin(
-          config.siteUrl,
-          config.pathPrefix,
-          '/logos/logo-512.png'
-        ),
+        title: paddedConfig.PROJECT_NAME,
+        description: paddedConfig.PROJECT_DESC,
+        image_url: urljoin(config.siteUrl, config.pathPrefix, "/logos/logo-512.png"),
         author: config.userName,
         copyright: config.copyright
       }
@@ -42,12 +65,12 @@ module.exports = function getGatsbyConfig(config) {
 
     plugins: [
       // Reads metadata from the React Helmet component
-      'gatsby-plugin-react-helmet',
+      "gatsby-plugin-react-helmet",
 
       // A Gatsby plugin for styled-components with built-in server-side rendering support.
-      'gatsby-plugin-styled-components',
-      'gatsby-plugin-sharp',
-      'gatsby-transformer-sharp',
+      "gatsby-plugin-styled-components",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp",
       // Drop-in support for SASS/SCSS stylesheets
       {
         resolve: `gatsby-plugin-sass`
@@ -73,52 +96,25 @@ module.exports = function getGatsbyConfig(config) {
 
       // Generates gatsby nodes for files in the ocular static folder
       {
-        resolve: 'gatsby-source-filesystem',
+        resolve: "gatsby-source-filesystem",
         options: {
-          name: 'assets',
+          name: "assets",
           path: `${__dirname}/../../static/`
         }
       },
-      
-      // Generates gatsby nodes for files in the website's static folder
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: 'assets',
-          path: `${config.ROOT_FOLDER}/static/`
-        }
-      },
-
-      // Generates gatsby nodes for posts in the in the content folder
-      // {
-      //   resolve: 'gatsby-source-filesystem',
-      //   options: {
-      //     name: 'posts',
-      //     path: `${__dirname}/content/`
-      //   }
-      // },
 
       // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
       {
-        resolve: 'gatsby-source-filesystem',
+        resolve: "gatsby-source-filesystem",
         options: {
-          name: 'docs',
+          name: "docs",
           path: config.DOC_FOLDER
         }
       },
 
-      // Generates gatsby nodes for markdown files in the in the docs folder
-      // {
-      //   resolve: 'gatsby-source-filesystem',
-      //   options: {
-      //     name: 'examples',
-      //     path: urljoin(config.ROOT_FOLDER, 'examples')
-      //   }
-      // },
-
       // Transforms markdown (.md) nodes, converting the raw markdown to HTML
       {
-        resolve: 'gatsby-transformer-remark',
+        resolve: "gatsby-transformer-remark",
         options: {
           // These are sub-plugins for gatsby-transformer-remark
           plugins: [
@@ -131,7 +127,7 @@ module.exports = function getGatsbyConfig(config) {
             // Using the 'blur up' technique popularized by Medium and Facebook where a small
             // 20px wide version is shown as placeholder until actual image is downloaded.
             {
-              resolve: 'gatsby-remark-images',
+              resolve: "gatsby-remark-images",
               options: {
                 maxWidth: 690
               }
@@ -140,16 +136,16 @@ module.exports = function getGatsbyConfig(config) {
             // in a responsive elastic container with a fixed aspect ratio. This ensures that
             // the iframe or object will scale proportionally and to the full width of its container.
             {
-              resolve: 'gatsby-remark-responsive-iframe'
+              resolve: "gatsby-remark-responsive-iframe"
             },
             // Adds syntax highlighting to code blocks in markdown files using PrismJS.
             // To load a theme, just require its CSS file in your gatsby-browser.js file, e.g.
             // require('prismjs/themes/prism-solarizedlight.css')
-            'gatsby-remark-prismjs',
+            "gatsby-remark-prismjs",
             // Copies local files linked to/from markdown to your public folder.
-            'gatsby-remark-copy-linked-files',
+            "gatsby-remark-copy-linked-files",
             // Adds GitHub-style hover links to headers in your markdown files when they’re rendered.
-            'gatsby-remark-autolink-headers'
+            "gatsby-remark-autolink-headers"
           ]
         }
       },
@@ -177,7 +173,7 @@ module.exports = function getGatsbyConfig(config) {
       // Exposes several image processing functions built on the Sharp image processing library.
       // This is a low-level helper plugin generally used by other Gatsby plugins.
       // You generally shouldn't be using this directly unless doing custom image processing.
-      'gatsby-plugin-sharp',
+      "gatsby-plugin-sharp",
 
       /*
       // Intercepts local links from markdown and other non-react pages and
@@ -318,14 +314,17 @@ module.exports = function getGatsbyConfig(config) {
   if (config.DIR_NAME) {
     // Generates gatsby nodes for files in the website's src folder
     gatsbyConfig.plugins.push({
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'src',
+        name: "src",
         path: `${config.DIR_NAME}/src/`
       }
     });
   } else {
-    log.log({ color: COLOR.YELLOW }, `DIR_NAME not found in ocular-gatsby config}`)();
+    log.log(
+      {color: COLOR.YELLOW},
+      `DIR_NAME not found in ocular-gatsby config}`
+    )();
   }
 
   // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig, null, 3)}`)();

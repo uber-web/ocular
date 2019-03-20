@@ -15,7 +15,9 @@ module.exports = {
   EXAMPLES: [
     // {title: 'my example', path: 'examples/my-example/', image: 'images/my-example.jpg'}
   ],
-  DOCS: [],
+  DOCS: [
+    // your table of contents go there
+  ],
 
   THEME_OVERRIDES: [
     //  {key: 'primaryFontFamily', value: 'serif'}
@@ -50,8 +52,12 @@ module.exports = {
     }
   ],
 
-  PROJECTS: {},
-  ADDITIONAL_LINKS: [],
+  PROJECTS: {
+    // 'Project name': 'http://project.url',
+  },
+  ADDITIONAL_LINKS: [
+    // {name: 'link label', href: 'http://link.url'}
+  ],
 
   GA_TRACKING: null,
 
@@ -71,7 +77,5 @@ module.exports = {
   dateFormat: "DD/MM/YYYY", // Date format for display.
   userName: "WebGL User", // Username to display in the author segment.
   copyright: "Copyright © 2017 Uber. MIT Licensed", // Copyright string for the footer of the website and RSS feed.
-  themeColor: "#c62828", // Used for setting manifest and progress theme colors.
-  backgroundColor: "#e0e0e0" // Used for setting manifest background color.
 };
 `;
