@@ -59,10 +59,12 @@ case $MODE in
 
   *)
     print_yellow "Checking prettier code style in $DIRECTORIES..."
-    npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN"
+    npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN" ||
+      echo -e "\033[91mNot all files using prettier code style. This may be fixed by running\033[0m \033[1mnpm run lint fix\033[0m" &&
+      exit 1
 
     print_yellow "Running eslint in $DIRECTORIES..."
-    npx eslint $DIRECTORIES/**/*.js
+    npx eslint "$DIRECTORIES/**/*.js"
     ;;
   esac
 
