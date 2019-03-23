@@ -48,7 +48,7 @@ const FILENAMES = [
   '.gitignore',
   '.eslintignore',
   // Better if we can avoid this
-  ['src/components/static-query.jsx'
+  'src/components/static-query.jsx'
 ];
 
 const PACKAGE_JSON = require(`${TEMPLATE_DIR}/package.json`)
