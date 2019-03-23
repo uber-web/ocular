@@ -1,35 +1,64 @@
 const urljoin = require('url-join');
 
-const { log, COLOR } = require('../utils/log');
+const {log, COLOR} = require('../utils/log');
 
 module.exports = function getGatsbyConfig(config) {
-  const { logLevel = 0 } = config;
+  const {logLevel = 0} = config;
   log.priority = logLevel;
 
-  log.log({ color: COLOR.CYAN, priority: 0 }, 'Loading gatsby config')();
+  log.log({color: COLOR.CYAN, priority: 0}, 'Loading gatsby config')();
   log.log(
-    { color: COLOR.CYAN, priority: 2 },
+    {color: COLOR.CYAN, priority: 2},
     `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
   )();
 
-  // Entry cannot be empty, since graphql then cannot autoinfer schemas
-  // which means queries will fail (sigh...)
-  if (!config.EXAMPLES || config.EXAMPLES.length === 0) {
-    config.EXAMPLES = [{ title: 'none', path: 'none' }];
-  }
+  // config padding
+  // those values are required to support the query in ../site-query.jsx
+  // if they don't exist, we provide empty values so that the query won't fail
+
+  const paddedConfig = {
+    PROJECT_TYPE: config.PROJECT_TYPE || '',
+    PROJECT_DESC: config.PROJECT_DESC || '',
+    HOME_HEADING: config.HOME_HEADING || '',
+    EXAMPLES:
+      config.EXAMPLES && config.EXAMPLES.length
+        ? config.EXAMPLES
+        : [{title: 'none', path: 'none'}],
+    HOME_BULLETS:
+      config.HOME_BULLETS && config.HOME_BULLETS.length
+        ? config.HOME_BULLETS
+        : [{text: '', desc: '', img: ''}],
+    THEME_OVERRIDES:
+      config.THEME_OVERRIDES && config.THEME_OVERRIDES.length
+        ? config.THEME_OVERRIDES
+        : [{key: 'none', value: 'none'}]
+  };
+
+  // there are default values for these in the ocular-config file we generate on init but
+  // if they are deleted, the urlJoin calls below will fail
+
+  ['siteUrl', 'pathPrefix', 'siteRss'].forEach(key => {
+    if (!config[key]) {
+      log.log(
+        {color: COLOR.CYAN, priority: 2},
+        `please provide a value for ${key} in ocular-config.js`
+      )();
+    }
+  });
 
   const gatsbyConfig = {
     pathPrefix: config.pathPrefix,
 
     // Site Metadata is populated from config (and react-helmet, see gatsby-plugin-react-helmet)
     siteMetadata: {
-      config,
+      config: {...config, ...paddedConfig},
+
       siteUrl: urljoin(config.siteUrl, config.pathPrefix),
       rssMetadata: {
         site_url: urljoin(config.siteUrl, config.pathPrefix),
         feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
-        title: config.PROJECT_NAME,
-        description: config.PROJECT_DESC,
+        title: paddedConfig.PROJECT_NAME,
+        description: paddedConfig.PROJECT_DESC,
         image_url: urljoin(
           config.siteUrl,
           config.pathPrefix,
@@ -79,24 +108,6 @@ module.exports = function getGatsbyConfig(config) {
           path: `${__dirname}/../../static/`
         }
       },
-      
-      // Generates gatsby nodes for files in the website's static folder
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: 'assets',
-          path: `${config.ROOT_FOLDER}/static/`
-        }
-      },
-
-      // Generates gatsby nodes for posts in the in the content folder
-      // {
-      //   resolve: 'gatsby-source-filesystem',
-      //   options: {
-      //     name: 'posts',
-      //     path: `${__dirname}/content/`
-      //   }
-      // },
 
       // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
       {
@@ -106,15 +117,6 @@ module.exports = function getGatsbyConfig(config) {
           path: config.DOC_FOLDER
         }
       },
-
-      // Generates gatsby nodes for markdown files in the in the docs folder
-      // {
-      //   resolve: 'gatsby-source-filesystem',
-      //   options: {
-      //     name: 'examples',
-      //     path: urljoin(config.ROOT_FOLDER, 'examples')
-      //   }
-      // },
 
       // Transforms markdown (.md) nodes, converting the raw markdown to HTML
       {
@@ -325,7 +327,10 @@ module.exports = function getGatsbyConfig(config) {
       }
     });
   } else {
-    log.log({ color: COLOR.YELLOW }, `DIR_NAME not found in ocular-gatsby config}`)();
+    log.log(
+      {color: COLOR.YELLOW},
+      `DIR_NAME not found in ocular-gatsby config}`
+    )();
   }
 
   // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig, null, 3)}`)();
