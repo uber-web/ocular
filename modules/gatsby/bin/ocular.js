@@ -21,6 +21,7 @@
 
 const { spawn, execSync } = require('child_process')
 const { existsSync, readFileSync, writeFileSync } = require('fs')
+const ghpages = require('gh-pages');
 const inquirer = require('inquirer')
 const slug = require('slug')
 
@@ -48,7 +49,7 @@ const FILENAMES = [
   '.gitignore',
   '.eslintignore',
   // Better if we can avoid this
-  ['src/components/static-query.jsx'
+  'src/components/static-query.jsx'
 ];
 
 const PACKAGE_JSON = require(`${TEMPLATE_DIR}/package.json`)
@@ -155,6 +156,12 @@ const commands = {
       env: Object.assign(env, { NODE_ENV: 'production' })
     })
   },
+  // debug() {
+  //   execSync(`node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop`);
+  // },
+  // serve() {
+  //   execSync(`node node_modules/gatsby/dist/bin/gatsby serve`);
+  // },
 
   /*
   lint() {
@@ -198,8 +205,6 @@ Available commands:
 - init: create the bootstrap files in the current project
 - start: launch webpack in dev mode (accepts 'open' arg)
 - build: generate the bundle and dist files
-- lint: run eslint on the current project
-- build-docs: generate routes for markdown files (optional argument - markdown files location)
 
 You can provide the --debug flag to print the computed webpack config.
 `)

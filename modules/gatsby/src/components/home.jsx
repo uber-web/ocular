@@ -40,21 +40,14 @@ export default class Home extends Component {
     // Note: The Layout "wrapper" component adds header and footer etc
     return (
       <div className="fg">
-
         <Hero />
-
         <div className="fg p4">
-
           <div className="container f fw">
-
             <div className="f1 p" style={{minWidth: '10rem'}}>
-
               <h2>
                 {HOME_HEADING}
               </h2>
-
               <hr className="short" />
-
               {HOME_BULLETS.map((bullet, i) => (
                 <div key={i}>
                   <h3 className="fac">
@@ -68,22 +61,16 @@ export default class Home extends Component {
                   )}
                 </div>
               ))}
-
             </div>
-
             <div className="f1 p" style={{minWidth: '10rem'}}>
               {HOME_RIGHT}
             </div>
-
           </div>
-
           {PROJECT_TYPE === 'github' && (
             <div className="container">
-
               <hr className="short" />
               <h3>Contributors</h3>
               <span>Join us!</span>
-
               <div className="Contributors m-top">
                 {contributors.map((contributor) => contributor ? (
                   <a
@@ -102,12 +89,9 @@ export default class Home extends Component {
                   <div className="Contributor" key={contributor.id} />
                 ))}
               </div>
-
             </div>
           )}
-
         </div>
-
       </div>
     );
   }
