@@ -5,8 +5,6 @@ import theme from './theme';
 // top-level layoout
 
 export const BodyContainerFull = styled.div(props => ({
-  padding: theme.sizing.scale400,
-  maxWidth: theme.breakpoints.large,
   margin: '0 auto',
 
   '.contributors': {

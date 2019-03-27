@@ -38,7 +38,6 @@ export default class ExampleTemplate extends React.Component {
     if (!example) {
       console.warn(`No example found: ${slug}`);
     }
-    console.log(this.props);
     // console.log(example);
 
     return (

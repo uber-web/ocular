@@ -6,7 +6,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
 
-import { WebsiteConfigProvider } from './website-config';
+import {WebsiteConfigProvider} from './website-config';
 
 import SEO from '../common/SEO';
 
@@ -48,8 +48,8 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const { children, pathContext, theme } = this.props;
-    const { isMenuOpen } = this.state;
+    const {children, pathContext, theme} = this.props;
+    const {isMenuOpen} = this.state;
     const isExample = pathContext.toc === 'examples';
     return (
       <BodyGrid theme={theme}>
@@ -61,9 +61,13 @@ export default class Layout extends React.Component {
           />
         </HeaderContainer>
 
-        <ToCContainer theme={theme}>{this.renderTOC(config, tableOfContents)}</ToCContainer>
+        <ToCContainer theme={theme}>
+          {this.renderTOC(config, tableOfContents)}
+        </ToCContainer>
 
-        <BodyContainerToC isExample={isExample} theme={theme}>{children}</BodyContainerToC>
+        <BodyContainerToC isExample={isExample} theme={theme}>
+          {children}
+        </BodyContainerToC>
 
         {/* <Footer /> */}
       </BodyGrid>
@@ -71,9 +75,8 @@ export default class Layout extends React.Component {
   }
 
   renderBodyFull(config) {
-    const { children, theme } = this.props;
-    const { isMenuOpen } = this.state;
-
+    const {children, theme} = this.props;
+    const {isMenuOpen} = this.state;
     return (
       <div>
         <HeaderContainer theme={theme}>
@@ -93,12 +96,12 @@ export default class Layout extends React.Component {
   }
 
   toggleMenu() {
-    const { isMenuOpen } = this.state;
-    this.setState({ isMenuOpen: !isMenuOpen });
+    const {isMenuOpen} = this.state;
+    this.setState({isMenuOpen: !isMenuOpen});
   }
 
   renderTOC(config, tableOfContents) {
-    const { pageContext, theme } = this.props;
+    const {pageContext, theme} = this.props;
     switch (pageContext.toc) {
       case 'docs':
         return (
@@ -110,7 +113,7 @@ export default class Layout extends React.Component {
         );
 
       case 'examples':
-        const { EXAMPLES } = config;
+        const {EXAMPLES} = config;
 
         const examplesTOC = [
           {
@@ -148,9 +151,17 @@ export default class Layout extends React.Component {
   render() {
     // Since gatsby's StaticQueries can't run in a plugin, we rely on the app website's
     // Layout wrapper component to query for us and pass in the data.
-    const { pageContext, config, theme, tableOfContents, allMarkdown } = this.props;
+    const {
+      pageContext,
+      config,
+      theme,
+      tableOfContents,
+      allMarkdown
+    } = this.props;
     return (
-      <WebsiteConfigProvider value={{ config, theme, tableOfContents, allMarkdown }}>
+      <WebsiteConfigProvider
+        value={{config, theme, tableOfContents, allMarkdown}}
+      >
         <div>
           {allMarkdown ? (
             <SEO postEdges={allMarkdown} />
