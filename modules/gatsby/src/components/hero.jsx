@@ -5,22 +5,28 @@ import {getReactComponent, getHeroExample} from '../utils/component-registry';
 import DefaultExampleRunner from './example-runner';
 
 export default class Hero extends Component {
-
   renderPage({config}) {
     const HeroExample = getHeroExample();
-    const ExampleRunner = getReactComponent('ExampleRunner', DefaultExampleRunner);
+    const ExampleRunner = getReactComponent(
+      'ExampleRunner',
+      DefaultExampleRunner
+    );
 
     return (
       <section className="banner">
         <div className="f hero">
-          { HeroExample &&
-            <ExampleRunner example={HeroExample} sourceLink={HeroExample.path} noPanel />
-          }
+          {HeroExample && (
+            <ExampleRunner
+              example={HeroExample}
+              sourceLink={HeroExample.path}
+              noPanel
+            />
+          )}
         </div>
         <div className="container">
           <h1>{config.PROJECT_NAME}</h1>
           <p>{config.PROJECT_DESC}</p>
-          <Link to="/docs/get-started" className="btn">
+          <Link to="/docs/" className="btn">
             GET STARTED
           </Link>
         </div>
@@ -31,7 +37,7 @@ export default class Hero extends Component {
   render() {
     return (
       <WebsiteConfigConsumer>
-        {({ config }) => this.renderPage({config})}
+        {({config}) => this.renderPage({config})}
       </WebsiteConfigConsumer>
     );
   }
