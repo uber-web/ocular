@@ -15,7 +15,6 @@ import '../../../styles/main.scss';
 export default class Layout extends React.Component {
   constructor(props) {
     super(props);
-    console.log('layout props', props);
     this.queryComplete = this.queryComplete.bind(this);
   }
 
