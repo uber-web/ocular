@@ -2,7 +2,6 @@
 module.exports.getGatsbyNodeCallbacks = require('./gatsby-node');
 
 module.exports.getGatsbyConfig = require('./gatsby-config/get-gatsby-config');
-module.exports.sourceNodes = require('./gatsby-node/sourcenodes');
 
 const {registerReactComponent, getReactComponent, getHeroExample} =
   require('./utils/component-registry');
