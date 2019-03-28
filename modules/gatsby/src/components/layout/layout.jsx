@@ -13,8 +13,9 @@ import '../../../styles/main.scss';
 // The Layout instance is shared between pages. It queries common, static data
 // and makes it available on React context
 export default class Layout extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log('layout props', props);
     this.queryComplete = this.queryComplete.bind(this);
   }
 

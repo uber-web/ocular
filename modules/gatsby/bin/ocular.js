@@ -49,7 +49,7 @@ const FILENAMES = [
   '.gitignore',
   '.eslintignore',
   // Better if we can avoid this
-  'src/components/static-query.jsx'
+  'src/components/site-query.jsx'
 ];
 
 const PACKAGE_JSON = require(`${TEMPLATE_DIR}/package.json`)
@@ -101,7 +101,7 @@ const commands = {
       ])
       .then(result => {
 
-        result.websiteFolder = PWD;
+        result.websiteFolder = process.env.PWD;
         execSync('mkdir -p src/components static styles')
 
         PACKAGE_JSON.name = slug(result.name)

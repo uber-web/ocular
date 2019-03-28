@@ -34,6 +34,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "gatsby": "^2.3.3",
+    "gatsby-cli": "^2.5.3",
     "gatsby-image": "2.0.25",
     "gatsby-plugin-catch-links": "2.0.9",
     "gatsby-plugin-feed": "2.0.11",
