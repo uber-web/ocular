@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.18
+- Fix lint script (prettier error check)
+
 ## v0.0.17
 - Monorepo publish now force publishes all packages, and uses exact dependencies
 
