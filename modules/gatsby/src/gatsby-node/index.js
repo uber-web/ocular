@@ -8,6 +8,7 @@ const {
   addSiblingNodes
 } = require('./process-nodes-markdown');
 const {processNewDocsJsonNode} = require('./process-nodes-json');
+const {sourceNodes} = require('./source-nodes');
 
 // TODO/ib - avoid globals
 const docNodes = {};
@@ -43,61 +44,7 @@ function setFieldsOnGraphQLNodeType({type, actions}) {
   }
 }
 
-function sourceNodes({actions}) {
-  const {createTypes} = actions;
-  // see https://graphql-compose.github.io/en/ for instructions on how to create types
-  // see https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/ for information on schema customization
 
-
-  // these type definitions support the table of contents. when gastby tries to infer the schema
-  // from the table of contents as it is read, it requires it to have a very strict shape/
-  // by defining the schema independently of the content of the file we can be more flexible. 
-
-  const typeDefs = `
-    
-    type EntryFrontMatter implements Node {
-      title: String
-    }
-
-    type EntryFields implements Node {
-      slug: String
-    }
-    
-    type EntrychildMarkdownRemark implements Node {
-      frontMatter: EntryFrontMatter
-      fields: EntryFields
-    }
-
-    type Entry implements Node {
-      childMarkdownRemark: EntrychildMarkdownRemark
-    }
-
-    type lvl2Chapter implements Node {
-      title: String
-      level: Int
-      entries: [Entry]
-    }
-
-    type lvl1Chapter implements Node {
-      title: String
-      level: Int
-      chapters: [lvl2Chapter]
-      entries: [Entry]
-    }
-    
-    type docsJson implements Node {
-      chapters: [lvl1Chapter]
-      entries: [Entry]
-    }
-
-    type DocsJson implements Node {
-      chapters: [lvl1Chapter]
-      entries: [Entry]
-    }
-    `;
-  log.log({color: COLOR.RED}, `Created new typedefs`, typeDefs)();
-  createTypes(typeDefs);
-}
 
 const GATSBY_NODE_CALLBACKS = {
   onCreateWebpackConfig,
