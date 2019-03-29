@@ -17,11 +17,11 @@ if [ -d "modules" ]; then
     "beta")
       # npm-tag argument: npm publish --tag <beta>
       # cd-version argument: increase <prerelease> version
-      lerna publish --npm-tag beta --cd-version prerelease
+      lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease
       ;;
 
     "prod")
-      lerna publish --cd-version patch
+      lerna publish --force-publish --exact --cd-version patch
       ;;
 
     *)
