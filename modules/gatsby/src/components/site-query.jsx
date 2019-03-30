@@ -32,6 +32,10 @@ const QUERY = graphql`
           key
           value
         }
+        PROJECTS {
+          name
+          url
+        }
       }
     }
   }

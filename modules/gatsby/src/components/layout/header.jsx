@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import StarIcon from 'react-icons/lib/go/star';
 import GithubIcon from 'react-icons/lib/go/mark-github';
@@ -26,7 +26,7 @@ import classNames from 'classnames';
 // import {trees} from 'routes';
 // import {toggleMenu, setHeaderOpacity} from 'reducers/ui';
 
-import { Link } from 'gatsby';
+import {Link} from 'gatsby';
 
 const propTypes = {
   config: PropTypes.object.isRequired
@@ -52,12 +52,12 @@ import {Link} from 'react-router-dom';
 */
 
 function hasExamples(props) {
-  const { config = {} } = props;
-  const { EXAMPLES } = config;
+  const {config = {}} = props;
+  const {EXAMPLES} = config;
   return !(EXAMPLES.length === 0 || EXAMPLES[0].title === 'none');
 }
 
-function HeaderLink({ to, href, label, classnames }) {
+function HeaderLink({to, href, label, classnames}) {
   if (to) {
     return (
       <Link to={to} className={classnames}>
@@ -101,10 +101,10 @@ export default class Header extends Component {
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
       links: [
-        ...(hasExamples(props) ? [{ label: 'Examples', to: '/examples' }] : []),
-        { label: 'Documentation', to: '/docs' },
-        { label: 'Search', to: '/search' },
-        { label: 'Blog', href: 'https://medium.com/@vis.gl' },
+        ...(hasExamples(props) ? [{label: 'Examples', to: '/examples'}] : []),
+        {label: 'Documentation', to: '/docs'},
+        {label: 'Search', to: '/search'},
+        {label: 'Blog', href: 'https://medium.com/@vis.gl'},
         ...(props.config && props.config.PROJECT_TYPE === 'github'
           ? [
               {
@@ -114,7 +114,7 @@ export default class Header extends Component {
                   <div className="github-link">
                     <span>Github</span>
                     <GithubIcon
-                      style={{ marginLeft: '0.5rem', display: 'inline' }}
+                      style={{marginLeft: '0.5rem', display: 'inline'}}
                     />
                     {/* <span className="Stars fac fje">
                       {props.githubLoading ? '...' : props.stargazers_count}
@@ -138,18 +138,17 @@ export default class Header extends Component {
       isMenuOpen,
       opacity
     } = this.props;
-
     const {
       // ADDITIONAL_LINKS,
-      PROJECT_NAME
-      // PROJECTS,
+      PROJECT_NAME,
+      PROJECTS = []
     } = config;
 
-    const { links } = this.state;
+    const {links} = this.state;
 
     return (
-      <header className={classNames({ open: isMenuOpen })}>
-        <div className="bg" style={{ opacity }} />
+      <header className={classNames({open: isMenuOpen})}>
+        <div className="bg" style={{opacity}} />
 
         <div className="f header-content">
           <a className="logo" href="#/">
@@ -160,11 +159,11 @@ export default class Header extends Component {
             <div className="site-link">
               <Link to="/">{PROJECT_NAME}</Link>
             </div>
-            {/* Object.keys(PROJECTS).map(name => (
+            {PROJECTS.map(({name, url}) => (
               <div className="site-link" key={name}>
-                <a href={PROJECTS[name]}>{name}</a>
+                <a href={url}>{name}</a>
               </div>
-            )) */}
+            ))}
           </div>
 
           <div
