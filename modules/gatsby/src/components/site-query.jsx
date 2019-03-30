@@ -67,9 +67,7 @@ const QUERY = graphql`
           title
           level
           entries {
-            id
             childMarkdownRemark {
-              id
               frontmatter {
                 title
               }
@@ -80,9 +78,7 @@ const QUERY = graphql`
           }
         }
         entries {
-          id
           childMarkdownRemark {
-            id
             frontmatter {
               title
             }

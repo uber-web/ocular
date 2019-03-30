@@ -3,8 +3,15 @@ const {log, COLOR} = require('../utils/log');
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
 // https://github.com/gatsbyjs/gatsby/issues/3052
-module.exports = function onCreateWebpackConfig(opts) {
 
+let hasRun = false;
+
+module.exports = function onCreateWebpackConfig(opts) {
+  if (hasRun) {
+    return;
+  }
+  hasRun = true;
+  
   const {ocularConfig} = global || {};
 
   const {
