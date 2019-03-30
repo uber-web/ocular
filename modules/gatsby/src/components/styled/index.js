@@ -17,7 +17,6 @@ export const BodyContainerToC = styled.div(props => ({
   gridColumn: '2 / 3',
   gridRow: '2 / 3',
   width: '100%',
-  maxWidth: props.isExample ? null : props.theme.breakpoints.medium,
   padding: props.theme.sizing.scale500,
   [`@media screen and (max-width: ${props.theme.breakpoints.medium})`]: {
     order: 2
@@ -41,7 +40,7 @@ export const BodyGrid = styled.div`
   display: grid;
   grid-template-rows: 64px 1fr;
   grid-template-columns: 300px 1fr;
-
+  max-width: ${theme.breakpoints.large}px;
   @media screen and (max-width: ${theme.breakpoints.medium}) {
     display: flex;
     flex-direction: column;
