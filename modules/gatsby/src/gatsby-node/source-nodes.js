@@ -34,7 +34,7 @@ function sourceNodes({actions}) {
       href: String
     }
 
-    type Project implements Node {
+    type Projects implements Node {
       name: String
       url: String
     }
