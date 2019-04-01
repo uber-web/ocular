@@ -617,14 +617,14 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@probe.gl/test-utils@3.0.0-alpha.5":
-  version "3.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@probe.gl/test-utils/-/test-utils-3.0.0-alpha.5.tgz#a3edc7cf1dff9ae8a0604fc02316577ef0e2475b"
-  integrity sha512-Bf5LwkUwA9WoXz6LjhSj/+8R6D6m4uk/ScGaC2WeEhKqGTIDgiiatrqvZGeEltrlipd8AgrLwC9Ydp7D3Qq2tg==
+"@probe.gl/test-utils@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@probe.gl/test-utils/-/test-utils-3.0.0.tgz#220da23fdc689c00bf525dbd726b33899436c12b"
+  integrity sha512-/ywvOPoBQAng6bVIauKZTE+MaRmNjydKxXwzXkgUhASbd9N/FU9w4bH8uzGJo75HEwaHW0m7gm3aWrAXCNfS4Q==
   dependencies:
     "@babel/runtime" "^7.0.0"
     pixelmatch "^4.0.2"
-    probe.gl "^3.0.0-alpha.5"
+    probe.gl "^3.0.0"
     puppeteer "1.8.0"
 
 "@webassemblyjs/ast@1.7.11":
@@ -5388,10 +5388,10 @@ private@^0.1.6:
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
   integrity sha512-VvivMrbvd2nKkiG38qjULzlc+4Vx4wm/whI9pQD35YrARNnhxeiRktSOhSukRLFNlzg6Br/cJPet5J/u19r/mg==
 
-probe.gl@^3.0.0-alpha.5:
-  version "3.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/probe.gl/-/probe.gl-3.0.0-alpha.6.tgz#1658518b19f577c85bdcd20629db396bbffa6552"
-  integrity sha512-WgIj1LnM4wBNOMAkF/titGvK/ykkB5q4X7VcOzTYNNhyYMhSYQxWZBS3MR4eri7xEviZZmBAUtkT5ez8DutUYg==
+probe.gl@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/probe.gl/-/probe.gl-3.0.0.tgz#61dea0e12574f630e7ad809414400bb22d2eea35"
+  integrity sha512-Po3fE0OCqs8tv3cSOzUNsNKS5qNknMAEQ6u3ne1RLr1+pJUvtON+/1Ffm1p1/ppdvfxVvMIgNa/7LnK4SXPIlQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
 
