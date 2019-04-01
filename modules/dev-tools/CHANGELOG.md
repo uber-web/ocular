@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.19
+- Upgrade to probe.gl@3.0.0
+
 ## v0.0.18
 - Fix lint script (prettier error check)
 
