@@ -1,4 +1,4 @@
-import {registerReactComponent} from './src/utils/component-registry';
+import {registerDefaultReactComponent} from './src/utils/component-registry';
 
 import Home from './src/components/home';
 import Hero from './src/components/hero';
@@ -8,13 +8,13 @@ import InfoPanel from './src/components/info-panel';
 export {default as wrapPageElement} from './src/gatsby-common/wrap-page';
 
 export function onClientEntry() {
-  console.log('Ocular loaded')
+  console.log('Ocular loaded'); // eslint-disable-line
 }
 
-registerReactComponent('Home', Home);
-registerReactComponent('Hero', Hero);
-registerReactComponent('ExampleRunner', ExampleRunner);
-registerReactComponent('InfoPanel', InfoPanel);
+registerDefaultReactComponent('Home', Home);
+registerDefaultReactComponent('Hero', Hero);
+registerDefaultReactComponent('ExampleRunner', ExampleRunner);
+registerDefaultReactComponent('InfoPanel', InfoPanel);
 
-registerReactComponent('EXAMPLES', {});
-registerReactComponent('HERO_EXAMPLE', null);
+registerDefaultReactComponent('EXAMPLES', {});
+registerDefaultReactComponent('HERO_EXAMPLE', null);

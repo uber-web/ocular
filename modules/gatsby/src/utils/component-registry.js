@@ -7,6 +7,11 @@ function registerReactComponent(name, component) {
   registry[name] = component;
 }
 
+function registerDefaultReactComponent(name, component) {
+  assert(component !== undefined, name);
+  registry[name] = registry[name] || component;
+}
+
 function getReactComponent(name, defaultComponent) {
   const component = registry[name] || defaultComponent;
   assert(component !== undefined, name);
@@ -24,14 +29,14 @@ function getHeroExample() {
     DefaultHeroExample = null;
   }
 
-  let HeroExample = getReactComponent("HERO_EXAMPLE", DefaultHeroExample);
+  const HeroExample = getReactComponent("HERO_EXAMPLE", DefaultHeroExample);
   if (!HeroExample) {
-    console.warn("ocular: No hero example found", EXAMPLES);
+    console.warn("ocular: No hero example found", EXAMPLES); // eslint-disable-line
   }
   return HeroExample;
 }
 
 module.exports.registerReactComponent = registerReactComponent;
-module.exports.registerReactComponent = registerReactComponent;
+module.exports.registerDefaultReactComponent = registerDefaultReactComponent;
 module.exports.getReactComponent = getReactComponent;
 module.exports.getHeroExample = getHeroExample;
