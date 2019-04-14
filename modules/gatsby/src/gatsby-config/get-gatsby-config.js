@@ -37,7 +37,7 @@ module.exports = function getGatsbyConfig(config) {
   // there are default values for these in the ocular-config file we generate on init but
   // if they are deleted, the urlJoin calls below will fail
 
-  ['siteUrl', 'pathPrefix', 'siteRss'].forEach(key => {
+  ['PROJECT_URL', 'PATH_PREFIX'].forEach(key => {
     if (!config[key]) {
       log.log(
         {color: COLOR.CYAN, priority: 2},
@@ -47,26 +47,28 @@ module.exports = function getGatsbyConfig(config) {
   });
 
   const gatsbyConfig = {
-    pathPrefix: config.pathPrefix,
+    pathPrefix: config.PATH_PREFIX,
 
     // Site Metadata is populated from config (and react-helmet, see gatsby-plugin-react-helmet)
     siteMetadata: {
       config: {...config, ...paddedConfig},
 
-      siteUrl: urljoin(config.siteUrl, config.pathPrefix),
+      siteUrl: urljoin(config.PROJECT_URL, config.pathPrefix),
+      /*
       rssMetadata: {
-        site_url: urljoin(config.siteUrl, config.pathPrefix),
-        feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
+        site_url: urljoin(config.PROJECT_URL, config.pathPrefix),
+        feed_url: urljoin(config.PROJECT_URL, config.pathPrefix, config.siteRss),
         title: paddedConfig.PROJECT_NAME,
         description: paddedConfig.PROJECT_DESC,
         image_url: urljoin(
-          config.siteUrl,
+          config.PROJECT_URL,
           config.pathPrefix,
           '/logos/logo-512.png'
         ),
         author: config.userName,
         copyright: config.copyright
       }
+      */
     },
 
     plugins: [
