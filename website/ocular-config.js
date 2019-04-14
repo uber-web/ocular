@@ -15,10 +15,11 @@ module.exports = {
   PROJECT_URL: 'https://github.com/uber-web/ocular',
   PROJECT_DESC: 'A documentation website for Ocular, made with Ocular',
   WEBSITE_PATH: '/website/',
+  PATH_PREFIX: '/ocular/',
 
   FOOTER_LOGO: '',
 
-  PROJECTS: {},
+  PROJECTS: [],
 
   HOME_PATH: '/',
 

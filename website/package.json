@@ -8,12 +8,17 @@
   ],
   "main": "index.js",
   "scripts": {
+    "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
-    "develop": "rm -fr .cache && gatsby develop --port=8001"
+    "develop": "rm -fr .cache && gatsby develop --port=8001",
+    "build": "gatsby build"
   },
   "dependencies": {
-    "gatsby": "2.0.85",
-    "ocular-gatsby": "1.0.0-alpha.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gatsby": "2.2.0-rc.2",
+    "gatsby-plugin-styletron": "^3.0.5",
+    "ocular-gatsby": "1.0.0-alpha.17",
+    "sharp": "0.22.0"
+  }
 }

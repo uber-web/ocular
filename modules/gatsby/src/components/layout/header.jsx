@@ -20,7 +20,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import StarIcon from 'react-icons/lib/go/star';
+// import StarIcon from 'react-icons/lib/go/star';
 import GithubIcon from 'react-icons/lib/go/mark-github';
 import classNames from 'classnames';
 // import {trees} from 'routes';
@@ -79,25 +79,28 @@ export default class Header extends Component {
     // this is not an ideal solution.
     // some of the links which are hardcoded should come from configuration
 
-    {
-      /*
-            <Link className={classNames({active: pathname === '/search'})} to="/search">Search</Link>
-            Object.keys(trees).map(p => (
-              <Link
-                className={classNames({active: pathname.includes(p)})}
-                to={p}
-                key={p}
-              >
-                {trees[p].name}
-              </Link>
-            )) */
-    }
+    /*
+      {
+          <Link className={classNames({active: pathname === '/search'})} to="/search">Search</Link>
+          Object.keys(trees).map(p => (
+            <Link
+              className={classNames({active: pathname.includes(p)})}
+              to={p}
+              key={p}
+            >
+              {trees[p].name}
+            </Link>
+          ))
+      }
+   */
 
+  /*
     {
-      /* ADDITIONAL_LINKS.map(link => (
+   ADDITIONAL_LINKS.map(link => (
               <a key={link.href} href={link.href}>{link.name}</a>
-            )) */
+            ))
     }
+    */
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
       links: [

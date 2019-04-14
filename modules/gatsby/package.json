@@ -30,7 +30,8 @@
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
   "peerDependencies": {
-    "gatsby": "2.2.0-rc.2"
+    "gatsby": "2.2.0-rc.2",
+    "sharp": "^0.22"
   },
   "dependencies": {
     "classnames": "^2.2.6",

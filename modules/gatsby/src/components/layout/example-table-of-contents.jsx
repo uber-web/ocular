@@ -22,7 +22,7 @@ import React, { PureComponent } from 'react'
 import cx from 'classnames'
 import {Link} from 'gatsby';
 
-const getRootPath = pathname => `/${pathname.split('/')[1]}`
+// const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
 function getHeight(route) {
   return route.entries.reduce((prev, curr) => prev + (curr.entries ? getHeight(curr) : 40), 0)
