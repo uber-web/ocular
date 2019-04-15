@@ -40,8 +40,8 @@ function getExampleThumbnails({ allFile, allImageSharp }) {
   return pathLookup;
 }
 
-function createExamplePages(EXAMPLES, thumbnailsPublicUrls = {}, createPage) {
-  if (EXAMPLES.length === 0 || EXAMPLES[0].title === 'none') {
+function createExampleGalleryPage(EXAMPLES, thumbnailsPublicUrls = {}, createPage) {
+  if (EXAMPLES.length === 0) {
     return;
   }
   // matches public urls to paths of images
@@ -58,7 +58,9 @@ function createExamplePages(EXAMPLES, thumbnailsPublicUrls = {}, createPage) {
       examples: examplesWithImage
     }
   });
+}
 
+function createIndividualExamplePages(EXAMPLES, createPage) {
   EXAMPLES.forEach(example => {
     const exampleName = example.title;
 
@@ -67,9 +69,12 @@ function createExamplePages(EXAMPLES, thumbnailsPublicUrls = {}, createPage) {
       `Creating example page ${JSON.stringify(example)}`
     )();
 
+    const {ocularConfig} = global;
+    const exampleComponentUrl = (ocularConfig && ocularConfig.EXAMPLE_TEMPLATE_URL) || EXAMPLE_PAGE;
+
     createPage({
       path: example.path,
-      component: EXAMPLE_PAGE,
+      component: exampleComponentUrl,
       context: {
         slug: exampleName,
         toc: 'examples'
@@ -127,7 +132,8 @@ module.exports = function prepareExamplePages({ graphql, actions }) {
       // build a lookup map that matches relative paths of images with their public URLs
       const thumbnailsPublicUrls = getExampleThumbnails(result.data);
       // If the no examples marker, return without creating pages
-      createExamplePages(EXAMPLES, thumbnailsPublicUrls, createPage);
+      createExampleGalleryPage(EXAMPLES, thumbnailsPublicUrls, createPage);
+      createIndividualExamplePages(EXAMPLES, createPage);
     })
     .catch(error => {
       log.log(

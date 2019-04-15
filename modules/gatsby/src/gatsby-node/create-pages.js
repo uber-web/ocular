@@ -2,7 +2,7 @@ const path = require('path');
 const assert = require('assert');
 
 const { log, COLOR } = require('../utils/log');
-const prepareExamplePages = require('./create-example-pages');
+const createExamplePages = require('./create-example-pages');
 // PATHS TO REACT PAGES
 const INDEX_PAGE = path.resolve(__dirname, '../templates/index.jsx');
 const SEARCH_PAGE = path.resolve(__dirname, '../templates/search.jsx');
@@ -227,7 +227,7 @@ module.exports = function createPages({ graphql, actions }, pluginOptions) {
 
   let examplesPromise;
   if (examplePages) {
-    examplesPromise = prepareExamplePages({ graphql, actions });
+    examplesPromise = createExamplePages({ graphql, actions });
   }
 
   let searchPromise;

@@ -20,10 +20,7 @@ module.exports = function getGatsbyConfig(config) {
     PROJECT_TYPE: config.PROJECT_TYPE || '',
     PROJECT_DESC: config.PROJECT_DESC || '',
     HOME_HEADING: config.HOME_HEADING || '',
-    EXAMPLES:
-      config.EXAMPLES && config.EXAMPLES.length
-        ? config.EXAMPLES
-        : [{title: 'none', path: 'none'}],
+    EXAMPLES: config.EXAMPLES || [],
     HOME_BULLETS:
       config.HOME_BULLETS && config.HOME_BULLETS.length
         ? config.HOME_BULLETS
