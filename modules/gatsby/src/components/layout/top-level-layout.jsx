@@ -112,7 +112,7 @@ export default class Layout extends React.Component {
           />
         );
 
-      case 'examples':
+      case 'examples': {
         const {EXAMPLES} = config;
 
         const examplesTOC = [
@@ -122,17 +122,15 @@ export default class Layout extends React.Component {
           }
         ];
 
+        // eslint-disable-next-line
         for (const example of EXAMPLES) {
-          // ignore empty list placeholder (makes graphql queryies not fail)
-          if (example.title !== 'none') {
-            const exampleEntry = Object.assign(
-              {
-                entry: example.title
-              },
-              example
-            );
-            examplesTOC[0].entries.push(exampleEntry);
-          }
+          const exampleEntry = Object.assign(
+            {
+              entry: example.title
+            },
+            example
+          );
+          examplesTOC[0].entries.push(exampleEntry);
         }
 
         return (
@@ -141,9 +139,10 @@ export default class Layout extends React.Component {
             slug={pageContext.slug}
           />
         );
+      }
 
       default:
-        console.warn(`Unknown toc type ${pageContext.toc}`);
+        console.warn(`Unknown toc type ${pageContext.toc}`); // eslint-disable-line
         return null;
     }
   }

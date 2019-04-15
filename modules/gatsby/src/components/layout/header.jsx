@@ -54,7 +54,7 @@ import {Link} from 'react-router-dom';
 function hasExamples(props) {
   const {config = {}} = props;
   const {EXAMPLES} = config;
-  return !(EXAMPLES.length === 0 || EXAMPLES[0].title === 'none');
+  return EXAMPLES.length > 0;
 }
 
 function HeaderLink({to, href, label, classnames}) {
