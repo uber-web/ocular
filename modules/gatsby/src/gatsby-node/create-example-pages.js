@@ -160,7 +160,7 @@ module.exports = function prepareExamplePages({ graphql, actions }) {
           throw new Error(result.errors);
         }
         const { EXAMPLES } = result.data.site.siteMetadata.config;
-        createExamplePages(EXAMPLES, {}, createPage);
+        createIndividualExamplePages(EXAMPLES, {}, createPage);
       });
     });
 };
