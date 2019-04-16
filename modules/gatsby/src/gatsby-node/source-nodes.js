@@ -85,7 +85,7 @@ function sourceNodes({actions}) {
     }
     
     type EntrychildMarkdownRemark implements Node {
-      frontMatter: EntryFrontMatter
+      frontmatter: EntryFrontMatter
       fields: EntryFields
     }
 
