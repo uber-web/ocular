@@ -6,12 +6,23 @@ const {log, COLOR} = require('../utils/log');
 
 let hasRun = false;
 
+// Makes JSON.stringify print regexps
+function stringify(key, value) {
+  if (value instanceof RegExp) {
+    return value.toString();
+  }
+  if (value instanceof Function) {
+    return '[function]';
+  }
+  return value;
+}
+
 module.exports = function onCreateWebpackConfig(opts) {
   if (hasRun) {
     return;
   }
   hasRun = true;
-  
+
   const {ocularConfig} = global || {};
 
   const {
@@ -27,7 +38,7 @@ module.exports = function onCreateWebpackConfig(opts) {
   if (ocularConfig.webpack) {
     log.log({color: COLOR.CYAN}, `rewriting gatsby webpack config (using website config)`)();
     log.log({priority: 2, color: COLOR.MAGENTA},
-      `Webpack options ${JSON.stringify(ocularConfig.webpack, null, 2)}`)();
+      `Webpack options ${JSON.stringify(ocularConfig.webpack, stringify, 2)}`)();
   } else {
     log.log({color: COLOR.CYAN},
       `rewriting gatsby webpack config (no website webpack config supplied)`)();
@@ -36,37 +47,20 @@ module.exports = function onCreateWebpackConfig(opts) {
 
   let config = getConfig();
 
-  // Recreate it with custom exclude filter
-  const newJSRule = {
-    // Called without any arguments, `loaders.js` will return an
-    // object like:
-    // {
-    //   options: undefined,
-    //   loader: '/path/to/node_modules/gatsby/dist/utils/babel-loader.js',
-    // }
-    // Unless you're replacing Babel with a different transpiler, you probably
-    // want this so that Gatsby will apply its required Babel
-    // presets/plugins.  This will also merge in your configuration from
-    // `babel.config.js`.
-    ...loaders.js(),
+  const doNotExcludeOcular = modulePath =>
+    /node_modules/.test(modulePath) &&
+    !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(modulePath);
 
-    // JS and JSX
-    test: /\.jsx?$/,
-
-    // Exclude all node_modules from transpilation, except for ocular
-    exclude: modulePath =>
-      /node_modules/.test(modulePath) &&
-      !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(modulePath),
-  };
-
-  const newConfig = {
-    module: {
-      rules: [
-        // Omit the default rule where test === '\.jsx?$'
-        newJSRule
-      ]
+  // eslint-disable-next-line no-restricted-syntax
+  for (const rule of config.module.rules) {
+    if (rule.exclude && rule.exclude.toString() === '/(node_modules|bower_components)/') {
+      rule.exclude = doNotExcludeOcular;
     }
-  };
+  }
+
+  actions.replaceWebpackConfig(config);
+
+  const newConfig = {};
 
   // nulling out `fs` avoids issues with certain node modules getting bundled,
   // e.g. headless-gl gets bundled by luma.gl if installed in root folder
@@ -75,28 +69,21 @@ module.exports = function onCreateWebpackConfig(opts) {
 
   Object.assign(newConfig, ocularConfig.webpack);
 
-  // Completely replace the webpack config for the current stage.
-  // This can be dangerous and break Gatsby if certain configuration options are changed.
-  // Generally only useful for cases where you need to handle config merging logic yourself,
-  // in which case consider using webpack-merge.
+  // NOTE: setWebpackConfig MERGES in the new config
   actions.setWebpackConfig(newConfig);
 
-  log.log({color: COLOR.CYAN, priority: 2}, `Webpack delta config ${JSON.stringify(newConfig, null, 2)}`)();
+  log.log(
+    {color: COLOR.CYAN, priority: 4},
+    `Webpack delta config ${JSON.stringify(newConfig, stringify, 2)}`
+  )();
 
   /* UNCOMMENT TO DEBUG THE CONFUG
   */
   config = getConfig();
-  const jsRules = config.module.rules.filter(rule => String(rule.test) === String(/\.jsx?$/))
-  const oldJSRule = jsRules[0];
-
-  log.log({color: COLOR.CYAN, priority: 1},
-    `Webpack started with aliases ${JSON.stringify(config.resolve.alias, null, 2)}`)();
 
   log.log({color: COLOR.MAGENTA, priority: 3},
-    `Webpack config
-rules ${JSON.stringify(jsRules[0])} => ${JSON.stringify(newJSRule)}
-test ${oldJSRule.test} => ${newJSRule.test}
-include ${oldJSRule.include} => ${newJSRule.include}
-exclude ${oldJSRule.exclude} => ${newJSRule.exclude}`
-  )();
+    `Webpack rules: ${JSON.stringify(config, stringify, 4)}`)();
+
+  log.log({color: COLOR.CYAN, priority: 1},
+    `Webpack started with aliases ${JSON.stringify(config.resolve.alias, stringify, 2)}`)();
 }

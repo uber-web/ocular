@@ -3,8 +3,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { AutoSizer } from 'react-virtualized';
 
-import ExampleTableOfContents from '../components/layout/example-table-of-contents';
-import { getReactComponent } from '../utils/component-registry';
+import { ExampleTableOfContents, from '../components/layout/example-table-of-contents';
 import { MainExample } from '../components/styled';
 import WithConfig from '../components/layout/website-config';
 

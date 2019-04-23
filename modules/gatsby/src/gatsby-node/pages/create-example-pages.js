@@ -54,6 +54,7 @@ function queryExamplesData(graphql) {
               image
               title
               path
+              componentUrl
             }
           }
         }
@@ -161,7 +162,7 @@ function createIndividualExamplePages(EXAMPLES, createPage) {
       `Creating example page ${JSON.stringify(example)}`
     )();
 
-    const componentUrl = getPageTemplateUrl('EXAMPLE_PAGE_URL');
+    const componentUrl = example.componentUrl || getPageTemplateUrl('EXAMPLE_PAGE_URL');
 
     createPage({
       path: example.path,

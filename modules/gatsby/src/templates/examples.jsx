@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'gatsby';
 
-import { graphql } from 'gatsby';
-
-import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 import { MainExamples, ExampleCard, ExampleTitle } from '../components/styled';
 import WithConfig from '../components/layout/website-config';
+// import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 
 /* eslint no-undef: "off" */
 
