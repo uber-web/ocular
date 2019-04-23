@@ -1,13 +1,11 @@
-const {log, COLOR} = require('../utils/log');
-
 const onCreateWebpackConfig = require('./create-webpack-config');
 const createPages = require('./create-pages');
 const {
   processNewMarkdownNode,
   cleanupMarkdownNode,
   addSiblingNodes
-} = require('./process-nodes-markdown');
-const {processNewDocsJsonNode} = require('./process-nodes-json');
+} = require('./process-nodes/process-nodes-markdown');
+const {processNewDocsJsonNode} = require('./process-nodes/process-nodes-json');
 const {sourceNodes} = require('./source-nodes');
 
 // TODO/ib - avoid globals

@@ -11,7 +11,7 @@ function sourceNodes({actions}) {
   // of the content of the file we can be more flexible.
 
   const typeDefs = `
-    
+
     type Examples implements Node {
       title: String
       path: String
@@ -43,16 +43,16 @@ function sourceNodes({actions}) {
       PROJECT_NAME: String
       PROJECT_TYPE: String
       PROJECT_DESC: String
-      
+
       PROJECT_URL: String
       WEBSITE_PATH: String
-      
+
       FOOTER_LOGO: String
       HOME_HEADING: String
-      
+
       ROOT_FOLDER: String
       DOC_FOLDER: String
-      
+
       GA_TRACKING: String
       GITHUB_KEY: String
       ADDITIONAL_LINKS: [AdditionalLinks]
@@ -83,7 +83,7 @@ function sourceNodes({actions}) {
     type EntryFields implements Node {
       slug: String
     }
-    
+
     type EntrychildMarkdownRemark implements Node {
       frontmatter: EntryFrontMatter
       fields: EntryFields
@@ -105,7 +105,7 @@ function sourceNodes({actions}) {
       chapters: [lvl2Chapter]
       entries: [Entry]
     }
-    
+
     type docsJson implements Node {
       chapters: [lvl1Chapter]
       entries: [Entry]

@@ -1,49 +1,8 @@
 const path = require('path');
-const moment = require('moment');
+// const moment = require('moment');
 // TODO/ib - remove
 const _ = require('lodash');
-const { log, COLOR } = require('../utils/log');
-
-module.exports.cleanupMarkdownNode = function cleanupMarkdownNode(
-  { node, getNode, loadNodeContent, actions, createNodeId, reporter },
-  pluginOptions
-) {
-  let processed = false;
-
-  if (!processed) {
-    switch (node.internal.mediaType) {
-      case `text/markdown`:
-      case `text/x-markdown`:
-        addSourceInstanceName(...arguments);
-        processed = true;
-        break;
-
-      default:
-    }
-  }
-
-  // Secondary nodes created by remark
-  if (!processed) {
-    switch (node.internal.type) {
-      case 'MarkdownRemark':
-      case 'Markdown':
-        addSourceInstanceName(...arguments);
-        processed = true;
-        break;
-
-      default:
-    }
-  }
-
-  // if (!processed) {
-  //   if (node.internal.mediaType ==- 'application/json') {
-  //   }
-  //   if (node.id === 'table-of-contents') {
-  //   }
-  //   console.warn('Ocular ignoring node',
-  //     node.absolutePath, node.internal.mediaType, node.internal.type, node.sourceInstanceName);
-  // }
-};
+const { log, COLOR } = require('../../utils/log');
 
 function parseToc(queue, entry) {
   // this function returns a node in the TOC that has an entry corresponding to
@@ -238,3 +197,44 @@ function addMissingFrontmatter(node, sourceInstanceName) {
     node.frontmatter.type = sourceInstanceName;
   }
 }
+
+module.exports.cleanupMarkdownNode = function cleanupMarkdownNode(
+  { node, getNode, loadNodeContent, actions, createNodeId, reporter },
+  pluginOptions
+) {
+  let processed = false;
+
+  if (!processed) {
+    switch (node.internal.mediaType) {
+      case `text/markdown`:
+      case `text/x-markdown`:
+        addSourceInstanceName(...arguments);
+        processed = true;
+        break;
+
+      default:
+    }
+  }
+
+  // Secondary nodes created by remark
+  if (!processed) {
+    switch (node.internal.type) {
+      case 'MarkdownRemark':
+      case 'Markdown':
+        addSourceInstanceName(...arguments);
+        processed = true;
+        break;
+
+      default:
+    }
+  }
+
+  // if (!processed) {
+  //   if (node.internal.mediaType ==- 'application/json') {
+  //   }
+  //   if (node.id === 'table-of-contents') {
+  //   }
+  //   console.warn('Ocular ignoring node',
+  //     node.absolutePath, node.internal.mediaType, node.internal.type, node.sourceInstanceName);
+  // }
+};
