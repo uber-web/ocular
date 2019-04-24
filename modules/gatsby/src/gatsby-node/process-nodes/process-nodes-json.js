@@ -1,4 +1,4 @@
-const { log, COLOR } = require('../utils/log');
+const { log, COLOR } = require('../../utils/log');
 /* eslint-disable no-param-reassign */
 let tableOfContents = [];
 
