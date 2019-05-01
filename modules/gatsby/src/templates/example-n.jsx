@@ -3,9 +3,9 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { AutoSizer } from 'react-virtualized';
 
-import { ExampleTableOfContents, from '../components/layout/example-table-of-contents';
 import { MainExample } from '../components/styled';
 import WithConfig from '../components/layout/website-config';
+import ExampleRunner from '../components/example-runner';
 
 /* eslint no-undef: "off" */
 export const query = graphql`
@@ -30,9 +30,7 @@ export default class ExampleTemplate extends React.Component {
     const { slug } = pathContext;
 
     // Get app website's example runner
-    const DemoRunner = getReactComponent('ExampleRunner');
-    const EXAMPLES = getReactComponent('EXAMPLES');
-
+    const EXAMPLES = getExamples();
     const example = EXAMPLES[slug];
     if (!example) {
       console.warn(`No example found: ${slug}`);
@@ -46,7 +44,7 @@ export default class ExampleTemplate extends React.Component {
             <AutoSizer>
               {({ height, width }) =>
                   example && (
-                    <DemoRunner
+                    <ExampleRunner
                       height={height}
                       example={example}
                       sourceLink={

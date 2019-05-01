@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'gatsby';
-import WebsiteConfigConsumer from '../components/layout/website-config';
-import {getReactComponent, getHeroExample} from '../utils/component-registry';
-import DefaultExampleRunner from './example-runner';
+import {getHeroExample} from '../utils/example-registry';
+import WebsiteConfigConsumer from './layout/website-config';
+import ExampleRunner from './example-runner';
 
 export default class Hero extends Component {
   renderPage({config}) {
     const HeroExample = getHeroExample();
-    const ExampleRunner = getReactComponent(
-      'ExampleRunner',
-      DefaultExampleRunner
-    );
 
     return (
       <section className="banner">
