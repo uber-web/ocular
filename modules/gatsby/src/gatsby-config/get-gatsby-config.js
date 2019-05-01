@@ -325,6 +325,13 @@ module.exports = function getGatsbyConfig(config) {
         path: `${config.DIR_NAME}/src/`
       }
     });
+    gatsbyConfig.plugins.push({
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'src',
+        path: `${config.DIR_NAME}/static/`
+      }
+    });
   } else {
     log.log(
       {color: COLOR.YELLOW},
