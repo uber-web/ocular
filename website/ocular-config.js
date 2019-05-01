@@ -3,6 +3,7 @@ const DOCS = require('../docs/table-of-contents.json');
 module.exports = {
   DOC_FOLDER: `${__dirname}/../docs/`,
   ROOT_FOLDER: `${__dirname}/../`,
+  DIR_NAME: `${__dirname}`,
 
   EXAMPLES: [],
   DOCS,

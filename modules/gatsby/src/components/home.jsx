@@ -19,10 +19,8 @@
 // THE SOFTWARE.
 
 import React, {Component} from 'react';
-import WebsiteConfigConsumer from '../components/layout/website-config';
-import {getReactComponent} from '../utils/component-registry';
-import DefaultHero from './hero';
-
+import WebsiteConfigConsumer from './layout/website-config';
+import Hero from './hero';
 
 export default class Home extends Component {
   renderPage({config}) {
@@ -34,8 +32,6 @@ export default class Home extends Component {
       HOME_BULLETS = [],
       PROJECT_TYPE
     } = config;
-
-    const Hero = getReactComponent('Hero', DefaultHero);
 
     // Note: The Layout "wrapper" component adds header and footer etc
     return (
@@ -51,7 +47,7 @@ export default class Home extends Component {
               {HOME_BULLETS.map((bullet, i) => (
                 <div key={i}>
                   <h3 className="fac">
-                    <img src={bullet.img} className="m-right" alt=""/>
+                    <img src={bullet.img} className="m-right" alt="" />
                     {bullet.text}
                   </h3>
                   {bullet.desc && (

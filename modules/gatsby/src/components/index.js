@@ -2,3 +2,8 @@
 export {default as ExampleTableOfContents} from './layout/example-table-of-contents';
 export {default as WithConfig} from './layout/website-config';
 export { MainExample } from './styled';
+
+export {default as Home} from './home';
+export {default as Hero} from './hero';
+export {default as ExampleRunner} from './example-runner';
+export {default as InfoPanel} from './info-panel';
