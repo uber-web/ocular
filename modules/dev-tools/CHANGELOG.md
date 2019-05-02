@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.20
+- Fix build error when package.json is missing (#152)
+
 ## v0.0.19
 - Upgrade to probe.gl@3.0.0
 
