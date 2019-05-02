@@ -25,7 +25,7 @@ import {Link} from 'gatsby';
 // const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
 function getHeight(route) {
-  return route.entries.reduce((prev, curr) => prev + (curr.entries ? getHeight(curr) : 40), 0)
+  return route.entries.reduce((prev, curr) => prev + (curr.entries ? getHeight(curr) : 56), 0)
 }
 
 // This component only creates a Link component if clicking on that Link will
