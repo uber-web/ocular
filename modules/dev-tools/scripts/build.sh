@@ -28,10 +28,12 @@ build_monorepo() {
   fi
 
   for D in ${MODULES}; do (
-    echo -e "\033[1mBuilding modules/$D\033[0m"
-    cd $D
-    build_module
-    echo ""
+    if [ -e "${D}/package.json" ]; then
+      echo -e "\033[1mBuilding modules/$D\033[0m"
+      cd $D
+      build_module
+      echo ""
+    fi
   ); done
 }
 
