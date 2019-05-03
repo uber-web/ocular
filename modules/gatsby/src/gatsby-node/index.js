@@ -16,6 +16,10 @@ const {sourceNodes} = require('./source-nodes');
 const docNodes = {};
 let tocNode = null;
 
+function setOcularConfig(config) {
+  global.ocularConfig = config;
+}
+
 function onCreateNode({node, actions, getNode}) {
   // log.log({color: COLOR.CYAN}, `Processed node`)();
 
@@ -46,24 +50,25 @@ function setFieldsOnGraphQLNodeType({type, actions}) {
   }
 }
 
-
-
 const GATSBY_NODE_CALLBACKS = {
   onCreateWebpackConfig,
   onCreateNode,
   setFieldsOnGraphQLNodeType,
   createPages,
   sourceNodes,
-
-  // Helpers
-  logWebpackConfig,
-  getWebpackConfigOverrides
 };
 
 // gatsby-node default implementation, user can just export these from gatsby-node
 module.exports = function getGatsbyNodeCallbacks(config) {
-  global.ocularConfig = config;
+  if (config) {
+    setOcularConfig(config);
+  }
   return GATSBY_NODE_CALLBACKS;
 };
 
-Object.assign(module.exports, GATSBY_NODE_CALLBACKS);
+Object.assign(module.exports, GATSBY_NODE_CALLBACKS, {
+  // Helpers
+  setOcularConfig,
+  logWebpackConfig,
+  getWebpackConfigOverrides
+});
