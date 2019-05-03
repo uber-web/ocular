@@ -10,7 +10,7 @@ MODE=$1
 MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 
 run_test_script() {
-  node $MODULE_DIR/node/test.js $1
+  BABEL_ENV=test node $MODULE_DIR/node/test.js $1
 }
 
 run_full_test() {
