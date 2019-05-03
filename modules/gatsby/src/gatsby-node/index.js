@@ -1,4 +1,8 @@
-const onCreateWebpackConfig = require('./create-webpack-config');
+const {
+  onCreateWebpackConfig,
+  logWebpackConfig,
+  getWebpackConfigOverrides
+} = require('./create-webpack-config');
 const createPages = require('./create-pages');
 const {
   processNewMarkdownNode,
@@ -49,7 +53,11 @@ const GATSBY_NODE_CALLBACKS = {
   onCreateNode,
   setFieldsOnGraphQLNodeType,
   createPages,
-  sourceNodes
+  sourceNodes,
+
+  // Helpers
+  logWebpackConfig,
+  getWebpackConfigOverrides
 };
 
 // gatsby-node default implementation, user can just export these from gatsby-node

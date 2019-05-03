@@ -39,7 +39,7 @@ export default class Layout extends React.Component {
         allMarkdown={allMarkdown}
         theme={theme}
       >
-        <div style={{position: 'relative'}}>
+        <div style={{position: 'relative', height: '100%'}}>
           {children}
         </div>
       </TopLevelLayout>

@@ -117,7 +117,8 @@ function sourceNodes({actions}) {
       entries: [Entry]
     }
     `;
-  log.log({priority: 4, color: COLOR.YELLOW}, `Set up graphql schemas`, typeDefs)();
+  log.log({color: COLOR.YELLOW}, `Set up graphql schemas`)();
+  log.log({priority: 4, color: COLOR.YELLOW}, `Schemas:`, typeDefs)();
   createTypes(typeDefs);
 }
 
