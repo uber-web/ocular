@@ -4,31 +4,24 @@
     {
       "title": "Overview",
       "entries": [
-        {
-          "entry": "docs/README"
-        },
-        {
-          "entry": "docs/whats-new"
-        }
+        {"entry": "docs/README"},
+        {"entry": "docs/whats-new"},
+        {"entry": "docs/faq"}
       ]
     },
     {
       "title": "Developer Guide",
       "entries": [
-        {
-          "entry": "docs/developer-guide/README"
-        },
-        {
-          "entry": "docs/developer-guide/debugging"
-        }
+        {"entry": "docs/developer-guide/README"},
+        {"entry": "docs/developer-guide/configuring"},
+        {"entry": "docs/developer-guide/deploying"},
+        {"entry": "docs/developer-guide/debugging"}
       ]
     },
     {
-      "title": "Reference",
+      "title": "API Reference",
       "entries": [
-        {
-          "entry": "docs/reference/configuration"
-        }
+        {"entry": "docs/api-reference/ocular-config"}
       ]
     },
     {
