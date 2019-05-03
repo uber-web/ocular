@@ -3,9 +3,10 @@ const resolve = require('path').resolve;
 const DOCS = require('../docs/table-of-contents.json');
 const DEPENDENCIES = require('./package.json').dependencies;
 // eslint-disable-next-line import/no-extraneous-dependencies
-const ALIASES = require('ocular-dev-tools/config/ocular.config')({
-  root: resolve(__dirname, '..')
-}).aliases;
+const ALIASES = {};
+// require('ocular-dev-tools/config/ocular.config')({
+//   root: resolve(__dirname, '..')
+// }).aliases;
 
 // When duplicating example dependencies in website, autogenerate
 // aliases to ensure the website version is picked up
