@@ -17,24 +17,17 @@ function stringify(key, value) {
   return value;
 }
 
-module.exports = function onCreateWebpackConfig(opts) {
-  if (hasRun) {
-    return;
+function logWebpackConfig(config) {
+  if (log.priority >= 3) {
+    log.log({color: COLOR.MAGENTA, priority: 3},
+      `Webpack rules: ${JSON.stringify(config, stringify, 4)}`)();
+  } else {
+    log.log({color: COLOR.CYAN, priority: 1},
+      `Webpack started with aliases ${JSON.stringify(config.resolve.alias, stringify, 2)}`)();
   }
-  hasRun = true;
+}
 
-  const {ocularConfig} = global || {};
-
-  const {
-    stage,     // build stage: ‘develop’, ‘develop-html’, ‘build-javascript’, or ‘build-html’
-    getConfig, // Function that returns the current webpack config
-    rules,     // Object (map): set of preconfigured webpack config rules
-    loaders,   // Object (map): set of preconfigured webpack config loaders
-    plugins,    // Object (map): A set of preconfigured webpack config plugins
-    actions
-  } = opts;
-
-
+function getWebpackConfigOverrides(config, ocularConfig = global.ocularConfig) {
   if (ocularConfig.webpack) {
     log.log({color: COLOR.CYAN}, `rewriting gatsby webpack config (using website config)`)();
     log.log({priority: 2, color: COLOR.MAGENTA},
@@ -43,9 +36,6 @@ module.exports = function onCreateWebpackConfig(opts) {
     log.log({color: COLOR.CYAN},
       `rewriting gatsby webpack config (no website webpack config supplied)`)();
   }
-
-
-  let config = getConfig();
 
   const doNotExcludeOcular = modulePath =>
     /node_modules/.test(modulePath) &&
@@ -58,8 +48,6 @@ module.exports = function onCreateWebpackConfig(opts) {
     }
   }
 
-  actions.replaceWebpackConfig(config);
-
   const newConfig = {};
 
   // nulling out `fs` avoids issues with certain node modules getting bundled,
@@ -69,21 +57,39 @@ module.exports = function onCreateWebpackConfig(opts) {
 
   Object.assign(newConfig, ocularConfig.webpack);
 
-  // NOTE: setWebpackConfig MERGES in the new config
-  actions.setWebpackConfig(newConfig);
+  return newConfig;
+}
+
+function onCreateWebpackConfig(opts) {
+  if (hasRun) {
+    return;
+  }
+  hasRun = true;
+
+  const {
+    // stage,     // build stage: ‘develop’, ‘develop-html’, ‘build-javascript’, or ‘build-html’
+    getConfig, // Function that returns the current webpack config
+    // rules,     // Object (map): set of preconfigured webpack config rules
+    // loaders,   // Object (map): set of preconfigured webpack config loaders
+    // plugins,    // Object (map): A set of preconfigured webpack config plugins
+    actions
+  } = opts;
+
+  const config = getConfig();
+
+  const newConfig = getWebpackConfigOverrides(config)
 
   log.log(
     {color: COLOR.CYAN, priority: 4},
     `Webpack delta config ${JSON.stringify(newConfig, stringify, 2)}`
   )();
 
-  /* UNCOMMENT TO DEBUG THE CONFUG
-  */
-  config = getConfig();
+  // NOTE: setWebpackConfig MERGES in the new config
+  actions.setWebpackConfig(newConfig);
 
-  log.log({color: COLOR.MAGENTA, priority: 3},
-    `Webpack rules: ${JSON.stringify(config, stringify, 4)}`)();
-
-  log.log({color: COLOR.CYAN, priority: 1},
-    `Webpack started with aliases ${JSON.stringify(config.resolve.alias, stringify, 2)}`)();
+  logWebpackConfig(getConfig());
 }
+
+module.exports.logWebpackConfig = logWebpackConfig;
+module.exports.getWebpackConfigOverrides = getWebpackConfigOverrides;
+module.exports.onCreateWebpackConfig = onCreateWebpackConfig;

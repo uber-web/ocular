@@ -5,7 +5,7 @@ function sourceNodes({actions}) {
   // see https://graphql-compose.github.io/en/ for instructions on how to create types
   // see https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/ for information on schema customization
 
-  // these type definitions support the site metadata and table of contents. 
+  // these type definitions support the site metadata and table of contents.
   // when gastby tries to infer these schemas from contents as it is read,
   // it requires it to have a very strict shape by defining the schema independently
   // of the content of the file we can be more flexible.
@@ -14,6 +14,7 @@ function sourceNodes({actions}) {
 
     type Examples implements Node {
       title: String
+      componentUrl: String
       path: String
       image: String
     }
@@ -116,7 +117,7 @@ function sourceNodes({actions}) {
       entries: [Entry]
     }
     `;
-  log.log({color: COLOR.YELLOW}, `Set up graphql schemas`, typeDefs)();
+  log.log({priority: 4, color: COLOR.YELLOW}, `Set up graphql schemas`, typeDefs)();
   createTypes(typeDefs);
 }
 
