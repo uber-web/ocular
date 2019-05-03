@@ -1,7 +1,6 @@
 // Launch script for various Node test configurations
 
 // Enables ES2015 import/export in Node.js
-require('reify');
 const {resolve} = require('path');
 
 /* global process */

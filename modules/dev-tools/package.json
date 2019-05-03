@@ -60,11 +60,9 @@
     "webpack-dev-server": "^3.1.14"
   },
   "devDependencies": {
-    "@probe.gl/test-utils": "^3.0.0",
-    "reify": "^0.18.1"
+    "@probe.gl/test-utils": "^3.0.0"
   },
   "peerDependencies": {
-    "@probe.gl/test-utils": "^3.0.0",
-    "reify": "^0.18.1"
+    "@probe.gl/test-utils": "^3.0.0"
   }
 }
