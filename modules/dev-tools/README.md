@@ -172,3 +172,4 @@ A file `ocular-dev-tools.config.js` can be placed at the root of the package to 
   + `bench` (String) - benchmark entry point. Default `./test/bench/index`.
   + `bench-browser` (String|[Object](https://webpack.js.org/concepts/entry-points/)) - benchmark browser entry point. Default `./test/bench/browser`.
   + `size` (String|[Object](https://webpack.js.org/concepts/entry-points/)) - metrics entry points. Default `./test/size`.
+- `browserTest` (Object) - options for browser tests. Passed to [BrowserTestDriver.run](https://uber-web.github.io/probe.gl/#/documentation/api-reference-testing/browsertestdriver).

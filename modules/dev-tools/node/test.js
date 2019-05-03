@@ -30,7 +30,12 @@ function runBrowserTest(opts) {
     console.log('\033[93m@probe.gl/test-utils is not installed, skipping browser test\033[0m');
     process.exit(0);
   }
-  return new BrowserTestDriver().run(opts);
+  const userConfig = config.browserTest || {};
+  const options = Object.assign({}, opts, userConfig, {
+    server: Object.assign({}, opts.server, userConfig.server),
+    browser: Object.assign({}, opts.browser, userConfig.browser)
+  });
+  return new BrowserTestDriver().run(options);
 }
 
 switch (mode) {
@@ -53,28 +58,34 @@ switch (mode) {
   case 'browser':
   case 'browser-headless':
     runBrowserTest({
-      command: 'webpack-dev-server',
-      arguments: ['--config', config.webpack.configPath, '--env.mode=test'],
+      server: {
+        command: 'webpack-dev-server',
+        arguments: ['--config', config.webpack.configPath, '--env.mode=test'],
+      },
       headless: mode === 'browser-headless'
     });
     break;
 
   case 'bench-browser':
     runBrowserTest({
-      command: 'webpack-dev-server',
-      arguments: ['--config', config.webpack.configPath, '--env.mode=bench']
+      server: {
+        command: 'webpack-dev-server',
+        arguments: ['--config', config.webpack.configPath, '--env.mode=bench']
+      }
     });
     break;
 
   default:
     if (/\bbrowser\b/.test(mode)) {
       runBrowserTest({
-        command: 'webpack-dev-server',
-        arguments: [
-          '--config',
-          config.webpack.configPath,
-          `--env.mode=${mode.replace('-browser', '').replace('-headless', '')}`
-        ],
+        server: {
+          command: 'webpack-dev-server',
+          arguments: [
+            '--config',
+            config.webpack.configPath,
+            `--env.mode=${mode.replace('-browser', '').replace('-headless', '')}`
+          ]
+        },
         headless: /\bheadless\b/.test(mode)
       });
     } else if (mode in config.entry) {
