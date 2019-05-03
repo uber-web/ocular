@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.21
+- Remove hard reference of reify (#154)
+
 ## v0.0.20
 - Fix build error when package.json is missing (#152)
 
