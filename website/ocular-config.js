@@ -18,7 +18,7 @@ for (const dependency in DEPENDENCIES) {
 }
 
 module.exports = {
-  logLevel: 1,
+  logLevel: 4,
 
   DOC_FOLDER: `${__dirname}/../docs/`,
   ROOT_FOLDER: `${__dirname}/../`,
@@ -34,8 +34,7 @@ module.exports = {
   PROJECT_ORG: 'uber-web',
   PROJECT_URL: 'https://github.com/uber-web/ocular',
   PROJECT_DESC: 'A documentation website for Ocular, made with Ocular',
-  WEBSITE_PATH: '/website/',
-  PATH_PREFIX: '/ocular/',
+  PATH_PREFIX: '/ocular',
 
   FOOTER_LOGO: '',
 

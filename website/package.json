@@ -6,8 +6,8 @@
     "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
     "develop": "gatsby develop --port=8001",
-    "build": "gatsby build --path-prefix",
-    "serve": "gatsby serve --path-prefix",
+    "build": "gatsby build --prefix-paths",
+    "serve": "gatsby serve --prefix-paths",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dependencies": {
