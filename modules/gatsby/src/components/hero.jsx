@@ -22,7 +22,7 @@ export default class Hero extends Component {
         <div className="container">
           <h1>{config.PROJECT_NAME}</h1>
           <p>{config.PROJECT_DESC}</p>
-          <Link to="/docs/" className="btn">
+          <Link to="/docs/get-started" className="btn">
             GET STARTED
           </Link>
         </div>
