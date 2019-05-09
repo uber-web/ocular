@@ -3,13 +3,6 @@
 // Enables ES2015 import/export in Node.js
 const {resolve} = require('path');
 
-/* global process */
-const moduleAlias = require('module-alias');
-
-const getConfig = require('../config/ocular.config');
-const config = getConfig();
-moduleAlias.addAliases(config.aliases);
-
 // Browser test is opt-in by installing @probe.gl/test-utils
 let BrowserTestDriver = null;
 try {
@@ -18,6 +11,14 @@ try {
   BrowserTestDriver = null;
 }
 
+// Register module aliases
+const moduleAlias = require('module-alias');
+
+const getConfig = require('../config/ocular.config');
+const config = getConfig();
+moduleAlias.addAliases(config.aliases);
+
+/* global process */
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
 console.log(`Running ${mode} tests...`); // eslint-disable-line
 
