@@ -1,26 +1,15 @@
 # What's New
 
-ocular-gatsby is still in experimental pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and this module will be deprecated.
+## ocular-gatsby
 
-## 1.0.0-alpha.7
-    remove stray luma.gl import
-    rewrite local links (#83)
-    Collapsible toc (#81)
-    Styles more similar to luma.gl (#80)
+ocular-gatsby is still in alpha pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and this module will be deprecated.
 
-## 1.0.0-alpha.6
-- Fix webpack config support and logging
-- ocular-gatsby is now published without beta tag to ensure latest version gets installed.
 
-## 1.0.0-alpha.5
-- CLI added (`ocular init` creates working page).
+## ocular-dev-tools
 
-## 1.0.0-alpha.4
-- Bump to `gatsby` 2.0.85.
-- Add `logLevel` support for debugging ocular. Hide verbose logging under `logLevel`.
-- Support debugging of webpack config and aliases.
-- Improved docs
+ocular-dev-tools is still in experimental pre-release.
 
-## 1.0.0-alpha.3
-- Allow `gatsby` peer dependency version to be controlled by app website (i.e ocular no longer pins it).
 
+## ocular (classic)
+
+ocular-gatsby is still in alpha pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and the `ocular` module will be deprecated.
