@@ -55,6 +55,9 @@ const ENV_CONFIG = {
   }
 };
 
+// Ensure we have an entry for the default BABEL_ENV
+ENV_CONFIG.development = ENV_CONFIG.es5;
+
 module.exports = (api) => {
   api.cache.using(() => process.env.BABEL_ENV);
 
