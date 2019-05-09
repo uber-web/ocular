@@ -6,7 +6,7 @@
     "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
     "develop": "gatsby develop --port=8001",
-    "build": "gatsby build --prefix-paths",
+    "build": "yarn clean && gatsby build --prefix-paths",
     "serve": "gatsby serve --prefix-paths",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
@@ -18,7 +18,7 @@
     "gatsby": "^2.3.0",
     "gatsby-plugin-styletron": "^3.0.5",
     "gh-pages": "^2.0.1",
-    "ocular-gatsby": "1.0.0-alpha.25",
+    "ocular-gatsby": "1.0.0-alpha.27",
     "sharp": "0.22.1"
   }
 }

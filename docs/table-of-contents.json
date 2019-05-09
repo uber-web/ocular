@@ -11,16 +11,11 @@
     },
     {
       "title": "Ocular Dev Tools",
-      "chapters": [
-        {
-          "title": "Developer Guide",
-          "entries": [
-            {"entry": "docs/dev-tools/README"},
-            {"entry": "docs/dev-tools/aliases"},
-            {"entry": "docs/dev-tools/configuring-tests"},
-            {"entry": "docs/dev-tools/webpack-config"}
-          ]
-        }
+      "entries": [
+        {"entry": "docs/dev-tools/README"},
+        {"entry": "docs/dev-tools/aliases"},
+        {"entry": "docs/dev-tools/configuring-tests"},
+        {"entry": "docs/dev-tools/webpack-config"}
       ]
     },
     {
