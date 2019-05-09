@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.23
+- fix module aliasing for probe.gl (#158)
+
 ## v0.0.22
 - Expose BrowserTestRunner configurations (#155)
 
