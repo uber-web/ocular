@@ -1,6 +1,8 @@
 # Welcome
 
-Ocular is a framework to generate documentation websites.
+## ocular-gatsby
+
+ocular-gatsby is a framework to generate documentation websites.
 
 Simply write your documentation in markdown files, organize them in folders as you see fit, run a couple of scripts: your website is ready to go without having to write a single line of code.
 
@@ -13,3 +15,10 @@ We built Ocular as a way to organize documentation for our open source projects 
 Happy documenting!
 
 > Note that there are two versions of ocular described in these docs! We are moving to the newer gatsby-based version of ocular. The "classic" variant is still documented for backwards compatibility, but will be removed as all frameworks migrate. The classic version is not maintained and new sites should be built using the gatsbyjs-based generator, you have been warned. .
+
+
+## ocular-dev-tools
+
+ocular-dev-tools installs a set of configurable development scripts to handle build, test and publish tasks for JavaScript framework repositories.
+
+While highly configurable ocular-dev-tools is very opinionated in choice of tooling etc, and mainly targets vis.gl frameworks, like deck.gl, luma.gl etc.
