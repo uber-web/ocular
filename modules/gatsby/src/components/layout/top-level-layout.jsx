@@ -47,30 +47,38 @@ export default class Layout extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
   }
 
+  toggleMenu() {
+    const {isMenuOpen} = this.state;
+    this.setState({isMenuOpen: !isMenuOpen});
+  }
+
   renderBodyWithTOC(config, tableOfContents) {
     const {children, pathContext, theme} = this.props;
     const {isMenuOpen} = this.state;
     const isExample = pathContext.toc === 'examples';
+    // first div is to avoid the BodyGrid div className to be overwritten
     return (
-      <BodyGrid theme={theme}>
-        <HeaderContainer theme={theme}>
-          <ResponsiveHeader
-            config={config}
-            isMenuOpen={isMenuOpen}
-            toggleMenu={this.toggleMenu}
-          />
-        </HeaderContainer>
+      <div>
+        <BodyGrid theme={theme}>
+          <HeaderContainer theme={theme}>
+            <ResponsiveHeader
+              config={config}
+              isMenuOpen={isMenuOpen}
+              toggleMenu={this.toggleMenu}
+            />
+          </HeaderContainer>
 
-        <ToCContainer theme={theme}>
-          {this.renderTOC(config, tableOfContents)}
-        </ToCContainer>
+          <ToCContainer theme={theme}>
+            {this.renderTOC(config, tableOfContents)}
+          </ToCContainer>
 
-        <BodyContainerToC isExample={isExample} theme={theme}>
-          {children}
-        </BodyContainerToC>
+          <BodyContainerToC isExample={isExample} theme={theme}>
+            {children}
+          </BodyContainerToC>
 
-        {/* <Footer /> */}
-      </BodyGrid>
+          {/* <Footer /> */}
+        </BodyGrid>
+      </div>
     );
   }
 
@@ -93,11 +101,6 @@ export default class Layout extends React.Component {
         {/* <Footer /> */}
       </div>
     );
-  }
-
-  toggleMenu() {
-    const {isMenuOpen} = this.state;
-    this.setState({isMenuOpen: !isMenuOpen});
   }
 
   renderTOC(config, tableOfContents) {

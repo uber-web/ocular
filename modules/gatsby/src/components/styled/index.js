@@ -36,18 +36,18 @@ export const BodyContainerToC = styled.div(props => ({
   }
 }));
 
-export const BodyGrid = styled.div`
-  height: 100vh;
-  display: grid;
-  grid-template-rows: 64px 1fr;
-  grid-template-columns: 300px 1fr;
-  max-width: ${theme.breakpoints.large}px;
-  @media screen and (max-width: ${theme.breakpoints.medium}) {
-    display: flex;
-    flex-direction: column;
-    height: inherit;
+export const BodyGrid = styled.div(props => ({
+  height: '100vh',
+  display: 'grid',
+  gridTemplateRows: '64px 1fr',
+  gridTemplateColumns: '300px 1fr',
+  maxWidth: `${theme.breakpoints.large}px`,
+  [`@media screen and (max-width: ${theme.breakpoints.medium})`]: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: 'inherit'
   }
-`;
+}));
 
 export const HeaderContainer = styled.div(props => ({
   gridColumn: '1 / 3',
