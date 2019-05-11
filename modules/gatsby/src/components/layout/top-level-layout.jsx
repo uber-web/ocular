@@ -5,6 +5,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
+import {Client as Styletron} from 'styletron-engine-atomic';
+import {Provider as StyletronProvider} from 'styletron-react';
+import {BaseProvider} from 'baseui';
 
 import {WebsiteConfigProvider} from './website-config';
 
@@ -21,6 +24,8 @@ import {
   BodyContainerFull,
   BodyContainerToC
 } from '../styled';
+
+const engine = new Styletron();
 
 // TODO/ib - restore footer
 // import Footer from './footer';
@@ -164,18 +169,22 @@ export default class Layout extends React.Component {
       <WebsiteConfigProvider
         value={{config, theme, tableOfContents, allMarkdown}}
       >
-        <div>
-          {allMarkdown ? (
-            <SEO postEdges={allMarkdown} />
-          ) : (
-            <Helmet>
-              <title>{config.PROJECT_NAME}</title>
-            </Helmet>
-          )}
-          {pageContext.toc
-            ? this.renderBodyWithTOC(config, tableOfContents)
-            : this.renderBodyFull(config)}
-        </div>
+        <StyletronProvider value={engine}>
+          <BaseProvider theme={theme}>
+            <div>
+              {allMarkdown ? (
+                <SEO postEdges={allMarkdown} />
+              ) : (
+                <Helmet>
+                  <title>{config.PROJECT_NAME}</title>
+                </Helmet>
+              )}
+              {pageContext.toc
+                ? this.renderBodyWithTOC(config, tableOfContents)
+                : this.renderBodyFull(config)}
+            </div>
+          </BaseProvider>
+        </StyletronProvider>
       </WebsiteConfigProvider>
     );
   }
