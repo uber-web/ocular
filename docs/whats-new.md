@@ -4,12 +4,15 @@
 
 ocular-gatsby is still in alpha pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and this module will be deprecated.
 
+Some release details are available in the [CHANGELOG](https://github.com/uber-web/ocular/blob/master/modules/gatsby/CHANGELOG.md)
+
 
 ## ocular-dev-tools
 
 ocular-dev-tools is still in experimental pre-release.
 
+Some release details are available in the [CHANGELOG](https://github.com/uber-web/ocular/blob/master/modules/dev-tools/CHANGELOG.md)
 
 ## ocular (classic)
 
-ocular-gatsby is still in alpha pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and the `ocular` module will be deprecated.
+ocular classic is deprecated and no longer maintained, and will removed from this repo when `ocular-gatsby` v1.0 release ships.
