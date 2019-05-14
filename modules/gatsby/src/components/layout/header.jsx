@@ -93,14 +93,7 @@ export default class Header extends Component {
           ))
       }
    */
-
-  /*
-    {
-   ADDITIONAL_LINKS.map(link => (
-              <a key={link.href} href={link.href}>{link.name}</a>
-            ))
-    }
-    */
+    
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
       links: [
@@ -127,7 +120,8 @@ export default class Header extends Component {
                 )
               }
             ]
-          : [])
+          : []),
+        ...(props.config && props.config.ADDITIONAL_LINKS)
       ]
     };
   }
