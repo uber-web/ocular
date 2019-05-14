@@ -12,7 +12,7 @@
 | `HOME_HEADING`     | `String` | |
 | `HOME_RIGHT`       | `String` | |
 | `HOME_BULLETS`     | `Array`  | See below |
-| `ADDITIONAL_LINKS` | `Array` | |
+| `ADDITIONAL_LINKS` | `Array` | See below |
 | `GA_TRACKING`      | `String` | |
 | `GITHUB_KEY`       | `String` | The Github key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
 | `EXAMPLES`         | `Array` | See below |
