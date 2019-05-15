@@ -57,7 +57,7 @@ function hasExamples(props) {
   return EXAMPLES.length > 0;
 }
 
-function HeaderLink({to, href, label, classnames}) {
+function HeaderLink({to, href, label, classnames = ''}) {
   if (to) {
     return (
       <Link to={to} className={classnames}>
@@ -136,7 +136,6 @@ export default class Header extends Component {
       opacity
     } = this.props;
     const {
-      // ADDITIONAL_LINKS,
       PROJECT_NAME,
       PROJECTS = []
     } = config;

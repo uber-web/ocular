@@ -48,7 +48,7 @@ Each link entry has the following fields:
 
 | Field     | Type     | Name  |
 | ---       | ---      | ---   |
-| `label`    | `String` | Required. The displayed text in the header link. |
+| `name`    | `String` | Required. The displayed text in the header link. |
 | `href`    | `String` | Optional. The hyperlink you want to redirect to. |
 | `to`   | `String` | Optional. The path to an internal gatsby page. Each entry will either only has `href` or `to`. |
 | `classnames` | `String` | Optional. The classname of the header link.

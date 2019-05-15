@@ -21,6 +21,7 @@ module.exports = function getGatsbyConfig(config) {
     PROJECT_DESC: config.PROJECT_DESC || '',
     HOME_HEADING: config.HOME_HEADING || '',
     EXAMPLES: config.EXAMPLES || [],
+    ADDITIONAL_LINKS: config.ADDITIONAL_LINKS || [],
     HOME_BULLETS:
       config.HOME_BULLETS && config.HOME_BULLETS.length
         ? config.HOME_BULLETS
