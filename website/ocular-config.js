@@ -58,7 +58,9 @@ module.exports = {
     }
   ],
 
-  ADDITIONAL_LINKS: [],
+  ADDITIONAL_LINKS: [
+    {name: 'google', href: 'https://google.com'}
+  ],
 
   GA_TRACKING: null,
 

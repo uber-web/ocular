@@ -51,10 +51,19 @@ import {Link} from 'react-router-dom';
 })
 */
 
-function hasExamples(props) {
-  const {config = {}} = props;
-  const {EXAMPLES} = config;
-  return EXAMPLES.length > 0;
+function GithubLink() {
+  return (
+    <div className="github-link">
+      <span>Github</span>
+      <GithubIcon
+        style={{marginLeft: '0.5rem', display: 'inline'}}
+      />
+      {/* <span className="Stars fac fje">
+        {props.githubLoading ? '...' : props.stargazers_count}
+        <StarIcon style={{ marginLeft: '0.5rem', display: 'inline' }} />
+      </span> */}
+    </div>
+  );
 }
 
 function HeaderLink({to, href, label, classnames = ''}) {
@@ -72,57 +81,48 @@ function HeaderLink({to, href, label, classnames = ''}) {
   );
 }
 
+/**
+ * Generate all the links in the header.
+ * @param  {Object} props Input props which includes site config.
+ * @return {Array}  Array of link object ({label, to, href, classnames})
+ */
+function generateHeaderLinks(props) {
+  const {config = {}} = props;
+
+  const exampleLink = config.EXAMPLES &&
+    config.EXAMPLES.length > 0 &&
+    {label: 'Examples', to: '/examples'};
+
+  const githubLink = config.PROJECT_TYPE === 'github' &&
+    {
+      classnames: 'z',
+      href: props.config.PROJECT_URL,
+      label: (<GithubLink />)
+    };
+
+  const additionalLinks = config.ADDITIONAL_LINKS &&
+    config.ADDITIONAL_LINKS.length > 0 &&
+    config.ADDITIONAL_LINKS.map(link => ({...link, label: link.name}));
+
+  return [
+    exampleLink,
+    {label: 'Documentation', to: '/docs'},
+    {label: 'Search', to: '/search'},
+    {label: 'Blog', href: 'https://medium.com/@vis.gl'},
+    githubLink,
+    ...additionalLinks
+  ];
+}
+
 export default class Header extends Component {
   constructor(props) {
     super(props);
     // we need to know the number of links before render.
     // this is not an ideal solution.
     // some of the links which are hardcoded should come from configuration
-
-    /*
-      {
-          <Link className={classNames({active: pathname === '/search'})} to="/search">Search</Link>
-          Object.keys(trees).map(p => (
-            <Link
-              className={classNames({active: pathname.includes(p)})}
-              to={p}
-              key={p}
-            >
-              {trees[p].name}
-            </Link>
-          ))
-      }
-   */
-    
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
-      links: [
-        ...(hasExamples(props) ? [{label: 'Examples', to: '/examples'}] : []),
-        {label: 'Documentation', to: '/docs'},
-        {label: 'Search', to: '/search'},
-        {label: 'Blog', href: 'https://medium.com/@vis.gl'},
-        ...(props.config && props.config.PROJECT_TYPE === 'github'
-          ? [
-              {
-                classnames: 'z',
-                href: props.config.PROJECT_URL,
-                label: (
-                  <div className="github-link">
-                    <span>Github</span>
-                    <GithubIcon
-                      style={{marginLeft: '0.5rem', display: 'inline'}}
-                    />
-                    {/* <span className="Stars fac fje">
-                      {props.githubLoading ? '...' : props.stargazers_count}
-                      <StarIcon style={{ marginLeft: '0.5rem', display: 'inline' }} />
-                    </span> */}
-                  </div>
-                )
-              }
-            ]
-          : []),
-        ...(props.config && props.config.ADDITIONAL_LINKS.map(link => ({...link, label: link.name})))
-      ]
+      links: generateHeaderLinks(props)
     };
   }
 
