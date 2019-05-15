@@ -111,7 +111,7 @@ function generateHeaderLinks(props) {
     {label: 'Blog', href: 'https://medium.com/@vis.gl'},
     githubLink,
     ...additionalLinks
-  ];
+  ].filter(Boolean);
 }
 
 export default class Header extends Component {
