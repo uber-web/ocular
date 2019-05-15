@@ -121,7 +121,7 @@ export default class Header extends Component {
               }
             ]
           : []),
-        ...(props.config && props.config.ADDITIONAL_LINKS)
+        ...(props.config && props.config.ADDITIONAL_LINKS.map(link => ({...link, label: link.name})))
       ]
     };
   }

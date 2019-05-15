@@ -37,6 +37,10 @@ const QUERY = graphql`
           name
           url
         }
+        ADDITIONAL_LINKS {
+          name
+          href
+        }
       }
     }
   }
