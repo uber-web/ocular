@@ -5,7 +5,7 @@ set -e
 
 usage() {
   # TODO: Add more specific url
-  open "https://uber-web.github.io/ocular/docs/dev-tools"
+  open "https://uber-web.github.io/ocular/docs/dev-tools/cli/ocular-publish"
 }
 
 BASEDIR=$(dirname "$0")

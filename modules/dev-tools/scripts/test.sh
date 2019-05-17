@@ -11,7 +11,7 @@ MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 
 usage() {
   # TODO: Add more specific url
-  open "https://uber-web.github.io/ocular/docs/dev-tools"
+  open "https://uber-web.github.io/ocular/docs/dev-tools/cli/ocular-test"
 }
 
 run_test_script() {

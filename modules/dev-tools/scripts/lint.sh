@@ -24,7 +24,7 @@ ROOT_PATTERN="*.$EXTENSIONS"
 
 usage() {
   # TODO: Add more specific url
-  open "https://uber-web.github.io/ocular/docs/dev-tools"
+  open "https://uber-web.github.io/ocular/docs/dev-tools/cli/ocular-lint"
 }
 
 print_yellow() {
