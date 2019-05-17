@@ -9,6 +9,11 @@ MODE=$1
 
 MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 
+usage() {
+  # TODO: Add more specific url
+  open "https://uber-web.github.io/ocular/docs/dev-tools"
+}
+
 run_test_script() {
   BABEL_ENV=test node $MODULE_DIR/node/test.js $1
 }
@@ -17,6 +22,7 @@ run_full_test() {
   npm run lint
   run_test_script node
   run_test_script browser-headless
+  ocular-metrics
 }
 
 case $MODE in
@@ -40,7 +46,7 @@ case $MODE in
     ;;
 
   "cover")
-    NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover 
+    NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover
     npx nyc report --reporter=lcov
     ;;
 
@@ -50,8 +56,12 @@ case $MODE in
     run_test_script browser-headless
     ocular-test cover
     # node test/start.js bench
-    ocular-metrics
+    # ocular-metrics
+    ;;
 
+  "node-debug")
+    echo "Open chrome://inspect/#devices to attach debugger."
+    node --inspect-brk $MODULE_DIR/node/test.js node
     ;;
 
   *)

@@ -22,11 +22,20 @@ fi
 DIR_PATTERN="$DIRECTORIES/**/*.$EXTENSIONS"
 ROOT_PATTERN="*.$EXTENSIONS"
 
+usage() {
+  # TODO: Add more specific url
+  open "https://uber-web.github.io/ocular/docs/dev-tools"
+}
+
 print_yellow() {
   echo -e "\033[93m${1}\033[0m"
 }
 
 case $MODE in
+  "help")
+    usage
+    ;;
+
   "pre-commit")
     print_yellow "Running prettier & eslint on changed files..."
 
