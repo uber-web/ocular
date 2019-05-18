@@ -10,7 +10,11 @@ MODE=$1
 MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 
 run_test_script() {
-  BABEL_ENV=test node $MODULE_DIR/node/test.js $1
+  # get Chromium executable path
+  YARN_GLOBAL_DIR=`yarn global dir`
+  CHROMIUM_EXECUTABLE=`node -e "console.log(require('$YARN_GLOBAL_DIR/node_modules/puppeteer').executablePath())"`
+
+  BABEL_ENV=test PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $MODULE_DIR/node/test.js $1
 }
 
 run_full_test() {

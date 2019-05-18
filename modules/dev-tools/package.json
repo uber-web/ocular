@@ -39,6 +39,7 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@probe.gl/test-utils": "^3.0.0",
     "babel-eslint": "^9.0.0",
     "babel-plugin-istanbul": "^5.0.0",
     "babel-plugin-version-inline": "^1.0.0",
@@ -58,11 +59,5 @@
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
-  },
-  "devDependencies": {
-    "@probe.gl/test-utils": "^3.0.0"
-  },
-  "peerDependencies": {
-    "@probe.gl/test-utils": "^3.0.0"
   }
 }
