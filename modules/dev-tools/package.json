@@ -59,10 +59,10 @@
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
   },
-  "devDependencies": {  
-    "@probe.gl/test-utils": "^3.0.0"  
-  },  
-  "peerDependencies": { 
-    "@probe.gl/test-utils": "^3.0.0"  
+  "devDependencies": {
+    "@probe.gl/test-utils": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@probe.gl/test-utils": "^3.0.0"
   }
 }
