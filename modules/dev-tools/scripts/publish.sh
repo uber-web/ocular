@@ -3,6 +3,11 @@
 
 set -e
 
+usage() {
+  # TODO: Add more specific url
+  open "https://uber-web.github.io/ocular/docs/dev-tools/cli/ocular-publish"
+}
+
 BASEDIR=$(dirname "$0")
 
 ocular-bootstrap
@@ -14,6 +19,10 @@ MODE=$1
 
 if [ -d "modules" ]; then
   case $MODE in
+    "help")
+      usage
+      ;;
+
     "beta")
       # npm-tag argument: npm publish --tag <beta>
       # cd-version argument: increase <prerelease> version
@@ -30,6 +39,10 @@ if [ -d "modules" ]; then
   esac
 else
   case $MODE in
+    "help")
+      usage
+      break;;
+
     "beta")
       npm version prerelease
       npm publish --tag beta
