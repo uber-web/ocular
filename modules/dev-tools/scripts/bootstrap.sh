@@ -4,7 +4,7 @@
 set -e
 
 # install dependencies
-yarn global add puppeteer@1.16.0
+yarn global add puppeteer
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn
 
 PACKAGE_DIR=`pwd`
