@@ -19,6 +19,7 @@ const QUERY = graphql`
         PROJECT_TYPE
         PROJECT_DESC
         PROJECT_URL
+        PROJECT_ORG
         HOME_HEADING
         HOME_BULLETS {
           text

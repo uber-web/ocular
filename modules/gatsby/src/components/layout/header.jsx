@@ -28,6 +28,8 @@ import classNames from 'classnames';
 
 import {Link} from 'gatsby';
 
+import GithubStars from '../github/github-stars.jsx';
+
 const propTypes = {
   config: PropTypes.object.isRequired
 };
@@ -108,7 +110,7 @@ function generateHeaderLinks(props) {
     exampleLink,
     {label: 'Documentation', to: '/docs'},
     {label: 'Search', to: '/search'},
-    {label: 'Blog', href: 'https://medium.com/@vis.gl'},
+    {label: 'Blog', href: 'https://medium.com/vis-gl'},
     githubLink,
     ...additionalLinks
   ].filter(Boolean);
@@ -124,6 +126,15 @@ export default class Header extends Component {
     this.state = {
       links: generateHeaderLinks(props)
     };
+  }
+
+  renderStars() {
+    const {config} = this.props;
+    if (config.PROJECT_TYPE === 'github') {
+      return <GithubStars project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`} />;
+    }
+
+    return null;
   }
 
   renderHeader() {
@@ -182,6 +193,7 @@ export default class Header extends Component {
                 })}
               />
             ))}
+            {this.renderStars()}
           </div>
 
           <div
