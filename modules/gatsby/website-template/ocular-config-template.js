@@ -41,7 +41,6 @@ module.exports = {
   }',
   PROJECT_DESC: '${init.desc ||
     'A documentation website for Ocular, made with Ocular'}',
-  WEBSITE_PATH: '${init.path || '/website/'}',
   PATH_PREFIX: '',
 
   FOOTER_LOGO: '',
