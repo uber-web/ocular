@@ -5,6 +5,7 @@ const assert = require('assert');
 const INDEX_PAGE_URL = path.resolve(__dirname, '../../templates/index.jsx');
 
 const DOC_MARKDOWN_PAGE_URL = path.resolve(__dirname, '../../templates/doc-page-markdown.jsx');
+const DOC_MDX_PAGE_URL = path.resolve(__dirname, '../../templates/doc-page-mdx.jsx');
 
 const EXAMPLE_GALLERY_PAGE_URL = path.resolve(__dirname, '../../templates/examples.jsx');
 const EXAMPLE_PAGE_URL = path.resolve(__dirname, '../../templates/example-n.jsx');
@@ -16,6 +17,7 @@ const PAGE_TEMPLATES = {
   INDEX_PAGE_URL,
 
   DOC_MARKDOWN_PAGE_URL,
+  DOC_MDX_PAGE_URL,
 
   EXAMPLE_GALLERY_PAGE_URL,
   EXAMPLE_PAGE_URL,

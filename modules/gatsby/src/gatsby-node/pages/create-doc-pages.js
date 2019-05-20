@@ -98,6 +98,32 @@ function queryMarkdownDocs(graphql) {
   });
 }
 
+function queryMdxDocs(graphql) {
+  return graphql(
+    `
+      {
+        allMdx {
+          edges {
+            node {
+              fileAbsolutePath
+              code {
+                body
+              }
+            }
+          }
+        }
+      }
+    `
+  ).then(result => {
+    if (result.errors) {
+      /* eslint no-console: "off" */
+      console.log(result.errors);
+      throw new Error(result.errors);
+    }
+    return result;
+  });
+}
+
 // Walks all markdown nodes and creates a doc page for each node
 function createDocMarkdownPages({ graphql, actions }) {
   const { createPage } = actions;
@@ -139,7 +165,50 @@ function createDocMarkdownPages({ graphql, actions }) {
   });
 }
 
+// Walks all markdown nodes and creates a doc page for each node
+function createDocMdxPages({ graphql, actions }) {
+  const { createPage } = actions;
+
+  return queryMdxDocs(graphql)
+  .then(result => {
+    // const rootFolder = result.data.site.siteMetadata.config.ROOT_FOLDER;
+    // const pathToSlug = result.data.allMarkdownRemark.edges.map(({ node }) => ({
+    //   source: node.fileAbsolutePath,
+    //   target: node.fields.slug
+    // }));
+
+    // let relativeLinks = {};
+    // result.data.allMdx.edges.forEach(edge => {
+    //   pathToSlug.forEach(({ source, target }) => {
+    //     relativeLinks = addToRelativeLinks({
+    //       source,
+    //       target,
+    //       rootFolder,
+    //       edge,
+    //       relativeLinks
+    //     });
+    //   });
+    // });
+
+    result.data.allMdx.edges.forEach(edge => {
+      console.log('Creating MDX page at', edge.node.fields.path);
+
+      const componentUrl = getPageTemplateUrl('DOC_MDX_PAGE_URL');
+
+      createPage({
+        path: edge.node.fields.path,
+        component: componentUrl,
+        context: {
+          // relativeLinks,
+          slug: edge.node.fields.path,
+          toc: 'docs'
+        }
+      });
+    });
+  });
+}
 
 module.exports = function createDocPages({ graphql, actions }) {
   createDocMarkdownPages({ graphql, actions });
+  createDocMdxPages({ graphql, actions });
 };

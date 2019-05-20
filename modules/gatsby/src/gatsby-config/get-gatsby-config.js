@@ -118,6 +118,15 @@ module.exports = function getGatsbyConfig(config) {
         }
       },
 
+      // Handles MDX files
+      {
+        resolve: 'gatsby-mdx',
+        options: {
+          extensions: ['.mdx']
+        }
+      },
+
+      // Handles MD files
       // Transforms markdown (.md) nodes, converting the raw markdown to HTML
       {
         resolve: 'gatsby-transformer-remark',

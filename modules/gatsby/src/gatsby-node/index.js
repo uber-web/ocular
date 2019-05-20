@@ -9,6 +9,7 @@ const {
   cleanupMarkdownNode,
   addSiblingNodes
 } = require('./process-nodes/process-nodes-markdown');
+const {processNewMDXNode} = require('./process-nodes/process-nodes-mdx');
 const {processNewDocsJsonNode} = require('./process-nodes/process-nodes-json');
 const {sourceNodes} = require('./source-nodes');
 
@@ -34,11 +35,16 @@ function onCreateNode({node, actions, getNode}) {
       processNewMarkdownNode({node, actions, getNode}, docNodes, tocNode);
       break;
 
+    case 'Mdx':
+      processNewMDXNode({node, actions, getNode}, docNodes, tocNode);
+      break;
+
     case 'DocsJson':
       tocNode = processNewDocsJsonNode({node, actions, getNode}, docNodes);
       break;
 
     default:
+      console.log(node.internal.type, node.fileAbsolutePath);
   }
 }
 
