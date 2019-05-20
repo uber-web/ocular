@@ -52,6 +52,7 @@ Each link entry has the following fields:
 | `href`    | `String` | Optional. The hyperlink you want to redirect to. |
 | `to`   | `String` | Optional. The path to an internal gatsby page. Each entry will either only has `href` or `to`. |
 | `classnames` | `String` | Optional. The classname of the header link.
+| `index`      | `Int`    | Optional. Use 0 to push before first item. |
 
 
 ## EXAMPLES

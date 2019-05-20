@@ -57,9 +57,7 @@ function GithubLink() {
   return (
     <div className="github-link">
       <span>Github</span>
-      <GithubIcon
-        style={{marginLeft: '0.5rem', display: 'inline'}}
-      />
+      <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} />
       {/* <span className="Stars fac fje">
         {props.githubLoading ? '...' : props.stargazers_count}
         <StarIcon style={{ marginLeft: '0.5rem', display: 'inline' }} />
@@ -92,28 +90,35 @@ function generateHeaderLinks(props) {
   const {config = {}} = props;
 
   const exampleLink = config.EXAMPLES &&
-    config.EXAMPLES.length > 0 &&
-    {label: 'Examples', to: '/examples'};
+    config.EXAMPLES.length > 0 && {label: 'Examples', to: '/examples'};
 
-  const githubLink = config.PROJECT_TYPE === 'github' &&
-    {
-      classnames: 'z',
-      href: props.config.PROJECT_URL,
-      label: (<GithubLink />)
-    };
+  const githubLink = config.PROJECT_TYPE === 'github' && {
+    classnames: 'z',
+    href: props.config.PROJECT_URL,
+    label: <GithubLink />
+  };
 
-  const additionalLinks = config.ADDITIONAL_LINKS &&
-    config.ADDITIONAL_LINKS.length > 0 &&
-    config.ADDITIONAL_LINKS.map(link => ({...link, label: link.name}));
-
-  return [
+  const links = [
     exampleLink,
     {label: 'Documentation', to: '/docs'},
     {label: 'Search', to: '/search'},
     {label: 'Blog', href: 'https://medium.com/vis-gl'},
-    githubLink,
-    ...additionalLinks
-  ].filter(Boolean);
+    githubLink
+  ];
+
+  if (config.ADDITIONAL_LINKS && config.ADDITIONAL_LINKS.length > 0) {
+    config.ADDITIONAL_LINKS.map(link => ({...link, label: link.name})).forEach(
+      link => {
+        if (link.index !== undefined) {
+          links.splice(link.index, 0, link);
+        } else {
+          links.push(link);
+        }
+      }
+    );
+  }
+
+  return links.filter(Boolean);
 }
 
 export default class Header extends Component {
@@ -131,7 +136,9 @@ export default class Header extends Component {
   renderStars() {
     const {config} = this.props;
     if (config.PROJECT_TYPE === 'github') {
-      return <GithubStars project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`} />;
+      return (
+        <GithubStars project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`} />
+      );
     }
 
     return null;
@@ -146,10 +153,7 @@ export default class Header extends Component {
       isMenuOpen,
       opacity
     } = this.props;
-    const {
-      PROJECT_NAME,
-      PROJECTS = []
-    } = config;
+    const {PROJECT_NAME, PROJECTS = []} = config;
 
     const {links} = this.state;
 

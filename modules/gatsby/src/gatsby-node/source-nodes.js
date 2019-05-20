@@ -33,6 +33,7 @@ function sourceNodes({actions}) {
     type AdditionalLinks implements Node {
       name: String
       href: String
+      index: Int
     }
 
     type Projects implements Node {
