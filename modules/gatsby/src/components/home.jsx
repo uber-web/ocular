@@ -26,7 +26,7 @@ import GithubContributors from './github/github-contributors.jsx';
 function renderPage({config}) {
   const {
     HOME_HEADING,
-    HOME_RIGHT = '...',
+    HOME_RIGHT = '',
     HOME_BULLETS = [],
     PROJECT_TYPE
   } = config;
