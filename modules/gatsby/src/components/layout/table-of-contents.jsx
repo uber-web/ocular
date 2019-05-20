@@ -109,11 +109,18 @@ const SafeLink = ({
     marginLeft: depth * 30
   };
 
+  // Gatsby <Link> element emmits warning if "external" links are used
+  // "internal" links start with `/`
+  // https://github.com/gatsbyjs/gatsby/issues/11243
+  if (typeof path && !path.startsWith('/')) {
+    path = `/${path}`; // eslint-disable-line
+  }
+
   return (
     <div className={classNames(className, { active, expanded })} title={name}>
       <Chevron collapsed={collapsed} expanded={expanded} style={style} />
       {!path || typeof path !== 'string' ? (
-        <span style={style}>name</span>
+        <span style={style}>{name}</span>
       ) : (
         <Link to={path} title={name} style={style}>
           {name}

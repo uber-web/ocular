@@ -45,27 +45,6 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     slug = `/${parsedFilePath.dir}/`;
   }
 
-  /*
-  if (Object.prototype.hasOwnProperty.call(node, 'frontmatter')) {
-    if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug'))
-      slug = `/${_.kebabCase(node.frontmatter.slug)}`;
-    if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
-      const date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
-      if (!date.isValid)
-        console.warn(`WARNING: Invalid date.`, node.frontmatter);
-
-      createNodeField({
-        node,
-        name: 'date',
-        value: date.toISOString()
-      });
-    }
-  }
-  */
-
-  // createNodeField({ node, name: 'slug', value: slug });
-  // postNodes.push(node);
-
   // Update path
   let relPath = node.fields.slug;
   if (node.fileAbsolutePath) {
@@ -91,7 +70,7 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     // the regular toc node generation process adds the full content of each markdown node to the toc.
     // we don't need as much. The app will only use the title and slug of the corresponding markdown
     // node for each toc entry.
-    
+
     const nodeToEdit = parseToc([tocNode], relPath);
     if (nodeToEdit) {
       nodeToEdit.childMarkdownRemark = {
