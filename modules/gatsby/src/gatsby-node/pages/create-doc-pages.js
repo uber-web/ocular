@@ -64,7 +64,7 @@ function addToRelativeLinks({
   };
 }
 
-function queryDocs(graphql) {
+function queryMarkdownDocs(graphql) {
   return graphql(
     `
       {
@@ -72,10 +72,6 @@ function queryDocs(graphql) {
           edges {
             node {
               fileAbsolutePath
-              frontmatter {
-                tags
-                category
-              }
               fields {
                 slug
                 path
@@ -103,10 +99,10 @@ function queryDocs(graphql) {
 }
 
 // Walks all markdown nodes and creates a doc page for each node
-module.exports = function createDocPages({ graphql, actions }) {
+function createDocMarkdownPages({ graphql, actions }) {
   const { createPage } = actions;
 
-  return queryDocs(graphql)
+  return queryMarkdownDocs(graphql)
   .then(result => {
     const rootFolder = result.data.site.siteMetadata.config.ROOT_FOLDER;
     const pathToSlug = result.data.allMarkdownRemark.edges.map(({ node }) => ({
@@ -114,19 +110,7 @@ module.exports = function createDocPages({ graphql, actions }) {
       target: node.fields.slug
     }));
 
-    const tagSet = new Set();
-    const categorySet = new Set();
     result.data.allMarkdownRemark.edges.forEach(edge => {
-      if (edge.node.frontmatter.tags) {
-        edge.node.frontmatter.tags.forEach(tag => {
-          tagSet.add(tag);
-        });
-      }
-
-      if (edge.node.frontmatter.category) {
-        categorySet.add(edge.node.frontmatter.category);
-      }
-
       let relativeLinks = {};
       pathToSlug.forEach(({ source, target }) => {
         relativeLinks = addToRelativeLinks({
@@ -154,3 +138,8 @@ module.exports = function createDocPages({ graphql, actions }) {
     });
   });
 }
+
+
+module.exports = function createDocPages({ graphql, actions }) {
+  createDocMarkdownPages({ graphql, actions });
+};
