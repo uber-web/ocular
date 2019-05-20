@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.24
+- Only install one copy of chromium (#176)
+
 ## v0.0.23
 - fix module aliasing for probe.gl (#158)
 
