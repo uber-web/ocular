@@ -9,11 +9,19 @@
 
 module.exports = init => `
 module.exports = {
+  // Adjusts amount of debug information from ocular-gatsby
+  logLevel: 4,
+
   DOC_FOLDER: '${init.websiteFolder}/../docs/',
   ROOT_FOLDER: '${init.websiteFolder}/../',
 
   EXAMPLES: [
-    // {title: 'my example', path: 'examples/my-example/', image: 'images/my-example.jpg'}
+    // {
+    //   title: 'my example',
+    //   path: 'examples/my-example/',
+    //   image: 'images/my-example.jpg',
+    //   componentUrl: '../examples/app.js'
+    // }
   ],
   DOCS: [
     // your table of contents go there
@@ -34,6 +42,7 @@ module.exports = {
   PROJECT_DESC: '${init.desc ||
     'A documentation website for Ocular, made with Ocular'}',
   WEBSITE_PATH: '${init.path || '/website/'}',
+  PATH_PREFIX: '',
 
   FOOTER_LOGO: '',
 
