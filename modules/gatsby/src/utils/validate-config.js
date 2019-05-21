@@ -4,7 +4,7 @@ const {log, COLOR} = require('./log');
 // const LOCAL_FILE_PATH = /^((\.\.|[a-zA-Z0-9_/\-\\])*\.[a-zA-Z0-9]+)/g;
 // const URL_PATH_PATTERN = /^\/([A-z0-9-_+]+\/)*([A-z0-9])*$/g;
 
-// custom validator: check every element in an array.
+// custom validator: validate if the value is a string (null is allowed).
 validate.validators.anyString = function anyString(value, options) {
   // allow value === null
   if (value === null) {
@@ -13,7 +13,7 @@ validate.validators.anyString = function anyString(value, options) {
   if (value === undefined && options.allowEmpty) {
     return '';
   }
-  // check is array
+  // check value is string
   if (!validate.isString(value)) {
     return options.message;
   }
@@ -27,7 +27,7 @@ validate.validators.arrayValidate = function arrayValidate(
   constraint,
   key
 ) {
-  // check is array
+  // check value is array
   if (!validate.isArray(value)) {
     return `${key} needs to be an array.`;
   }
@@ -46,7 +46,7 @@ validate.validators.objectValidate = function objectValidate(
   constraint,
   key
 ) {
-  // check is array
+  // check value is object
   if (!validate.isObject(value)) {
     return `${key} needs to be an object.`;
   }
@@ -310,7 +310,6 @@ function validateConfig(config) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
   // check required config
-  // const messages = [];
   const messages = validate(config, constraints) || {};
   // config padding
   // those values are required to support the query in ../site-query.jsx
@@ -319,15 +318,6 @@ function validateConfig(config) {
     ...defaults,
     ...config
   };
-  // const paddedConfig = Object.keys(messages).reduce((res, key) => {
-  //   return constraints[key].presence ?
-  //     {
-  //       ...res,
-  //       [key]: defaults[key]
-  //     } : res;
-  // }, {...config});
-  // console.log('before', config);
-  // console.log('after padding: ', paddedConfig);
   // print out all error messages
   unusedProperties.forEach(key =>
     log.log(
@@ -335,7 +325,6 @@ function validateConfig(config) {
       `[gatsby-config] ${key} is deprecated.`
     )()
   );
-  // console.log('validation errors: ', messages);
   Object.keys(messages).forEach(key =>
     log.log(
       {color: COLOR.RED, priority: 0},
