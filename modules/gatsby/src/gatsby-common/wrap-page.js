@@ -1,4 +1,4 @@
-// TODO: fix lint errors below
+// TODO: fix lint errors in this file
 /* eslint-disable */
 // Effectively does the same job as `gatsby-layout-plugin`
 // See https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-layout

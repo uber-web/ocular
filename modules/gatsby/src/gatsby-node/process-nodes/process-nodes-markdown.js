@@ -1,4 +1,4 @@
-// TODO: fix lint errors below
+// TODO: fix lint errors in this file
 /* eslint-disable */
 const path = require('path');
 // const moment = require('moment');
