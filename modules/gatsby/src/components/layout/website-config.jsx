@@ -15,7 +15,7 @@ const defaultContextValue = {
   set: () => {}
 };
 
-const { Provider, Consumer } = React.createContext(defaultContextValue);
+const {Provider, Consumer} = React.createContext(defaultContextValue);
 
 export class WebsiteConfigProvider extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ export class WebsiteConfigProvider extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const {children} = this.props;
     return <Provider value={this.state}>{children}</Provider>;
   }
 }

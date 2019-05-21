@@ -1,7 +1,7 @@
 const getPageTemplateUrl = require('./get-page-template-url');
 
-module.exports = function createSearchPage({ graphql, actions }) {
-  const { createPage } = actions;
+module.exports = function createSearchPage({graphql, actions}) {
+  const {createPage} = actions;
 
   return graphql(`
     {
@@ -34,7 +34,6 @@ module.exports = function createSearchPage({ graphql, actions }) {
           title: e.node.frontmatter.title
         }))
       }
-    })
+    });
   });
-}
-
+};

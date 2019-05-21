@@ -1,12 +1,12 @@
-const validate = require("validate.js");
+const validate = require('validate.js');
 const {log, COLOR} = require('./log');
 
 // const LOCAL_FILE_PATH = /^((\.\.|[a-zA-Z0-9_/\-\\])*\.[a-zA-Z0-9]+)/g;
 // const URL_PATH_PATTERN = /^\/([A-z0-9-_+]+\/)*([A-z0-9])*$/g;
 
 // custom validator: check every element in an array.
-validate.validators.anyString = function(value, options) {
-  // allow value === null 
+validate.validators.anyString = function anyString(value, options) {
+  // allow value === null
   if (value === null) {
     return '';
   }
@@ -22,7 +22,11 @@ validate.validators.anyString = function(value, options) {
 };
 
 // custom validator: check every element in an array.
-validate.validators.arrayValidate = function(value, constraint, key) {
+validate.validators.arrayValidate = function arrayValidate(
+  value,
+  constraint,
+  key
+) {
   // check is array
   if (!validate.isArray(value)) {
     return `${key} needs to be an array.`;
@@ -37,7 +41,11 @@ validate.validators.arrayValidate = function(value, constraint, key) {
 };
 
 // custom validator: check if the value is an object.
-validate.validators.objectValidate = function(value, constraint, key) {
+validate.validators.objectValidate = function objectValidate(
+  value,
+  constraint,
+  key
+) {
   // check is array
   if (!validate.isObject(value)) {
     return `${key} needs to be an object.`;
@@ -69,7 +77,7 @@ const constraints = {
       message: 'should be the local path to the root folder.'
     }
   },
-  
+
   DIR_NAME: {
     anyString: {
       message: 'should be the local path to the gatsby website folder.'
@@ -88,7 +96,8 @@ const constraints = {
       image: {
         presence: true,
         anyString: {
-          message: 'image should be the local path to the image in /static folder.'
+          message:
+            'image should be the local path to the image in /static folder.'
         }
       },
       componentUrl: {
@@ -114,7 +123,8 @@ const constraints = {
     presence: true,
     inclusion: {
       within: ['github', ''],
-      message: 'should be set to "github" if your project is hosted on Github, or leave it empty.'
+      message:
+        'should be set to "github" if your project is hosted on Github, or leave it empty.'
     }
   },
 
@@ -210,7 +220,8 @@ const constraints = {
       img: {
         presence: true,
         anyString: {
-          message: 'should be the local path to the preview image in /static folder.'
+          message:
+            'should be the local path to the preview image in /static folder.'
         }
       }
     }
@@ -259,7 +270,6 @@ const constraints = {
   webpack: {
     objectValidate: true
   }
-
 };
 
 const defaults = {
@@ -286,8 +296,8 @@ const defaults = {
   HOME_BULLETS: [],
   THEME_OVERRIDES: [
     {
-      key: "none",
-      value: "none"
+      key: 'none',
+      value: 'none'
     }
   ],
   ADDITIONAL_LINKS: [],
@@ -316,15 +326,21 @@ function validateConfig(config) {
   //       [key]: defaults[key]
   //     } : res;
   // }, {...config});
-  console.log("before", config);
-  console.log("after padding: ", paddedConfig);
+  // console.log('before', config);
+  // console.log('after padding: ', paddedConfig);
   // print out all error messages
   unusedProperties.forEach(key =>
-    log.log({color: COLOR.RED, priority: 0}, `[gatsby-config] ${key} is deprecated.`)()
+    log.log(
+      {color: COLOR.RED, priority: 0},
+      `[gatsby-config] ${key} is deprecated.`
+    )()
   );
   // console.log('validation errors: ', messages);
   Object.keys(messages).forEach(key =>
-    log.log({color: COLOR.RED, priority: 0}, `[gatsby-config] ${messages[key].toString()}`)()
+    log.log(
+      {color: COLOR.RED, priority: 0},
+      `[gatsby-config] ${messages[key].toString()}`
+    )()
   );
   // return new config;
   return paddedConfig;

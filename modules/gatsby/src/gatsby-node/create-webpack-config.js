@@ -19,31 +19,51 @@ function stringify(key, value) {
 
 function logWebpackConfig(config) {
   if (log.priority >= 3) {
-    log.log({color: COLOR.MAGENTA, priority: 3},
-      `Webpack rules: ${JSON.stringify(config, stringify, 4)}`)();
+    log.log(
+      {color: COLOR.MAGENTA, priority: 3},
+      `Webpack rules: ${JSON.stringify(config, stringify, 4)}`
+    )();
   } else {
-    log.log({color: COLOR.CYAN, priority: 1},
-      `Webpack started with aliases ${JSON.stringify(config.resolve.alias, stringify, 2)}`)();
+    log.log(
+      {color: COLOR.CYAN, priority: 1},
+      `Webpack started with aliases ${JSON.stringify(
+        config.resolve.alias,
+        stringify,
+        2
+      )}`
+    )();
   }
 }
 
 function getWebpackConfigOverrides(config, ocularConfig = global.ocularConfig) {
   if (ocularConfig.webpack) {
-    log.log({color: COLOR.CYAN}, `rewriting gatsby webpack config (using website config)`)();
-    log.log({priority: 2, color: COLOR.MAGENTA},
-      `Webpack options ${JSON.stringify(ocularConfig.webpack, stringify, 2)}`)();
+    log.log(
+      {color: COLOR.CYAN},
+      `rewriting gatsby webpack config (using website config)`
+    )();
+    log.log(
+      {priority: 2, color: COLOR.MAGENTA},
+      `Webpack options ${JSON.stringify(ocularConfig.webpack, stringify, 2)}`
+    )();
   } else {
-    log.log({color: COLOR.CYAN},
-      `rewriting gatsby webpack config (no website webpack config supplied)`)();
+    log.log(
+      {color: COLOR.CYAN},
+      `rewriting gatsby webpack config (no website webpack config supplied)`
+    )();
   }
 
   const doNotExcludeOcular = modulePath =>
     /node_modules/.test(modulePath) &&
-    !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(modulePath);
+    !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(
+      modulePath
+    );
 
   // eslint-disable-next-line no-restricted-syntax
   for (const rule of config.module.rules) {
-    if (rule.exclude && rule.exclude.toString() === '/(node_modules|bower_components)/') {
+    if (
+      rule.exclude &&
+      rule.exclude.toString() === '/(node_modules|bower_components)/'
+    ) {
       rule.exclude = doNotExcludeOcular;
     }
   }
@@ -77,7 +97,7 @@ function onCreateWebpackConfig(opts) {
 
   const config = getConfig();
 
-  const newConfig = getWebpackConfigOverrides(config)
+  const newConfig = getWebpackConfigOverrides(config);
 
   log.log(
     {color: COLOR.CYAN, priority: 4},

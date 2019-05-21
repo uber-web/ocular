@@ -36,9 +36,8 @@ const config1 = {
 };
 
 test('validateConfig', t => {
-  validateConfig({});
-  validateConfig(config1);
-
+  const result = validateConfig(config1);
+  console.log(result);
   // t.equals(validateConfig({}), 'function', 'getExamples is exported');
   t.end();
 });
