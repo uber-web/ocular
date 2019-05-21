@@ -4,10 +4,19 @@ const assert = require('assert');
 // PATHS TO REACT PAGES
 const INDEX_PAGE_URL = path.resolve(__dirname, '../../templates/index.jsx');
 
-const DOC_MARKDOWN_PAGE_URL = path.resolve(__dirname, '../../templates/doc-page-markdown.jsx');
+const DOC_MARKDOWN_PAGE_URL = path.resolve(
+  __dirname,
+  '../../templates/doc-page-markdown.jsx'
+);
 
-const EXAMPLE_GALLERY_PAGE_URL = path.resolve(__dirname, '../../templates/examples.jsx');
-const EXAMPLE_PAGE_URL = path.resolve(__dirname, '../../templates/example-n.jsx');
+const EXAMPLE_GALLERY_PAGE_URL = path.resolve(
+  __dirname,
+  '../../templates/examples.jsx'
+);
+const EXAMPLE_PAGE_URL = path.resolve(
+  __dirname,
+  '../../templates/example-n.jsx'
+);
 
 const SEARCH_PAGE_URL = path.resolve(__dirname, '../../templates/search.jsx');
 
@@ -32,11 +41,12 @@ module.exports = function getPageTemplateUrl(templateName) {
   const templateUrl = PAGE_TEMPLATES[templateName];
   // If this is a valid template, look for an override in the config
   if (templateUrl) {
-    const ocularTemplateUrl = global.ocularConfig && global.ocularConfig[templateName];
+    const ocularTemplateUrl =
+      global.ocularConfig && global.ocularConfig[templateName];
     if (ocularTemplateUrl) {
       return ocularTemplateUrl;
     }
   }
   assert(templateUrl);
   return templateUrl;
-}
+};

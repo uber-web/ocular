@@ -1,6 +1,6 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
-import { Link } from 'gatsby';
+import {Link} from 'gatsby';
 import SearchIcon from '../components/images/search-filled.svg';
 import WithConfig from '../components/layout/website-config';
 
@@ -26,9 +26,9 @@ export default class SearchPage extends React.Component {
   }
 
   findResults(currentQuery) {
-    const { lastQuery } = this.state;
-    const { pathContext } = this.props;
-    this.setState({ debouncing: false });
+    const {lastQuery} = this.state;
+    const {pathContext} = this.props;
+    this.setState({debouncing: false});
     if (currentQuery === lastQuery) {
       return;
     }
@@ -39,22 +39,22 @@ export default class SearchPage extends React.Component {
             (node.rawMarkdownBody && node.rawMarkdownBody.match(currentQuery))
         )
       : [];
-    this.setState({ results, lastQuery: currentQuery });
+    this.setState({results, lastQuery: currentQuery});
   }
 
   handleChange(event) {
     const currentQuery = event.target.value;
-    this.setState({ currentQuery, debouncing: true });
+    this.setState({currentQuery, debouncing: true});
     this.findResults(currentQuery);
   }
 
   renderPage() {
     // Note: The Layout "wrapper" component adds header and footer etc
-    const { debouncing, results, currentQuery } = this.state;
-    const { pathContext } = this.props;
+    const {debouncing, results, currentQuery} = this.state;
+    const {pathContext} = this.props;
     return (
       <WithConfig>
-        {({ theme }) => (
+        {({theme}) => (
           <MainSearch theme={theme}>
             <div className="fcol f fg container p2">
               <SearchContainer theme={theme}>
@@ -68,7 +68,7 @@ export default class SearchPage extends React.Component {
                     onChange={this.handleChange}
                     value={currentQuery}
                     theme={theme}
-                    style={{ width: '100%' }}
+                    style={{width: '100%'}}
                   />
                 </div>
               </SearchContainer>

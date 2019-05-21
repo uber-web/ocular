@@ -1,32 +1,32 @@
-import React, { Component } from 'react'
-import Helmet from 'react-helmet'
+import React, {Component} from 'react';
+import Helmet from 'react-helmet';
 
 // TODO/ib - modify this component to work with ocular content
 class SEO extends Component {
   render() {
     const config = this.props;
 
-    const { postNode, postPath, postSEO } = this.props
-    let title
-    let description
-    let image
-    let postURL
+    const {postNode, postPath, postSEO} = this.props;
+    let title;
+    let description;
+    let image;
+    let postURL;
     if (postSEO) {
-      const postMeta = postNode.frontmatter
-      title = postMeta.title
+      const postMeta = postNode.frontmatter;
+      title = postMeta.title;
       description = postMeta.description
         ? postMeta.description
-        : postNode.excerpt
-      image = postMeta.cover
-      postURL = config.siteUrl + config.pathPrefix + postPath
+        : postNode.excerpt;
+      image = postMeta.cover;
+      postURL = config.siteUrl + config.pathPrefix + postPath;
     } else {
-      title = config.PROJECT_NAME
-      description = config.PROJECT_DESC
-      image = config.siteLogo
+      title = config.PROJECT_NAME;
+      description = config.PROJECT_DESC;
+      image = config.siteLogo;
     }
-    const realPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
-    image = config.siteUrl + realPrefix + image
-    const blogURL = config.siteUrl + config.pathPrefix
+    const realPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix;
+    image = config.siteUrl + realPrefix + image;
+    const blogURL = config.siteUrl + config.pathPrefix;
     const schemaOrgJSONLD = [
       {
         '@context': 'http://schema.org',
@@ -35,7 +35,7 @@ class SEO extends Component {
         name: title,
         alternateName: config.siteTitleAlt ? config.siteTitleAlt : ''
       }
-    ]
+    ];
     if (postSEO) {
       schemaOrgJSONLD.push([
         {
@@ -66,7 +66,7 @@ class SEO extends Component {
           },
           description
         }
-      ])
+      ]);
     }
     return (
       <Helmet>
@@ -100,8 +100,8 @@ class SEO extends Component {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={image} />
       </Helmet>
-    )
+    );
   }
 }
 
-export default SEO
+export default SEO;

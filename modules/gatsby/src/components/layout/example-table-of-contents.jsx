@@ -18,14 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { PureComponent } from 'react'
-import cx from 'classnames'
+import React, {PureComponent} from 'react';
+import cx from 'classnames';
 import {Link} from 'gatsby';
 
 // const getRootPath = pathname => `/${pathname.split('/')[1]}`
 
 function getHeight(route) {
-  return route.entries.reduce((prev, curr) => prev + (curr.entries ? getHeight(curr) : 56), 0)
+  return route.entries.reduce(
+    (prev, curr) => prev + (curr.entries ? getHeight(curr) : 56),
+    0
+  );
 }
 
 // This component only creates a Link component if clicking on that Link will
@@ -35,10 +38,14 @@ function getHeight(route) {
 
 const SafeLink = ({className, name, path, pathname}) => {
   if (path === pathname) {
-    return (<div className={className}>{name}</div>);
+    return <div className={className}>{name}</div>;
   }
-  return (<Link to={path} className={className}>{name}</Link>)
-}
+  return (
+    <Link to={path} className={className}>
+      {name}
+    </Link>
+  );
+};
 
 const renderRoute = (route, i, pathname, depth) => {
   let path;
@@ -51,7 +58,6 @@ const renderRoute = (route, i, pathname, depth) => {
     }
   }
 
-
   if (route.chapters) {
     const name = route.title;
     return (
@@ -60,14 +66,18 @@ const renderRoute = (route, i, pathname, depth) => {
           <SafeLink
             className={cx('list-header', {
               expanded: true, // TODO - route.expanded,
-              active: true, // pathname.includes(route.path)
+              active: true // pathname.includes(route.path)
             })}
             name={name}
             path={path}
             pathname={pathname}
           />
           <div className="subpages">
-            <ul>{route.chapters.map((r, idx) => renderRoute(r, idx, pathname, depth + 1))}</ul>
+            <ul>
+              {route.chapters.map((r, idx) =>
+                renderRoute(r, idx, pathname, depth + 1)
+              )}
+            </ul>
           </div>
         </div>
       </div>
@@ -82,14 +92,18 @@ const renderRoute = (route, i, pathname, depth) => {
           <SafeLink
             className={cx('list-header', {
               expanded: true, // TODO - route.expanded,
-              active: false, // pathname.includes(route.path)
+              active: false // pathname.includes(route.path)
             })}
             name={name}
             path={path}
             pathname={pathname}
           />
-          <div className="subpages" style={{ maxHeight: getHeight(route) }}>
-            <ul>{route.entries.map((r, idx) => renderRoute(r, idx, pathname, depth + 1))}</ul>
+          <div className="subpages" style={{maxHeight: getHeight(route)}}>
+            <ul>
+              {route.entries.map((r, idx) =>
+                renderRoute(r, idx, pathname, depth + 1)
+              )}
+            </ul>
           </div>
         </div>
       </div>
@@ -105,7 +119,7 @@ const renderRoute = (route, i, pathname, depth) => {
     <div key={i} style={{marginLeft: 10 * depth}}>
       <li>
         <SafeLink
-          className={cx('link', { active: false /* pathname.includes(path) */ })}
+          className={cx('link', {active: false /* pathname.includes(path) */})}
           name={name}
           path={slug}
           pathname={pathname}
@@ -113,20 +127,20 @@ const renderRoute = (route, i, pathname, depth) => {
       </li>
     </div>
   );
-}
+};
 
 export default class TableOfContents extends PureComponent {
   render() {
     const tree = this.props.chapters;
-    const { className, open, pathname } = this.props
+    const {className, open, pathname} = this.props;
 
     if (!tree) {
-      return null
+      return null;
     }
     return (
-      <div className={cx('toc', { open }, className)}>
+      <div className={cx('toc', {open}, className)}>
         <div>{tree.map((route, i) => renderRoute(route, i, pathname, 0))}</div>
       </div>
-    )
+    );
   }
 }

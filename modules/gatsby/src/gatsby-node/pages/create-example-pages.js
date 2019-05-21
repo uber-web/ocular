@@ -1,11 +1,11 @@
-const { log, COLOR } = require('../../utils/log');
+const {log, COLOR} = require('../../utils/log');
 
 const getPageTemplateUrl = require('./get-page-template-url');
 
 // assert(CONFIG.EXAMPLES_GALLERY_TEMPLATE_URL && EXAMPLE_TEMPLATE_URL);
 
 // Exracts thumbnails from the sharp query
-function getExampleThumbnails({ allFile, allImageSharp }) {
+function getExampleThumbnails({allFile, allImageSharp}) {
   // this function associates the path of an original image
   // with the public url of a thumbnail, resized server side by imageSharp.
   if (
@@ -16,12 +16,12 @@ function getExampleThumbnails({ allFile, allImageSharp }) {
     !allImageSharp.edges ||
     !allImageSharp.edges.length
   ) {
-    log.log({ color: COLOR.YELLOW, priority: 1 }, `No thumbnails created.`)();
+    log.log({color: COLOR.YELLOW, priority: 1}, `No thumbnails created.`)();
     return {};
   }
   // in a first pass, we create a lookup - original path to internal gatsby node id.
   /* eslint-disable no-param-reassign */
-  const idLookup = allFile.edges.reduce((lookup, { node }) => {
+  const idLookup = allFile.edges.reduce((lookup, {node}) => {
     lookup[node.id] = node.relativePath;
     return lookup;
   }, {});
@@ -30,7 +30,7 @@ function getExampleThumbnails({ allFile, allImageSharp }) {
   // image, using the node id of this original image and the lookup
   // we just created.
 
-  const pathLookup = allImageSharp.edges.reduce((lookup, { node }) => {
+  const pathLookup = allImageSharp.edges.reduce((lookup, {node}) => {
     const originalImageId = node.parent.id;
     const originalImagePath = idLookup[originalImageId];
     lookup[originalImagePath] = node.resize.src;
@@ -81,55 +81,55 @@ function queryExamplesData(graphql) {
       }
     }
   `)
-  .then(result => {
-    console.log(result);
+    .then(result => {
+      console.log(result);
 
-    if (result.errors) {
-      /* eslint no-console: "off" */
-      console.log(result.errors);
-      throw new Error(result.errors);
-    }
-
-    const { EXAMPLES } = result.data.site.siteMetadata.config;
-    // build a lookup map that matches relative paths of images with their public URLs
-    const thumbnailsPublicUrls = getExampleThumbnails(result.data);
-
-    // matches public urls to paths of images
-    const examplesWithImages = EXAMPLES.map(example => ({
-      ...example,
-      imageSrc: thumbnailsPublicUrls[example.image]
-    }));
-
-    return examplesWithImages;
-  })
-  .catch(error => {
-    log.log(
-      { color: COLOR.BRIGHT_YELLOW },
-      `error in createPage query with images: ${error}`
-    )();
-    return graphql(`
-      {
-        site {
-          siteMetadata {
-            config {
-              EXAMPLES {
-                title
-                path
-              }
-            }
-          }
-        }
-      }
-    `).then(result => {
       if (result.errors) {
         /* eslint no-console: "off" */
         console.log(result.errors);
         throw new Error(result.errors);
       }
-      const { EXAMPLES } = result.data.site.siteMetadata.config;
-      return EXAMPLES;
+
+      const {EXAMPLES} = result.data.site.siteMetadata.config;
+      // build a lookup map that matches relative paths of images with their public URLs
+      const thumbnailsPublicUrls = getExampleThumbnails(result.data);
+
+      // matches public urls to paths of images
+      const examplesWithImages = EXAMPLES.map(example => ({
+        ...example,
+        imageSrc: thumbnailsPublicUrls[example.image]
+      }));
+
+      return examplesWithImages;
+    })
+    .catch(error => {
+      log.log(
+        {color: COLOR.BRIGHT_YELLOW},
+        `error in createPage query with images: ${error}`
+      )();
+      return graphql(`
+        {
+          site {
+            siteMetadata {
+              config {
+                EXAMPLES {
+                  title
+                  path
+                }
+              }
+            }
+          }
+        }
+      `).then(result => {
+        if (result.errors) {
+          /* eslint no-console: "off" */
+          console.log(result.errors);
+          throw new Error(result.errors);
+        }
+        const {EXAMPLES} = result.data.site.siteMetadata.config;
+        return EXAMPLES;
+      });
     });
-  });
 }
 
 function createExampleGalleryPage(examples, createPage) {
@@ -137,7 +137,7 @@ function createExampleGalleryPage(examples, createPage) {
     return;
   }
   log.log(
-    { color: COLOR.RED, priority: 1 },
+    {color: COLOR.RED, priority: 1},
     `Creating examples page: ${JSON.stringify(examples)}`
   );
 
@@ -158,11 +158,12 @@ function createIndividualExamplePages(EXAMPLES, createPage) {
     const exampleName = example.title;
 
     log.log(
-      { color: COLOR.CYAN, priority: 1 },
+      {color: COLOR.CYAN, priority: 1},
       `Creating example page ${JSON.stringify(example)}`
     )();
 
-    const componentUrl = example.componentUrl || getPageTemplateUrl('EXAMPLE_PAGE_URL');
+    const componentUrl =
+      example.componentUrl || getPageTemplateUrl('EXAMPLE_PAGE_URL');
 
     createPage({
       path: example.path,
@@ -175,8 +176,8 @@ function createIndividualExamplePages(EXAMPLES, createPage) {
   });
 }
 
-module.exports = function createExamplePages({ graphql, actions }) {
-  const { createPage } = actions;
+module.exports = function createExamplePages({graphql, actions}) {
+  const {createPage} = actions;
 
   return queryExamplesData(graphql).then(examples => {
     createExampleGalleryPage(examples, createPage);

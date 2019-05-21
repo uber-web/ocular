@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { graphql } from 'gatsby';
+import {graphql} from 'gatsby';
 
 // Query for the markdown doc by slug
 // (Note: We could just search the allMarkdown from WebsiteConfig ourselves)
 export const query = graphql`
   query DocBySlug($slug: String!) {
-    docBySlug: markdownRemark(fields: { slug: { eq: $slug } }) {
+    docBySlug: markdownRemark(fields: {slug: {eq: $slug}}) {
       html
       timeToRead
       excerpt
@@ -21,8 +21,8 @@ export const query = graphql`
 `;
 
 function replaceLinks(props) {
-  const { html } = props.data.docBySlug;
-  const { relativeLinks } = props.pageContext;
+  const {html} = props.data.docBySlug;
+  const {relativeLinks} = props.pageContext;
 
   return html.replace(/href="([^"]+)"/g, (link, href) => {
     // don't rewrite external links, don't rewrite links to anchors
@@ -42,16 +42,16 @@ function replaceLinks(props) {
 export default class DocTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { html: replaceLinks(props) };
+    this.state = {html: replaceLinks(props)};
   }
 
   render() {
-    const { html } = this.state;
+    const {html} = this.state;
     return (
       <div>
         <div
           className="markdown-body"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{__html: html}}
         />
       </div>
     );

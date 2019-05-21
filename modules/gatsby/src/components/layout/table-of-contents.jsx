@@ -18,16 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import classNames from 'classnames';
-import { Link } from 'gatsby';
+import {Link} from 'gatsby';
 import chevronDown from '../images/chevron-down_small-filled.svg';
 import chevronRight from '../images/chevron-right_small-filled.svg';
 
-function getRouteInfo({ route, slug }) {
+function getRouteInfo({route, slug}) {
   if (route.childMarkdownRemark) {
     // if route corresponds to an entry with markdown
-    const { fields = { slug: '' } } = route.childMarkdownRemark;
+    const {fields = {slug: ''}} = route.childMarkdownRemark;
     return {
       // if this route has the same slug that we're testing then
       // all of the chapters/entries that contain it should be open.
@@ -51,7 +51,7 @@ function getRouteInfo({ route, slug }) {
   const children = route.entries || route.chapters || [];
   return children.reduce(
     (routeInfo, entry) => {
-      const { routeContainsSlug, pathToFirstChild } = getRouteInfo({
+      const {routeContainsSlug, pathToFirstChild} = getRouteInfo({
         route: entry,
         slug
       });
@@ -82,7 +82,7 @@ function getHeight(route) {
 
 // Creates the image of a chevron, facing right or down as needed
 
-const Chevron = ({ collapsed, expanded, style }) => {
+const Chevron = ({collapsed, expanded, style}) => {
   if (expanded) {
     return <img alt="chevron-down" src={chevronDown} style={style} />;
   }
@@ -117,7 +117,7 @@ const SafeLink = ({
   }
 
   return (
-    <div className={classNames(className, { active, expanded })} title={name}>
+    <div className={classNames(className, {active, expanded})} title={name}>
       <Chevron collapsed={collapsed} expanded={expanded} style={style} />
       {!path || typeof path !== 'string' ? (
         <span style={style}>{name}</span>
@@ -130,8 +130,8 @@ const SafeLink = ({
   );
 };
 
-const renderRoute = ({ route, index, depth, slug, fullyExpanded }) => {
-  const routeInfo = getRouteInfo({ route, slug });
+const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
+  const routeInfo = getRouteInfo({route, slug});
 
   if (route.chapters) {
     const name = route.title;
@@ -180,7 +180,7 @@ const renderRoute = ({ route, index, depth, slug, fullyExpanded }) => {
         />
         <div
           className="subpages subpages-entries"
-          style={{ maxHeight: getHeight(route) }}
+          style={{maxHeight: getHeight(route)}}
         >
           <ul>
             {route.entries.map((r, idx) =>
@@ -225,18 +225,18 @@ export default class TableOfContents extends PureComponent {
   }
 
   toggleExpanded() {
-    const { fullyExpanded } = this.state;
-    this.setState({ fullyExpanded: !fullyExpanded });
+    const {fullyExpanded} = this.state;
+    this.setState({fullyExpanded: !fullyExpanded});
   }
 
   render() {
-    const { chapters: tree, className, open, slug } = this.props;
-    const { fullyExpanded } = this.state;
+    const {chapters: tree, className, open, slug} = this.props;
+    const {fullyExpanded} = this.state;
     if (!tree) {
       return null;
     }
     return (
-      <div className={classNames('toc', { open }, className)}>
+      <div className={classNames('toc', {open}, className)}>
         <div>
           <div
             className={classNames('toggle-expanded', {

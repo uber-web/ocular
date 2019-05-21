@@ -2,7 +2,9 @@ const {log} = require('./log');
 
 // TODO
 function getExamples() {
-  log.warn('getExamples() not implemented. Use ocular-config.js:EXAMPLES[].componentUrl');
+  log.warn(
+    'getExamples() not implemented. Use ocular-config.js:EXAMPLES[].componentUrl'
+  );
   return [];
 }
 
@@ -13,13 +15,13 @@ function getHeroExample() {
   let DefaultHeroExample = exampleNames.length && EXAMPLES[0];
   // HACK/ib - Check if this is a dummy example injected to keep graphgl happy
   // Set to null if undefined
-  if (!DefaultHeroExample || DefaultHeroExample.title === "none") {
+  if (!DefaultHeroExample || DefaultHeroExample.title === 'none') {
     DefaultHeroExample = null;
   }
 
   const HeroExample = DefaultHeroExample;
   if (!HeroExample) {
-    console.warn("ocular: No hero example found", EXAMPLES); // eslint-disable-line
+    console.warn('ocular: No hero example found', EXAMPLES); // eslint-disable-line
   }
   return HeroExample;
 }
@@ -27,19 +29,27 @@ function getHeroExample() {
 module.exports.getReactComponent = getExamples;
 module.exports.getHeroExample = getHeroExample;
 
-
 // REMOVED
 
 function registerReactComponent() {
-  log.removed('registerReactComponent', 'Use ocular-config.js:EXAMPLES[].componentUrl')
+  log.removed(
+    'registerReactComponent',
+    'Use ocular-config.js:EXAMPLES[].componentUrl'
+  );
 }
 
 function registerDefaultReactComponent() {
-  log.removed('registerDefaultReactComponent', 'Use ocular-config.js:EXAMPLES[].componentUrl')
+  log.removed(
+    'registerDefaultReactComponent',
+    'Use ocular-config.js:EXAMPLES[].componentUrl'
+  );
 }
 
 function getReactComponent() {
-  log.removed('registerReactComponent', 'Use ocular-config.js:EXAMPLES[].componentUrl')
+  log.removed(
+    'registerReactComponent',
+    'Use ocular-config.js:EXAMPLES[].componentUrl'
+  );
 }
 
 module.exports.registerReactComponent = registerReactComponent;

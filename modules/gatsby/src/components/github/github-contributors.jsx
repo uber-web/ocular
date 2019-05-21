@@ -18,13 +18,13 @@ const ContribImage = styled.img`
   border-radius: 50%;
   border: 4px solid #17b8be;
   box-shadow: 0 0 0 #17b8be;
-  transition: border .5s,box-shadow .5s;
+  transition: border 0.5s, box-shadow 0.5s;
   opacity: 0.9;
 
   &:hover {
     border: 4px solid #fff;
     box-shadow: 0 0 20px #17b8be;
-    opacity: 1.0;
+    opacity: 1;
   }
 `;
 

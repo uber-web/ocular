@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from 'gatsby';
+import React, {Component} from 'react';
+import {Link} from 'gatsby';
 
-import { MainExamples, ExampleCard, ExampleTitle } from '../components/styled';
+import {MainExamples, ExampleCard, ExampleTitle} from '../components/styled';
 import WithConfig from '../components/layout/website-config';
 // import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 
@@ -29,11 +29,11 @@ class Gallery extends Component {
 export default class Examples extends Component {
   render() {
     const {
-      pageContext: { examples }
+      pageContext: {examples}
     } = this.props;
     return (
       <WithConfig>
-        {({ theme }) => (
+        {({theme}) => (
           <MainExamples theme={theme}>
             {examples.map(exampleData => (
               <ExampleCard theme={theme}>
