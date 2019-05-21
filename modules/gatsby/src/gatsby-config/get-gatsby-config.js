@@ -173,6 +173,13 @@ module.exports = function getGatsbyConfig(config) {
         //   typeName: ({ node, object, isArray }) =>
         //     console.log('json', node, object, isArray) && object.level,
         // },
+      },
+
+      {
+        resolve: `gatsby-plugin-env-variables`,
+        options: {
+          whitelist: ['MapboxAccessToken']
+        }
       }
 
       /*
