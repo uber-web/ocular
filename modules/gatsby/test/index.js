@@ -1,1 +1,2 @@
-import './utils/example-registry.spec.js';
+// import './utils/example-registry.spec.js';
+require('./utils/example-registry.spec.js');
