@@ -54,6 +54,7 @@ module.exports = {
     },
     {
       text: 'Totally ready for production',
+      desc: '',
       img: 'images/icon-layers.svg'
     }
   ],

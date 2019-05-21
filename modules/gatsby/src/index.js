@@ -23,6 +23,9 @@ const {
   getReactComponent
 } = require('./utils/example-registry');
 
+const {validateConfig} = require('./utils/validate-config');
+
 module.exports.registerReactComponent = registerReactComponent;
 module.exports.registerDefaultReactComponent = registerDefaultReactComponent;
 module.exports.getReactComponent = getReactComponent;
+module.exports.validateConfig = validateConfig;

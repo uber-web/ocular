@@ -1,6 +1,7 @@
 const urljoin = require('url-join');
 
 const {log, COLOR} = require('../utils/log');
+const {validateConfig} = require('../utils/validate-config');
 
 module.exports = function getGatsbyConfig(config) {
   const {logLevel = 0} = config;
@@ -13,58 +14,32 @@ module.exports = function getGatsbyConfig(config) {
   )();
 
   // config padding
-  // those values are required to support the query in ../site-query.jsx
+  // some values are required to support the query in ../site-query.jsx
   // if they don't exist, we provide empty values so that the query won't fail
-
-  const paddedConfig = {
-    PROJECT_TYPE: config.PROJECT_TYPE || '',
-    PROJECT_DESC: config.PROJECT_DESC || '',
-    HOME_HEADING: config.HOME_HEADING || '',
-    EXAMPLES: config.EXAMPLES || [],
-    ADDITIONAL_LINKS: config.ADDITIONAL_LINKS || [],
-    HOME_BULLETS:
-      config.HOME_BULLETS && config.HOME_BULLETS.length
-        ? config.HOME_BULLETS
-        : [{text: '', desc: '', img: ''}],
-    THEME_OVERRIDES:
-      config.THEME_OVERRIDES && config.THEME_OVERRIDES.length
-        ? config.THEME_OVERRIDES
-        : [{key: 'none', value: 'none'}]
-  };
-
-  // there are default values for these in the ocular-config file we generate on init but
-  // if they are deleted, the urlJoin calls below will fail
-
-  ['PROJECT_URL', 'PATH_PREFIX'].forEach(key => {
-    if (!config[key]) {
-      log.log(
-        {color: COLOR.CYAN, priority: 2},
-        `please provide a value for ${key} in ocular-config.js`
-      )();
-    }
-  });
+  const paddedConfig = validateConfig(config);
+  // const paddedConfig = config;
 
   const gatsbyConfig = {
-    pathPrefix: config.PATH_PREFIX,
+    pathPrefix: paddedConfig.PATH_PREFIX,
 
     // Site Metadata is populated from config (and react-helmet, see gatsby-plugin-react-helmet)
     siteMetadata: {
-      config: {...config, ...paddedConfig},
+      config: paddedConfig,
 
-      siteUrl: urljoin(config.PROJECT_URL, config.PATH_PREFIX),
+      siteUrl: urljoin(paddedConfig.PROJECT_URL, paddedConfig.PATH_PREFIX),
       /*
       rssMetadata: {
-        site_url: urljoin(config.PROJECT_URL, config.pathPrefix),
-        feed_url: urljoin(config.PROJECT_URL, config.pathPrefix, config.siteRss),
+        site_url: urljoin(paddedConfig.PROJECT_URL, paddedConfig.pathPrefix),
+        feed_url: urljoin(paddedConfig.PROJECT_URL, paddedConfig.pathPrefix, config.siteRss),
         title: paddedConfig.PROJECT_NAME,
         description: paddedConfig.PROJECT_DESC,
         image_url: urljoin(
-          config.PROJECT_URL,
-          config.pathPrefix,
+          paddedConfig.PROJECT_URL,
+          paddedConfig.pathPrefix,
           '/logos/logo-512.png'
         ),
-        author: config.userName,
-        copyright: config.copyright
+        author: paddedConfig.userName,
+        copyright: paddedConfig.copyright
       }
       */
     },
@@ -114,7 +89,7 @@ module.exports = function getGatsbyConfig(config) {
         resolve: 'gatsby-source-filesystem',
         options: {
           name: 'docs',
-          path: config.DOC_FOLDER
+          path: paddedConfig.DOC_FOLDER
         }
       },
 
@@ -161,7 +136,7 @@ module.exports = function getGatsbyConfig(config) {
       {
         resolve: 'gatsby-plugin-google-analytics',
         options: {
-          trackingId: config.googleAnalyticsID
+          trackingId: paddedConfig.googleAnalyticsID
         }
       },
 
@@ -170,7 +145,7 @@ module.exports = function getGatsbyConfig(config) {
       {
         resolve: 'gatsby-plugin-nprogress',
         options: {
-          color: config.themeColor
+          color: paddedConfig.themeColor
         }
       },
 
@@ -206,12 +181,12 @@ module.exports = function getGatsbyConfig(config) {
       {
         resolve: 'gatsby-plugin-manifest',
         options: {
-          name: config.PROJECT_NAME,
-          short_name: config.siteTitleShort,
-          description: config.PROJECT_DESC,
-          start_url: config.pathPrefix,
-          background_color: config.backgroundColor,
-          theme_color: config.themeColor,
+          name: paddedConfig.PROJECT_NAME,
+          short_name: paddedConfig.siteTitleShort,
+          description: paddedConfig.PROJECT_DESC,
+          start_url: paddedConfig.pathPrefix,
+          background_color: paddedConfig.backgroundColor,
+          theme_color: paddedConfig.themeColor,
           display: 'minimal-ui',
           icons: [
             {
@@ -306,7 +281,7 @@ module.exports = function getGatsbyConfig(config) {
                 }
               }
             `,
-              output: config.siteRss
+              output: paddedConfig.siteRss
             }
           ]
         }
@@ -317,20 +292,20 @@ module.exports = function getGatsbyConfig(config) {
 
   // conditional plug-ins - only added depending on options on config
 
-  if (config.DIR_NAME) {
+  if (paddedConfig.DIR_NAME) {
     // Generates gatsby nodes for files in the website's src folder
     gatsbyConfig.plugins.push({
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'src',
-        path: `${config.DIR_NAME}/src/`
+        path: `${paddedConfig.DIR_NAME}/src/`
       }
     });
     gatsbyConfig.plugins.push({
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'src',
-        path: `${config.DIR_NAME}/static/`
+        path: `${paddedConfig.DIR_NAME}/static/`
       }
     });
   } else {
