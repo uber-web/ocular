@@ -2,7 +2,6 @@
 import test from 'tape-catch';
 
 import {
-	getExamples,
 	getHeroExample,
 	registerReactComponent,
 	registerDefaultReactComponent,
@@ -10,7 +9,6 @@ import {
 } from 'ocular-gatsby';
 
 test('ExampleRegistry#Exports', t => {
-	t.equals(typeof getExamples, 'function', 'getExamples is exported');
 	t.equals(typeof getHeroExample, 'function', 'getHeroExample is exported');
 	t.equals(typeof registerReactComponent, 'function', 'registerReactComponent is exported');
 	t.equals(typeof registerDefaultReactComponent, 'function', 'registerDefaultReactComponent is exported');

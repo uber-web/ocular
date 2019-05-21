@@ -27,7 +27,7 @@
     "publish-beta": "yarn test && npm publish --tag beta",
     "publish-prod": "yarn test && npm publish",
     "lint": "ocular-lint",
-    "test": "ocular-test"
+    "test": "ocular-test node"
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
   "peerDependencies": {
@@ -74,6 +74,7 @@
     "prismjs": "^1.15.0",
     "probe.gl": "^3.0.1",
     "prop-types": "^15.6.2",
+    "puppeteer": "^1.16.0",
     "react-disqus-comments": "^1.4.0",
     "react-helmet": "^5.2.0",
     "react-icons": "^2.2.7",
