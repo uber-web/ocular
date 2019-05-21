@@ -26,6 +26,7 @@
     "format:js": "prettier '**/*.{js,jsx}' --write",
     "publish-beta": "yarn test && npm publish --tag beta",
     "publish-prod": "yarn test && npm publish",
+    "lint": "ocular-lint",
     "test": "ocular-test"
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",

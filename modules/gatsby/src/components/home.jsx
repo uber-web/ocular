@@ -60,7 +60,9 @@ function renderPage({config}) {
             <h3>Contributors</h3>
             <span>Join us!</span>
             <div className="Contributors m-top">
-              <GithubContributors project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`} />
+              <GithubContributors
+                project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`}
+              />
             </div>
           </div>
         )}

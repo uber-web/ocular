@@ -1,4 +1,4 @@
-const { log, COLOR } = require('../../utils/log');
+const {log, COLOR} = require('../../utils/log');
 /* eslint-disable no-param-reassign */
 let tableOfContents = [];
 
@@ -7,7 +7,7 @@ function processEntry(chapter, entry, docNodes) {
     // TODO/ib - make probe's log.warn emit color
     // log.warn({color: COLOR.RED}, 'missing entry in chapter', chapter.title, entry)();
     log.log(
-      { color: COLOR.RED },
+      {color: COLOR.RED},
       'missing entry in chapter',
       chapter.title,
       entry
@@ -19,7 +19,7 @@ function processEntry(chapter, entry, docNodes) {
   if (!docNode || !docNode.id) {
     // TODO/ib - make probe's log.warn emit color
     log.log(
-      { color: COLOR.RED },
+      {color: COLOR.RED},
       `unmatched toc entry for "${slug}" ${chapter.title}`,
       docNode
     )();
@@ -30,7 +30,7 @@ function processEntry(chapter, entry, docNodes) {
     // the app will only use the fields/slug and frontmatter/title properties.
     entry.childMarkdownRemark = docNode;
     log.log(
-      { color: COLOR.CYAN, priority: 2 },
+      {color: COLOR.CYAN, priority: 2},
       'doc page',
       chapter.title,
       entry.entry
@@ -54,14 +54,14 @@ function traverseTableOfContents(chapters, docNodes, level) {
 // Patches up new markdown nodes
 //
 module.exports.processNewDocsJsonNode = function processNewDocsJsonNode(
-  { node },
+  {node},
   docNodes
 ) {
   traverseTableOfContents(node.chapters, docNodes, 1);
   tableOfContents = node;
 
   log.log(
-    { color: COLOR.CYAN, priority: 3 },
+    {color: COLOR.CYAN, priority: 3},
     `Processing tableOfContents \
 ${Object.keys(docNodes).length}
 ${Object.keys(tableOfContents.chapters).length}

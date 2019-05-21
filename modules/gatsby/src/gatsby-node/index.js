@@ -55,7 +55,7 @@ const GATSBY_NODE_CALLBACKS = {
   onCreateNode,
   setFieldsOnGraphQLNodeType,
   createPages,
-  sourceNodes,
+  sourceNodes
 };
 
 // gatsby-node default implementation, user can just export these from gatsby-node

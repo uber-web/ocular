@@ -3,7 +3,7 @@
 // each page using the gatsby browser/SSR `wrapPage` callback.
 
 import React from 'react';
-import { lightThemePrimitives, createTheme } from '../styled/theme';
+import {lightThemePrimitives, createTheme} from '../styled/theme';
 import SiteQuery from '../site-query';
 import TopLevelLayout from './top-level-layout';
 
@@ -19,18 +19,17 @@ export default class Layout extends React.Component {
   }
 
   queryComplete(data) {
-    const { children } = this.props;
-    const { config } = data.site.siteMetadata;
-    const { tableOfContents, allMarkdown } = data;
+    const {children} = this.props;
+    const {config} = data.site.siteMetadata;
+    const {tableOfContents, allMarkdown} = data;
 
     // console.log('StaticQuery result', config, tableOfContents, allMarkdown);
-    const themeFromConfig = (
-      (config && config.THEME_OVERRIDES) ||
-      []
-    ).reduce((prev, curr) => ({ ...prev, [curr.key]: curr.value }), {});
+    const themeFromConfig = ((config && config.THEME_OVERRIDES) || []).reduce(
+      (prev, curr) => ({...prev, [curr.key]: curr.value}),
+      {}
+    );
 
-
-    const theme = createTheme({ ...lightThemePrimitives, ...themeFromConfig });
+    const theme = createTheme({...lightThemePrimitives, ...themeFromConfig});
     return (
       <TopLevelLayout
         {...this.props}
@@ -39,9 +38,7 @@ export default class Layout extends React.Component {
         allMarkdown={allMarkdown}
         theme={theme}
       >
-        <div style={{position: 'relative', height: '100%'}}>
-          {children}
-        </div>
+        <div style={{position: 'relative', height: '100%'}}>{children}</div>
       </TopLevelLayout>
     );
   }

@@ -1,6 +1,6 @@
 const path = require('path');
 
-const { log, COLOR } = require('../../utils/log');
+const {log, COLOR} = require('../../utils/log');
 
 const getPageTemplateUrl = require('./get-page-template-url');
 
@@ -8,13 +8,7 @@ const getPageTemplateUrl = require('./get-page-template-url');
 // NOTE: gatsby does automatically build pages from **top level** `/pages`, folder
 // but in ocular we keep those pages in the installed structure so gatsby can't see them
 
-function addToRelativeLinks({
-  source,
-  target,
-  rootFolder,
-  edge,
-  relativeLinks
-}) {
+function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
   // what we are doing here: for each markdown file, we create a mapping of different ways to
   // link to another markdown file that we will honor.
 
@@ -39,8 +33,8 @@ function addToRelativeLinks({
 
   if (!source || !target) {
     log.log(
-      { color: COLOR.YELLOW },
-      `couldn't add relative link for: ${JSON.stringify({ source, target })}`
+      {color: COLOR.YELLOW},
+      `couldn't add relative link for: ${JSON.stringify({source, target})}`
     )();
     return {};
   }
@@ -99,20 +93,19 @@ function queryMarkdownDocs(graphql) {
 }
 
 // Walks all markdown nodes and creates a doc page for each node
-function createDocMarkdownPages({ graphql, actions }) {
-  const { createPage } = actions;
+function createDocMarkdownPages({graphql, actions}) {
+  const {createPage} = actions;
 
-  return queryMarkdownDocs(graphql)
-  .then(result => {
+  return queryMarkdownDocs(graphql).then(result => {
     const rootFolder = result.data.site.siteMetadata.config.ROOT_FOLDER;
-    const pathToSlug = result.data.allMarkdownRemark.edges.map(({ node }) => ({
+    const pathToSlug = result.data.allMarkdownRemark.edges.map(({node}) => ({
       source: node.fileAbsolutePath,
       target: node.fields.slug
     }));
 
     result.data.allMarkdownRemark.edges.forEach(edge => {
       let relativeLinks = {};
-      pathToSlug.forEach(({ source, target }) => {
+      pathToSlug.forEach(({source, target}) => {
         relativeLinks = addToRelativeLinks({
           source,
           target,
@@ -139,7 +132,6 @@ function createDocMarkdownPages({ graphql, actions }) {
   });
 }
 
-
-module.exports = function createDocPages({ graphql, actions }) {
-  createDocMarkdownPages({ graphql, actions });
+module.exports = function createDocPages({graphql, actions}) {
+  createDocMarkdownPages({graphql, actions});
 };

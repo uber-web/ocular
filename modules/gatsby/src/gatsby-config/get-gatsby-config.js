@@ -51,7 +51,7 @@ module.exports = function getGatsbyConfig(config) {
     siteMetadata: {
       config: {...config, ...paddedConfig},
 
-      siteUrl: urljoin(config.PROJECT_URL, config.PATH_PREFIX),
+      siteUrl: urljoin(config.PROJECT_URL, config.PATH_PREFIX)
       /*
       rssMetadata: {
         site_url: urljoin(config.PROJECT_URL, config.pathPrefix),
