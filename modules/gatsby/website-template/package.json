@@ -6,14 +6,16 @@
   ],
   "main": "index.js",
   "scripts": {
+    "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
-    "develop": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve"
+    "develop": "gatsby develop --port=8001",
+    "build": "yarn clean && gatsby build --prefix-paths",
+    "serve": "gatsby serve --prefix-paths",
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dependencies": {
-    "gatsby": "2.0.85",
-    "ocular-gatsby": "1.0.0-alpha.13"
+    "gatsby": "^2.3.0",
+    "ocular-gatsby": "^1.0.0-alpha.31"
   },
   "devDependencies": {}
 }
