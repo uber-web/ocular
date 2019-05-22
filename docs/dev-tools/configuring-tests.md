@@ -21,7 +21,7 @@ Two tested options are:
 require('reify');
 
 // start to require your tests
-require('test1.js');
+require('./test1.js');
 
 ```
 
