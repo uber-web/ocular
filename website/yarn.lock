@@ -4883,6 +4883,11 @@ gatsby-plugin-catch-links@^2.0.13:
     "@babel/runtime" "^7.0.0"
     escape-string-regexp "^1.0.5"
 
+gatsby-plugin-env-variables@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-env-variables/-/gatsby-plugin-env-variables-1.0.1.tgz#89cdf43b03d46105521bb7d0f09d0d5b92ad83c8"
+  integrity sha512-TnXU+IjvM3iHcaNOa+alqP3Wk19+pmxvXwMyoPaUZIDKNwvpXRz8klsag2AwNlsqD17949/m8I80z8plZRyE1w==
+
 gatsby-plugin-feed@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-feed/-/gatsby-plugin-feed-2.2.0.tgz#fde7c0de54364e21b58ed88c5b394cf58d530d89"
@@ -8397,15 +8402,16 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
-ocular-gatsby@^1.0.0-alpha.31:
-  version "1.0.0-alpha.31"
-  resolved "https://registry.yarnpkg.com/ocular-gatsby/-/ocular-gatsby-1.0.0-alpha.31.tgz#931468cf0003e5742d745571325cd5ccf67e06e5"
-  integrity sha512-06mH5Nn0FufiIPx6C23hOJJI+LvYsqia4XN9QP4T5tuBbY5sEvKv2EQWXYytlySNIhs972qfgaQlxEynUmSAkw==
+ocular-gatsby@^1.0.0-alpha.32:
+  version "1.0.0-alpha.32"
+  resolved "https://registry.yarnpkg.com/ocular-gatsby/-/ocular-gatsby-1.0.0-alpha.32.tgz#57ffdfd29b690dd7151e721881ee52753e67f694"
+  integrity sha512-Jf8Ne36h62o4ghaBUGJB3EsI7DDgihSgou37hhpiEBfbtJBfGt6RixvwPxDJgTDBSnS+IqKPE7g7Elc14Q2Jnw==
   dependencies:
     classnames "^2.2.6"
     gatsby-cli "^2.5.7"
     gatsby-image "^2.0.38"
     gatsby-plugin-catch-links "^2.0.13"
+    gatsby-plugin-env-variables "^1.0.1"
     gatsby-plugin-feed "^2.1.0"
     gatsby-plugin-google-analytics "^2.0.18"
     gatsby-plugin-google-fonts "^0.0.4"
