@@ -112,7 +112,7 @@ const SafeLink = ({
   // Gatsby <Link> element emmits warning if "external" links are used
   // "internal" links start with `/`
   // https://github.com/gatsbyjs/gatsby/issues/11243
-  if (typeof path && !path.startsWith('/')) {
+  if (path && !path.startsWith('/')) {
     path = `/${path}`; // eslint-disable-line
   }
 
