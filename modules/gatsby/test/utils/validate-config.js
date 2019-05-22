@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import test from 'tape-catch';
-
 import {validateConfig} from 'ocular-gatsby';
 
 const GOOD_CONFIG = {

@@ -3,5 +3,4 @@
 require('reify');
 
 // start to import tests
-require('./utils/example-registry.spec.js');
 require('./utils/validate-config.js');
