@@ -37,7 +37,11 @@ const GOOD_CONFIG = {
 };
 
 test('validateConfig', t => {
-  t.deepEquals(validateConfig(GOOD_CONFIG), [], 'Get zero error when config is valid');
+  t.deepEquals(
+    validateConfig(GOOD_CONFIG),
+    [],
+    'Get zero error when config is valid'
+  );
 
   t.deepEquals(
     validateConfig({}),
@@ -45,22 +49,22 @@ test('validateConfig', t => {
       'Doc folder should be the local path to the doc folder.',
       'Root folder should be the local path to the root folder.',
       'Dir name should be the local path to the gatsby website folder.',
-      'Examples can\'t be blank,Examples EXAMPLES needs to be an array.',
+      "Examples can't be blank,Examples EXAMPLES needs to be an array.",
       'Docs DOCS needs to be an object.',
-      'Project type can\'t be blank',
-      'Project name should be the project\'s name on Github.',
-      'Project org should be the project\'s Github organization',
-      'Project url can\'t be blank',
-      'Project desc can\'t be blank,Project desc should be the project\'s description',
+      "Project type can't be blank",
+      "Project name should be the project's name on Github.",
+      "Project org should be the project's Github organization",
+      "Project url can't be blank",
+      "Project desc can't be blank,Project desc should be the project's description",
       'Path prefix should be the prefix added to all paths on the site',
       'Footer logo should be the local path to foorter logo',
       'Projects PROJECTS needs to be an array.',
       'Home path should be the path to the home page',
-      'Home heading can\'t be blank,Home heading should be ...',
+      "Home heading can't be blank,Home heading should be ...",
       'Home right should be ...',
-      'Home bullets can\'t be blank,Home bullets HOME_BULLETS needs to be an array.',
+      "Home bullets can't be blank,Home bullets HOME_BULLETS needs to be an array.",
       'Theme overrides THEME_OVERRIDES needs to be an array.',
-      'Additional links can\'t be blank,Additional links ADDITIONAL_LINKS needs to be an array.',
+      "Additional links can't be blank,Additional links ADDITIONAL_LINKS needs to be an array.",
       'Ga tracking should be the Google analytics key',
       'Webpack webpack needs to be an object.'
     ],
@@ -81,9 +85,7 @@ test('validateConfig', t => {
   t.deepEquals(
     validateConfig({
       ...GOOD_CONFIG,
-      PROJECTS: [
-        {title: 'Project 1', url: ''}
-      ]
+      PROJECTS: [{title: 'Project 1', url: ''}]
     }),
     ['Projects PROJECTS[0]: Url is not a valid url'],
     'Check PROJECTS with empty url'
@@ -95,7 +97,7 @@ test('validateConfig', t => {
       ...GOOD_CONFIG,
       PROJECT_URL: null
     }),
-    ['Project url can\'t be blank'],
+    ["Project url can't be blank"],
     'Check if PROJECT_URL is null'
   );
 
@@ -103,11 +105,9 @@ test('validateConfig', t => {
   t.deepEquals(
     validateConfig({
       ...GOOD_CONFIG,
-      HOME_BULLETS: [
-        {text: 'Project 1', desc: '', img: ''}
-      ]
+      HOME_BULLETS: [{text: 'Project 1', desc: '', img: ''}]
     }),
-    ['Home bullets HOME_BULLETS[0]: Img can\'t be blank'],
+    ["Home bullets HOME_BULLETS[0]: Img can't be blank"],
     'Check HOME_BULLETS with empty img'
   );
 
@@ -115,11 +115,9 @@ test('validateConfig', t => {
   t.deepEquals(
     validateConfig({
       ...GOOD_CONFIG,
-      ADDITIONAL_LINKS: [
-        {index: 0, name: 'Project 1', href: ''}
-      ]
+      ADDITIONAL_LINKS: [{index: 0, name: 'Project 1', href: ''}]
     }),
-    ['Additional links ADDITIONAL_LINKS[0]: Href can\'t be blank'],
+    ["Additional links ADDITIONAL_LINKS[0]: Href can't be blank"],
     'Check ADDITIONAL_LINKS with empty href'
   );
 

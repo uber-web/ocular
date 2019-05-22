@@ -79,13 +79,13 @@ validate.validators.prerequisite = function prerequisite(
 // validators we used below:
 // [numericality](http://validatejs.org/#validators-numericality)
 // check if the value is a valid number
-// 
+//
 // [presence](http://validatejs.org/#validators-presence)
 // The presence validator validates that the value is defined.
-// 
+//
 // [url](http://validatejs.org/#validators-url)
 // The URL validator ensures that the input is a valid URL.
-// 
+//
 // [custom validator](http://validatejs.org/#custom-validator)
 // Create our own custom reusable validator.
 const constraints = {
@@ -314,10 +314,7 @@ function validateConfig(config) {
   ];
   // print out all error messages
   allMessages.forEach(message =>
-    log.log(
-      {color: COLOR.RED, priority: 0},
-      `[gatsby-config] ${message}`
-    )()
+    log.log({color: COLOR.RED, priority: 0}, `[gatsby-config] ${message}`)()
   );
   return allMessages;
 }

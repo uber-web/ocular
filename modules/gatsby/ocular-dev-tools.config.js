@@ -1,6 +1,6 @@
 module.exports = {
   lint: {
-    paths: ['src'],
+    paths: ['src', 'test'],
     extensions: ['js', 'jsx']
   },
   aliases: {},
