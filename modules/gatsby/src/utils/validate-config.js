@@ -135,6 +135,7 @@ const constraints = {
   // String, optional, local path
   DOC_FOLDER: {
     anyString: {
+      allowEmpty: true,
       message: 'should be the local path to the doc folder.'
     }
   },
@@ -142,6 +143,7 @@ const constraints = {
   // String, optional, local path
   ROOT_FOLDER: {
     anyString: {
+      allowEmpty: true,
       message: 'should be the local path to the root folder.'
     }
   },
@@ -149,6 +151,7 @@ const constraints = {
   // String, optional, local path
   DIR_NAME: {
     anyString: {
+      allowEmpty: true,
       message: 'should be the local path to the gatsby website folder.'
     }
   },
@@ -211,6 +214,7 @@ const constraints = {
   // String, optional
   PROJECT_NAME: {
     anyString: {
+      allowEmpty: true,
       message: `should be the project's name on Github.`
     }
   },
@@ -218,6 +222,7 @@ const constraints = {
   // String, optional
   PROJECT_ORG: {
     anyString: {
+      allowEmpty: true,
       message: `should be the project's Github organization`
     }
   },
@@ -246,6 +251,7 @@ const constraints = {
   // String, optional
   FOOTER_LOGO: {
     anyString: {
+      allowEmpty: true,
       message: 'should be the local path to foorter logo'
     }
   },
@@ -275,6 +281,7 @@ const constraints = {
   // String, optional
   HOME_PATH: {
     anyString: {
+      allowEmpty: true,
       message: 'should be the path to the home page'
     }
   },
@@ -292,6 +299,7 @@ const constraints = {
   // String, optional
   HOME_RIGHT: {
     anyString: {
+      allowEmpty: true,
       message: 'should be ...'
     }
   },
@@ -375,6 +383,7 @@ const constraints = {
   // String, optional
   GA_TRACKING: {
     anyString: {
+      allowEmpty: true,
       message: 'should be the Google analytics key'
     }
   },
