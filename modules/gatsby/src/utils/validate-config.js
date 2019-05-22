@@ -3,19 +3,24 @@ const validate = require('validate.js');
 const {log, COLOR} = require('./log');
 
 // TODO: theoretically, we should be able to validate the local path and url with regex below.
-// Needs more tests later.
+// Format validator: http://validatejs.org/#validators-format
 // const LOCAL_FILE_PATH = /^((\.\.|[a-zA-Z0-9_/\-\\])*\.[a-zA-Z0-9]+)/g;
 // const URL_PATH_PATTERN = /^\/([A-z0-9-_+]+\/)*([A-z0-9])*$/g;
 
 // custom validators:
 // http://validatejs.org/#custom-validator
-// validate if the value is a string (null is allowed).
+
+/**
+ * Validate if the value is a string (null is allowed).
+ * @param  {String} value   The string to be validated.
+ * @param  {Object} options The options for validation.
+ *         {String} options.message  Custom message when the value is invalid.
+ *         {Bool}   options.allowEmpty  Allow the string is empty/undefined/null.
+ * @param  {String} key     The key of the string
+ * @return {String}         The validation result(a string). Return null if passes.
+ */
 validate.validators.anyString = function anyString(value, options) {
-  // allow value === null
-  if (value === null) {
-    return null;
-  }
-  if (value === undefined && options.allowEmpty) {
+  if (!value && options.allowEmpty) {
     return null;
   }
   // check value is string
@@ -26,7 +31,15 @@ validate.validators.anyString = function anyString(value, options) {
   return null;
 };
 
-// check every element in an array.
+/**
+ * Check every element in an array of objects
+ * @param  {Array} value    The array to be validated.
+ * @param  {Object} options The options for validation.
+ *         {Object} options.constraint  The constraint for validating each object in the array.
+ *         {Bool}   options.allowEmpty  Allow the array is empty.
+ * @param  {String} key     The key of the array
+ * @return {String|Array}   The validation result(a string or a list of strings). Return null if passes.
+ */
 validate.validators.arrayValidate = function arrayValidate(
   value,
   options,
@@ -52,10 +65,16 @@ validate.validators.arrayValidate = function arrayValidate(
   return null;
 };
 
-// check if the value is an object.
+/**
+ * Check if the value is an object.
+ * @param  {Object} value   The object to be validated.
+ * @param  {Object} options Not used at this momemt.
+ * @param  {String} key     The key of the object
+ * @return {String|Array}   The validation result(a string). Return null if passes.
+ */
 validate.validators.objectValidate = function objectValidate(
   value,
-  constraint,
+  options,
   key
 ) {
   // check value is object
@@ -67,7 +86,16 @@ validate.validators.objectValidate = function objectValidate(
   return null;
 };
 
-// check the value cannot be blank when prerequisite is true
+/**
+ * Check the value cannot be blank when prerequisite is established.
+ * @param  {Any} value   The value to be validated.
+ * @param  {Object} options Not used at this momemt.
+ *         {Function} options.test  A function to test prerequisite.
+ *         {String}   options.message  Custom message when the prerequisite is established
+ * @param  {String} key     The key of the value.
+ * @param  {Object} attributes The entire object to be examined.
+ * @return {String|Array}   The validation result(a string). Return null if passes.
+ */
 validate.validators.prerequisite = function prerequisite(
   value,
   options,
@@ -93,33 +121,44 @@ validate.validators.prerequisite = function prerequisite(
 // [custom validator](http://validatejs.org/#custom-validator)
 // Create our own custom reusable validator.
 const constraints = {
+
+  // Number, optional, value range between 0 to 5
   logLevel: {
     numericality: {
       onlyInteger: true,
       greaterThanOrEqualTo: 0,
       lessThanOrEqualTo: 5,
-      notValid: 'should be between 1 to 5.'
+      notValid: 'should be between 0 to 5.'
     }
   },
 
+  // String, optional, local path
   DOC_FOLDER: {
     anyString: {
       message: 'should be the local path to the doc folder.'
     }
   },
 
+  // String, optional, local path
   ROOT_FOLDER: {
     anyString: {
       message: 'should be the local path to the root folder.'
     }
   },
 
+  // String, optional, local path
   DIR_NAME: {
     anyString: {
       message: 'should be the local path to the gatsby website folder.'
     }
   },
 
+  // Array of examples, required,
+  // Example object: {title, image, componentUrl, path}
+  // title: string, required
+  // image: string, required
+  // componentUrl: string, required
+  // path: string, required
   EXAMPLES: {
     presence: true,
     arrayValidate: {
@@ -154,10 +193,12 @@ const constraints = {
     }
   },
 
+  // Object, optional
   DOCS: {
     objectValidate: true
   },
 
+  // One of ['github', ''], required
   PROJECT_TYPE: {
     presence: true,
     inclusion: {
@@ -167,23 +208,27 @@ const constraints = {
     }
   },
 
+  // String, optional
   PROJECT_NAME: {
     anyString: {
       message: `should be the project's name on Github.`
     }
   },
 
+  // String, optional
   PROJECT_ORG: {
     anyString: {
       message: `should be the project's Github organization`
     }
   },
 
+  // URL, required
   PROJECT_URL: {
     presence: true,
     url: true
   },
 
+  // String, required
   PROJECT_DESC: {
     presence: true,
     anyString: {
@@ -191,18 +236,24 @@ const constraints = {
     }
   },
 
+  // String, optional
   PATH_PREFIX: {
     anyString: {
       message: 'should be the prefix added to all paths on the site'
     }
   },
 
+  // String, optional
   FOOTER_LOGO: {
     anyString: {
       message: 'should be the local path to foorter logo'
     }
   },
 
+  // Array of projects, optional
+  // Project object: {title, url}
+  // title: string, required
+  // url: string, required
   PROJECTS: {
     arrayValidate: {
       allowEmpty: true,
@@ -221,6 +272,7 @@ const constraints = {
     }
   },
 
+  // String, optional
   HOME_PATH: {
     anyString: {
       message: 'should be the path to the home page'
@@ -228,6 +280,7 @@ const constraints = {
   },
 
   // TODO: what's this?
+  // String, required
   HOME_HEADING: {
     presence: true,
     anyString: {
@@ -236,12 +289,18 @@ const constraints = {
   },
 
   // TODO: what's this?
+  // String, optional
   HOME_RIGHT: {
     anyString: {
       message: 'should be ...'
     }
   },
 
+  // Array of home bullets, required,
+  // Home bullet object: {text, desc, img}
+  // text: string, required
+  // desc: string, optional
+  // img: string, required
   HOME_BULLETS: {
     presence: true,
     arrayValidate: {
@@ -270,6 +329,10 @@ const constraints = {
     }
   },
 
+  // Array of theme overides, required,
+  // Theme override object: {key, value}
+  // key: string, required
+  // value: string, required
   THEME_OVERRIDES: {
     arrayValidate: {
       allowEmpty: false,
@@ -280,6 +343,11 @@ const constraints = {
     }
   },
 
+  // Array of additional links, required,
+  // Additional link object: {index, name, href}
+  // index: number, optional
+  // name: string, required
+  // href: string, required
   ADDITIONAL_LINKS: {
     presence: true,
     arrayValidate: {
@@ -304,12 +372,13 @@ const constraints = {
     }
   },
 
+  // String, optional
   GA_TRACKING: {
     anyString: {
       message: 'should be the Google analytics key'
     }
   },
-
+  // String, required if PROJECT_TYPE === 'github'
   GITHUB_KEY: {
     prerequisite: {
       test: attributes => attributes.PROJECT_TYPE === 'github',
@@ -317,6 +386,7 @@ const constraints = {
     }
   },
 
+  // Object, optional
   webpack: {
     objectValidate: true
   }
