@@ -10,7 +10,7 @@ WORKING_DIR=`pwd`
 TMP_DIR=$WORKING_DIR/tmp
 
 # Get webpack config path
-WEBPACK_CONFIG=`$DEV_TOOLS_DIR/scripts/print-config.sh ".webpack.configPath"`
+WEBPACK_CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".webpack.configPath"`
 
 # Get name from package.json
 module=$(jq '.name' ./package.json)

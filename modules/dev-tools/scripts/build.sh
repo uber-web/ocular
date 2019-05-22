@@ -3,7 +3,7 @@
 set -e
 
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
-CONFIG=`$DEV_TOOLS_DIR/scripts/print-config.sh ".babel.configPath"`
+CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
 
 build_module() {
   BABEL_ENV=es6 npx babel src --config-file $CONFIG --out-dir dist/es6 --source-maps
