@@ -21,7 +21,9 @@ const defaults = {
   HOME_PATH: '/',
   HOME_HEADING: 'A documentation website made with Ocular',
   HOME_RIGHT: null,
-  HOME_BULLETS: [],
+  // TODO: not sure why HOME_BULLETS can't be an empty array
+  HOME_BULLETS: [{text: '', desc: '', img: ''}],
+  // TODO: not sure why THEME_OVERRIDES can't be an empty array
   THEME_OVERRIDES: [
     {
       key: 'none',

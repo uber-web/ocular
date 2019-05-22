@@ -28,7 +28,12 @@ const GOOD_CONFIG = {
       img: 'images/icon-react.svg'
     }
   ],
-  THEME_OVERRIDES: [],
+  THEME_OVERRIDES: [
+    {
+      key: 'none',
+      value: 'none'
+    }
+  ],
 
   ADDITIONAL_LINKS: [],
   GA_TRACKING: null,
@@ -140,6 +145,16 @@ test('validateConfig', t => {
     }),
     [],
     `Check if PROJECT_TYPE == '' and GITHUB_KEY is null`
+  );
+
+  // THEME_OVERRIDES
+  t.deepEquals(
+    validateConfig({
+      ...GOOD_CONFIG,
+      THEME_OVERRIDES: []
+    }),
+    ['Theme overrides THEME_OVERRIDES cannot be empty.'],
+    'Check if THEME_OVERRIDES is empty'
   );
 
   t.end();

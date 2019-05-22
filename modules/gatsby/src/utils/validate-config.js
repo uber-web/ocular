@@ -29,12 +29,16 @@ validate.validators.anyString = function anyString(value, options) {
 // check every element in an array.
 validate.validators.arrayValidate = function arrayValidate(
   value,
-  constraint,
+  options,
   key
 ) {
+  const {allowEmpty, constraint} = options;
   // check value is array
   if (!validate.isArray(value)) {
     return `${key} needs to be an array.`;
+  }
+  if (value.length === 0 && !allowEmpty) {
+    return `${key} cannot be empty.`;
   }
   // check every element in the array
   const messages = value.map(v => validate(v, constraint)).filter(Boolean);
@@ -119,29 +123,32 @@ const constraints = {
   EXAMPLES: {
     presence: true,
     arrayValidate: {
-      title: {
-        presence: true,
-        anyString: {
-          message: 'title is the title of the example.'
-        }
-      },
-      image: {
-        presence: true,
-        anyString: {
-          message:
-            'image should be the local path to the image in /static folder.'
-        }
-      },
-      componentUrl: {
-        presence: true,
-        anyString: {
-          message: 'componentUrl should be the local path to the component.'
-        }
-      },
-      path: {
-        presence: true,
-        anyString: {
-          message: 'should be the URL path to the example.'
+      allowEmpty: true,
+      constraint: {
+        title: {
+          presence: true,
+          anyString: {
+            message: 'title is the title of the example.'
+          }
+        },
+        image: {
+          presence: true,
+          anyString: {
+            message:
+              'image should be the local path to the image in /static folder.'
+          }
+        },
+        componentUrl: {
+          presence: true,
+          anyString: {
+            message: 'componentUrl should be the local path to the component.'
+          }
+        },
+        path: {
+          presence: true,
+          anyString: {
+            message: 'should be the URL path to the example.'
+          }
         }
       }
     }
@@ -198,15 +205,18 @@ const constraints = {
 
   PROJECTS: {
     arrayValidate: {
-      title: {
-        presence: true,
-        anyString: {
-          message: 'is the title of the project.'
+      allowEmpty: true,
+      constraint: {
+        title: {
+          presence: true,
+          anyString: {
+            message: 'is the title of the project.'
+          }
+        },
+        url: {
+          presence: true,
+          url: true
         }
-      },
-      url: {
-        presence: true,
-        url: true
       }
     }
   },
@@ -235,23 +245,26 @@ const constraints = {
   HOME_BULLETS: {
     presence: true,
     arrayValidate: {
-      text: {
-        presence: {allowEmpty: false},
-        anyString: {
-          message: 'is the title of the home bullet.'
-        }
-      },
-      desc: {
-        anyString: {
-          message: 'should be the description of the home bullet',
-          allowEmpty: true
-        }
-      },
-      img: {
-        presence: {allowEmpty: false},
-        anyString: {
-          message:
-            'should be the local path to the preview image in /static folder.'
+      allowEmpty: false,
+      constraint: {
+        text: {
+          presence: {allowEmpty: false},
+          anyString: {
+            message: 'is the title of the home bullet.'
+          }
+        },
+        desc: {
+          anyString: {
+            message: 'should be the description of the home bullet',
+            allowEmpty: true
+          }
+        },
+        img: {
+          presence: {allowEmpty: false},
+          anyString: {
+            message:
+              'should be the local path to the preview image in /static folder.'
+          }
         }
       }
     }
@@ -259,27 +272,33 @@ const constraints = {
 
   THEME_OVERRIDES: {
     arrayValidate: {
-      key: {presence: true},
-      value: {presence: true}
+      allowEmpty: false,
+      constraint: {
+        key: {presence: true},
+        value: {presence: true}
+      }
     }
   },
 
   ADDITIONAL_LINKS: {
     presence: true,
     arrayValidate: {
-      index: {
-        numericality: true
-      },
-      name: {
-        presence: {allowEmpty: false},
-        anyString: {
-          message: 'is the title of the link.'
-        }
-      },
-      href: {
-        presence: {allowEmpty: false},
-        anyString: {
-          message: 'should be a local path.'
+      allowEmpty: true,
+      constraint: {
+        index: {
+          numericality: true
+        },
+        name: {
+          presence: {allowEmpty: false},
+          anyString: {
+            message: 'is the title of the link.'
+          }
+        },
+        href: {
+          presence: {allowEmpty: false},
+          anyString: {
+            message: 'should be a local path.'
+          }
         }
       }
     }
@@ -303,16 +322,18 @@ const constraints = {
   }
 };
 
+// validate the config and return a list of warnings.
 function validateConfig(config) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
-  // check required config
+  // check config, validate function will return a object with corresponding warnings.
+  // ex: {GITHUB_KEY: ['must be provided if your project is hosted on Github.']}
   const messages = validate(config, constraints) || {};
   const allMessages = [
     ...unusedProperties.map(key => `${key} is not used in the gatsby config.`),
     ...Object.keys(messages).map(key => messages[key].toString())
   ];
-  // print out all error messages
+  // print out all warnings
   allMessages.forEach(message =>
     log.log({color: COLOR.RED, priority: 0}, `[gatsby-config] ${message}`)()
   );
