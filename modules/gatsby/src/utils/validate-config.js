@@ -1,27 +1,32 @@
+// [Validate.js](http://validatejs.org/)
 const validate = require('validate.js');
 const {log, COLOR} = require('./log');
 
+// TODO: theoretically, we should be able to validate the local path and url with regex below.
+// Needs more tests later.
 // const LOCAL_FILE_PATH = /^((\.\.|[a-zA-Z0-9_/\-\\])*\.[a-zA-Z0-9]+)/g;
 // const URL_PATH_PATTERN = /^\/([A-z0-9-_+]+\/)*([A-z0-9])*$/g;
 
-// custom validator: validate if the value is a string (null is allowed).
+// custom validators:
+// http://validatejs.org/#custom-validator
+// validate if the value is a string (null is allowed).
 validate.validators.anyString = function anyString(value, options) {
   // allow value === null
   if (value === null) {
-    return '';
+    return null;
   }
   if (value === undefined && options.allowEmpty) {
-    return '';
+    return null;
   }
   // check value is string
   if (!validate.isString(value)) {
     return options.message;
   }
   // pass validation
-  return '';
+  return null;
 };
 
-// custom validator: check every element in an array.
+// check every element in an array.
 validate.validators.arrayValidate = function arrayValidate(
   value,
   constraint,
@@ -34,13 +39,16 @@ validate.validators.arrayValidate = function arrayValidate(
   // check every element in the array
   const messages = value.map(v => validate(v, constraint)).filter(Boolean);
   if (messages.length > 0) {
-    return messages;
+    // consolidate error messages of each element
+    return messages.map((m, idx) => {
+      return `${key}[${idx}]: ${Object.values(m)}`;
+    });
   }
   // pass validation
-  return '';
+  return null;
 };
 
-// custom validator: check if the value is an object.
+// check if the value is an object.
 validate.validators.objectValidate = function objectValidate(
   value,
   constraint,
@@ -52,14 +60,39 @@ validate.validators.objectValidate = function objectValidate(
   }
   // TODO: we could validate the object properties, too.
   // pass validation
-  return '';
+  return null;
 };
 
+// check the value cannot be blank when prerequisite is true
+validate.validators.prerequisite = function prerequisite(
+  value,
+  options,
+  key,
+  attributes
+) {
+  if (options.test(attributes) && !value) {
+    return options.message;
+  }
+  return null;
+};
+
+// validators we used below:
+// [numericality](http://validatejs.org/#validators-numericality)
+// check if the value is a valid number
+// 
+// [presence](http://validatejs.org/#validators-presence)
+// The presence validator validates that the value is defined.
+// 
+// [url](http://validatejs.org/#validators-url)
+// The URL validator ensures that the input is a valid URL.
+// 
+// [custom validator](http://validatejs.org/#custom-validator)
+// Create our own custom reusable validator.
 const constraints = {
   logLevel: {
     numericality: {
       onlyInteger: true,
-      greaterThanOrEqualTO: 1,
+      greaterThanOrEqualTo: 0,
       lessThanOrEqualTo: 5,
       notValid: 'should be between 1 to 5.'
     }
@@ -71,7 +104,6 @@ const constraints = {
     }
   },
 
-  // TODO: is it deprecated?
   ROOT_FOLDER: {
     anyString: {
       message: 'should be the local path to the root folder.'
@@ -174,9 +206,7 @@ const constraints = {
       },
       url: {
         presence: true,
-        anyString: {
-          message: 'should be the URL path to the project.'
-        }
+        url: true
       }
     }
   },
@@ -206,7 +236,7 @@ const constraints = {
     presence: true,
     arrayValidate: {
       text: {
-        presence: true,
+        presence: {allowEmpty: false},
         anyString: {
           message: 'is the title of the home bullet.'
         }
@@ -218,7 +248,7 @@ const constraints = {
         }
       },
       img: {
-        presence: true,
+        presence: {allowEmpty: false},
         anyString: {
           message:
             'should be the local path to the preview image in /static folder.'
@@ -241,15 +271,15 @@ const constraints = {
         numericality: true
       },
       name: {
-        presence: true,
+        presence: {allowEmpty: false},
         anyString: {
           message: 'is the title of the link.'
         }
       },
       href: {
-        presence: true,
+        presence: {allowEmpty: false},
         anyString: {
-          message: 'should be the URL path.'
+          message: 'should be a local path.'
         }
       }
     }
@@ -262,8 +292,9 @@ const constraints = {
   },
 
   GITHUB_KEY: {
-    anyString: {
-      message: `should be like btoa('YourUsername:YourKey') and should be readonly.`
+    prerequisite: {
+      test: attributes => attributes.PROJECT_TYPE === 'github',
+      message: 'must be provided if your project is hosted on Github.'
     }
   },
 
@@ -272,67 +303,23 @@ const constraints = {
   }
 };
 
-const defaults = {
-  logLevel: 3,
-  DOC_FOLDER: '/docs',
-  // TODO: is it deprecated?
-  ROOT_FOLDER: './',
-  DIR_NAME: 'website',
-  EXAMPLES: [],
-  DOCS: {},
-  PROJECT_TYPE: '',
-  PROJECT_NAME: 'Ocular',
-  PROJECT_ORG: 'uber-web',
-  PROJECT_URL: 'http://localhost/',
-  PROJECT_DESC: '',
-  PATH_PREFIX: '/',
-  FOOTER_LOGO: '',
-  PROJECTS: [],
-  HOME_PATH: '/',
-  // TODO: what's this?
-  HOME_HEADING: 'A documentation website made with Ocular',
-  // TODO: what's this?
-  HOME_RIGHT: null,
-  HOME_BULLETS: [],
-  THEME_OVERRIDES: [
-    {
-      key: 'none',
-      value: 'none'
-    }
-  ],
-  ADDITIONAL_LINKS: [],
-  GA_TRACKING: null,
-  GITHUB_KEY: null,
-  webpack: {}
-};
-
 function validateConfig(config) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
   // check required config
   const messages = validate(config, constraints) || {};
-  // config padding
-  // those values are required to support the query in ../site-query.jsx
-  // if they don't exist, we provide empty values so that the query won't fail
-  const paddedConfig = {
-    ...defaults,
-    ...config
-  };
+  const allMessages = [
+    ...unusedProperties.map(key => `${key} is not used in the gatsby config.`),
+    ...Object.keys(messages).map(key => messages[key].toString())
+  ];
   // print out all error messages
-  unusedProperties.forEach(key =>
+  allMessages.forEach(message =>
     log.log(
       {color: COLOR.RED, priority: 0},
-      `[gatsby-config] ${key} is deprecated.`
+      `[gatsby-config] ${message}`
     )()
   );
-  Object.keys(messages).forEach(key =>
-    log.log(
-      {color: COLOR.RED, priority: 0},
-      `[gatsby-config] ${messages[key].toString()}`
-    )()
-  );
-  // return new config;
-  return paddedConfig;
+  return allMessages;
 }
 
 module.exports.validateConfig = validateConfig;

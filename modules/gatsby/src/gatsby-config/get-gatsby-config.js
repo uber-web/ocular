@@ -3,6 +3,37 @@ const urljoin = require('url-join');
 const {log, COLOR} = require('../utils/log');
 const {validateConfig} = require('../utils/validate-config');
 
+const defaults = {
+  logLevel: 3,
+  DOC_FOLDER: '/docs',
+  ROOT_FOLDER: './',
+  DIR_NAME: 'website',
+  EXAMPLES: [],
+  DOCS: {},
+  PROJECT_TYPE: '',
+  PROJECT_NAME: 'Ocular',
+  PROJECT_ORG: 'uber-web',
+  PROJECT_URL: 'http://localhost/',
+  PROJECT_DESC: '',
+  PATH_PREFIX: '/',
+  FOOTER_LOGO: '',
+  PROJECTS: [],
+  HOME_PATH: '/',
+  HOME_HEADING: 'A documentation website made with Ocular',
+  HOME_RIGHT: null,
+  HOME_BULLETS: [],
+  THEME_OVERRIDES: [
+    {
+      key: 'none',
+      value: 'none'
+    }
+  ],
+  ADDITIONAL_LINKS: [],
+  GA_TRACKING: null,
+  GITHUB_KEY: null,
+  webpack: {}
+};
+
 module.exports = function getGatsbyConfig(config) {
   const {logLevel = 0} = config;
   log.priority = logLevel;
@@ -13,11 +44,16 @@ module.exports = function getGatsbyConfig(config) {
     `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
   )();
 
+  // validate the entire config and print the errors/warnings in the console
+  validateConfig(config);
+
   // config padding
-  // some values are required to support the query in ../site-query.jsx
+  // those values are required to support the query in ../site-query.jsx
   // if they don't exist, we provide empty values so that the query won't fail
-  const paddedConfig = validateConfig(config);
-  // const paddedConfig = config;
+  const paddedConfig = {
+    ...defaults,
+    ...config
+  };
 
   const gatsbyConfig = {
     pathPrefix: paddedConfig.PATH_PREFIX,
