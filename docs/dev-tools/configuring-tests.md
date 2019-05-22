@@ -14,8 +14,18 @@ While Node 12 will soon enable `import`/`export` by default, you will typically 
 
 Two tested options are:
 
-* import `reify` - This makes Node.js understand `import`/`export`, but otherwise does not transpile your code. This is a great option if you want to test your source code directly, either because you want to debug untranspiled code, or you want to ensure that your code runs untranspiled to ensure you don't use unsupported syntax.
-* import `@babel/register` - This option runs the babel transpiler. This is ideal if you want to use non-standard syntax such as stage-x babel plugins, flow etc.
+* `require('reify')` - This makes Node.js understand `import`/`export`, but otherwise does not transpile your code. This is a great option if you want to test your source code directly, either because you want to debug untranspiled code, or you want to ensure that your code runs untranspiled to ensure you don't use unsupported syntax. You can simply require `reify` at the entry point of your test:
+
+```
+// test/index.js
+require('reify');
+
+// start to require your tests
+require('./test1.js');
+
+```
+
+* `require('@babel/register')` - This option runs the babel transpiler. This is ideal if you want to use non-standard syntax such as stage-x babel plugins, flow etc.
 
 You can import `@bable/register`, and that is how babel config is accessed in dev mode. Unless that module is imported, no transpilation is done on your source.
 
