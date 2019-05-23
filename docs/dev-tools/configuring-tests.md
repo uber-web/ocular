@@ -14,7 +14,7 @@ While Node 12 will soon enable `import`/`export` by default, you will typically 
 
 Two tested options are:
 
-* `require('reify')` - This makes Node.js understand `import`/`export`, but otherwise does not transpile your code. This is a great option if you want to test your source code directly, either because you want to debug untranspiled code, or you want to ensure that your code runs untranspiled to ensure you don't use unsupported syntax. You can simply require `reify` at the entry point of your test:
+* `require('reify')` - This makes Node.js understand `import`/`export`, but otherwise does not transpile your code. This is a great option if you want to test your source code directly, either because you want to debug untranspiled code, or you want to ensure that your code runs untranspiled to ensure you don't use unsupported syntax. You can simply require `reify` at the entry point of your test. Note that you cannot use import in the same file, only inside files required after requiring reify.
 
 ```
 // test/index.js
