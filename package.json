@@ -12,5 +12,6 @@
     "@probe.gl/test-utils": "^3.0.2",
     "ocular-dev-tools": "^0.0.24",
     "reify": "^0.19.1"
-  }
+  },
+  "version": "0.0.0"
 }
