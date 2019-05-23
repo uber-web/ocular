@@ -183,14 +183,18 @@ const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
           style={{maxHeight: getHeight(route)}}
         >
           <ul>
-            {route.entries.map((r, idx) =>
-              renderRoute({
+            {route.entries.map((r, idx) => {
+              if (!r.childMarkdownRemark) {
+                console.warn(`Missing content for entry ${idx} in chapter ${route.title}`, route);
+              }
+              return renderRoute({
                 route: r,
                 fullyExpanded,
                 index: idx,
                 depth: depth + 1,
                 slug
               })
+            }
             )}
           </ul>
         </div>

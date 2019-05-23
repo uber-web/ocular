@@ -36,8 +36,8 @@ export default class Examples extends Component {
         {({theme}) => (
           <MainExamples theme={theme}>
             {examples.map(exampleData => (
-              <ExampleCard theme={theme}>
-                <Link to={exampleData.path}>
+              <ExampleCard theme={theme} key={exampleData.title}>
+                <Link to={`/${exampleData.path}`}>
                   {exampleData.imageSrc ? (
                     <img src={exampleData.imageSrc} alt={exampleData.title} />
                   ) : null}
