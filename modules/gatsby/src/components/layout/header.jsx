@@ -20,12 +20,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import StarIcon from 'react-icons/lib/go/star';
 import GithubIcon from 'react-icons/lib/go/mark-github';
 import classNames from 'classnames';
-// import {trees} from 'routes';
-// import {toggleMenu, setHeaderOpacity} from 'reducers/ui';
-
 import {Link} from 'gatsby';
 
 import GithubStars from '../github/github-stars.jsx';
@@ -34,34 +30,11 @@ const propTypes = {
   config: PropTypes.object.isRequired
 };
 
-/*
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-@connect(({
-  ui: {isMenuOpen, headerOpacity},
-  router: {location: {pathname}},
-  github: {loading: githubLoading, repo: {stargazers_count}},
-}) => ({
-  isMenuOpen,
-  headerOpacity,
-  pathname,
-  stargazers_count,
-  githubLoading,
-}), {
-  toggleMenu,
-  setHeaderOpacity,
-})
-*/
-
 function GithubLink() {
   return (
     <div className="github-link">
       <span>Github</span>
       <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} />
-      {/* <span className="Stars fac fje">
-        {props.githubLoading ? '...' : props.stargazers_count}
-        <StarIcon style={{ marginLeft: '0.5rem', display: 'inline' }} />
-      </span> */}
     </div>
   );
 }
@@ -94,7 +67,7 @@ function generateHeaderLinks(props) {
 
   const githubLink = config.PROJECT_TYPE === 'github' && {
     classnames: 'z',
-    href: props.config.PROJECT_URL,
+    href: `https://github.com/${config.PROJECT_ORG}/${config.PROJECT_NAME}`,
     label: <GithubLink />
   };
 
@@ -213,25 +186,6 @@ export default class Header extends Component {
 
   render() {
     return this.renderHeader();
-    /*
-    return (
-      <StaticQuery query={graphql`
-    query StaticQuery {
-      site {
-        siteMetadata {
-          config {
-            PROJECT_TYPE
-          }
-        }
-      }
-    }
-    `}
-        render={data => {
-          return this.renderHeader(data)
-        }}
-      />
-    );
-    */
   }
 }
 
