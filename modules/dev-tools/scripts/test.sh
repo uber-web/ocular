@@ -17,7 +17,7 @@ usage() {
 run_test_script() {
   # get Chromium executable path
   YARN_GLOBAL_DIR=`yarn global dir`
-  CHROMIUM_EXECUTABLE=`node -e "console.log(require('$YARN_GLOBAL_DIR/node_modules/puppeteer').executablePath())"`
+  CHROMIUM_EXECUTABLE=`node $MODULE_DIR/node/get-puppeteer-executable-path.js $YARN_GLOBAL_DIR`
 
   BABEL_ENV=test PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $MODULE_DIR/node/test.js $1
 }

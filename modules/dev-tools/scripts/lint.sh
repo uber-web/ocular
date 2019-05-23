@@ -9,12 +9,12 @@ MODE=$1
 
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 
-DIRECTORIES=`$DEV_TOOLS_DIR/scripts/print-config.sh ".lint.paths" | jq -r 'join(",")'`
+DIRECTORIES=`node $DEV_TOOLS_DIR/node/get-config.js ".lint.paths" | jq -r 'join(",")'`
 if [[ $DIRECTORIES == *","* ]]; then
   DIRECTORIES={$DIRECTORIES}
 fi
 
-EXTENSIONS=`$DEV_TOOLS_DIR/scripts/print-config.sh ".lint.extensions" | jq -r 'join(",")'`
+EXTENSIONS=`node $DEV_TOOLS_DIR/node/get-config.js ".lint.extensions" | jq -r 'join(",")'`
 if [[ $EXTENSIONS == *","* ]]; then
   EXTENSIONS={$EXTENSIONS}
 fi
