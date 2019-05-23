@@ -3,4 +3,4 @@
 require('reify');
 
 // start to import tests
-require('./utils/validate-config.js');
+require('./utils/validate-config.spec.js');

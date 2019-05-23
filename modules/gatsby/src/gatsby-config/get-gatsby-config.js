@@ -2,6 +2,7 @@ const urljoin = require('url-join');
 
 const {log, COLOR} = require('../utils/log');
 const {validateConfig} = require('../utils/validate-config');
+const CONFIG_SCHEMA = require('./config-schema');
 
 const defaults = {
   logLevel: 3,
@@ -21,9 +22,9 @@ const defaults = {
   HOME_PATH: '/',
   HOME_HEADING: 'A documentation website made with Ocular',
   HOME_RIGHT: null,
-  // TODO: not sure why HOME_BULLETS can't be an empty array
+  // TODO(@javidhsueh): not sure why HOME_BULLETS can't be an empty array
   HOME_BULLETS: [{text: '', desc: '', img: ''}],
-  // TODO: not sure why THEME_OVERRIDES can't be an empty array
+  // TODO(@javidhsueh): not sure why THEME_OVERRIDES can't be an empty array
   THEME_OVERRIDES: [
     {
       key: 'none',
@@ -47,7 +48,7 @@ module.exports = function getGatsbyConfig(config) {
   )();
 
   // validate the entire config and print the errors/warnings in the console
-  validateConfig(config);
+  validateConfig(config, CONFIG_SCHEMA);
 
   // config padding
   // those values are required to support the query in ../site-query.jsx
@@ -65,21 +66,6 @@ module.exports = function getGatsbyConfig(config) {
       config: paddedConfig,
 
       siteUrl: urljoin(paddedConfig.PROJECT_URL, paddedConfig.PATH_PREFIX)
-      /*
-      rssMetadata: {
-        site_url: urljoin(paddedConfig.PROJECT_URL, paddedConfig.pathPrefix),
-        feed_url: urljoin(paddedConfig.PROJECT_URL, paddedConfig.pathPrefix, config.siteRss),
-        title: paddedConfig.PROJECT_NAME,
-        description: paddedConfig.PROJECT_DESC,
-        image_url: urljoin(
-          paddedConfig.PROJECT_URL,
-          paddedConfig.pathPrefix,
-          '/logos/logo-512.png'
-        ),
-        author: paddedConfig.userName,
-        copyright: paddedConfig.copyright
-      }
-      */
     },
 
     plugins: [

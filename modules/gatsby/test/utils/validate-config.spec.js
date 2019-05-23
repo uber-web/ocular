@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import test from 'tape-catch';
-import {validateConfig} from 'ocular-gatsby';
+import {validateConfig, CONFIG_SCHEMA} from 'ocular-gatsby';
 
 const GOOD_CONFIG = {
   logLevel: 4,
@@ -42,13 +42,13 @@ const GOOD_CONFIG = {
 
 test('validateConfig', t => {
   t.deepEquals(
-    validateConfig(GOOD_CONFIG),
+    validateConfig(GOOD_CONFIG, CONFIG_SCHEMA),
     [],
     'Get zero error when config is valid'
   );
 
   t.deepEquals(
-    validateConfig({}),
+    validateConfig({}, CONFIG_SCHEMA),
     [
       'Examples can\'t be blank,Examples EXAMPLES needs to be an array.',
       'Docs DOCS needs to be an object.',
@@ -71,7 +71,7 @@ test('validateConfig', t => {
     validateConfig({
       ...GOOD_CONFIG,
       logLevel: 6
-    }),
+    }, CONFIG_SCHEMA),
     ['Log level must be less than or equal to 5'],
     'Check logLevel'
   );
@@ -81,7 +81,7 @@ test('validateConfig', t => {
     validateConfig({
       ...GOOD_CONFIG,
       PROJECTS: [{title: 'Project 1', url: ''}]
-    }),
+    }, CONFIG_SCHEMA),
     ['Projects PROJECTS[0]: Url is not a valid url'],
     'Check PROJECTS with empty url'
   );
@@ -91,7 +91,7 @@ test('validateConfig', t => {
     validateConfig({
       ...GOOD_CONFIG,
       PROJECT_URL: null
-    }),
+    }, CONFIG_SCHEMA),
     ["Project url can't be blank"],
     'Check if PROJECT_URL is null'
   );
@@ -101,7 +101,7 @@ test('validateConfig', t => {
     validateConfig({
       ...GOOD_CONFIG,
       HOME_BULLETS: [{text: 'Project 1', desc: '', img: ''}]
-    }),
+    }, CONFIG_SCHEMA),
     ["Home bullets HOME_BULLETS[0]: Img can't be blank"],
     'Check HOME_BULLETS with empty img'
   );
@@ -111,7 +111,7 @@ test('validateConfig', t => {
     validateConfig({
       ...GOOD_CONFIG,
       ADDITIONAL_LINKS: [{index: 0, name: 'Project 1', href: ''}]
-    }),
+    }, CONFIG_SCHEMA),
     ["Additional links ADDITIONAL_LINKS[0]: Href can't be blank"],
     'Check ADDITIONAL_LINKS with empty href'
   );
@@ -122,7 +122,7 @@ test('validateConfig', t => {
       ...GOOD_CONFIG,
       PROJECT_TYPE: 'github',
       GITHUB_KEY: null
-    }),
+    }, CONFIG_SCHEMA),
     ['Github key must be provided if your project is hosted on Github.'],
     'Check if PROJECT_TYPE == github and GITHUB_KEY is null'
   );
@@ -132,7 +132,7 @@ test('validateConfig', t => {
       ...GOOD_CONFIG,
       PROJECT_TYPE: '',
       GITHUB_KEY: null
-    }),
+    }, CONFIG_SCHEMA),
     [],
     `Check if PROJECT_TYPE == '' and GITHUB_KEY is null`
   );
@@ -142,7 +142,7 @@ test('validateConfig', t => {
     validateConfig({
       ...GOOD_CONFIG,
       THEME_OVERRIDES: []
-    }),
+    }, CONFIG_SCHEMA),
     ['Theme overrides THEME_OVERRIDES cannot be empty.'],
     'Check if THEME_OVERRIDES is empty'
   );

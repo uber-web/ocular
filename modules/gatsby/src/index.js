@@ -23,8 +23,11 @@ const {
 } = require('./utils/example-registry');
 
 const {validateConfig} = require('./utils/validate-config');
+const CONFIG_SCHEMA = require('./gatsby-config/config-schema');
+
 
 module.exports.registerReactComponent = registerReactComponent;
 module.exports.registerDefaultReactComponent = registerDefaultReactComponent;
 module.exports.getReactComponent = getReactComponent;
 module.exports.validateConfig = validateConfig;
+module.exports.CONFIG_SCHEMA = CONFIG_SCHEMA;

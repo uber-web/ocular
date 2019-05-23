@@ -2,13 +2,23 @@
 const validate = require('validate.js');
 const {log, COLOR} = require('./log');
 
-// TODO: theoretically, we should be able to validate the local path and url with regex below.
+// TODO(@javidhsueh): theoretically, we should be able to validate the local path and url with regex below.
 // Format validator: http://validatejs.org/#validators-format
 // const LOCAL_FILE_PATH = /^((\.\.|[a-zA-Z0-9_/\-\\])*\.[a-zA-Z0-9]+)/g;
 // const URL_PATH_PATTERN = /^\/([A-z0-9-_+]+\/)*([A-z0-9])*$/g;
 
-// custom validators:
-// http://validatejs.org/#custom-validator
+// validators we used below:
+// [numericality](http://validatejs.org/#validators-numericality)
+// check if the value is a valid number
+//
+// [presence](http://validatejs.org/#validators-presence)
+// The presence validator validates that the value is defined.
+//
+// [url](http://validatejs.org/#validators-url)
+// The URL validator ensures that the input is a valid URL.
+//
+// [custom validator](http://validatejs.org/#custom-validator)
+// See below
 
 /**
  * Validate if the value is a string (null is allowed).
@@ -81,7 +91,7 @@ validate.validators.objectValidate = function objectValidate(
   if (!validate.isObject(value)) {
     return `${key} needs to be an object.`;
   }
-  // TODO: we could validate the object properties, too.
+  // TODO(@javidhsueh): we could validate the object properties, too.
   // pass validation
   return null;
 };
@@ -102,307 +112,15 @@ validate.validators.prerequisite = function prerequisite(
   key,
   attributes
 ) {
-  if (options.test(attributes) && !value) {
-    return options.message;
-  }
+  // if (options.test(attributes) && !value) {
+  //   return options.message;
+  // }
   return null;
 };
 
-// validators we used below:
-// [numericality](http://validatejs.org/#validators-numericality)
-// check if the value is a valid number
-//
-// [presence](http://validatejs.org/#validators-presence)
-// The presence validator validates that the value is defined.
-//
-// [url](http://validatejs.org/#validators-url)
-// The URL validator ensures that the input is a valid URL.
-//
-// [custom validator](http://validatejs.org/#custom-validator)
-// Create our own custom reusable validator.
-const constraints = {
-
-  // Number, optional, value range between 0 to 5
-  logLevel: {
-    numericality: {
-      onlyInteger: true,
-      greaterThanOrEqualTo: 0,
-      lessThanOrEqualTo: 5,
-      notValid: 'should be between 0 to 5.'
-    }
-  },
-
-  // String, optional, local path
-  DOC_FOLDER: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be the local path to the doc folder.'
-    }
-  },
-
-  // String, optional, local path
-  ROOT_FOLDER: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be the local path to the root folder.'
-    }
-  },
-
-  // String, optional, local path
-  DIR_NAME: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be the local path to the gatsby website folder.'
-    }
-  },
-
-  // Array of examples, required,
-  // Example object: {title, image, componentUrl, path}
-  // title: string, required
-  // image: string, required
-  // componentUrl: string, required
-  // path: string, required
-  EXAMPLES: {
-    presence: true,
-    arrayValidate: {
-      allowEmpty: true,
-      constraint: {
-        title: {
-          presence: true,
-          anyString: {
-            message: 'title is the title of the example.'
-          }
-        },
-        image: {
-          presence: true,
-          anyString: {
-            message:
-              'image should be the local path to the image in /static folder.'
-          }
-        },
-        componentUrl: {
-          presence: true,
-          anyString: {
-            message: 'componentUrl should be the local path to the component.'
-          }
-        },
-        path: {
-          presence: true,
-          anyString: {
-            message: 'should be the URL path to the example.'
-          }
-        }
-      }
-    }
-  },
-
-  // Object, optional
-  DOCS: {
-    objectValidate: true
-  },
-
-  // One of ['github', ''], required
-  PROJECT_TYPE: {
-    presence: true,
-    inclusion: {
-      within: ['github', ''],
-      message:
-        'should be set to "github" if your project is hosted on Github, or leave it empty.'
-    }
-  },
-
-  // String, optional
-  PROJECT_NAME: {
-    anyString: {
-      allowEmpty: true,
-      message: `should be the project's name on Github.`
-    }
-  },
-
-  // String, optional
-  PROJECT_ORG: {
-    anyString: {
-      allowEmpty: true,
-      message: `should be the project's Github organization`
-    }
-  },
-
-  // URL, required
-  PROJECT_URL: {
-    presence: true,
-    url: true
-  },
-
-  // String, required
-  PROJECT_DESC: {
-    presence: true,
-    anyString: {
-      message: `should be the project's description`
-    }
-  },
-
-  // String, optional
-  PATH_PREFIX: {
-    anyString: {
-      message: 'should be the prefix added to all paths on the site'
-    }
-  },
-
-  // String, optional
-  FOOTER_LOGO: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be the local path to foorter logo'
-    }
-  },
-
-  // Array of projects, optional
-  // Project object: {title, url}
-  // title: string, required
-  // url: string, required
-  PROJECTS: {
-    arrayValidate: {
-      allowEmpty: true,
-      constraint: {
-        title: {
-          presence: true,
-          anyString: {
-            message: 'is the title of the project.'
-          }
-        },
-        url: {
-          presence: true,
-          url: true
-        }
-      }
-    }
-  },
-
-  // String, optional
-  HOME_PATH: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be the path to the home page'
-    }
-  },
-
-  // TODO: what's this?
-  // String, required
-  HOME_HEADING: {
-    presence: true,
-    anyString: {
-      message: 'should be ...'
-    }
-  },
-
-  // TODO: what's this?
-  // String, optional
-  HOME_RIGHT: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be ...'
-    }
-  },
-
-  // Array of home bullets, required,
-  // Home bullet object: {text, desc, img}
-  // text: string, required
-  // desc: string, optional
-  // img: string, required
-  HOME_BULLETS: {
-    presence: true,
-    arrayValidate: {
-      allowEmpty: false,
-      constraint: {
-        text: {
-          presence: {allowEmpty: false},
-          anyString: {
-            message: 'is the title of the home bullet.'
-          }
-        },
-        desc: {
-          anyString: {
-            message: 'should be the description of the home bullet',
-            allowEmpty: true
-          }
-        },
-        img: {
-          presence: {allowEmpty: false},
-          anyString: {
-            message:
-              'should be the local path to the preview image in /static folder.'
-          }
-        }
-      }
-    }
-  },
-
-  // Array of theme overides, required,
-  // Theme override object: {key, value}
-  // key: string, required
-  // value: string, required
-  THEME_OVERRIDES: {
-    arrayValidate: {
-      allowEmpty: false,
-      constraint: {
-        key: {presence: true},
-        value: {presence: true}
-      }
-    }
-  },
-
-  // Array of additional links, required,
-  // Additional link object: {index, name, href}
-  // index: number, optional
-  // name: string, required
-  // href: string, required
-  ADDITIONAL_LINKS: {
-    presence: true,
-    arrayValidate: {
-      allowEmpty: true,
-      constraint: {
-        index: {
-          numericality: true
-        },
-        name: {
-          presence: {allowEmpty: false},
-          anyString: {
-            message: 'is the title of the link.'
-          }
-        },
-        href: {
-          presence: {allowEmpty: false},
-          anyString: {
-            message: 'should be a local path.'
-          }
-        }
-      }
-    }
-  },
-
-  // String, optional
-  GA_TRACKING: {
-    anyString: {
-      allowEmpty: true,
-      message: 'should be the Google analytics key'
-    }
-  },
-  // String, required if PROJECT_TYPE === 'github'
-  GITHUB_KEY: {
-    prerequisite: {
-      test: attributes => attributes.PROJECT_TYPE === 'github',
-      message: 'must be provided if your project is hosted on Github.'
-    }
-  },
-
-  // Object, optional
-  webpack: {
-    objectValidate: true
-  }
-};
 
 // validate the config and return a list of warnings.
-function validateConfig(config) {
+function validateConfig(config, constraints) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
   // check config, validate function will return a object with corresponding warnings.
