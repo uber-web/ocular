@@ -1,7 +1,7 @@
 const urljoin = require('url-join');
 
 const {log, COLOR} = require('../utils/log');
-const {validateConfig} = require('../utils/validate-config');
+const validateConfig = require('../utils/validate-config');
 const CONFIG_SCHEMA = require('./config-schema');
 
 const defaults = {

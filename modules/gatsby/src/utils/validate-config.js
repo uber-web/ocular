@@ -117,9 +117,8 @@ validate.validators.requiredForGithubProject = function prerequisite(
   return null;
 };
 
-
 // validate the config and return a list of warnings.
-function validateConfig(config, constraints) {
+module.exports = function validateConfig(config, constraints) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
   // check config, validate function will return a object with corresponding warnings.
@@ -134,6 +133,4 @@ function validateConfig(config, constraints) {
     log.log({color: COLOR.RED, priority: 0}, `[gatsby-config] ${message}`)()
   );
   return allMessages;
-}
-
-module.exports.validateConfig = validateConfig;
+};

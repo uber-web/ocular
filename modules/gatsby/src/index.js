@@ -6,28 +6,13 @@ module.exports.getGatsbyConfig = require('./gatsby-config/get-gatsby-config');
 const {log, COLOR} = require('./utils/log');
 
 module.exports.log = log;
-module.exports.log = COLOR;
+module.exports.COLOR = COLOR;
+
+module.exports.validateConfig = require('./utils/validate-config');
+module.exports.CONFIG_SCHEMA = require('./gatsby-config/config-schema');
 
 // IN PROGRESS - AUTOMATIC EXAMPLE LIST DETECTION
 const {getExamples, getHeroExample} = require('./utils/example-registry');
 
 module.exports.getExamples = getExamples;
 module.exports.getHeroExample = getHeroExample;
-
-// DEPRECATED/REMOVED (Export stubs that emit deprecation messages)
-
-const {
-  registerReactComponent,
-  registerDefaultReactComponent,
-  getReactComponent
-} = require('./utils/example-registry');
-
-const {validateConfig} = require('./utils/validate-config');
-const CONFIG_SCHEMA = require('./gatsby-config/config-schema');
-
-
-module.exports.registerReactComponent = registerReactComponent;
-module.exports.registerDefaultReactComponent = registerDefaultReactComponent;
-module.exports.getReactComponent = getReactComponent;
-module.exports.validateConfig = validateConfig;
-module.exports.CONFIG_SCHEMA = CONFIG_SCHEMA;
