@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import {styled} from 'baseui';
-import theme from './theme';
 /* eslint-disable import/prefer-default-export */
 
 // top-level layoout
@@ -153,3 +152,4 @@ export const MainSearch = styled('main', ({$theme, ...props}) => ({
   maxWidth: '600px',
   margin: '104px auto 0'
 }));
+
