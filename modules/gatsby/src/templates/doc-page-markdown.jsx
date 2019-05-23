@@ -2,6 +2,10 @@ import React from 'react';
 import rehypeReact from 'rehype-react';
 import {graphql} from 'gatsby';
 
+// note - these typographic elements are taken directly from baseui.
+// we can consider customizing them by first importing in styled/index, then
+// giving them special parameters
+
 import {H1, H2, H3, H4, H5, H6, Paragraph1 as P} from 'baseui/typography';
 
 const CustomLinkWrapper = relativeLinks => {
@@ -34,38 +38,11 @@ export const query = graphql`
   }
 `;
 
-// function replaceLinks(props) {
-//   const { htmlAst } = props.data.docBySlug;
-//   const { relativeLinks } = props.pageContext;
-//   const renderAst = new rehypeReact({
-//     createElement: React.createElement,
-//     components: {
-//       h1: CustomH1,
-//       a: CustomLinkWrapper(relativeLinks)
-//     },
-//   }).Compiler
-
-// const { html } = props.data.docBySlug;
-
-//   return html.replace(/href="([^"]+)"/g, (link, href) => {
-//     // don't rewrite external links, don't rewrite links to anchors
-//     if (href.startsWith('http') || href.startsWith('#')) {
-//       // TODO - we could style them differently though
-//       return link;
-//     }
-//     const hrefWithoutLeadingSlash = href.startsWith('/') ? href.slice(1) : href;
-//     // replace links to:
-//     // - known physical files, either relative to this file or relative to root
-//     // - known routes, either relative to the route of this page or to the home page
-//     // by a link to their corresponding route, expresed relative to the home page
-//     return `href="${relativeLinks[hrefWithoutLeadingSlash]}"`;
-//   });
-// }
-
 export default class DocTemplate extends React.Component {
   constructor(props) {
     super(props);
     const {relativeLinks} = props.pageContext;
+    // note - we can add many other custom components.
     const renderAst = new rehypeReact({
       createElement: React.createElement,
       components: {
