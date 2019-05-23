@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "bootstrap": "(cd modules/gatsby; yarn)",
+    "test": "(cd modules/gatsby; npm run test ci)",
     "publish-beta": "(cd modules/gatsby; npm run publish-beta)",
     "publish-prod": "(cd modules/gatsby; npm run publish-prod)"
   },
