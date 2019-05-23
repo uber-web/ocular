@@ -97,24 +97,23 @@ validate.validators.objectValidate = function objectValidate(
 };
 
 /**
- * Check the value cannot be blank when prerequisite is established.
+ * Check the value cannot be blank when project type is github.
  * @param  {Any} value   The value to be validated.
- * @param  {Object} options Not used at this momemt.
- *         {Function} options.test  A function to test prerequisite.
- *         {String}   options.message  Custom message when the prerequisite is established
+ * @param  {Object} options The options for validation.
+ *         {String}   options.message  Custom message when the value is invalid
  * @param  {String} key     The key of the value.
  * @param  {Object} attributes The entire object to be examined.
  * @return {String|Array}   The validation result(a string). Return null if passes.
  */
-validate.validators.prerequisite = function prerequisite(
+validate.validators.requiredForGithubProject = function prerequisite(
   value,
   options,
   key,
   attributes
 ) {
-  // if (options.test(attributes) && !value) {
-  //   return options.message;
-  // }
+  if (attributes.PROJECT_TYPE === 'github' && !value) {
+    return options.message;
+  }
   return null;
 };
 

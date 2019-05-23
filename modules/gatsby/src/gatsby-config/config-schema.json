@@ -223,8 +223,7 @@
     }
   },
   "GITHUB_KEY": {
-    "prerequisite": {
-      "test": "attributes => attributes.PROJECT_TYPE === 'github'",
+    "requiredForGithubProject": {
       "message": "must be provided if your project is hosted on Github."
     }
   },
