@@ -8686,6 +8686,13 @@ table@^5.0.0, table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
+tape-catch@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/tape-catch/-/tape-catch-1.0.6.tgz#12931d5ea60a03a97d9bd19d0d7d8cfc3f6cecf1"
+  integrity sha1-EpMdXqYKA6l9m9GdDX2M/D9s7PE=
+  dependencies:
+    global "~4.3.0"
+
 tar-fs@^1.13.0:
   version "1.16.3"
   resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-1.16.3.tgz#966a628841da2c4010406a82167cbd5e0c72d509"
