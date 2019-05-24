@@ -3,13 +3,8 @@
 // each page using the gatsby browser/SSR `wrapPage` callback.
 
 import React from 'react';
-<<<<<<< HEAD
-import {lightThemePrimitives, createTheme} from '../styled/theme';
-=======
 import {createTheme} from 'baseui';
 import {primitives} from '../styled/theme';
-
->>>>>>> use baseui typography for markdown, replace clan pro by uber move
 import SiteQuery from '../site-query';
 import TopLevelLayout from './top-level-layout';
 
@@ -35,11 +30,7 @@ export default class Layout extends React.Component {
       {}
     );
 
-<<<<<<< HEAD
-    const theme = createTheme({...lightThemePrimitives, ...themeFromConfig});
-=======
     const theme = createTheme({...primitives, ...themeFromConfig});
->>>>>>> use baseui typography for markdown, replace clan pro by uber move
     return (
       <TopLevelLayout
         {...this.props}

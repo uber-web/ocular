@@ -339,6 +339,16 @@ module.exports = function getGatsbyConfig(config) {
         path: `${paddedConfig.DIR_NAME}/static/`
       }
     });
+    gatsbyConfig.plugins.push({
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${paddedConfig.DIR_NAME}/static/images`,
+        plugins: [
+          `gatsby-plugin-sharp`
+        ]
+      }
+    });
   } else {
     log.log(
       {color: COLOR.YELLOW},
