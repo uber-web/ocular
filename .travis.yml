@@ -10,5 +10,3 @@ install:
   - yarn bootstrap
 script:
   - npm run test
-after_success:
-  - cat coverage/lcov.info | coveralls

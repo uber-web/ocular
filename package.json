@@ -1,17 +1,9 @@
 {
   "scripts": {
-    "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
-    "test": "ocular-test",
+    "bootstrap": "(cd modules/gatsby; yarn;)",
+    "test": "(cd modules/gatsby; yarn test;)",
     "publish-beta": "(cd modules/gatsby; npm run publish-beta)",
     "publish-prod": "(cd modules/gatsby; npm run publish-prod)"
-  },
-  "dependencies": {
-    "status": "^0.0.13"
-  },
-  "devDependencies": {
-    "@probe.gl/test-utils": "^3.0.2",
-    "ocular-dev-tools": "^0.0.24",
-    "reify": "^0.19.1"
   },
   "version": "0.0.0"
 }
