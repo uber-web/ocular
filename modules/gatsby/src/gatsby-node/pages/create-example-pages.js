@@ -170,7 +170,8 @@ function createIndividualExamplePages(EXAMPLES, createPage) {
       component: componentUrl,
       context: {
         slug: exampleName,
-        toc: 'examples'
+        toc: 'examples',
+        exampleConfig: example
       }
     });
   });
