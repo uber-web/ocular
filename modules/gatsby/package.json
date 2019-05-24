@@ -26,8 +26,8 @@
     "format:js": "prettier '**/*.{js,jsx}' --write",
     "publish-beta": "yarn test && npm publish --tag beta",
     "publish-prod": "yarn test && npm publish",
-    "lint": "ocular-lint",
-    "test": "ocular-test node"
+    "lint": "eslint src",
+    "test": "node test/index.js"
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
   "peerDependencies": {
@@ -89,7 +89,6 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
-    "@probe.gl/test-utils": "^3.0.2",
     "cli-glob": "^0.1.0",
     "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -98,7 +97,6 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.0",
     "gh-pages": "^2.0.1",
-    "ocular-dev-tools": "^0.0.24",
     "prettier": "^1.17.0",
     "reify": "^0.19.1",
     "remark-cli": "^6.0.0",
@@ -106,6 +104,8 @@
     "stylefmt": "^6.0.3",
     "stylelint": "^9.7.1",
     "stylelint-config-standard": "^18.0.0",
+    "tape": "^4.10.1",
+    "tape-catch": "^1.0.6",
     "write-good": "^0.13.1"
   },
   "keywords": [

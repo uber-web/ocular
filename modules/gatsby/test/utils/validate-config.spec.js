@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import test from 'tape-catch';
-import {validateConfig, CONFIG_SCHEMA} from 'ocular-gatsby';
+import validateConfig from '../../src/utils/validate-config';
+import CONFIG_SCHEMA from '../../src/gatsby-config/config-schema';
 
 const GOOD_CONFIG = {
   logLevel: 4,
