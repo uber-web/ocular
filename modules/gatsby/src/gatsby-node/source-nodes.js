@@ -117,6 +117,10 @@ function sourceNodes({actions}) {
       chapters: [lvl1Chapter]
       entries: [Entry]
     }
+
+    type ImageSharp implements Node {
+      id: ID!
+    }
     `;
   log.log({color: COLOR.YELLOW}, `Set up graphql schemas`)();
   log.log({priority: 4, color: COLOR.YELLOW}, `Schemas:`, typeDefs)();
