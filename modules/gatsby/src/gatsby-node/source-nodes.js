@@ -10,6 +10,10 @@ function sourceNodes({actions}) {
   // it requires it to have a very strict shape by defining the schema independently
   // of the content of the file we can be more flexible.
 
+
+  // Having ImageSharp type is to enfore the `allImageSharp` node exists in the schema
+  // Original disussion: https://github.com/gatsbyjs/gatsby/issues/14304
+  // PR: https://github.com/uber-web/ocular/pull/195
   const typeDefs = `
 
     type Examples implements Node {
@@ -116,6 +120,10 @@ function sourceNodes({actions}) {
     type DocsJson implements Node {
       chapters: [lvl1Chapter]
       entries: [Entry]
+    }
+
+    type ImageSharp implements Node {
+      id: ID!
     }
     `;
   log.log({color: COLOR.YELLOW}, `Set up graphql schemas`)();
