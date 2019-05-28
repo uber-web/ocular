@@ -339,6 +339,10 @@ module.exports = function getGatsbyConfig(config) {
         path: `${paddedConfig.DIR_NAME}/static/`
       }
     });
+    // TODO(@javidhsueh):
+    // Should we fs.stat these directories before we add the plugins?
+    // Or fs.stat and warn if they don't exist?
+    // Or fs.stat and create them if they don't exist?
     gatsbyConfig.plugins.push({
       resolve: 'gatsby-source-filesystem',
       options: {
