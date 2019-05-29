@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.25
+- Bump webpack-bundle-analyzer version (#192)
+- Update Lerna version (#197)
+
 ## v0.0.24
 - Only install one copy of chromium (#176)
 
