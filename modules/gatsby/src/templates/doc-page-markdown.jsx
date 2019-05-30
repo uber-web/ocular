@@ -9,12 +9,14 @@ import {graphql} from 'gatsby';
 import {H1, H2, H3, H4, H5, H6, Paragraph1 as P} from 'baseui/typography';
 
 const CustomLinkWrapper = relativeLinks => {
-  const CustomLink = ({href, ...props}) => {
+  const CustomLink = ({ href, ...props }) => {
     if (href.startsWith('http') || href.startsWith('#')) {
       // TODO - we could style them differently though
+      // eslint-disable-next-line jsx-a11y/anchor-has-content
       return <a {...props} />;
     }
     const hrefWithoutLeadingSlash = href.startsWith('/') ? href.slice(1) : href;
+    // eslint-disable-next-line jsx-a11y/anchor-has-content
     return <a {...props} href={relativeLinks[hrefWithoutLeadingSlash]} />;
   };
   return CustomLink;

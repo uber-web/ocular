@@ -58,9 +58,8 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const {children, pathContext} = this.props;
+    const {children} = this.props;
     const {isMenuOpen} = this.state;
-    const isExample = pathContext.toc === 'examples';
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
       <div>
@@ -77,7 +76,7 @@ export default class Layout extends React.Component {
             {this.renderTOC(config, tableOfContents)}
           </ToCContainer>
 
-          <BodyContainerToC isExample={isExample}>
+          <BodyContainerToC>
             {children}
           </BodyContainerToC>
 
@@ -163,6 +162,7 @@ export default class Layout extends React.Component {
       tableOfContents,
       allMarkdown
     } = this.props;
+
     return (
       <WebsiteConfigProvider
         value={{config, theme, tableOfContents, allMarkdown}}

@@ -89,13 +89,13 @@ export const MainExamples = styled('main', ({$theme, ...props}) => ({
 }));
 
 export const ExampleCard = styled('div', ({$theme, ...props}) => ({
-  border: $theme.border300,
+  border: $theme.borders.border300,
   cursor: 'pointer',
   margin: $theme.sizing.scale400,
   padding: `${$theme.sizing.scale700} ${$theme.sizing.scale600} ${
     $theme.sizing.scale700
   } ${$theme.sizing.scale600}`,
-  transition: `background ${$theme.animation.timing400} border-color ${
+  transitionDuration: `background ${$theme.animation.timing400} border-color ${
     $theme.animation.timing400
   }`,
   transitionTimingFunction: $theme.animation.easeInOutCurve,
