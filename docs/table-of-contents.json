@@ -51,7 +51,8 @@
         {
           "title": "API Reference",
           "entries": [
-            {"entry": "docs/gatsby/api-reference/ocular-config"}
+            {"entry": "docs/gatsby/api-reference/ocular-config"},
+            {"entry": "docs/gatsby/api-reference/generated-pages"}
           ]
         }
       ]

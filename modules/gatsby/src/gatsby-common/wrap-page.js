@@ -12,7 +12,6 @@ const Layout = require('../components/layout/layout').default;
 
 // eslint-disable-next-line react/prop-types, react/display-name
 module.exports = ({element, props}) => {
-  console.log('in wrap page', props);
   return <Layout {...props}>{element}</Layout>;
 };
 
