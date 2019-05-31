@@ -18,13 +18,12 @@ for (const dependency in DEPENDENCIES) {
 }
 
 module.exports = {
-  logLevel: 4,
+  logLevel: 3,
 
   DOC_FOLDER: `${__dirname}/../docs/`,
   ROOT_FOLDER: `${__dirname}/../`,
   DIR_NAME: `${__dirname}`,
 
-  EXAMPLES: [],
   DOCS,
 
   // TODO/ib - from ocular, deduplicate with above settings
@@ -46,6 +45,14 @@ module.exports = {
 
   HOME_RIGHT: null,
 
+  GA_TRACKING: null,
+
+  // For showing star counts and contributors.
+  // Should be like btoa('YourUsername:YourKey') and should be readonly.
+  GITHUB_KEY: null,
+
+  ADDITIONAL_LINKS: [],
+
   HOME_BULLETS: [
     {
       text: 'Designed for React',
@@ -58,13 +65,35 @@ module.exports = {
     }
   ],
 
-  ADDITIONAL_LINKS: [],
+  PROJECTS: [
+    {
+      title: 'deck.gl',
+      url: 'https://deck.gl'
+    },
+    {
+      title: 'luma.gl',
+      url: 'https://luma.gl'
+    },
+    {
+      title: 'react-map-gl',
+      url: 'https://uber.github.io/react-map-gl'
+    },
+    {
+      title: 'react-vis',
+      url: 'https://uber.github.io/react-vis'
+    }
+  ],
 
-  GA_TRACKING: null,
+  INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
 
-  // For showing star counts and contributors.
-  // Should be like btoa('YourUsername:YourKey') and should be readonly.
-  GITHUB_KEY: null,
+  EXAMPLES: [
+    {
+      title: 'Minimal Example',
+      image: 'images/icon-high-precision.svg',
+      componentUrl: resolve(__dirname, '../examples/minimal/app.js'),
+      path: 'examples/minimal'
+    }
+  ],
 
   // Avoids duplicate conflicting inputs when importing from examples folders
   // Ocular adds this to gatsby's webpack config
