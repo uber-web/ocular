@@ -21,9 +21,9 @@
 import React, {Component} from 'react';
 import WebsiteConfigConsumer from './layout/website-config';
 import Hero from './hero';
-import GithubContributors from './github/github-contributors.jsx';
+import GithubContributors from './github/github-contributors';
 
-function renderPage({config}) {
+function renderPage({config, HeroExample}) {
   const {
     HOME_HEADING,
     HOME_RIGHT = '',
@@ -34,14 +34,14 @@ function renderPage({config}) {
   // Note: The Layout "wrapper" component adds header and footer etc
   return (
     <div className="fg">
-      <Hero />
+      <Hero HeroExample={HeroExample} />
       <div className="fg p4">
         <div className="container f fw">
           <div className="f1 p" style={{minWidth: '10rem'}}>
             <h2>{HOME_HEADING}</h2>
             <hr className="short" />
-            {HOME_BULLETS.map((bullet, i) => (
-              <div key={i}>
+            {HOME_BULLETS.map(bullet => (
+              <div key={bullet.text}>
                 <h3 className="fac">
                   <img src={bullet.img} className="m-right" alt="" />
                   {bullet.text}
@@ -73,10 +73,13 @@ function renderPage({config}) {
 
 export default class Home extends Component {
   render() {
+    const {HeroExample} = this.props;
     return (
-      <WebsiteConfigConsumer>
-        {({config}) => renderPage({config})}
-      </WebsiteConfigConsumer>
+      <main>
+        <WebsiteConfigConsumer>
+          {({config}) => renderPage({config, HeroExample})}
+        </WebsiteConfigConsumer>
+      </main>
     );
   }
 }
