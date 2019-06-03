@@ -84,7 +84,7 @@ module.exports = {
     }
   ],
 
-  INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
+  // INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
 
   EXAMPLES: [
     {
