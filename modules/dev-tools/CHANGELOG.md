@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.26
+- Update publish script for unirepo (#201)
+
 ## v0.0.25
 - Bump webpack-bundle-analyzer version (#192)
 - Update Lerna version (#197)
