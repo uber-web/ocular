@@ -44,12 +44,18 @@ else
       break;;
 
     "beta")
-      npm version prerelease
+      # -f includes any changes in the version commit
+      npm version prerelease --force
+      # push to branch
+      git push && git push --tags
       npm publish --tag beta
       break;;
 
     "prod")
-      npm version patch
+      # -f includes any changes in the version commit
+      npm version patch --force
+      # push to branch
+      git push && git push --tags
       npm publish
       break;;
 
