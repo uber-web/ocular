@@ -27,7 +27,9 @@
     "publish-beta": "yarn test && npm publish --tag beta",
     "publish-prod": "yarn test && npm publish",
     "lint": "eslint src",
-    "test": "node test/index.js"
+    "test": "node test/index.js",
+    "-------- NPM LIFECYCLE --------": "install will be called for the post-install stages of the lifecycle",
+    "install": "bin/install.js"
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
   "peerDependencies": {
