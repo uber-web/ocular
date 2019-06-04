@@ -53,7 +53,7 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const {children, pathContext, theme} = this.props;
+    const {children, theme} = this.props;
     const {isMenuOpen} = this.state;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
@@ -71,7 +71,7 @@ export default class Layout extends React.Component {
             {this.renderTOC(config, tableOfContents)}
           </ToCContainer>
 
-          <BodyContainerToC isExample={isExample} theme={theme}>
+          <BodyContainerToC theme={theme}>
             {children}
           </BodyContainerToC>
 
