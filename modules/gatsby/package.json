@@ -29,7 +29,7 @@
     "lint": "eslint src",
     "test": "node test/index.js",
     "-------- NPM LIFECYCLE --------": "install will be called for the post-install stages of the lifecycle",
-    "install": "bin/install.js"
+    "postinstall": "bin/post-install.js"
   },
   "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
   "peerDependencies": {
