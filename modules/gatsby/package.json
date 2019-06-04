@@ -1,7 +1,7 @@
 {
   "name": "ocular-gatsby",
   "description": "GatsbyJS plugin for rendering markdown docs for frameworks.",
-  "version": "1.0.0-alpha.35",
+  "version": "1.0.0-alpha.36",
   "license": "MIT",
   "repository": {
     "type": "git",
