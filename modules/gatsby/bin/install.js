@@ -21,18 +21,21 @@
 
 const { readFileSync, writeFileSync } = require('fs')
 
-const SOURCE_DIR = `${__dirname}/../`;
+const SOURCE_DIR = `${__dirname}/..`;
 const DIR_PATH = process.env.PWD;
 
 // copy required files for migration
 const FILENAMES = [
-  'src/components/site-query.jsx'
+  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-browser.js'},
+  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-config.js'},
+  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-ssr.js'},
+  {dir: `${SOURCE_DIR}/`, filename: 'src/components/site-query.jsx'},
 ];
 
-for (const filename of FILENAMES) {
-  const file = readFileSync(`${SOURCE_DIR}/${filename}`);
-  console.log('Migrating', `${DIR_PATH}/${filename}`)
-  writeFileSync(`${DIR_PATH}/${filename}`, file);
+for (const f of FILENAMES) {
+  const file = readFileSync(`${f.dir}/${f.filename}`);
+  console.log('Migrating', `${DIR_PATH}/${f.filename}`)
+  writeFileSync(`${DIR_PATH}/${f.filename}`, file);
 }
 
 return 1
