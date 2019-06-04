@@ -39,7 +39,6 @@
     "sharp": "0.22.1"
   },
   "dependencies": {
-    "baseui": "^6.17.2",
     "classnames": "^2.2.6",
     "gatsby-cli": "^2.5.7",
     "gatsby-image": "^2.0.38",
@@ -78,19 +77,15 @@
     "probe.gl": "^3.0.1",
     "prop-types": "^15.6.2",
     "react-disqus-comments": "^1.4.0",
-    "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
     "react-icons": "^2.2.7",
     "react-responsive": "^6.0.1",
     "react-share": "^2.0.0",
     "react-twitter-widgets": "^1.7.1",
     "react-virtualized": "^9.21.0",
-    "rehype-react": "^3.1.0",
     "slug": "^0.9.3",
     "stats.js": "^0.17.0",
     "styled-components": "^4.1.0",
-    "styletron-engine-atomic": "^1.1.2",
-    "styletron-react": "^5.0.1",
     "url-join": "^4.0.0",
     "validate.js": "^0.12.0"
   },
