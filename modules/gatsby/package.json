@@ -75,7 +75,6 @@
     "prismjs": "^1.15.0",
     "probe.gl": "^3.0.1",
     "prop-types": "^15.6.2",
-    "puppeteer": "^1.16.0",
     "react-disqus-comments": "^1.4.0",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
