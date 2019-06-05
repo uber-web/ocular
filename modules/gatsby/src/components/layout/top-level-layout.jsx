@@ -5,9 +5,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
-import {Client as Styletron} from 'styletron-engine-atomic';
-import {Provider as StyletronProvider} from 'styletron-react';
-import {BaseProvider} from 'baseui';
 
 import {WebsiteConfigProvider} from './website-config';
 
@@ -24,8 +21,6 @@ import {
   BodyContainerFull,
   BodyContainerToC
 } from '../styled';
-
-const engine = new Styletron();
 
 // TODO/ib - restore footer
 // import Footer from './footer';
@@ -58,13 +53,13 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const {children} = this.props;
+    const {children, theme} = this.props;
     const {isMenuOpen} = this.state;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
       <div>
-        <BodyGrid>
-          <HeaderContainer>
+        <BodyGrid theme={theme}>
+          <HeaderContainer theme={theme}>
             <ResponsiveHeader
               config={config}
               isMenuOpen={isMenuOpen}
@@ -72,11 +67,11 @@ export default class Layout extends React.Component {
             />
           </HeaderContainer>
 
-          <ToCContainer>
+          <ToCContainer theme={theme}>
             {this.renderTOC(config, tableOfContents)}
           </ToCContainer>
 
-          <BodyContainerToC>
+          <BodyContainerToC theme={theme}>
             {children}
           </BodyContainerToC>
 
@@ -87,19 +82,20 @@ export default class Layout extends React.Component {
   }
 
   renderBodyFull(config) {
-    const {children} = this.props;
+    const {children, theme} = this.props;
     const {isMenuOpen} = this.state;
     return (
       <div>
-        <HeaderContainer>
+        <HeaderContainer theme={theme}>
           <ResponsiveHeader
             config={config}
             isMenuOpen={isMenuOpen}
+            theme={theme}
             toggleMenu={this.toggleMenu}
           />
         </HeaderContainer>
 
-        <BodyContainerFull>{children}</BodyContainerFull>
+        <BodyContainerFull theme={theme}>{children}</BodyContainerFull>
 
         {/* <Footer /> */}
       </div>
@@ -107,13 +103,14 @@ export default class Layout extends React.Component {
   }
 
   renderTOC(config, tableOfContents) {
-    const {pageContext} = this.props;
+    const {pageContext, theme} = this.props;
     switch (pageContext.toc) {
       case 'docs':
         return (
           <TableOfContents
             chapters={tableOfContents.chapters}
             slug={pageContext.slug}
+            theme={theme}
           />
         );
 
@@ -167,22 +164,18 @@ export default class Layout extends React.Component {
       <WebsiteConfigProvider
         value={{config, theme, tableOfContents, allMarkdown}}
       >
-        <StyletronProvider value={engine}>
-          <BaseProvider theme={theme}>
-            <div>
-              {allMarkdown ? (
-                <SEO postEdges={allMarkdown} />
-              ) : (
-                <Helmet>
-                  <title>{config.PROJECT_NAME}</title>
-                </Helmet>
-              )}
-              {pageContext.toc
-                ? this.renderBodyWithTOC(config, tableOfContents)
-                : this.renderBodyFull(config)}
-            </div>
-          </BaseProvider>
-        </StyletronProvider>
+        <div>
+          {allMarkdown ? (
+            <SEO postEdges={allMarkdown} />
+          ) : (
+            <Helmet>
+              <title>{config.PROJECT_NAME}</title>
+            </Helmet>
+          )}
+          {pageContext.toc
+            ? this.renderBodyWithTOC(config, tableOfContents)
+            : this.renderBodyFull(config)}
+        </div>
       </WebsiteConfigProvider>
     );
   }
