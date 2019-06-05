@@ -24,29 +24,25 @@ const { existsSync, readFileSync, writeFileSync } = require('fs')
 const SOURCE_DIR = `${__dirname}/..`;
 const DIR_PATH = process.env.PWD;
 
-// always keep site-query.jsx fresh
-const siteQueryFilename = 'src/components/site-query.jsx';
-const siteQuerySourcePath = `${SOURCE_DIR}/${siteQueryFilename}`;
-const siteQueryTargetPath = `${DIR_PATH}/${siteQueryFilename}`;
-const file = readFileSync(siteQuerySourcePath);
-console.log('Migrating', siteQueryTargetPath)
-writeFileSync(siteQueryTargetPath, file);
-
 // copy required files for migration
 const FILENAMES = [
-  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-browser.js'},
-  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-config.js'},
-  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-ssr.js'},
+  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-browser.js', keepFresh: false},
+  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-config.js', keepFresh: false},
+  {dir: `${SOURCE_DIR}/website-template`, filename: 'gatsby-ssr.js', keepFresh: false},
+  // always keep site-query.jsx fresh
+  {dir: `${SOURCE_DIR}`, filename: 'src/components/site-query.jsx', keepFresh: true},
 ];
 
 for (const f of FILENAMES) {
   const targetPath = `${DIR_PATH}/${f.filename}`;
   // copy the file if it doesn't exist
-  if (!existsSync(targetPath)) {
+  if (f.keepFresh || !existsSync(targetPath)) {
     const sourcePath = `${f.dir}/${f.filename}`;
     const file = readFileSync(`${f.dir}/${f.filename}`);
-    console.log('Migrating', targetPath)
+    console.log(`Migrating '${targetPath}'.`)
     writeFileSync(targetPath, file);
+  } else {
+    console.log(`Skip '${targetPath}'' for migration.`)
   }
 }
 
