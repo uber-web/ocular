@@ -56,6 +56,9 @@ validate.validators.arrayValidate = function arrayValidate(
   key
 ) {
   const {allowEmpty, constraint} = options;
+  if (!value && allowEmpty) {
+    return null;
+  }
   // check value is array
   if (!validate.isArray(value)) {
     return `${key} needs to be an array.`;
