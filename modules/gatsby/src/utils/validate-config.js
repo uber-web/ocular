@@ -63,7 +63,6 @@ validate.validators.arrayValidate = function arrayValidate(
   if (value.length === 0 && !allowEmpty) {
     return `${key} cannot be empty.`;
   }
-  console.log(value, constraint);
   // check every element in the array
   const messages = value.map(v => {
     if (validate.isObject(v)) {

@@ -20,7 +20,6 @@
       "allowEmpty": true,
       "constraint": {
         "anyString": {
-          "allowEmpty": true,
           "message": "should be the local path to the doc folder."
         }
       }
