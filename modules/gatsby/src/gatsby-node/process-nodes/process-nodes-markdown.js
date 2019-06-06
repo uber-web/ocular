@@ -50,12 +50,24 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   // Update path
   let relPath = node.fields.slug;
   if (node.fileAbsolutePath) {
-    const index = node.fileAbsolutePath.indexOf('docs');
-    if (index !== -1) {
-      relPath = node.fileAbsolutePath.slice(index);
+
+    const {ocularConfig} = global;
+    // TODO(@javidhsueh): we might deprecate DOC_FOLDER soon.
+    if (ocularConfig.DOC_FOLDER) {
+      const src = path.resolve(ocularConfig.DOC_FOLDER);
+      const pathBeforeDir = src.substr(0, src.lastIndexOf('/') + 1);
+      relPath = node.fileAbsolutePath.replace(pathBeforeDir, '');
+    } else if (ocularConfig.DOC_FOLDERS) {
+      const index = ocularConfig.DOC_FOLDERS.findIndex(
+        folder => node.fileAbsolutePath.includes(path.resolve(folder))
+      );
+      if (index !== -1) {
+        const src = path.resolve(ocularConfig.DOC_FOLDERS[index]);
+        const pathBeforeDir = src.substr(0, src.lastIndexOf('/') + 1);
+        relPath = node.fileAbsolutePath.replace(pathBeforeDir, '');
+      }
     }
 
-    // relPath = path.relative(siteConfig.ROOT_FOLDER, node.fileAbsolutePath);
     const basename = path.basename(relPath, '.md');
     const dirname = path.dirname(relPath);
     relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;

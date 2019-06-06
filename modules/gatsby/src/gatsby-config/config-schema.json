@@ -15,6 +15,18 @@
     }
   },
 
+  "DOC_FOLDERS": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "anyString": {
+          "allowEmpty": true,
+          "message": "should be the local path to the doc folder."
+        }
+      }
+    }
+  },
+
   "ROOT_FOLDER": {
     "anyString": {
       "allowEmpty": true,
