@@ -52,7 +52,6 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   if (node.fileAbsolutePath) {
 
     const {ocularConfig} = global;
-    // TODO(@javidhsueh): we might deprecate DOC_FOLDER soon.
     if (ocularConfig.DOC_FOLDER) {
       const src = path.resolve(ocularConfig.DOC_FOLDER);
       const pathBeforeDir = src.substr(0, src.lastIndexOf('/') + 1);

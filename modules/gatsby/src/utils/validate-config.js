@@ -125,15 +125,19 @@ validate.validators.requiredForGithubProject = function prerequisite(
   return null;
 };
 
+const WILL_DEPRECATED = ['DOC_FOLDER'];
+
 // validate the config and return a list of warnings.
 module.exports = function validateConfig(config, constraints) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
+  const deprecatedProperties = Object.keys(config).filter(key => WILL_DEPRECATED.includes(key));
   // check config, validate function will return a object with corresponding warnings.
   // ex: {GITHUB_KEY: ['must be provided if your project is hosted on Github.']}
   const messages = validate(config, constraints) || {};
   const allMessages = [
     ...unusedProperties.map(key => `${key} is not used in the gatsby config.`),
+    ...deprecatedProperties.map(key => `${key} will be deprecated soon.`),
     ...Object.keys(messages).map(key => messages[key].toString())
   ];
   // print out all warnings
