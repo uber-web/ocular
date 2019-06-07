@@ -18,6 +18,7 @@
 | `EXAMPLES`         | `Array` | See below |
 | `INDEX_PAGE_URL` | `String`  | Optional URL to a replacement component for the home page. |
 | `DOC_PAGE_URL` | `String`  | Optional URL to a replacement component for doc pages. |
+| `DOC_FOLDERS` | `Array`  | A set of paths to the doc folders to source all markdown files. |
 | `EXAMPLE_GALLERY_PAGE_URL` | `String`  | Optional URL to a replacement component for the example gallery page (`/examples`). |
 | `EXAMPLE_PAGE_URL` | `String`  | Optional URL to a replacement component for the default example page. Normally `EXAMPLES[].componentUrl` is used instead. |
 

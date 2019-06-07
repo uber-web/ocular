@@ -6,7 +6,8 @@ const CONFIG_SCHEMA = require('./config-schema');
 
 const defaults = {
   logLevel: 3,
-  DOC_FOLDER: '/docs',
+  DOC_FOLDER: '',
+  DOC_FOLDERS: [],
   ROOT_FOLDER: './',
   DIR_NAME: 'website',
   EXAMPLES: [],
@@ -105,15 +106,6 @@ module.exports = function getGatsbyConfig(config) {
         options: {
           name: 'assets',
           path: `${__dirname}/../../static/`
-        }
-      },
-
-      // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: 'docs',
-          path: paddedConfig.DOC_FOLDER
         }
       },
 
@@ -322,6 +314,30 @@ module.exports = function getGatsbyConfig(config) {
   };
 
   // conditional plug-ins - only added depending on options on config
+
+  // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
+  if (paddedConfig.DOC_FOLDER) {
+    gatsbyConfig.plugins.push({
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'docs',
+        path: paddedConfig.DOC_FOLDER
+      }
+    });
+  }
+
+  if (paddedConfig.DOC_FOLDERS && paddedConfig.DOC_FOLDERS.length > 0) {
+    // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
+    paddedConfig.DOC_FOLDERS.forEach(folderPath => {
+      gatsbyConfig.plugins.push({
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: 'docs',
+          path: folderPath
+        }
+      });
+    })
+  }
 
   if (paddedConfig.DIR_NAME) {
     // Generates gatsby nodes for files in the website's src folder

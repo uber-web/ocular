@@ -5,7 +5,7 @@ import CONFIG_SCHEMA from '../../src/gatsby-config/config-schema';
 
 const GOOD_CONFIG = {
   logLevel: 4,
-  DOC_FOLDER: `./docs/`,
+  DOC_FOLDERS: [],
   ROOT_FOLDER: `/`,
   DIR_NAME: '/',
   EXAMPLES: [],
@@ -51,20 +51,32 @@ test('validateConfig', t => {
   t.deepEquals(
     validateConfig({}, CONFIG_SCHEMA),
     [
-      "Examples can't be blank,Examples EXAMPLES needs to be an array.",
+      'Examples can\'t be blank',
       'Docs DOCS needs to be an object.',
-      "Project type can't be blank",
-      "Project url can't be blank",
-      "Project desc can't be blank,Project desc should be the project's description",
+      'Project type can\'t be blank',
+      'Project url can\'t be blank',
+      'Project desc can\'t be blank,Project desc should be the project\'s description',
       'Path prefix should be the prefix added to all paths on the site',
-      'Projects PROJECTS needs to be an array.',
-      "Home heading can't be blank,Home heading should be ...",
-      "Home bullets can't be blank,Home bullets HOME_BULLETS needs to be an array.",
+      'Home heading can\'t be blank,Home heading should be ...',
+      'Home bullets can\'t be blank,Home bullets HOME_BULLETS needs to be an array.',
       'Theme overrides THEME_OVERRIDES needs to be an array.',
-      "Additional links can't be blank,Additional links ADDITIONAL_LINKS needs to be an array.",
+      'Additional links can\'t be blank',
       'Webpack webpack needs to be an object.'
     ],
     'Get all errors when config is empty'
+  );
+
+  // will deprecated configs
+  t.deepEquals(
+    validateConfig(
+      {
+        ...GOOD_CONFIG,
+        DOC_FOLDER: './docs'
+      },
+      CONFIG_SCHEMA
+    ),
+    ['DOC_FOLDER will be deprecated soon.'],
+    'Check deprecated configs'
   );
 
   // logLevel
