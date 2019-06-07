@@ -5,7 +5,6 @@ import CONFIG_SCHEMA from '../../src/gatsby-config/config-schema';
 
 const GOOD_CONFIG = {
   logLevel: 4,
-  DOC_FOLDER: `./docs/`,
   DOC_FOLDERS: [],
   ROOT_FOLDER: `/`,
   DIR_NAME: '/',
@@ -65,6 +64,19 @@ test('validateConfig', t => {
       'Webpack webpack needs to be an object.'
     ],
     'Get all errors when config is empty'
+  );
+
+  // will deprecated configs
+  t.deepEquals(
+    validateConfig(
+      {
+        ...GOOD_CONFIG,
+        DOC_FOLDER: './docs'
+      },
+      CONFIG_SCHEMA
+    ),
+    ['DOC_FOLDER will be deprecated soon.'],
+    'Check deprecated configs'
   );
 
   // logLevel
