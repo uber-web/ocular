@@ -40,11 +40,11 @@ function runBrowserTest(opts) {
 }
 
 switch (mode) {
+  case 'cover':
   case 'node':
     require(resolveEntry('test')); // Run the tests
     break;
 
-  case 'cover':
   case 'dist':
     const distConfig = getConfig({aliasMode: 'dist'});
     // Load deck.gl itself from the dist folder
