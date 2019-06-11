@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.27
+- Report coverage using src (#209)
+
 ## v0.0.26
 - Update publish script for unirepo (#201)
 
