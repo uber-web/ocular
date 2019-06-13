@@ -8441,10 +8441,10 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
-ocular-gatsby@1.0.0-alpha.38:
-  version "1.0.0-alpha.38"
-  resolved "https://registry.yarnpkg.com/ocular-gatsby/-/ocular-gatsby-1.0.0-alpha.38.tgz#2bed87e088a2d8379927da901b4126a7fa64ca10"
-  integrity sha512-DZXz9tUL3WIXTbBZUrEtBbNhban1VEDI6fGbjpYvYx7Ed+R7Ba7PGlyS5G/GQG5eGXmEY5ykIdII26VQCfE7gQ==
+ocular-gatsby@1.0.0-alpha.41:
+  version "1.0.0-alpha.41"
+  resolved "https://registry.yarnpkg.com/ocular-gatsby/-/ocular-gatsby-1.0.0-alpha.41.tgz#72769d11d0cce179f57e18e05ddb666afe59d943"
+  integrity sha512-JdKOxBPGmG+dp0pKeHorVlJO4SHNLugcexKysOr4DrrT/MFQeWjbv/cWdQyhfJI4D0YgE8hK0kaufcQ7krpVsQ==
   dependencies:
     classnames "^2.2.6"
     gatsby-cli "^2.5.7"
