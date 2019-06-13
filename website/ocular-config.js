@@ -18,7 +18,7 @@ for (const dependency in DEPENDENCIES) {
 }
 
 module.exports = {
-  logLevel: 3,
+  logLevel: 4,
 
   DOC_FOLDER: `${__dirname}/../docs/`,
   ROOT_FOLDER: `${__dirname}/../`,
@@ -67,20 +67,24 @@ module.exports = {
 
   PROJECTS: [
     {
-      title: 'deck.gl',
+      name: 'deck.gl',
       url: 'https://deck.gl'
     },
     {
-      title: 'luma.gl',
+      name: 'luma.gl',
       url: 'https://luma.gl'
     },
     {
-      title: 'react-map-gl',
+      name: 'react-map-gl',
       url: 'https://uber.github.io/react-map-gl'
     },
     {
-      title: 'react-vis',
+      name: 'react-vis',
       url: 'https://uber.github.io/react-vis'
+    },
+    {
+      name: 'vis.gl',
+      url: 'https://vis.gl'
     }
   ],
 
@@ -97,11 +101,5 @@ module.exports = {
 
   // Avoids duplicate conflicting inputs when importing from examples folders
   // Ocular adds this to gatsby's webpack config
-  webpack: {
-    resolve: {
-      // modules: [resolve(__dirname, './node_modules')],
-      alias: Object.assign({}, ALIASES, dependencyAliases)
-      // Local aliases need to be set in local gatsby node!
-    }
-  }
+  WEBPACK_ALIAS: Object.assign({}, ALIASES, dependencyAliases)
 };

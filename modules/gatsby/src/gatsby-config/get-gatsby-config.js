@@ -44,7 +44,7 @@ module.exports = function getGatsbyConfig(config) {
 
   log.log({color: COLOR.CYAN, priority: 0}, 'Loading gatsby config')();
   log.log(
-    {color: COLOR.CYAN, priority: 2},
+    {color: COLOR.CYAN, priority: 4},
     `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
   )();
 
