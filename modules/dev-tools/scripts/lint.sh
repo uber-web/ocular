@@ -53,9 +53,6 @@ case $MODE in
           fi
       done
     fi
-
-    # add changes to commit
-    git add .
     ;;
 
   "fix")
