@@ -5,6 +5,8 @@ import WebsiteConfigConsumer from './layout/website-config';
 export default class Hero extends Component {
   renderPage({config}) {
     const {HeroExample} = this.props;
+    const linkToGetStarted = config.LINK_TO_GET_STARTED || '/docs/developer-guide/get-started';
+
     return (
       <section className="banner">
         <div className="f hero">
@@ -13,7 +15,7 @@ export default class Hero extends Component {
         <div className="container">
           <h1>{config.PROJECT_NAME}</h1>
           <p>{config.PROJECT_DESC}</p>
-          <Link to="/docs/get-started" className="btn">
+          <Link to={linkToGetStarted} className="btn">
             GET STARTED
           </Link>
         </div>

@@ -20,18 +20,20 @@
 
 import React, {Component} from 'react';
 
-import {PROJECT_NAME, PROJECT_DESC} from 'config';
+import {PROJECT_NAME, PROJECT_DESC, LINK_TO_GET_STARTED} from 'config';
 
 class Hero extends Component {
 
   render() {
+    const linkToGetStarted = LINK_TO_GET_STARTED || '/docs/developer-guide/get-started';
+
     return (
       <div className="Hero">
 
         <div className="container">
           <h1>{PROJECT_NAME}</h1>
           <p>{PROJECT_DESC}</p>
-          <a href="#/documentation" className="btn">{'Get started'}</a>
+          <a href={linkToGetStarted} className="btn">{'Get started'}</a>
         </div>
 
       </div>
