@@ -50,6 +50,8 @@ module.exports = function getGatsbyConfig(config) {
 
   // validate the entire config and print the errors/warnings in the console
   validateConfig(config, CONFIG_SCHEMA);
+  // TODO/javidhsueh: we might want to throw an error if the config is invalid
+  // Right now we only print out warning/error messages
 
   // config padding
   // those values are required to support the query in ../site-query.jsx
