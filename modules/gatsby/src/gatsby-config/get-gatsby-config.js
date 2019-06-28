@@ -12,6 +12,7 @@ const defaults = {
   DIR_NAME: 'website',
   EXAMPLES: [],
   DOCS: {},
+  LINK_TO_GET_STARTED: '/docs/developer-guide/get-started',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'Ocular',
   PROJECT_ORG: 'uber-web',

@@ -21,6 +21,7 @@ const QUERY = graphql`
         PROJECT_URL
         PROJECT_ORG
         HOME_HEADING
+        LINK_TO_GET_STARTED
         HOME_BULLETS {
           text
           desc
