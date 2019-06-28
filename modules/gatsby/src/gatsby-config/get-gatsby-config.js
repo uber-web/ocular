@@ -12,6 +12,7 @@ const defaults = {
   DIR_NAME: 'website',
   EXAMPLES: [],
   DOCS: {},
+  LINK_TO_GET_STARTED: '/docs/developer-guide/get-started',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'Ocular',
   PROJECT_ORG: 'uber-web',
@@ -50,6 +51,8 @@ module.exports = function getGatsbyConfig(config) {
 
   // validate the entire config and print the errors/warnings in the console
   validateConfig(config, CONFIG_SCHEMA);
+  // TODO/javidhsueh: we might want to throw an error if the config is invalid
+  // Right now we only print out warning/error messages
 
   // config padding
   // those values are required to support the query in ../site-query.jsx

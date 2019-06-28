@@ -58,10 +58,12 @@ function sourceNodes({actions}) {
 
       ROOT_FOLDER: String
       DOC_FOLDER: String
+      DOC_FOLDERS: [String]
 
       GA_TRACKING: String
       GITHUB_KEY: String
       ADDITIONAL_LINKS: [AdditionalLinks]
+      LINK_TO_GET_STARTED: String
       PROJECTS: [Projects]
       HOME_BULLETS: [HomeBullets]
       EXAMPLES: [Examples]

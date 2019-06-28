@@ -46,6 +46,7 @@ export const HOME_BULLETS = [{
 }];
 
 export const ADDITIONAL_LINKS = [];
+export const LINK_TO_GET_STARTED = '/docs/developer-guide/get-started';
 
 export const GA_TRACKING = null;
 

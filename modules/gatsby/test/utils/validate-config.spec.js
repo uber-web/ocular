@@ -10,6 +10,7 @@ const GOOD_CONFIG = {
   DIR_NAME: '/',
   EXAMPLES: [],
   DOCS: {},
+  LINK_TO_GET_STARTED: '',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'ocular',
   PROJECT_ORG: 'uber-web',
@@ -170,6 +171,20 @@ test('validateConfig', t => {
     [],
     `Check if PROJECT_TYPE == '' and GITHUB_KEY is null`
   );
+
+  // LINK_TO_GET_STARTED
+  t.deepEquals(
+    validateConfig(
+      {
+        ...GOOD_CONFIG,
+        LINK_TO_GET_STARTED: 1
+      },
+      CONFIG_SCHEMA
+    ),
+    [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs/developer-guide/get-started'`],
+    `Check if LINK_TO_GET_STARTED is a valid string`
+  );
+  
 
   // THEME_OVERRIDES
   t.deepEquals(
