@@ -51,6 +51,8 @@ module.exports = {
   // Should be like btoa('YourUsername:YourKey') and should be readonly.
   GITHUB_KEY: null,
 
+  LINK_TO_GET_STARTED: '/docs/get-started',
+
   ADDITIONAL_LINKS: [],
 
   HOME_BULLETS: [
