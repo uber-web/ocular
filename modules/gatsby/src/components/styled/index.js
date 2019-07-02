@@ -3,7 +3,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import styledComponents from 'styled-components';
-
 import theme from './theme';
 /* eslint-disable import/prefer-default-export */
 
@@ -36,10 +35,9 @@ const styleObjectToString = (obj, depth = 0) => {
 
 function styled(element, stylingFunction) {
   const styledComponentLiteral = styleObjectToString(stylingFunction({$theme: theme}));
-  return styledComponents[element]`${styledComponentLiteral}`;
+  console.log(styledComponentLiteral);
+  return styledComponents(element)`${styledComponentLiteral}`;
 }
-
-
 
 // top-level layoout
 
@@ -51,7 +49,6 @@ export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
     margin: '100px auto 0'
   }
 }));
-
 
 export const BodyContainerToC = styled('div', ({$theme, ...props}) => ({
   gridColumn: '2 / 3',
@@ -192,3 +189,121 @@ export const MainSearch = styled('main', ({$theme, ...props}) => ({
   maxWidth: '600px',
   margin: '104px auto 0px'
 }));
+
+// table of contents
+
+const tocWidth = '300px';
+const topbarHeight = '4rem';
+const topbarMaxheight ='8rem';
+
+export const Toc = styled('div', ({$theme, ...props}) => ({
+    position: 'fixed',
+    width: tocWidth,
+    height: `calc(100% - ${topbarHeight})`,
+    fontWeight: 500,
+    padding: `1rem 0`,
+
+    flexShrink: 0,
+
+    zIndex: 1,
+    overflowY: 'auto',
+    '-webkit-overflow-scrolling': 'touch',
+
+    backgroundColor: $theme.colors.white,
+    borderRight: `1px solid ${$theme.colors.mono400}`,
+    transition: `all ${theme.animation.timing400}`,
+    whiteSpace: 'nowrap',
+    [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+      position: 'absolute',
+      width: '100vw',
+      height: 0,
+      padding: 0
+    }
+}));
+
+export const TocInnerDiv = styled('div', ({$theme, props}) => ({
+  paddingBottom: '80px',
+   [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+      paddingTop: topbarMaxheight,
+      paddingBottom: '1rem'
+   }
+}));
+
+export const ToggleExpanded = styled('div', ({$theme, props}) => ({
+    display: 'flex',
+    alignContent: 'center',
+    justifyItems: 'center',
+    borderBottom: `1px solid ${$theme.colors.mono400}`
+}))
+
+export const ToggleExpandedButton = styled('button', ({$theme, props}) => ({
+  display: 'flex'
+}))
+
+export const TocLinkWrapper = styled('div', ({$theme, props}) => ({
+  paddingLeft: `28px`,
+  color: $theme.colors.mono900,
+  background: 'transparent',
+  borderStyle: 'solid',
+  borderWidth: '0 0 0 1px',
+  borderColor: 'transparent',
+  fontSize: '14px',
+  overflowX: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  ':hover': {
+     color: $theme.colors.mono700
+  }
+}));
+
+export const ListHeaderLinkWrapper = styled('div', ({$theme, props}) => ({
+  background: 'transparent',
+  borderColor: 'transparent',
+  borderColorBottom: `1px solid ${$theme.colors.mono400}`,
+  borderStyle: 'solid',
+  borderWidth: '0 0 1px 1px',
+  color: $theme.colors.mono700,  
+  fontSize: '14px',
+  lineHeight: '56px',
+  overflowX: 'hidden',
+  paddingLeft: `40px`,
+  position: 'relative',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+}));
+
+export const SubPages = styled('div', ({$theme, props}) => ({
+  overflow: 'hidden',
+  transition: `max-height ${theme.animation.timing400}`
+}));
+
+export const SubPagesList = styled('ul', ({$theme, props}) => ({
+  marginBottom: 0,
+  marginTop: 0,
+  paddingLeft: 0
+}));
+
+export const TocListItem = styled('li',  ({$theme, props}) => ({
+  listStyle: 'none'
+}));
+
+export const TocFirstEntryInSection = styled('div', ({$theme, props}) => ({
+  lineHeight: '55px',
+}));
+
+export const TocEntryInSection = styled('div', ({$theme, props}) => ({
+  borderTop: `1px solid ${$theme.colors.mono400}`,
+  lineHeight: '55px',
+}));
+
+export const TocSoleEntryInSection = styled('div', ({$theme, props}) => ({
+  borderBottom: `1px solid ${$theme.colors.mono400}`,
+  lineHeight: '55px',
+}));
+
+export const TocLastEntryInSection = styled('div', ({$theme, props}) => ({
+  borderBottom: `1px solid ${$theme.colors.mono400}`,
+  borderTop: `1px solid ${$theme.colors.mono400}`,
+  lineHeight: '55px',
+}));
+

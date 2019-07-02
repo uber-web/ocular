@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-no-bind */
 // Copyright (c) 2018 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,6 +25,22 @@ import classNames from 'classnames';
 import {Link} from 'gatsby';
 import chevronDown from '../images/chevron-down_small-filled.svg';
 import chevronRight from '../images/chevron-right_small-filled.svg';
+
+import {
+  ListHeaderLinkWrapper,
+  SubPages,
+  SubPagesList,
+  TocListItem,
+  Toc,
+  TocFirstEntryInSection,
+  TocEntryInSection,
+  TocLastEntryInSection,
+  TocSoleEntryInSection,
+  TocInnerDiv,
+  TocLinkWrapper,
+  ToggleExpanded,
+  ToggleExpandedButton
+} from '../styled/index';
 
 function getRouteInfo({route, slug}) {
   if (route.childMarkdownRemark) {
@@ -97,15 +115,16 @@ const Chevron = ({collapsed, expanded, style}) => {
 // usable then it just renders a div. That should not be the case
 
 const SafeLink = ({
-  active,
   className,
   collapsed,
   depth,
   expanded,
   name,
-  path
+  path,
+  Wrapper
 }) => {
   const style = {
+    color: 'inherit',
     marginLeft: depth * 30
   };
 
@@ -117,7 +136,8 @@ const SafeLink = ({
   }
 
   return (
-    <div className={classNames(className, {active, expanded})} title={name}>
+    // <div className={classNames(className, {active, expanded})} title={name}>
+    <Wrapper>
       <Chevron collapsed={collapsed} expanded={expanded} style={style} />
       {!path || typeof path !== 'string' ? (
         <span style={style}>{name}</span>
@@ -126,11 +146,11 @@ const SafeLink = ({
           {name}
         </Link>
       )}
-    </div>
+    </Wrapper>
   );
 };
 
-const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
+const renderRoute = ({route, index, isLast, depth, slug, fullyExpanded}) => {
   const routeInfo = getRouteInfo({route, slug});
 
   if (route.chapters) {
@@ -143,23 +163,28 @@ const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
           active={active}
           collapsed={!fullyExpanded && !active}
           expanded={fullyExpanded || active}
-          className="list-header"
+          Wrapper={ListHeaderLinkWrapper}
           name={name}
           path={routeInfo.pathToFirstChild}
         />
-        <div className="subpages">
-          <ul>
+        <SubPages
+          style={{
+            ...(!active && !fullyExpanded ? {maxHeight: 0} : {})
+          }}
+        >
+          <SubPagesList>
             {route.chapters.map((r, idx) =>
               renderRoute({
                 route: r,
                 index: idx,
+                isLast: idx === route.chapters.length - 1,
                 depth: depth + 1,
                 slug,
                 fullyExpanded
               })
             )}
-          </ul>
-        </div>
+          </SubPagesList>
+        </SubPages>
       </div>
     );
   }
@@ -170,7 +195,7 @@ const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
     return (
       <div key={index} className="section">
         <SafeLink
-          className="list-header"
+          Wrapper={ListHeaderLinkWrapper}
           collapsed={!fullyExpanded && !active}
           expanded={fullyExpanded || active}
           active={active}
@@ -178,11 +203,12 @@ const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
           name={name}
           path={routeInfo.pathToFirstChild}
         />
-        <div
-          className="subpages subpages-entries"
-          style={{maxHeight: getHeight(route)}}
+        <SubPages
+          style={{
+            maxHeight: active || fullyExpanded ? getHeight(route) : 0
+          }}
         >
-          <ul>
+          <SubPagesList>
             {route.entries.map((childRoute, idx) => {
               if (!childRoute.childMarkdownRemark) {
                 console.warn(
@@ -193,13 +219,14 @@ const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
               return renderRoute({
                 route: childRoute,
                 fullyExpanded,
+                isLast: idx === route.entries.length - 1,
                 index: idx,
                 depth: depth + 1,
                 slug
               });
             })}
-          </ul>
-        </div>
+          </SubPagesList>
+        </SubPages>
       </div>
     );
   }
@@ -207,18 +234,27 @@ const renderRoute = ({route, index, depth, slug, fullyExpanded}) => {
   const remark = route.childMarkdownRemark;
   const name = remark && remark.frontmatter && remark.frontmatter.title;
   const target = remark && remark.fields && remark.fields.slug;
+  const Entry =
+    index === 0
+      ? isLast
+        ? TocSoleEntryInSection
+        : TocFirstEntryInSection
+      : isLast
+      ? TocLastEntryInSection
+      : TocEntryInSection;
   return (
-    <div key={index}>
-      <li>
+    <Entry key={index}>
+      <TocListItem>
         <SafeLink
           active={target === slug}
           depth={depth}
           className="link"
           name={name}
           path={target}
+          Wrapper={TocLinkWrapper}
         />
-      </li>
-    </div>
+      </TocListItem>
+    </Entry>
   );
 };
 
@@ -242,23 +278,27 @@ export default class TableOfContents extends PureComponent {
       return null;
     }
     return (
-      <div className={classNames('toc', {open}, className)}>
-        <div>
-          <div
+      <Toc>
+        {/* <div className={classNames('toc', {open}, className)}> */}
+        <TocInnerDiv>
+          {/* <div> */}
+          <ToggleExpanded>
+            {/* <div
             className={classNames('toggle-expanded', {
               expanded: fullyExpanded
             })}
-          >
-            <button
-              onClick={this.toggleExpanded.bind(this)}
-              onKeyPress={this.toggleExpanded.bind(this)}
+          > */}
+            {/* <button */}
+            <ToggleExpandedButton
+              onClick={() => this.toggleExpanded()}
+              onKeyPress={() => this.toggleExpanded()}
               type="button"
             >
               {fullyExpanded
                 ? 'Collapse table of contents'
                 : 'Expand table of contents'}
-            </button>
-          </div>
+            </ToggleExpandedButton>
+          </ToggleExpanded>
           {tree.map((route, index) =>
             renderRoute({
               route,
@@ -268,8 +308,8 @@ export default class TableOfContents extends PureComponent {
               fullyExpanded
             })
           )}
-        </div>
-      </div>
+        </TocInnerDiv>
+      </Toc>
     );
   }
 }
