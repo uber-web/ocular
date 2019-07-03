@@ -35,7 +35,6 @@ const styleObjectToString = (obj, depth = 0) => {
 
 function styled(element, stylingFunction) {
   const styledComponentLiteral = styleObjectToString(stylingFunction({$theme: theme}));
-  console.log(styledComponentLiteral);
   return styledComponents(element)`${styledComponentLiteral}`;
 }
 
@@ -55,7 +54,7 @@ export const BodyContainerToC = styled('div', ({$theme, ...props}) => ({
   gridRow: '2 / 3',
   width: '100%',
   padding: $theme.sizing.scale500,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     order: 2
   },
 
@@ -78,7 +77,7 @@ export const BodyGrid = styled('div', ({$theme, ...props}) => ({
   gridTemplateRows: '64px 1fr',
   gridTemplateColumns: '300px 1fr',
   maxWidth: `${$theme.breakpoints.large}px`,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     display: 'flex',
     flexDirection: 'column',
     height: 'inherit'
@@ -89,7 +88,7 @@ export const HeaderContainer = styled('div', ({$theme, ...props}) => ({
   gridColumn: '1 / 3',
   gridRow: '1 / 2',
   zIndex: 2,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     order: 1
   }
 }));
@@ -99,7 +98,7 @@ export const ToCContainer = styled('div', ({$theme, ...props}) => ({
   gridRow: '2 / 3',
   background: $theme.colors.mono200,
   overflow: 'scroll',
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     order: 3,
     overflow: 'inherit'
   }
@@ -109,7 +108,7 @@ export const ToCContainer = styled('div', ({$theme, ...props}) => ({
 
 export const MainExample = styled('main', ({$theme, ...props}) => ({
   height: 'calc(100vh - 96px)',
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     marginTop: '64px'
   }
 }));
@@ -213,7 +212,7 @@ export const Toc = styled('div', ({$theme, ...props}) => ({
     borderRight: `1px solid ${$theme.colors.mono400}`,
     transition: `all ${theme.animation.timing400}`,
     whiteSpace: 'nowrap',
-    [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+    [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
       position: 'absolute',
       width: '100vw',
       height: 0,
@@ -223,7 +222,7 @@ export const Toc = styled('div', ({$theme, ...props}) => ({
 
 export const TocInnerDiv = styled('div', ({$theme, props}) => ({
   paddingBottom: '80px',
-   [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
+   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
       paddingTop: topbarMaxheight,
       paddingBottom: '1rem'
    }
