@@ -237,18 +237,24 @@ export const ToggleExpanded = styled('div', ({$theme, props}) => ({
 }))
 
 export const ToggleExpandedButton = styled('button', ({$theme, props}) => ({
-  display: 'flex'
+  cursor: 'pointer',
+  fontSize: '12px',
+  outline: 'none',
+  ':hover': {
+    textDecoration: 'underline'
+  }
 }))
 
 export const TocLinkWrapper = styled('div', ({$theme, props}) => ({
-  paddingLeft: `28px`,
-  color: $theme.colors.mono900,
   background: 'transparent',
   borderStyle: 'solid',
   borderWidth: '0 0 0 1px',
   borderColor: 'transparent',
+  color: $theme.colors.mono900,
   fontSize: '14px',
   overflowX: 'hidden',
+  paddingLeft: `28px`,
+  position: 'relative',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   ':hover': {
@@ -256,13 +262,32 @@ export const TocLinkWrapper = styled('div', ({$theme, props}) => ({
   }
 }));
 
+export const TocExpandedEntryBackground = styled('div', ({$theme, props}) => ({
+  background: $theme.colors.mono200,
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  left: 0,
+  zIndex: -1
+}));
+
+export const TocActiveEntryBackground = styled('div', ({$theme, props}) => ({
+  background: $theme.colors.mono200,
+  borderLeft: `2px solid ${$theme.colors.primary500}`,
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  left: 0,
+  zIndex: -1
+}));
+
+
 export const ListHeaderLinkWrapper = styled('div', ({$theme, props}) => ({
   background: 'transparent',
   borderColor: 'transparent',
-  borderColorBottom: `1px solid ${$theme.colors.mono400}`,
+  borderBottomColor: $theme.colors.mono400,
   borderStyle: 'solid',
   borderWidth: '0 0 1px 1px',
-  color: $theme.colors.mono700,  
   fontSize: '14px',
   lineHeight: '56px',
   overflowX: 'hidden',
@@ -307,3 +332,8 @@ export const TocLastEntryInSection = styled('div', ({$theme, props}) => ({
   lineHeight: '55px',
 }));
 
+export const StyledChevron = styled('img', ({$theme, ...props}) => ({
+  position: 'absolute',
+  top: '50%',
+  transform: 'translate(-30px, -50%)'
+}));

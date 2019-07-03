@@ -21,19 +21,21 @@
 // THE SOFTWARE.
 
 import React, {PureComponent} from 'react';
-import classNames from 'classnames';
 import {Link} from 'gatsby';
 import chevronDown from '../images/chevron-down_small-filled.svg';
 import chevronRight from '../images/chevron-right_small-filled.svg';
 
 import {
   ListHeaderLinkWrapper,
+  StyledChevron,
   SubPages,
   SubPagesList,
   TocListItem,
   Toc,
+  TocActiveEntryBackground,
   TocFirstEntryInSection,
   TocEntryInSection,
+  TocExpandedEntryBackground,
   TocLastEntryInSection,
   TocSoleEntryInSection,
   TocInnerDiv,
@@ -102,10 +104,12 @@ function getHeight(route) {
 
 const Chevron = ({collapsed, expanded, style}) => {
   if (expanded) {
-    return <img alt="chevron-down" src={chevronDown} style={style} />;
+    return <StyledChevron alt="chevron-down" src={chevronDown} style={style} />;
   }
   if (collapsed) {
-    return <img alt="chevron-right" src={chevronRight} style={style} />;
+    return (
+      <StyledChevron alt="chevron-right" src={chevronRight} style={style} />
+    );
   }
   return null;
 };
@@ -115,7 +119,7 @@ const Chevron = ({collapsed, expanded, style}) => {
 // usable then it just renders a div. That should not be the case
 
 const SafeLink = ({
-  className,
+  active,
   collapsed,
   depth,
   expanded,
@@ -124,28 +128,36 @@ const SafeLink = ({
   Wrapper
 }) => {
   const style = {
-    color: 'inherit',
     marginLeft: depth * 30
   };
-
   // Gatsby <Link> element emmits warning if "external" links are used
   // "internal" links start with `/`
   // https://github.com/gatsbyjs/gatsby/issues/11243
   if (path && !path.startsWith('/')) {
     path = `/${path}`; // eslint-disable-line
   }
-
   return (
     // <div className={classNames(className, {active, expanded})} title={name}>
+
     <Wrapper>
-      <Chevron collapsed={collapsed} expanded={expanded} style={style} />
-      {!path || typeof path !== 'string' ? (
-        <span style={style}>{name}</span>
-      ) : (
-        <Link to={path} title={name} style={style}>
-          {name}
-        </Link>
-      )}
+      <Link
+        to={path}
+        style={{width: '100%', height: '100%', color: 'inherit'}}
+      >
+        {active && !expanded ? (
+          <TocActiveEntryBackground />
+        ) : expanded ? (
+          <TocExpandedEntryBackground />
+        ) : null}
+        <Chevron collapsed={collapsed} expanded={expanded} style={style} />
+        {!path || typeof path !== 'string' ? (
+          <span style={style}>{name}</span>
+        ) : (
+          <div to={path} title={name} style={style}>
+            {name}
+          </div>
+        )}
+      </Link>
     </Wrapper>
   );
 };
@@ -272,7 +284,7 @@ export default class TableOfContents extends PureComponent {
   }
 
   render() {
-    const {chapters: tree, className, open, slug} = this.props;
+    const {chapters: tree, slug} = this.props;
     const {fullyExpanded} = this.state;
     if (!tree) {
       return null;
