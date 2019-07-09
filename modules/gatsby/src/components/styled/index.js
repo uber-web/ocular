@@ -4,42 +4,13 @@
 import React from 'react';
 import styledComponents from 'styled-components';
 
-import theme from './theme';
+import {styled} from 'baseui';
 /* eslint-disable import/prefer-default-export */
 
 // baseweb shim
 // this function replicates the baseweb API, but uses styledComponents under the hood.
 // when we'll be ready to use baseweb, we can simply import {styled} from 'baseui'
 // and remove this function as well as the styled-components import
-
-function styleHyphenFormat(propertyName) {
-  function upperToHyphenLower(match, offset, string) {
-    return (offset > 0 ? '-' : '') + match.toLowerCase();
-  }
-  return propertyName.replace(/[A-Z]/g, upperToHyphenLower);
-}
-
-const styleObjectToString = (obj, depth = 0) => {
-  return Object.entries(obj).reduce((result, [key, value], index) => {
-    const recursiveValue =
-      typeof value === 'object'
-        ? `{\n${styleObjectToString(value, depth + 1)}\n}`
-        : `${value};`;
-    const optionalNewLine = index ? '\n' : '';
-    const indentation = ' '.repeat(depth * 2);
-    const hyphenatedKey = styleHyphenFormat(key);
-    const formattedKey = hyphenatedKey.includes(' ') ? `"${hyphenatedKey}"` : hyphenatedKey;
-    const optionalColon = typeof value === 'object' ? ' ' : ': '
-    return `${result}${optionalNewLine}${indentation}${hyphenatedKey}${optionalColon}${recursiveValue}`;
-  }, '');
-};
-
-function styled(element, stylingFunction) {
-  const styledComponentLiteral = styleObjectToString(stylingFunction({$theme: theme}));
-  return styledComponents[element]`${styledComponentLiteral}`;
-}
-
-
 
 // top-level layoout
 

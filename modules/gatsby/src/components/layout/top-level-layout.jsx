@@ -5,7 +5,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
-
+import {BaseProvider, styled} from 'baseui';
 import {WebsiteConfigProvider} from './website-config';
 
 import SEO from '../common/SEO';
@@ -21,6 +21,8 @@ import {
   BodyContainerFull,
   BodyContainerToC
 } from '../styled';
+
+const HelloWorld = styled('div', {color: 'red'});
 
 // TODO/ib - restore footer
 // import Footer from './footer';
@@ -71,9 +73,7 @@ export default class Layout extends React.Component {
             {this.renderTOC(config, tableOfContents)}
           </ToCContainer>
 
-          <BodyContainerToC theme={theme}>
-            {children}
-          </BodyContainerToC>
+          <BodyContainerToC theme={theme}>{children}</BodyContainerToC>
 
           {/* <Footer /> */}
         </BodyGrid>
@@ -164,18 +164,21 @@ export default class Layout extends React.Component {
       <WebsiteConfigProvider
         value={{config, theme, tableOfContents, allMarkdown}}
       >
-        <div>
-          {allMarkdown ? (
-            <SEO postEdges={allMarkdown} />
-          ) : (
-            <Helmet>
-              <title>{config.PROJECT_NAME}</title>
-            </Helmet>
-          )}
-          {pageContext.toc
-            ? this.renderBodyWithTOC(config, tableOfContents)
-            : this.renderBodyFull(config)}
-        </div>
+        <BaseProvider theme={theme}>
+          <div>
+            <HelloWorld>Hello Styletron</HelloWorld>
+            {allMarkdown ? (
+              <SEO postEdges={allMarkdown} />
+            ) : (
+              <Helmet>
+                <title>{config.PROJECT_NAME}</title>
+              </Helmet>
+            )}
+            {pageContext.toc
+              ? this.renderBodyWithTOC(config, tableOfContents)
+              : this.renderBodyFull(config)}
+          </div>
+        </BaseProvider>
       </WebsiteConfigProvider>
     );
   }
