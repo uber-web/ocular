@@ -55,13 +55,13 @@ export default class Layout extends React.Component {
   }
 
   renderBodyWithTOC(config, tableOfContents) {
-    const {children, theme} = this.props;
+    const {children} = this.props;
     const {isMenuOpen} = this.state;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
       <div>
-        <BodyGrid theme={theme}>
-          <HeaderContainer theme={theme}>
+        <BodyGrid>
+          <HeaderContainer>
             <ResponsiveHeader
               config={config}
               isMenuOpen={isMenuOpen}
@@ -69,11 +69,11 @@ export default class Layout extends React.Component {
             />
           </HeaderContainer>
 
-          <ToCContainer theme={theme}>
+          <ToCContainer>
             {this.renderTOC(config, tableOfContents)}
           </ToCContainer>
 
-          <BodyContainerToC theme={theme}>{children}</BodyContainerToC>
+          <BodyContainerToC>{children}</BodyContainerToC>
 
           {/* <Footer /> */}
         </BodyGrid>
@@ -82,20 +82,19 @@ export default class Layout extends React.Component {
   }
 
   renderBodyFull(config) {
-    const {children, theme} = this.props;
+    const {children} = this.props;
     const {isMenuOpen} = this.state;
     return (
       <div>
-        <HeaderContainer theme={theme}>
+        <HeaderContainer>
           <ResponsiveHeader
             config={config}
             isMenuOpen={isMenuOpen}
-            theme={theme}
             toggleMenu={this.toggleMenu}
           />
         </HeaderContainer>
 
-        <BodyContainerFull theme={theme}>{children}</BodyContainerFull>
+        <BodyContainerFull>{children}</BodyContainerFull>
 
         {/* <Footer /> */}
       </div>
@@ -103,14 +102,13 @@ export default class Layout extends React.Component {
   }
 
   renderTOC(config, tableOfContents) {
-    const {pageContext, theme} = this.props;
+    const {pageContext} = this.props;
     switch (pageContext.toc) {
       case 'docs':
         return (
           <TableOfContents
             chapters={tableOfContents.chapters}
             slug={pageContext.slug}
-            theme={theme}
           />
         );
 

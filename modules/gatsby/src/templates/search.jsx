@@ -2,7 +2,6 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 import {Link} from 'gatsby';
 import SearchIcon from '../components/images/search-filled.svg';
-import WithConfig from '../components/layout/website-config';
 
 import WebsiteConfigConsumer from '../components/layout/website-config';
 import {
@@ -53,58 +52,53 @@ export default class SearchPage extends React.Component {
     const {debouncing, results, currentQuery} = this.state;
     const {pathContext} = this.props;
     return (
-      <WithConfig>
-        {({theme}) => (
-          <MainSearch theme={theme}>
-            <div className="fcol f fg container p2">
-              <SearchContainer theme={theme}>
-                <IconContainer theme={theme}>
-                  <img src={SearchIcon} alt="search" height="16" width="16" />
-                </IconContainer>
-                <div className="fg">
-                  <InputSearch
-                    type="text"
-                    placeholder="Search"
-                    onChange={this.handleChange}
-                    value={currentQuery}
-                    theme={theme}
-                    style={{width: '100%'}}
-                  />
-                </div>
-              </SearchContainer>
-
-              {debouncing ? <div>Searching...</div> : null}
-              <div>
-                {currentQuery && !debouncing && (
-                  <div>
-                    {results.length
-                      ? `${results.length} articles found.`
-                      : `No result for this query.`}
-                  </div>
-                )}
-
-                {!currentQuery && !debouncing && (
-                  <div>
-                    {pathContext.data
-                      ? `${pathContext.data.length} articles indexed.`
-                      : ''}
-                  </div>
-                )}
-                <div className="results">
-                  {results.map(result => (
-                    <div className="search-item" key={result.slug}>
-                      <div className="search-title">
-                        <Link to={result.slug}>{result.title}</Link>
-                      </div>
-                      <div className="search-content">{result.excerpt}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <MainSearch>
+        <div className="fcol f fg container p2">
+          <SearchContainer>
+            <IconContainer>
+              <img src={SearchIcon} alt="search" height="16" width="16" />
+            </IconContainer>
+            <div className="fg">
+              <InputSearch
+                type="text"
+                placeholder="Search"
+                onChange={this.handleChange}
+                value={currentQuery}
+                style={{width: '100%'}}
+              />
             </div>
-          </MainSearch>
-        )}
-      </WithConfig>
+          </SearchContainer>
+
+          {debouncing ? <div>Searching...</div> : null}
+          <div>
+            {currentQuery && !debouncing && (
+              <div>
+                {results.length
+                  ? `${results.length} articles found.`
+                  : `No result for this query.`}
+              </div>
+            )}
+
+            {!currentQuery && !debouncing && (
+              <div>
+                {pathContext.data
+                  ? `${pathContext.data.length} articles indexed.`
+                  : ''}
+              </div>
+            )}
+            <div className="results">
+              {results.map(result => (
+                <div className="search-item" key={result.slug}>
+                  <div className="search-title">
+                    <Link to={result.slug}>{result.title}</Link>
+                  </div>
+                  <div className="search-content">{result.excerpt}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </MainSearch>
     );
   }
 

@@ -4,7 +4,6 @@ import {graphql} from 'gatsby';
 import {AutoSizer} from 'react-virtualized';
 
 import {MainExample} from '../components/styled';
-import WithConfig from '../components/layout/website-config';
 import ExampleRunner from '../components/example-runner';
 
 /* eslint no-undef: "off" */
@@ -38,28 +37,22 @@ export default class ExampleTemplate extends React.Component {
     // console.log(example);
 
     return (
-      <WithConfig>
-        {({theme}) => (
-          <MainExample theme={theme}>
-            <AutoSizer>
-              {({height, width}) =>
-                example && (
-                  <ExampleRunner
-                    height={height}
-                    example={example}
-                    sourceLink={
-                      pageResources &&
-                      pageResources.page &&
-                      pageResources.page.path
-                    }
-                    width={width}
-                  />
-                )
-              }
-            </AutoSizer>
-          </MainExample>
-        )}
-      </WithConfig>
+      <MainExample>
+        <AutoSizer>
+          {({height, width}) =>
+            example && (
+              <ExampleRunner
+                height={height}
+                example={example}
+                sourceLink={
+                  pageResources && pageResources.page && pageResources.page.path
+                }
+                width={width}
+              />
+            )
+          }
+        </AutoSizer>
+      </MainExample>
     );
   }
 }
