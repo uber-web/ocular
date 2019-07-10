@@ -5,7 +5,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
-import {BaseProvider, styled} from 'baseui';
+import {BaseProvider} from 'baseui';
 import {WebsiteConfigProvider} from './website-config';
 
 import SEO from '../common/SEO';
@@ -22,7 +22,6 @@ import {
   BodyContainerToC
 } from '../styled';
 
-const HelloWorld = styled('div', {color: 'red'});
 
 // TODO/ib - restore footer
 // import Footer from './footer';
@@ -164,7 +163,6 @@ export default class Layout extends React.Component {
       >
         <BaseProvider theme={theme}>
           <div>
-            <HelloWorld>Hello Styletron</HelloWorld>
             {allMarkdown ? (
               <SEO postEdges={allMarkdown} />
             ) : (
