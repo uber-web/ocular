@@ -75,7 +75,7 @@ module.exports = function getGatsbyConfig(config) {
     plugins: [
       // Reads metadata from the React Helmet component
       'gatsby-plugin-react-helmet',
-
+      'gatsby-plugin-styletron',
       // A Gatsby plugin for styled-components with built-in server-side rendering support.
       'gatsby-plugin-styled-components',
       'gatsby-plugin-sharp',
