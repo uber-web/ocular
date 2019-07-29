@@ -6,6 +6,7 @@
     "generate": "node ./generate-index/index.js"
   },
   "dependencies": {
+    "lodash": "^4.7.13",
     "prop-types": "^15.7.2",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
