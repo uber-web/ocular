@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "gatsby": "^2.3.0",
-    "ocular-gatsby": "^1.0.0-alpha.43"
+    "ocular-gatsby": "^1.0.0-alpha.45"
   },
   "devDependencies": {}
 }
