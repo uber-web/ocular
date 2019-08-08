@@ -208,30 +208,15 @@ const commands = {
       stdio: 'inherit'
     })
   },
-
-  'build-docs'() {
-    let options = {
-      websitePath: '/website'
-    }
-    if (existsSync(`${DIR_PATH}/src/build-routes-options.json`)) {
-      options = JSON.parse(readFileSync(`${DIR_PATH}/src/build-routes-options.json`))
-    }
-    const { websitePath, baseurl } = options
-    const docsSrcPath = process.argv[3] || options.docsSrcPath || `src/docs/`
-
-    const docs = listDocs(docsSrcPath, websitePath)
-    const output = buildMdRoutes(docs, docsSrcPath, websitePath)
-
-    if (baseurl) {
-      console.log('generating sitemap')
-      const sitemap = buildSitemap(baseurl, docs)
-      writeFileSync(`${DIR_PATH}/dist/sitemap.xml`, sitemap)
-      writeFileSync(`${DIR_PATH}/dist/robots.txt`, `sitemap: ${baseurl}/sitemap.xml`)
-    }
-    console.log('upating documentation routes')
-    writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, output)
-  },
   */
+  'build-toc'() {
+    let ocularConfig = require(`${DIR_PATH}/ocular-config.js`);
+    const docFolder = ocularConfig.DOC_FOLDER;
+    const listOfDocs = listDocs(docFolder);
+    const toc = buildToc(listOfDocs);
+    writeFileSync(`${docFolder}/table-of-contents.json`, toc);
+  },
+  
 
   help() {
     console.log(`
@@ -256,3 +241,81 @@ if (!commands[command]) {
 
 commands[command]()
 return 1
+
+
+function listDocs(docsSrcPath) {
+  const queue = readdirSync(docsSrcPath).map(fileName => ({
+    fileName,
+    path: []
+  }))
+  const docs = [];
+  while (queue.length) {
+    const { fileName, path } = queue.pop();
+    const fullPath = normalize(
+      [docsSrcPath]
+        .concat(path)
+        .concat(fileName)
+        .join('/');
+    )
+
+    if (lstatSync(fullPath).isDirectory() === false) {
+      if (extname(fileName) === '.md') {
+        const docBaseName = basename(fileName, '.md');
+        const slug = path.concat(docBaseName).join('/');
+        docs.push({
+          docBaseName,
+          slug,
+          path
+        });
+      }
+      // ignore non .md files
+    } else {
+      const newPath = path.concat(fileName);
+      const newFullPath = [docsSrcPath].concat(newPath).join('/');
+      readdirSync(newFullPath).forEach(f => {
+        queue.push({ fileName: f, path: newPath });
+      })
+    }
+  }
+  return docs;
+}
+
+function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
+  return docs
+    .sort((a, b) => (a.fullPath > b.fullPath ? 1 : -1))
+    .reduce((result, doc) => {
+      
+      let url = baseUrl;
+      // removes accidental '//'s
+      const slug = `${baseUrl}/${doc.slug}`.replace(/\/\//g, '/');
+
+      // we'll look where to add each entry
+      let location;
+
+      // we'll create chapters in the TOC if needs be
+      const chapterKey = doc.path.length ? sentence(doc.path[0]) : nameOfDefaultChapter;
+      
+      if (!result.chapters.find(chapter => chapter.title === chapterKey)) {
+        result.chapters.push({title: chapterKey, entries: []});
+      }
+
+      // we'll update location depending on the path of each entry,
+      // creating new sections as we go if needed
+
+      location = result.chapters.find(chapter => chapter.title === chapterKey);
+      doc.path.slice(1).forEach(folder => {
+        const entryKey = sentence(folder);
+        if (!location.entries.find(entry => entry.title === entryKey)) {
+          location.entries.push({title: entryKey, entries: []});
+        }
+        location = location.entries.find(entry => entry.title === entryKey);
+      });
+
+      location.entries.push({entry: `${baseUrl}${doc.slug}`});
+      
+      return result;
+    }, {
+      chapters: [],
+      id: 'table-of-contents'
+    });
+}
