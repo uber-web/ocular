@@ -14,6 +14,7 @@ module.exports = {
 
   DOC_FOLDER: '${init.websiteFolder}/../docs/',
   ROOT_FOLDER: '${init.websiteFolder}/../',
+  DIR_NAME: '${init.websiteFolder}',
 
   EXAMPLES: [
     // {
@@ -60,9 +61,9 @@ module.exports = {
     }
   ],
 
-  PROJECTS: {
-    // 'Project name': 'http://project.url',
-  },
+  PROJECTS: [
+    // {name: 'Project name', url: 'http://project.url'},
+  ],
   ADDITIONAL_LINKS: [
     // {name: 'link label', href: 'http://link.url'}
   ],
