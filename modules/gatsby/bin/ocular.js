@@ -62,10 +62,7 @@ const FILENAMES = [
   '.eslintignore',
 ];
 
-const PACKAGE_JSON = require(`${TEMPLATE_DIR}/package.json`)
-
 const OCULAR_CONFIG_TEMPLATE = require(`${TEMPLATE_DIR}/ocular-config-template.js`)
-
 
 // TODO/ib - autogenerate table-of-contents.json
 // const { listDocs, buildMdRoutes, buildSitemap } = require('./utils/build-docs')
@@ -121,10 +118,10 @@ const commands = {
 
         result.websiteFolder = process.env.PWD;
         execSync('mkdir -p src/components static/images styles');
-        
-        let license = PACKAGE_JSON.license;
-        PACKAGE_JSON.name = slug(result.name);
-        PACKAGE_JSON.description = result.desc;
+
+        const CURRENT_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
+
+        let license = CURRENT_PACKAGE_JSON.license;
 
         // PACKAGE_JSON.scripts = {
         //   clean: 'rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}',
@@ -140,11 +137,16 @@ const commands = {
           const file = readFileSync(`${TEMPLATE_DIR}/${filename}`);
           console.log('Writing', `${DIR_PATH}/${filename}`, file.slice(20))
           writeFileSync(`${DIR_PATH}/${filename}`, file);
-        }
+        }        
+        const UPDATED_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
+        UPDATED_PACKAGE_JSON.name = slug(result.name);
+        UPDATED_PACKAGE_JSON.description = result.desc;
 
         if (license !== '') {
-          PACKAGE_JSON.license = license;
+          UPDATED_PACKAGE_JSON.license = license;
         }
+
+        writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(UPDATED_PACKAGE_JSON, null, 2)}\n`)
         
         const ocularConfig = OCULAR_CONFIG_TEMPLATE(result);
         writeFileSync(`${DIR_PATH}/ocular-config.js`, ocularConfig);
