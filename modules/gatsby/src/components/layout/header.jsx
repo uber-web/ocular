@@ -22,7 +22,19 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import GithubIcon from 'react-icons/lib/go/mark-github';
 import classNames from 'classnames';
-import {Link} from 'gatsby';
+
+import {
+  HamburgerMenu,
+  Header as StyledHeader,
+  HeaderA,
+  HeaderLink as StyledLink,
+  HeaderLinksBlock,
+  HeaderLinkContainer,
+  HeaderLogo,
+  HeaderMenuBlock,
+  HeaderMenu,
+  HeaderMenuLink
+} from '../styled/';
 
 import GithubStars from '../github/github-stars.jsx';
 
@@ -34,24 +46,16 @@ function GithubLink() {
   return (
     <div className="github-link">
       <span>Github</span>
-      <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} />
+      {/* <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} /> */}
     </div>
   );
 }
 
-function HeaderLink({to, href, label, classnames = ''}) {
+function HeaderLink({to, href, label}) {
   if (to) {
-    return (
-      <Link to={to} className={classnames}>
-        {label}
-      </Link>
-    );
+    return <StyledLink to={to}>{label}</StyledLink>;
   }
-  return (
-    <a href={href} className={classnames}>
-      {label}
-    </a>
-  );
+  return <HeaderA href={href}>{label}</HeaderA>;
 }
 
 /**
@@ -102,8 +106,14 @@ export default class Header extends Component {
     // some of the links which are hardcoded should come from configuration
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
+      collapsed: true,
       links: generateHeaderLinks(props)
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({collapsed: !this.state.collapsed});
   }
 
   renderStars() {
@@ -131,47 +141,37 @@ export default class Header extends Component {
     const {links} = this.state;
 
     return (
-      <header className={classNames({open: isMenuOpen})}>
-        <div className="bg" style={{opacity}} />
-
-        <div className="f header-content">
-          <a className="logo" href="#/">
-            {PROJECT_NAME}
-          </a>
-
-          <div className="site-links">
-            <div className="site-link">
-              <Link to="/">{PROJECT_NAME}</Link>
-            </div>
-            {PROJECTS.map(({name, url}) => (
-              <div className="site-link" key={name}>
-                <a href={url}>{name}</a>
-              </div>
-            ))}
-          </div>
-
-          <div
-            className="links fac"
-            style={{
-              maxHeight:
-                isSmallScreen && isMenuOpen
-                  ? `${4 * links.length}rem`
-                  : undefined
-            }}
+      <StyledHeader>
+        <HeaderMenuBlock>
+          {PROJECTS.length ? (
+            <HamburgerMenu onClick={this.handleClick} />
+          ) : null}
+          <HeaderLogo href="/">{PROJECT_NAME}</HeaderLogo>
+          <HeaderMenu
+            $collapsed={this.state.collapsed}
+            $nbItems={PROJECTS.length}
           >
-            {/* If the no examples marker, return without creating pages */}
-            {links.map((link, index) => (
-              <HeaderLink
-                {...link}
-                key={index}
-                classnames={classNames({
-                  ...link.classnames,
-                  active: link.to && pathname === link.to
-                })}
-              />
+            {PROJECTS.map(({name, url}) => (
+              <HeaderMenuLink key={name} href={url}>
+                {name}
+              </HeaderMenuLink>
             ))}
-            {this.renderStars()}
-          </div>
+          </HeaderMenu>
+        </HeaderMenuBlock>
+
+        <HeaderLinksBlock
+          style={{
+            maxHeight:
+              isSmallScreen && isMenuOpen ? `${4 * links.length}rem` : undefined
+          }}
+        >
+          {/* If the no examples marker, return without creating pages */}
+          {links.map((link, index) => (
+            <HeaderLinkContainer>
+              <HeaderLink {...link} key={index} />
+            </HeaderLinkContainer>
+          ))}
+          {/* this.renderStars() */}
 
           <div
             className="menu-toggle"
@@ -179,8 +179,8 @@ export default class Header extends Component {
           >
             <i className={`icon icon-${isMenuOpen ? 'close' : 'menu'}`} />
           </div>
-        </div>
-      </header>
+        </HeaderLinksBlock>
+      </StyledHeader>
     );
   }
 

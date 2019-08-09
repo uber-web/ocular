@@ -10,6 +10,23 @@ import {styled} from 'baseui';
 
 export {CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, MarkdownBody, P, Pre} from './typography';
 
+// Header
+
+export {
+  HamburgerMenu,
+  Header,
+  HeaderA,
+  HeaderContainer,
+  HeaderLink,
+  HeaderLinkContainer,
+  HeaderLinksBlock,
+  HeaderLogo,
+  HeaderMenu,
+  HeaderMenuBlock,
+  HeaderMenuLink
+} from './header';
+
+
 // top-level layoout
 
 export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
@@ -54,15 +71,6 @@ export const BodyGrid = styled('div', ({$theme, ...props}) => ({
     display: 'flex',
     flexDirection: 'column',
     height: 'inherit'
-  }
-}));
-
-export const HeaderContainer = styled('div', ({$theme, ...props}) => ({
-  gridColumn: '1 / 3',
-  gridRow: '1 / 2',
-  zIndex: 2,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
-    order: 1
   }
 }));
 
