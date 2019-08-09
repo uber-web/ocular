@@ -118,23 +118,10 @@ const commands = {
 
         result.websiteFolder = process.env.PWD;
         execSync('mkdir -p src/components static/images styles');
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> final round of changes following session with Isaac
 
         const CURRENT_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
 
         let license = CURRENT_PACKAGE_JSON.license;
-<<<<<<< HEAD
-=======
-        
-        let license = PACKAGE_JSON.license;
-        PACKAGE_JSON.name = slug(result.name);
-        PACKAGE_JSON.description = result.desc;
->>>>>>> more fixes to init process
-=======
->>>>>>> final round of changes following session with Isaac
 
         // PACKAGE_JSON.scripts = {
         //   clean: 'rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}',
