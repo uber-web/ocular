@@ -7,10 +7,14 @@ import {graphql} from 'gatsby';
 // giving them special parameters
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, P, Pre, MarkdownBody} from '../components/styled';
 =======
 import {H1, H2, H3, H4, H5, H6, Paragraph1 as P} from 'baseui/typography';
 >>>>>>> 1st pass at typography pass
+=======
+import {CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, P, Pre, MarkdownBody} from '../components/styled/';
+>>>>>>> first typography pass using new designs
 
 const CustomLinkWrapper = relativeLinks => {
   const CustomLink = ({href, ...props}) => {
@@ -25,6 +29,9 @@ const CustomLinkWrapper = relativeLinks => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> first typography pass using new designs
 const CustomPre = props => {
   // the point of this component is to distinguish styling of inline <code /> elements
   // with code blocks (ie <pre><code>...</code></pre>). 
@@ -45,8 +52,11 @@ const CustomPre = props => {
   </Pre>);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 1st pass at typography pass
+=======
+>>>>>>> first typography pass using new designs
 // Query for the markdown doc by slug
 // (Note: We could just search the allMarkdown from WebsiteConfig ourselves)
 export const query = graphql`
@@ -93,10 +103,15 @@ export default class DocTemplate extends React.Component {
         h6: H6,
         p: P,
 <<<<<<< HEAD
+<<<<<<< HEAD
         pre: CustomPre,
         code: InlineCode,
 =======
 >>>>>>> 1st pass at typography pass
+=======
+        pre: CustomPre,
+        code: InlineCode,
+>>>>>>> first typography pass using new designs
         a: CustomLinkWrapper(relativeLinks)
       }
     }).Compiler;
@@ -109,10 +124,14 @@ export default class DocTemplate extends React.Component {
     return (
       <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <MarkdownBody>{renderAst(htmlAst)}</MarkdownBody>
 =======
         <div className="markdown-body">{renderAst(htmlAst)}</div>
 >>>>>>> 1st pass at typography pass
+=======
+        <MarkdownBody>{renderAst(htmlAst)}</MarkdownBody>
+>>>>>>> first typography pass using new designs
       </div>
     );
   }
