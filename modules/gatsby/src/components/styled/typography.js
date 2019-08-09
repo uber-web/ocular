@@ -3,6 +3,7 @@ import {styled} from 'baseui';
 // h4, h5, and h6 haven't been spec'ed yet, so we'll just reuse baseweb defaults
 export {H4, H5, H6} from 'baseui/typography';
 
+// we are moving the styling of the code block from scss into styletron styled components.
 const monospaceFontStack = `'SF Mono', Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`;
 
 export const H1 = styled('h1', ({$theme}) => ({

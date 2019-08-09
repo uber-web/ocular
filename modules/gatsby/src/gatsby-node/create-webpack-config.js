@@ -1,6 +1,6 @@
   const {log, COLOR} = require('../utils/log');
 
-  const MODULE_NAME = '@jckr/ocular-gatsby';
+  const MODULE_NAME = 'ocular-gatsby';
 
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
