@@ -20,10 +20,22 @@
 // THE SOFTWARE.
 
 const { spawn, execSync } = require('child_process')
-const { existsSync, readFileSync, writeFileSync } = require('fs')
-const ghpages = require('gh-pages');
-const inquirer = require('inquirer')
-const slug = require('slug')
+const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs')
+let ghpages;
+let inquirer;
+let slug;
+
+try {
+  ghpages = require('gh-pages');
+  inquirer = require('inquirer');
+  slug = require('slug');
+} 
+catch (e) {
+  // if either ghpages, inquirer or slug can't be found
+  // it's not the end of the world until they are used
+  console.log(e);
+}
+
 
 // Environment
 
@@ -48,20 +60,23 @@ const FILENAMES = [
   'package.json',
   '.gitignore',
   '.eslintignore',
-  // Better if we can avoid this
-  'src/components/site-query.jsx'
 ];
 
-const PACKAGE_JSON = require(`${TEMPLATE_DIR}/package.json`)
-
 const OCULAR_CONFIG_TEMPLATE = require(`${TEMPLATE_DIR}/ocular-config-template.js`)
-
 
 // TODO/ib - autogenerate table-of-contents.json
 // const { listDocs, buildMdRoutes, buildSitemap } = require('./utils/build-docs')
 
 const commands = {
   init() {
+    if (inquirer === undefined) {
+      console.log('please install inquirer (ie yarn add inquirer, npm install inquirer');
+      return;
+    }
+    if (slug === undefined) {
+      console.log('please install slug (ie yarn add slug, npm install slug');
+      return;
+    }
     inquirer
       .prompt([
         {
@@ -89,7 +104,7 @@ const commands = {
         },
         {
           name: 'path',
-          message: 'Where is the ocular website relative to your main project?',
+          message: 'Where is the website folder relative to your main project?',
           default: '/website/',
           validate: v => Boolean(v) || 'You should provide a path'
         },
@@ -102,10 +117,11 @@ const commands = {
       .then(result => {
 
         result.websiteFolder = process.env.PWD;
-        execSync('mkdir -p src/components static styles')
+        execSync('mkdir -p src/components static/images styles');
 
-        PACKAGE_JSON.name = slug(result.name)
-        PACKAGE_JSON.description = result.desc
+        const CURRENT_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
+
+        let license = CURRENT_PACKAGE_JSON.license;
 
         // PACKAGE_JSON.scripts = {
         //   clean: 'rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}',
@@ -121,8 +137,17 @@ const commands = {
           const file = readFileSync(`${TEMPLATE_DIR}/${filename}`);
           console.log('Writing', `${DIR_PATH}/${filename}`, file.slice(20))
           writeFileSync(`${DIR_PATH}/${filename}`, file);
+        }        
+        const UPDATED_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
+        UPDATED_PACKAGE_JSON.name = slug(result.name);
+        UPDATED_PACKAGE_JSON.description = result.desc;
+
+        if (license !== '') {
+          UPDATED_PACKAGE_JSON.license = license;
         }
 
+        writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(UPDATED_PACKAGE_JSON, null, 2)}\n`)
+        
         const ocularConfig = OCULAR_CONFIG_TEMPLATE(result);
         writeFileSync(`${DIR_PATH}/ocular-config.js`, ocularConfig);
 

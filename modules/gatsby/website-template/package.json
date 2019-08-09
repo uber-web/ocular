@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "gatsby": "^2.3.0",
-    "ocular-gatsby": "^1.0.0-alpha.43"
+    "ocular-gatsby": "^1.0.0-alpha.46",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {}
 }
