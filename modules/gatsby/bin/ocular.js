@@ -36,7 +36,6 @@ catch (e) {
   console.log(e);
 }
 
-
 // Environment
 
 const DIR_PATH = process.env.PWD;
@@ -207,28 +206,27 @@ const commands = {
 
   help() {
     console.log(`
-Ocular CLI
-----------
+    Ocular CLI
+    ----------
 
-Available commands:
+    Available commands:
 
-- init: create the bootstrap files in the current project
-- start: launch webpack in dev mode (accepts 'open' arg)
-- build: generate the bundle and dist files
+    - init: create the bootstrap files in the current project
+    - start: launch webpack in dev mode (accepts 'open' arg)
+    - build: generate the bundle and dist files
 
-You can provide the --debug flag to print the computed webpack config.
-`)
+    You can provide the --debug flag to print the computed webpack config.
+    `)
+    }
   }
-}
 
 const command = process.argv[2]
 if (!commands[command]) {
-  return commands.help()
+  return commands.help();
 }
 
-commands[command]()
-return 1
-
+commands[command]();
+return 1;
 
 function listDocs(docsSrcPath) {
   const queue = readdirSync(docsSrcPath).map(fileName => ({
@@ -242,8 +240,8 @@ function listDocs(docsSrcPath) {
       [docsSrcPath]
         .concat(path)
         .concat(fileName)
-        .join('/');
-    )
+        .join('/')
+    );
 
     if (lstatSync(fullPath).isDirectory() === false) {
       if (extname(fileName) === '.md') {
@@ -306,3 +304,4 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
       id: 'table-of-contents'
     });
 }
+

@@ -2,15 +2,13 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import styledComponents from 'styled-components';
 
 import {styled} from 'baseui';
 /* eslint-disable import/prefer-default-export */
 
-// baseweb shim
-// this function replicates the baseweb API, but uses styledComponents under the hood.
-// when we'll be ready to use baseweb, we can simply import {styled} from 'baseui'
-// and remove this function as well as the styled-components import
+// Typography 
+
+export {H1, H2, H3, H4, H5, H6, P} from './typography';
 
 // top-level layoout
 
