@@ -8,6 +8,9 @@
 // export const HOME_HEADING = '${init.desc}';
 
 module.exports = init => `
+// default location for table of contents
+const DOCS = require('../docs/table-of-contents.json');
+
 module.exports = {
   // Adjusts amount of debug information from ocular-gatsby
   logLevel: 4,
@@ -24,9 +27,8 @@ module.exports = {
     //   componentUrl: '../examples/app.js'
     // }
   ],
-  DOCS: [
-    // your table of contents go there
-  ],
+  // your table of contents go there
+  DOCS,
 
   THEME_OVERRIDES: [
     //  {key: 'primaryFontFamily', value: 'serif'}
