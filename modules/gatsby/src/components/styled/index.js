@@ -8,7 +8,7 @@ import {styled} from 'baseui';
 
 // Typography 
 
-export {H1, H2, H3, H4, H5, H6, P} from './typography';
+export {CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, MarkdownBody, P, Pre} from './typography';
 
 // top-level layoout
 
