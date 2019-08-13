@@ -10,7 +10,7 @@ export const Header = styled('header', ({$theme}) => ({
   display: 'flex',
   height: $theme.sizing.scale1600,
   justifyContent: 'space-between',
-  padding: `0 36px`,
+  padding: `0 24px`,
   position: 'fixed',
   top: 0,
   left: 0,
