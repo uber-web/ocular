@@ -194,13 +194,7 @@
   .toc {
     position: absolute;
     width: 100vw;
-    height: 0;
     padding: 0;
-
-    > div {
-      padding-top: $topbar-maxheight;
-      padding-bottom: 1rem;
-    }
 
     &.open {
       padding: 1rem;

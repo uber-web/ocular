@@ -16,6 +16,9 @@ export const Header = styled('header', ({$theme}) => ({
   left: 0,
   width: '100%',
   userSelect: 'none',
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+    position: 'static'
+  }
 }));
 
 export const HeaderContainer = styled('div', ({$theme, ...props}) => ({
@@ -28,9 +31,9 @@ export const HeaderContainer = styled('div', ({$theme, ...props}) => ({
 }));
 
 export const HeaderMenuBlock = styled('div', ({$theme, ...props}) => ({
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row'
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'row'
 }));
 
 export const HeaderLogo = styled('a', ({$theme}) => ({
@@ -63,34 +66,36 @@ export const HeaderMenuLink = styled('a', ({$theme}) => ({
   ':visited': {color: $theme.colors.mono100},
   ':active': {color: $theme.colors.mono100},
   ':hover': {color: $theme.colors.mono100}
-}))
+}));
 
 export const HeaderLinksBlock = styled('div', ({$theme, ...props}) => ({
   display: 'flex',
   alignItems: 'center'
 }));
 
-const StyledHamburgerMenu  = styled('div', ({$theme}) => ({
+const StyledHamburgerMenu = styled('div', ({$theme}) => ({
   justifyContent: 'space-between',
   display: 'flex',
   flexDirection: 'column',
   padding: '3px 1px 4px',
   marginRight: $theme.sizing.scale600,
   height: $theme.sizing.scale800,
-  width: $theme.sizing.scale800,
+  width: $theme.sizing.scale800
 }));
 
 const HamburgerBar = styled('div', ({$theme}) => ({
   backgroundColor: $theme.colors.mono100,
   height: '3px',
-  width: '100%',
+  width: '100%'
 }));
 
-export const HamburgerMenu = ({onClick}) => <StyledHamburgerMenu onClick={onClick}>
-  <HamburgerBar />
-  <HamburgerBar />
-  <HamburgerBar />
-</StyledHamburgerMenu>
+export const HamburgerMenu = ({onClick}) => (
+  <StyledHamburgerMenu onClick={onClick}>
+    <HamburgerBar />
+    <HamburgerBar />
+    <HamburgerBar />
+  </StyledHamburgerMenu>
+);
 
 export const HeaderA = styled('a', ({$theme}) => ({
   color: $theme.colors.mono100,
