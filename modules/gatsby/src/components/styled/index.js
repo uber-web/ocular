@@ -2,25 +2,13 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import ChevronDown from 'baseui/icon/chevron-down';
+import ChevronDown from 'baseui/icon/chevron-down'
 import {styled} from 'baseui';
 /* eslint-disable import/prefer-default-export */
 
-// Typography
+// Typography 
 
-export {
-  CodeBlock,
-  H1,
-  H2,
-  H3,
-  H4,
-  H5,
-  H6,
-  InlineCode,
-  MarkdownBody,
-  P,
-  Pre
-} from './typography';
+export {A, CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, MarkdownBody, P, Pre} from './typography';
 
 // Header
 
@@ -38,6 +26,18 @@ export {
   HeaderMenuLink
 } from './header';
 
+// toc
+
+export {
+  TocChevron,
+  TocContainer,
+  TocEntry,
+  TocLink,
+  TocSubpages,
+  TocToggle,
+} from './toc';
+
+
 // top-level layoout
 
 export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
@@ -49,13 +49,16 @@ export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
   }
 }));
 
-export const BodyContainerToC = styled('div', ({$theme, ...props}) => ({
+
+export const BodyContainerToC = styled('div', ({$theme, $isTocOpen, ...props}) => ({
   gridColumn: '2 / 3',
   gridRow: '2 / 3',
   width: '100%',
   padding: $theme.sizing.scale500,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
-    order: 2
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+    order: 2,
+    opacity: $isTocOpen ? 0 : 1,
+    transition: 'opacity 0.3s'
   },
 
   '& > div': {
@@ -84,53 +87,6 @@ export const BodyGrid = styled('div', ({$theme, ...props}) => ({
   }
 }));
 
-export const ToCContainer = styled('div', ({$theme, $isTocOpen, ...props}) => ({
-  gridColumn: '1 / 2',
-  gridRow: '2 / 3',
-  background: $theme.colors.mono200,
-  overflow: 'scroll',
-  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
-    // order: 3,
-    overflow: 'inherit',
-    ...($isTocOpen ? {} : {position: 'relative'})
-  }
-}));
-
-export const StyledTocToggle = styled('div', ({$theme}) => ({
-  ...$theme.typography.font300,
-  fontFamily: 'Uber Move',
-  background: $theme.colors.mono1000,
-  color: $theme.colors.mono100,
-  display: 'flex',
-  alignItems: 'center',
-  padding: '18px 24px',
-  position: 'sticky',
-  top: 0,
-  userSelect: 'none',
-  zIndex: 10,
-  [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
-    display: 'none'
-  }
-}));
-
-export const TocToggleChevron = styled('div', ({$theme, $isTocOpen}) => ({
-  display: 'inline',
-  height: $theme.sizing.scale600,
-  marginRight: $theme.sizing.scale600,
-  transform: $isTocOpen ? 'none' : 'rotate(-90deg)',
-  transition: 'transform 0.3s',
-  width: $theme.sizing.scale600
-}));
-
-export const TocToggle = ({toggleToc, isTocOpen}) => (
-  <StyledTocToggle onClick={toggleToc}>
-    <TocToggleChevron $isTocOpen={isTocOpen}>
-      <ChevronDown />
-    </TocToggleChevron>
-    Table of Contents
-  </StyledTocToggle>
-);
-
 // example
 
 export const MainExample = styled('main', ({$theme, ...props}) => ({
@@ -155,8 +111,12 @@ export const ExampleCard = styled('div', ({$theme, ...props}) => ({
   border: $theme.borders.border300,
   cursor: 'pointer',
   margin: $theme.sizing.scale400,
-  padding: `${$theme.sizing.scale700} ${$theme.sizing.scale600} ${$theme.sizing.scale700} ${$theme.sizing.scale600}`,
-  transition: `background ${$theme.animation.timing400} border-color ${$theme.animation.timing400}`,
+  padding: `${$theme.sizing.scale700} ${$theme.sizing.scale600} ${
+    $theme.sizing.scale700
+  } ${$theme.sizing.scale600}`,
+  transition: `background ${$theme.animation.timing400} border-color ${
+    $theme.animation.timing400
+  }`,
   transitionTimingFunction: $theme.animation.easeInOutCurve,
   '&:hover': {
     background: $theme.colors.mono200,

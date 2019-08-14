@@ -1,10 +1,6 @@
   const {log, COLOR} = require('../utils/log');
 
-<<<<<<< HEAD
   const MODULE_NAME = 'ocular-gatsby';
-=======
-  const MODULE_NAME = '@jckr/ocular-gatsby';
->>>>>>> 1st pass at typography pass
 
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
@@ -49,7 +45,7 @@ class WebpackRule {
   }
 
   static updateRuleForOcular(rule, ocularConfig) {
-    const {WEBPACK_EXCLUDE_REGEXP, WEBPACK_INCLUDE_REGEXP} = ocularConfig;
+    // const {WEBPACK_EXCLUDE_REGEXP, WEBPACK_INCLUDE_REGEXP} = ocularConfig;
 
     // Uncomment to restrict to babel loaders only
     // const isBabelLoader = WebpackRule.isBabelLoader(rule);
@@ -67,12 +63,12 @@ class WebpackRule {
   static getExcludeOverride(rule, ocularConfig = {}) {
     const {exclude} = rule;
     // console.log('replacing exclude', rule);
-    return function(path) {
+    return function excludeOverride(path) {
       // NOTE: site-query is included!!! but STILL DOES NOT WORK
       // if (/site-query/.test(path)) {
       //   console.log('site-query filtered');
       // }
-      let isExcluded = typeof exclude === 'function' ? exclude(path) : exclude.test(path);
+      const isExcluded = typeof exclude === 'function' ? exclude(path) : exclude.test(path);
       if (isExcluded && /.*\.css$/.test(path)) {
         log.log(4, 'Prevented exclusion of css', path);
         return false;
