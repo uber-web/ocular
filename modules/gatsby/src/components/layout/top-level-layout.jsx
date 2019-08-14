@@ -58,6 +58,11 @@ export default class Layout extends React.Component {
     const {isTocOpen} = this.state;
     this.setState({isTocOpen: !isTocOpen});
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.pageContext.slug !== this.props.pageContext.slug) {
+      this.setState({isTocOpen: false});
+    }
+  }
 
   renderBodyWithTOC(config, tableOfContents) {
     const {children} = this.props;
@@ -78,7 +83,7 @@ export default class Layout extends React.Component {
             {this.renderTOC(config, tableOfContents)}
           </TocContainer>
 
-          <BodyContainerToC>{children}</BodyContainerToC>
+          <BodyContainerToC $isTocOpen={isTocOpen}>{children}</BodyContainerToC>
 
           {/* <Footer /> */}
         </BodyGrid>

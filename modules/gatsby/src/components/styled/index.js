@@ -8,7 +8,7 @@ import {styled} from 'baseui';
 
 // Typography 
 
-export {CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, MarkdownBody, P, Pre} from './typography';
+export {A, CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, MarkdownBody, P, Pre} from './typography';
 
 // Header
 
@@ -50,13 +50,15 @@ export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
 }));
 
 
-export const BodyContainerToC = styled('div', ({$theme, ...props}) => ({
+export const BodyContainerToC = styled('div', ({$theme, $isTocOpen, ...props}) => ({
   gridColumn: '2 / 3',
   gridRow: '2 / 3',
   width: '100%',
   padding: $theme.sizing.scale500,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium})`]: {
-    order: 2
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+    order: 2,
+    opacity: $isTocOpen ? 0 : 1,
+    transition: 'opacity 0.3s'
   },
 
   '& > div': {

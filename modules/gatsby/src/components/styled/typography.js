@@ -4,6 +4,14 @@ import {styled} from 'baseui';
 
 export {H4, H5, H6} from 'baseui/typography';
 
+export const A = styled('a', ({$theme}) => ({
+  textDecoration: 'none',
+  color: $theme.colors.primary400,
+  ':visited': {color: $theme.colors.primary400},
+  ':active': {color: $theme.colors.primary400}, 
+  ':hover': {color: $theme.colors.primary700}, 
+}))
+
 export const H1 = styled('h1', ({$theme}) => ({
   ...$theme.typography.font700,
   fontFamily: 'Uber Move',

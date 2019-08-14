@@ -38,6 +38,7 @@ export const HeaderMenuBlock = styled('div', ({$theme, ...props}) => ({
 
 export const HeaderLogo = styled('a', ({$theme}) => ({
   ...$theme.typography.font600,
+  textDecoration: 'none',
   fontFamily: 'Uber Move',
   fontWeight: 500,
   fontSize: '28px',
@@ -63,6 +64,7 @@ export const HeaderMenuLink = styled('a', ({$theme}) => ({
   display: 'block',
   lineHeight: '48px',
   padding: '0 16px',
+  textDecoration: 'none',
   ':visited': {color: $theme.colors.mono100},
   ':active': {color: $theme.colors.mono100},
   ':hover': {color: $theme.colors.mono100}
@@ -74,6 +76,7 @@ export const HeaderLinksBlock = styled('div', ({$theme, ...props}) => ({
 }));
 
 const StyledHamburgerMenu  = styled('div', ({$theme}) => ({
+  cursor: 'pointer',
   justifyContent: 'space-between',
   display: 'flex',
   flexDirection: 'column',
@@ -97,6 +100,7 @@ export const HamburgerMenu = ({onClick}) => <StyledHamburgerMenu onClick={onClic
 
 export const HeaderA = styled('a', ({$theme}) => ({
   color: $theme.colors.mono100,
+  textDecoration: 'none',
   ':visited': {color: $theme.colors.mono100},
   ':active': {color: $theme.colors.mono600},
   ':hover': {color: $theme.colors.mono600}
@@ -104,6 +108,7 @@ export const HeaderA = styled('a', ({$theme}) => ({
 
 export const HeaderLink = styled(Link, ({$theme}) => ({
   color: $theme.colors.mono100,
+  textDecoration: 'none',
   ':visited': {color: $theme.colors.mono100},
   ':active': {color: $theme.colors.mono600},
   ':hover': {color: $theme.colors.mono600}

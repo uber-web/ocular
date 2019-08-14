@@ -51,7 +51,12 @@ html, body {
   flex-direction: column;
   min-height: 100vh;
 }
-
+a {
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
 #root > div {
   display: flex;
   position: relative;
@@ -71,17 +76,6 @@ body {
   line-height: 24px;
   margin: 0;
   overflow-y: auto;
-}
-
-a {
-  outline: none;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  color: $primary;
-  &:visited {
-    color: $primary;
-  }
 }
 
 h1 {

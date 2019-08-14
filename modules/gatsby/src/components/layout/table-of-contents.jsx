@@ -22,106 +22,74 @@ import React, {PureComponent} from 'react';
 
 import {TocChevron, TocLink, TocEntry, TocSubpages} from '../styled';
 
-// This component only creates a Link component if clicking on that Link will
-// effectively change routes. If no path is passed or if the path is not
-// usable then it just renders a div. That should not be the case
+export default class TableOfContents extends PureComponent {
+  constructor(props) {
+    super(props);
+    const {slug, chapters, firstItemIsExpanded} = props;
+    const expanded = firstItemIsExpanded ? {0 : true} : {};
+    const tocState = getTocState({slug, chapters, expanded});
 
-const SafeLink = ({
-  depth,
-  hasChildren,
-  id,
-  name,
-  path,
-  toggleEntry = () => {}
-}) => {
+    // tocState contains the state of the TOC with information such as
+    // what is the current height of an entry?
+    // is an entry selected or is any of its children selected?
+    // expanded records whether the user manually expanded or collapsed
+    // a section of the TOC. 
+    // why keep them separated? tocState get regenerated for instance
+    // when the slug changes (which may mean that some sections get expanded/collapsed)
+    // we don't want to overwrite the manual actions of the user in that case.
+    // instead, we first apply the "organic" changes of the toc, then on top of that
+    // we add the results of the user's action
 
-
-  // Gatsby <Link> element emmits warning if "external" links are used
-  // "internal" links start with `/`
-  // https://github.com/gatsbyjs/gatsby/issues/11243
-  if (path && !path.startsWith('/')) {
-    path = `/${path}`; // eslint-disable-line
+    this.state = {
+      tocState,
+      expanded
+    };
+    this.toggleEntry = this.toggleEntry.bind(this);
   }
 
-  return (
-    <TocEntry $depth={depth} title={name} onClick={() => toggleEntry(id)}>
-      {hasChildren && <TocChevron $depth={depth} />}
-      {!path || typeof path !== 'string' ? (
-        <span>{name}</span>
-      ) : (
-        <TocLink $depth={depth} to={path} title={name}>
-          {name}
-        </TocLink>
-      )}
-    </TocEntry>
-  );
-};
-
-const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
-  const children = route.chapters || route.entries || [];
-  const updatedId = id.concat(index);
-  
-  // parts of the TOC with children
-
-  if (children.length) {
-    const name = route.title;
-    const routeInfo = tocState[updatedId];
-    console.log({name, routeInfo})
-    return (
-      <div key={index}>
-        <SafeLink
-          depth={depth}
-          hasChildren
-          id={updatedId}
-          name={name}
-          /* uncomment to have the entry act as link to its first child */
-          /* path={routeInfo && routeInfo.pathToFirstChild} */
-          toggleEntry={toggleEntry}
-        />
-        <TocSubpages $height={routeInfo && routeInfo.height}>
-          {
-            children.map((childRoute, idx) => {
-            // if (!childRoute.childMarkdownRemark) {
-            //   console.warn(
-            //     `Missing content for entry ${idx} in chapter ${route.title}`,
-            //     route
-            //   );
-            // }
-          
-            return renderRoute({
-                depth: depth + 1,
-                id: updatedId,
-                index: idx,
-                route: childRoute,
-                tocState,
-                toggleEntry
-              });
-            })
-          }
-        </TocSubpages>
-      </div>
-    );
+  componentDidUpdate(prevProps) {
+    if (this.props.slug !== prevProps.slug) {
+      const {chapters, slug} = this.props;
+      const {expanded} = this.state;
+      const tocState = getTocState({chapters, slug, expanded});
+      this.setState({
+        tocState,
+        expanded
+      });
+    }
   }
 
-  // leaves 
+  toggleEntry(id) {
+    const {expanded, tocState} = this.state;
+    let updatedExpanded = {...expanded};
+    const entry = tocState[id];
+    
+    // if this entry has been manually expanded, then we manually collapse it.
+    // else - either this entry has never been manually expanded/collapsed,
+    // or it has been manually collapsed - we expand it.
+    updatedExpanded[id] = !isOpen(entry, expanded);
+    // then we need to update the heights.
+    let updatedTocState = updateHeights({...tocState}, updatedExpanded);
+    console.log(`${id} now ${expanded[id]} with height ${tocState[id].height}`);
 
-  const remark = route.childMarkdownRemark;
-  // first syntax is toc for documentation, second is toc for examples
-  const name = (remark && remark.frontmatter && remark.frontmatter.title) || route.title;
-  const target = (remark && remark.fields && remark.fields.slug) || route.path;
-  return (
-    <div key={index}>
-      <li>
-        <SafeLink
-          active={tocState[updatedId] && tocState[updatedId].isSelected === true}
-          depth={depth}
-          name={name}
-          path={target}
-        />
-      </li>
-    </div>
-  );
-};
+    this.setState({
+      tocState: updatedTocState,
+      expanded: updatedExpanded
+    });
+  }
+
+  render() {
+    const {chapters: tree, slug} = this.props;
+
+    if (!tree) {
+      return null;
+    }
+    return <ControlledToc tree={tree} tocState={this.state.tocState} toggleEntry={this.toggleEntry} />;
+  }
+}
+
+// util functions to pre-process the TOC
+
 
 function getTocState({chapters, slug, expanded}) {
   // we try to generate the height of each toc entry and whether it's expanded
@@ -204,63 +172,108 @@ function updateHeights(tocEntries, expanded) {
   return tocEntries;
 }
 
-export default class TableOfContents extends PureComponent {
-  constructor(props) {
-    super(props);
-    const {slug, chapters, firstItemIsExpanded} = props;
-    const expanded = firstItemIsExpanded ? {0 : true} : {};
-    const tocState = getTocState({slug, chapters, expanded});
-    this.state = {
-      tocState,
-      expanded
-    };
-    this.toggleEntry = this.toggleEntry.bind(this);
+// sub components of the TOC
+
+// This component only creates a Link component if clicking on that Link will
+// effectively change routes. If no path is passed or if the path is not
+// usable then it just renders a div. That should not be the case
+
+const SafeLink = ({
+  depth,
+  hasChildren,
+  id,
+  name,
+  path,
+  toggleEntry = () => {}
+}) => {
+
+  // Gatsby <Link> element emmits warning if "external" links are used
+  // "internal" links start with `/`
+  // https://github.com/gatsbyjs/gatsby/issues/11243
+  if (path && !path.startsWith('/')) {
+    path = `/${path}`; // eslint-disable-line
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.slug !== prevProps.slug) {
-      const {chapters, slug} = this.props;
-      const {expanded} = this.state;
-      const tocState = getTocState({chapters, slug, expanded});
-      this.setState({
-        tocState,
-        expanded
-      });
-    }
+  return (
+    <TocEntry $depth={depth} title={name} onClick={() => toggleEntry(id)}>
+      {hasChildren && <TocChevron $depth={depth} />}
+      {!path || typeof path !== 'string' ? (
+        <span>{name}</span>
+      ) : (
+        <TocLink $depth={depth} to={path} title={name}>
+          {name}
+        </TocLink>
+      )}
+    </TocEntry>
+  );
+};
+
+const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
+  const children = route.chapters || route.entries || [];
+  const updatedId = id.concat(index);
+  
+  // parts of the TOC with children
+
+  if (children.length) {
+    const name = route.title;
+    const routeInfo = tocState[updatedId];
+    return (
+      <div key={index}>
+        <SafeLink
+          depth={depth}
+          hasChildren
+          id={updatedId}
+          name={name}
+          /* uncomment to have the entry act as link to its first child */
+          /* path={routeInfo && routeInfo.pathToFirstChild} */
+          toggleEntry={toggleEntry}
+        />
+        <TocSubpages $height={routeInfo && routeInfo.height}>
+          {
+            children.map((childRoute, idx) => {
+            // if (!childRoute.childMarkdownRemark) {
+            //   console.warn(
+            //     `Missing content for entry ${idx} in chapter ${route.title}`,
+            //     route
+            //   );
+            // }
+          
+            return renderRoute({
+                depth: depth + 1,
+                id: updatedId,
+                index: idx,
+                route: childRoute,
+                tocState,
+                toggleEntry
+              });
+            })
+          }
+        </TocSubpages>
+      </div>
+    );
   }
 
-  toggleEntry(id) {
-    const {expanded, tocState} = this.state;
-    let updatedExpanded = {...expanded};
-    const entry = tocState[id];
-    
-    // if this entry has been manually expanded, then we manually collapse it.
-    // else - either this entry has never been manually expanded/collapsed,
-    // or it has been manually collapsed - we expand it.
-    updatedExpanded[id] = !isOpen(entry, expanded);
-    // then we need to update the heights.
-    let updatedTocState = updateHeights({...tocState}, updatedExpanded);
-    console.log(`${id} now ${expanded[id]} with height ${tocState[id].height}`);
+  // leaves 
 
-    this.setState({
-      tocState: updatedTocState,
-      expanded: updatedExpanded
-    });
-  }
-
-  render() {
-    const {chapters: tree, slug} = this.props;
-    console.log({tocState: this.state.tocState, tree});
-
-    if (!tree) {
-      return null;
-    }
-    return <ControlledToc tree={tree} tocState={this.state.tocState} toggleEntry={this.toggleEntry} />;
-  }
-}
+  const remark = route.childMarkdownRemark;
+  // first syntax is toc for documentation, second is toc for examples
+  const name = (remark && remark.frontmatter && remark.frontmatter.title) || route.title;
+  const target = (remark && remark.fields && remark.fields.slug) || route.path;
+  return (
+    <div key={index}>
+      <li>
+        <SafeLink
+          active={tocState[updatedId] && tocState[updatedId].isSelected === true}
+          depth={depth}
+          name={name}
+          path={target}
+        />
+      </li>
+    </div>
+  );
+};
 
 const ControlledToc = ({tree, tocState, toggleEntry}) => {
-  console.log('updating controlledToc');
   return (<div>
     {tree.map((route, index) =>
       renderRoute({
