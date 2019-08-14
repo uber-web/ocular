@@ -11,7 +11,6 @@ import {WebsiteConfigProvider} from './website-config';
 import SEO from '../common/SEO';
 
 import TableOfContents from './table-of-contents';
-import ExampleTableOfContents from './example-table-of-contents';
 import Header from './header';
 
 import {
@@ -19,9 +18,10 @@ import {
   BodyContainerToC,
   BodyGrid,
   HeaderContainer,
-  ToCContainer,
-  TocToggle
+  TocContainer,
+  TocToggle,
 } from '../styled';
+
 
 // TODO/ib - restore footer
 // import Footer from './footer';
@@ -54,7 +54,6 @@ export default class Layout extends React.Component {
     const {isMenuOpen} = this.state;
     this.setState({isMenuOpen: !isMenuOpen});
   }
-  
   toggleToc() {
     const {isTocOpen} = this.state;
     this.setState({isTocOpen: !isTocOpen});
@@ -75,9 +74,9 @@ export default class Layout extends React.Component {
             />
           </HeaderContainer>
           <TocToggle toggleToc={this.toggleToc} isTocOpen={isTocOpen} />
-          <ToCContainer $isTocOpen={isTocOpen}>
+          <TocContainer $isTocOpen={isTocOpen}> 
             {this.renderTOC(config, tableOfContents)}
-          </ToCContainer>
+          </TocContainer>
 
           <BodyContainerToC>{children}</BodyContainerToC>
 
@@ -140,8 +139,9 @@ export default class Layout extends React.Component {
         }
 
         return (
-          <ExampleTableOfContents
+          <TableOfContents
             chapters={examplesTOC}
+            firstItemIsExpanded
             slug={pageContext.slug}
           />
         );

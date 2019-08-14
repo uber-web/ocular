@@ -1,10 +1,8 @@
+import React from 'react';
+
 import {styled} from 'baseui';
 
-// h4, h5, and h6 haven't been spec'ed yet, so we'll just reuse baseweb defaults
 export {H4, H5, H6} from 'baseui/typography';
-
-// we are moving the styling of the code block from scss into styletron styled components.
-const monospaceFontStack = `'SF Mono', Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`;
 
 export const H1 = styled('h1', ({$theme}) => ({
   ...$theme.typography.font700,
@@ -43,7 +41,7 @@ export const InlineCode = styled('code', ({$theme}) => ({
   backgroundColor: $theme.colors.mono200,  
   borderRadius: $theme.sizing.scale100,
   padding: '0 5px',
-  fontFamily: monospaceFontStack,  
+  fontFamily: `Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`,  
   fontSize: '0.9em',
   margin: '1px 0',
   lineHeight: 'calc(1.5em / 0.9 - 2px)',
@@ -52,7 +50,7 @@ export const InlineCode = styled('code', ({$theme}) => ({
 }));
 
 export const CodeBlock = styled('code', ({$theme}) => ({
-  fontFamily: monospaceFontStack,
+  fontFamily: `Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`,
   direction: 'ltr',
   textAlign: 'left',
   whiteSpace: 'pre',
