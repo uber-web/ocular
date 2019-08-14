@@ -92,11 +92,13 @@ const HamburgerBar = styled('div', ({$theme}) => ({
   width: '100%',
 }));
 
-export const HamburgerMenu = ({onClick}) => <StyledHamburgerMenu onClick={onClick}>
-  <HamburgerBar />
-  <HamburgerBar />
-  <HamburgerBar />
-</StyledHamburgerMenu>
+export const HamburgerMenu = ({onClick}) => (
+  <StyledHamburgerMenu onClick={onClick}>
+    <HamburgerBar />
+    <HamburgerBar />
+    <HamburgerBar />
+  </StyledHamburgerMenu>
+)
 
 export const HeaderA = styled('a', ({$theme}) => ({
   color: $theme.colors.mono100,

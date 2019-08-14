@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {styled} from 'baseui';
 
 export {H4, H5, H6} from 'baseui/typography';

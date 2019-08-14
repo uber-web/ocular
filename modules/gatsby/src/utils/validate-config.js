@@ -75,9 +75,7 @@ validate.validators.arrayValidate = function arrayValidate(
   }).filter(Boolean);
   if (messages.length > 0) {
     // consolidate error messages of each element
-    return messages.map((m, idx) => {
-      return `${key}[${idx}]: ${Object.values(m)}`;
-    });
+    return messages.map((m, idx) => `${key}[${idx}]: ${Object.values(m)}`);
   }
   // pass validation
   return null;
