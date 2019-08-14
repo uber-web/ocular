@@ -1,5 +1,7 @@
   const {log, COLOR} = require('../utils/log');
 
+  const MODULE_NAME = 'ocular-gatsby';
+
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
 // https://github.com/gatsbyjs/gatsby/issues/3052
@@ -49,7 +51,7 @@ class WebpackRule {
     // const isBabelLoader = WebpackRule.isBabelLoader(rule);
 
     const excludeNeedsReplace =
-      WebpackRule.checkIfExcludes(rule, 'node_modules/ocular-gatsby/');
+      WebpackRule.checkIfExcludes(rule, `node_modules/${MODULE_NAME}/`);
       // && (!WEBPACK_EXCLUDE_REGEXP || WebpackRule.checkIfIncludes(rule, WEBPACK_EXCLUDE_REGEXP));
 
     if (excludeNeedsReplace) {
@@ -71,7 +73,8 @@ class WebpackRule {
         log.log(4, 'Prevented exclusion of css', path);
         return false;
       }
-      if (isExcluded && /ocular-gatsby/.test(path)) {
+      const ModuleRegEx = new RegExp(MODULE_NAME);
+      if (isExcluded && ModuleRegEx.test(path)) {
         log.log(4, `Prevented exclusion of ocular gatsby ${path}`);
         return false;
       }
