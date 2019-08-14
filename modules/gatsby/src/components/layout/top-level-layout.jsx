@@ -15,13 +15,13 @@ import ExampleTableOfContents from './example-table-of-contents';
 import Header from './header';
 
 import {
-  ToCContainer,
+  BodyContainerFull,
+  BodyContainerToC,
   BodyGrid,
   HeaderContainer,
-  BodyContainerFull,
-  BodyContainerToC
+  ToCContainer,
+  TocToggle
 } from '../styled';
-
 
 // TODO/ib - restore footer
 // import Footer from './footer';
@@ -43,19 +43,26 @@ export default class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMenuOpen: false
+      isMenuOpen: false,
+      isTocOpen: false
     };
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.toggleToc = this.toggleToc.bind(this);
   }
 
   toggleMenu() {
     const {isMenuOpen} = this.state;
     this.setState({isMenuOpen: !isMenuOpen});
   }
+  
+  toggleToc() {
+    const {isTocOpen} = this.state;
+    this.setState({isTocOpen: !isTocOpen});
+  }
 
   renderBodyWithTOC(config, tableOfContents) {
     const {children} = this.props;
-    const {isMenuOpen} = this.state;
+    const {isMenuOpen, isTocOpen} = this.state;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
       <div>
@@ -67,8 +74,8 @@ export default class Layout extends React.Component {
               toggleMenu={this.toggleMenu}
             />
           </HeaderContainer>
-
-          <ToCContainer>
+          <TocToggle toggleToc={this.toggleToc} isTocOpen={isTocOpen} />
+          <ToCContainer $isTocOpen={isTocOpen}>
             {this.renderTOC(config, tableOfContents)}
           </ToCContainer>
 
