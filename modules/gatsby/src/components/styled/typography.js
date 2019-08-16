@@ -22,7 +22,7 @@ export const H2 = styled('h2', ({$theme}) => ({
   ...$theme.typography.font500,
   fontFamily: 'Uber Move',
   fontWeight: 500,
-  margin: '16px 0 24px'
+  margin: '24px 0 16px'
 }));
 
 export const H3 = styled('h3', ({$theme}) => ({
@@ -33,7 +33,19 @@ export const H3 = styled('h3', ({$theme}) => ({
 export const P = styled('p', ({$theme}) => ({
   fontFamily: 'Uber Move',
   ...$theme.typography.font300,
-  margin: '20px 0'
+  lineHeight: 1.5,
+  margin: '0 0 16px'
+}));
+
+export const List = styled('ul', ({$theme}) => ({
+  fontFamily: 'Uber Move',
+  ...$theme.typography.font300,
+  lineHeight: 1.5,
+  margin: '0 0 16px'
+}));
+
+export const ListItem = styled('li', ({$theme}) => ({
+  marginBottom: '4px'
 }));
 
 export const MarkdownBody = styled('div', ({$theme}) => ({
@@ -57,6 +69,7 @@ export const InlineCode = styled('code', ({$theme}) => ({
 
 export const CodeBlock = styled('code', ({$theme}) => ({
   fontFamily: `Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`,
+  fontSize: '0.9em',
   direction: 'ltr',
   textAlign: 'left',
   whiteSpace: 'pre',
@@ -68,5 +81,33 @@ export const CodeBlock = styled('code', ({$theme}) => ({
 }));
 
 export const Pre = styled('pre', ({$theme}) => ({
-   backgroundColor: $theme.colors.mono200
+  backgroundColor: $theme.colors.mono200
+}));
+
+export const BlockQuote = styled('blockquote', ({$theme}) => ({
+  backgroundColor: $theme.colors.warning100,
+  marginInlineStart: 0,
+  marginInlineEnd: 0,
+  padding: $theme.sizing.scale600,
+  paddingBottom: '1px'
+}));
+
+export const Table = styled('table', ({$theme}) => ({
+  borderCollapse: 'collapse',
+  borderSpacing: '1px',
+  width: '100%'
+}));
+
+export const TableHeaderCell = styled('th', ({$theme}) => ({
+  padding: '4px',
+  textAlign: 'left',
+  background: $theme.colors.mono200,
+  fontWeight: 'bold',
+  border: `1px solid ${$theme.colors.mono400}`
+}));
+
+export const TableBodyCell = styled('td', ({$theme}) => ({
+  padding: '4px',
+  textAlign: 'left',
+  border: `1px solid ${$theme.colors.mono400}`
 }));

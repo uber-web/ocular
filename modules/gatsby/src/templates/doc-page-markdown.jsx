@@ -6,7 +6,7 @@ import {graphql} from 'gatsby';
 // we can consider customizing them by first importing in styled/index, then
 // giving them special parameters
 
-import {A, CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, P, Pre, MarkdownBody} from '../components/styled';
+import {A, CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, P, List, ListItem, Pre, BlockQuote, Table, TableHeaderCell, TableBodyCell, MarkdownBody} from '../components/styled';
 
 const CustomLinkWrapper = relativeLinks => {
   const CustomLink = ({href, ...props}) => {
@@ -82,8 +82,14 @@ export default class DocTemplate extends React.Component {
         h5: H5,
         h6: H6,
         p: P,
+        ul: List,
+        li: ListItem,
         pre: CustomPre,
         code: InlineCode,
+        table: Table,
+        th: TableHeaderCell,
+        td: TableBodyCell,
+        blockquote: BlockQuote,
         a: CustomLinkWrapper(relativeLinks)
       }
     }).Compiler;

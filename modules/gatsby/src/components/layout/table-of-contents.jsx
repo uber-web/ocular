@@ -20,7 +20,7 @@
 
 import React, {PureComponent} from 'react';
 
-import {TocChevron, TocLink, TocEntry, TocSubpages} from '../styled';
+import {activeTocLinkStyle, TocChevron, TocHeader, TocLink, TocEntry, TocSubpages} from '../styled';
 
 export default class TableOfContents extends PureComponent {
   constructor(props) {
@@ -181,6 +181,7 @@ function updateHeights(tocEntries, expanded) {
 const SafeLink = ({
   depth,
   hasChildren,
+  isTocOpen,
   id,
   name,
   path,
@@ -196,11 +197,11 @@ const SafeLink = ({
 
   return (
     <TocEntry $depth={depth} title={name} onClick={() => toggleEntry(id)}>
-      {hasChildren && <TocChevron $depth={depth} />}
+      {hasChildren && <TocChevron $depth={depth} $isTocOpen={isTocOpen} />}
       {!path || typeof path !== 'string' ? (
-        <span>{name}</span>
+        <TocHeader $depth={depth}>{name}</TocHeader>
       ) : (
-        <TocLink $depth={depth} to={path} title={name}>
+        <TocLink $depth={depth} to={path} title={name} activeStyle={activeTocLinkStyle}>
           {name}
         </TocLink>
       )}
@@ -222,6 +223,7 @@ const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
         <SafeLink
           depth={depth}
           hasChildren
+          isTocOpen={routeInfo && routeInfo.height > 0}
           id={updatedId}
           name={name}
           /* uncomment to have the entry act as link to its first child */
