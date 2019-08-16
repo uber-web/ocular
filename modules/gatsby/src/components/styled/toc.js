@@ -97,7 +97,7 @@ const StyledTocToggle = styled('div', ({$theme}) => ({
   userSelect: 'none',
   zIndex: 10,
   [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
-    display: 'none'
+    display: 'none !important'
   }
 }));
 
