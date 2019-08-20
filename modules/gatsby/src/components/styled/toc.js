@@ -50,10 +50,15 @@ export const TocSubpages = styled('ul', ({$height, ...props}) => ({
 }));
 
 export const TocContainer = styled('div', ({$theme, $isTocOpen, ...props}) => ({
-  gridColumn: '1 / 2',
-  gridRow: '2 / 3',
-  borderRight: `1px solid ${$theme.colors.mono500}`,
-  overflow: 'scroll',
+  [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
+    borderRight: `1px solid ${$theme.colors.mono500}`,
+    gridColumn: '1 / 2',
+    gridRow: '2 / 3',
+    maxHeight: 'unset',
+    opacity: 1,
+    overflow: 'scroll',
+    transform: 'translateY(0)'
+  },
   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     // order: 3,
     borderRight: 'none',
@@ -77,7 +82,6 @@ const StyledTocToggle = styled('div', ({$theme}) => ({
   fontFamily: 'Uber Move',
   background: $theme.colors.mono1000,
   color: $theme.colors.mono100,
-  display: 'flex',
   alignItems: 'center',
   padding: '18px 24px',
   position: 'sticky',
@@ -86,6 +90,9 @@ const StyledTocToggle = styled('div', ({$theme}) => ({
   zIndex: 10,
   [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
     display: 'none'
+  },
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+    display: 'flex',
   }
 }));
 

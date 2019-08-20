@@ -70,3 +70,24 @@ export const CodeBlock = styled('code', ({$theme}) => ({
 export const Pre = styled('pre', ({$theme}) => ({
    backgroundColor: $theme.colors.mono200
 }));
+
+export const Table = styled('table', ({$theme}) => ({
+  ...$theme.borders.border300,
+  borderCollapse: 'collapse',
+  fontSize: '0.9em',
+  margin: `${$theme.sizing.scale800} 0`,
+  overflow: 'hidden',
+  width: '100%'
+}));
+
+export const Td = styled('td', ({$theme}) => ({
+  padding: $theme.sizing.scale400
+}));
+
+export const Th = styled('th', ({$theme}) => ({
+  ...$theme.borders.border300
+}));
+
+export const Thead = styled('thead', ({$theme}) => ({
+  boxShadow: $theme.lighting.shadow400,
+}));

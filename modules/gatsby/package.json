@@ -86,6 +86,7 @@
     "react-share": "^2.0.0",
     "react-twitter-widgets": "^1.7.1",
     "react-virtualized": "^9.21.0",
+    "rehype-react": "^4.0.1",
     "slug": "^0.9.3",
     "stats.js": "^0.17.0",
     "styled-components": "^4.1.0",
