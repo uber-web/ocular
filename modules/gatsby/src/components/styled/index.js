@@ -6,9 +6,16 @@ import ChevronDown from 'baseui/icon/chevron-down'
 import {styled} from 'baseui';
 /* eslint-disable import/prefer-default-export */
 
+import THEME from './theme';
+
+export const activeTocLinkStyle = {
+  color: THEME.colors.primary400,
+  background: 'none'
+};
+
 // Typography 
 
-export {A, CodeBlock, H1, H2, H3, H4, H5, H6, InlineCode, MarkdownBody, P, Pre} from './typography';
+export {A, CodeBlock, H1, H2, H3, H4, H5, H6, List, ListItem, BlockQuote, Table, TableHeaderCell, TableBodyCell, InlineCode, MarkdownBody, P, Pre} from './typography';
 
 // Header
 
@@ -32,6 +39,7 @@ export {
   TocChevron,
   TocContainer,
   TocEntry,
+  TocHeader,
   TocLink,
   TocSubpages,
   TocToggle,
