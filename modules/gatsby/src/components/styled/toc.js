@@ -11,7 +11,7 @@ export const TocChevron = styled(ChevronDown, ({$depth, $isTocOpen}) => ({
   left: `${$depth * 24 + 36}px`,
   top: '20px',
   transform: $isTocOpen ? 'none' : 'rotate(-90deg)',
-  transition: 'transform 0.3s',
+  transition: 'transform 0.3s'
 }));
 
 export const TocEntry = styled('div', ({$theme, $depth, ...props}) => ({
@@ -35,8 +35,13 @@ export const TocHeader = styled('span', ({$depth, $theme}) => ({
   }
 }));
 
-export const TocLink = styled(Link, ({$depth, $theme}) => {
-  const color = $depth ? $theme.colors.mono800 : $theme.colors.mono1000;
+export const TocLink = styled(Link, ({$active, $depth, $theme}) => {
+  let color;
+  if ($active) {
+    color = $theme.colors.primary400;
+  } else {
+    color = $depth ? $theme.colors.mono800 : $theme.colors.mono1000;
+  }
   return {
     display: 'block',
     color,
@@ -61,26 +66,32 @@ export const TocSubpages = styled('ul', ({$height, ...props}) => ({
 }));
 
 export const TocContainer = styled('div', ({$theme, $isTocOpen, ...props}) => ({
-  gridColumn: '1 / 2',
-  gridRow: '2 / 3',
-  borderRight: `1px solid ${$theme.colors.mono500}`,
-  overflowY: 'scroll',
-  overflowX: 'hidden',
+  [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
+    gridColumn: '1 / 2',
+    gridRow: '2 / 3',
+    borderRight: `1px solid ${$theme.colors.mono500}`,
+    overflowY: 'scroll',
+    overflowX: 'hidden',
+    position: 'static'
+  },
   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     // order: 3,
     borderRight: 'none',
-    overflow: 'inherit',
+    position: 'sticky',
+    top: '56px', // height of toc toggle, ie 20 + 18 * 2
     transition: 'opacity 0.3s, transform 0.3s',
-    ...($isTocOpen ? {
-      opacity: 1,
-      maxHeight: 'unset',
-      transform: 'translateY(0)'
-    } : {
-      opacity: 0,
-      maxHeight: 0,
-      overflow: 'hidden',
-      transform: 'translateY(30px)'
-    })
+    ...($isTocOpen
+      ? {
+          opacity: 1,
+          maxHeight: 'unset',
+          transform: 'translateY(0)'
+        }
+      : {
+          opacity: 0,
+          maxHeight: 0,
+          overflow: 'hidden',
+          transform: 'translateY(30px)'
+        })
   }
 }));
 
@@ -89,15 +100,17 @@ const StyledTocToggle = styled('div', ({$theme}) => ({
   fontFamily: 'Uber Move',
   background: $theme.colors.mono1000,
   color: $theme.colors.mono100,
-  display: 'flex',
   alignItems: 'center',
   padding: '18px 24px',
   position: 'sticky',
   top: 0,
   userSelect: 'none',
   zIndex: 10,
+  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+    display: 'flex'
+  },
   [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
-    display: 'none !important'
+    display: 'none'
   }
 }));
 

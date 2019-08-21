@@ -4,14 +4,6 @@
 import React from 'react';
 import ChevronDown from 'baseui/icon/chevron-down'
 import {styled} from 'baseui';
-/* eslint-disable import/prefer-default-export */
-
-import THEME from './theme';
-
-export const activeTocLinkStyle = {
-  color: THEME.colors.primary400,
-  background: 'none'
-};
 
 // Typography 
 
@@ -50,37 +42,39 @@ export {
 
 export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
   margin: '0 auto',
-
-  '.contributors': {
-    maxWidth: '400px',
-    margin: '100px auto 0'
-  }
 }));
 
 
-export const BodyContainerToC = styled('div', ({$theme, $isTocOpen, ...props}) => ({
-  gridColumn: '2 / 3',
-  gridRow: '2 / 3',
-  width: '100%',
-  padding: $theme.sizing.scale500,
-  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
-    order: 2,
-    opacity: $isTocOpen ? 0 : 1,
-    transition: 'opacity 0.3s'
-  },
-
-  '& > div': {
-    maxWidth: $theme.breakpoints.large,
-    margin: 'auto'
-  },
-  '& p': {
-    marginBottom: $theme.sizing.scale500
-  },
-
-  '& > h1': {
-    color: $theme.colors.mono1000
-  }
-}));
+export const BodyContainerToC = styled(
+  'div',
+  ({$theme, $isTocOpen, ...props}) => ({
+    width: '100%',
+    padding: $theme.sizing.scale500,
+    [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
+      gridColumn: '2 / 3',
+      gridRow: '2 / 3',
+    },
+    [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+      order: 2,
+      transition: 'opacity 0.3s'
+    },
+    // the problem the following is solving is what happens if the document is very long
+    // on a responsive device. If the user toggles the table of content, because the
+    // document is long, the TOC will be not visible (above the viewport).
+    // to address that, when the TOC is open, we are removing the document from the flow, so
+    // that the TOC will be visible. Now, there are several ways to do that, some of which
+    // introduce another problem - when closing the table of contents, we want the user to be
+    // back exactly where they were before they opened it, as opposed to back on the top. 
+    // that's one way to approach this - 
+    ...($isTocOpen ? {
+      transform: 'scaleY(0)',
+      opacity: 0,
+    } : {
+      transform: 'scaleY(1)',
+      opacity: 1,
+    })
+  })
+);
 
 export const BodyGrid = styled('div', ({$theme, ...props}) => ({
   height: '100vh',
