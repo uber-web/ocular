@@ -11,11 +11,13 @@ export const Header = styled('header', ({$theme}) => ({
   height: $theme.sizing.scale1600,
   justifyContent: 'space-between',
   padding: `0 36px`,
-  position: 'fixed',
   top: 0,
   left: 0,
   width: '100%',
   userSelect: 'none',
+  [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
+    position: 'fixed',
+  },
   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     position: 'static'
   }
