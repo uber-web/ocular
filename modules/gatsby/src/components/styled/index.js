@@ -81,7 +81,6 @@ export const BodyGrid = styled('div', ({$theme, ...props}) => ({
   display: 'grid',
   gridTemplateRows: '64px 1fr',
   gridTemplateColumns: '300px 1fr',
-  // maxWidth: `${$theme.breakpoints.large}px`,
   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     display: 'flex',
     flexDirection: 'column',
