@@ -41,7 +41,7 @@ const ENV_CONFIG = {
   es6: {
     presets: [
       [ '@babel/env', {
-        targets: TARGETS,
+        targets: ES6_TARGETS,
         modules: false,
 	exclude: [
 	  "@babel/plugin-transform-regenerator"
