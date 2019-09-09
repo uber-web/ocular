@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.29
+- Fix targets 
+
 ## v0.0.28
 - Stricter es6 targets to avoid transforming async/await (#240)
 
