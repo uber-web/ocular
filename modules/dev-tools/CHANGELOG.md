@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.28
+- Stricter es6 targets to avoid transforming async/await (#240)
+
 ## v0.0.27
 - Report coverage using src (#209)
 
