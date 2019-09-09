@@ -1,10 +1,14 @@
-const TARGETS = {
-  chrome: '60',
-  edge: '15',
-  firefox: '53',
-  ios: '10.3',
-  safari: '10.1',
-  node: '8'
+// The goal of the `es6` target is a very clean build (minimally trannsformed) that runs on recent browsers only.
+// In particular, it does not transform async/await constructs, which is very helpful when debugging
+// Because of this, we only try to support ~1 year old browsers + Node LTS
+// Including older versions dramatically increases the number of transforms
+const ES6_TARGETS = {
+  chrome: '64', // Released: 2018-Jan-24, https://en.wikipedia.org/wiki/Google_Chrome_version_history
+  edge: '18', // Released: 2018-Nov-13, https://en.wikipedia.org/wiki/Microsoft_Edge
+  firefox: '60', // Released: 2018-May-9, https://en.wikipedia.org/wiki/Firefox_version_history
+  safari: '12', // Released: 2018-09-07 (OSX Mojave) - https://en.wikipedia.org/wiki/Safari_version_history
+  ios: '12', // Track Safari
+  node: '8' // Node 8 is LTS until December 31, 2019.
 };
 
 const COMMON_CONFIG = {
@@ -38,7 +42,10 @@ const ENV_CONFIG = {
     presets: [
       [ '@babel/env', {
         targets: TARGETS,
-        modules: false
+        modules: false,
+	exclude: [
+	  "@babel/plugin-transform-regenerator"
+	]
       }]
     ],
     plugins: [
