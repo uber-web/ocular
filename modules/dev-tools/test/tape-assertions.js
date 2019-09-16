@@ -1,4 +1,4 @@
-const {equals, _withEpsilon} =  require('math.gl');
+const {equals, _withEpsilon} = require('math.gl');
 
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)
