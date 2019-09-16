@@ -4070,6 +4070,11 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
+gl-matrix@^3.0.0:
+  version "3.1.0"
+  resolved "https://unpm.uberinternal.com/gl-matrix/-/gl-matrix-3.1.0.tgz#f5b2de17d8fed95a79e5025b10cded0ab9ccbed0"
+  integrity sha1-9bLeF9j+2Vp55QJbEM3tCrnMvtA=
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -5493,6 +5498,14 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+math.gl@^3.0.0:
+  version "3.0.0"
+  resolved "https://unpm.uberinternal.com/math.gl/-/math.gl-3.0.0.tgz#fe7ee98bd9439a29942246b3fe7a36f27fba06b2"
+  integrity sha1-/n7pi9lDmimUIkaz/no28n+6BrI=
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    gl-matrix "^3.0.0"
 
 md5.js@^1.3.4:
   version "1.3.5"
