@@ -3,7 +3,7 @@
 From the project you want to create a website for, create a new folder:
 
 ```
-mkdir website && $_
+mkdir website
 ```
 
 Initialize that folder as a new project with its own package.json.
@@ -19,41 +19,54 @@ then install Ocular as a devDependency.
 ```
 yarn add -D ocular-gatsby
 ```
+or
+```
+npm install ocular-gatsby --save-dev
+```
 
 ## Creating and running your Ocular website
 
-Now, start the ocular project:
+Now, start the Ocular project:
 
 ```
 ocular init
 ```
 
-This will create a number of files and folders in the ocular folder.
-
+This will prompt you with a few questions, and create a number of files and folders in the Ocular folder.
+The most important of these file is `ocular-config.js` in the Ocular folder, which contains all the settings for your website. You can edit it later. 
 
 Now install any remaining packages:
 ```
 yarn
 ```
+or
+```
+npm install
+```
+
+Your project will need a `table-of-contents.json` file in the same location you have your documentation files. You can create one manually but Ocular can also create one for you by typing: 
+```
+yarn build-toc
+```
+or
+```
+npm run build-toc
+```
 
 At this stage, you can see your website by typing:
 
 ```
-ocular develop
-# or
-gatsby develop
+yarn start
+```
+or
+```
+npm run start
 ```
 
 ## Writing content
 
-Next, create documentation files. From the ocular folder, the folder /src/docs/ contains one single .md file, getting-started.md. Add as many files as you want, organize them in folders as you wish...
-
-When you're done, from the ocular folder, type
-
-```
-ocular build-docs
-```
-
+You're going to need documentation files for your documentation website.
+Your `ocular-config.js` file will contain the location of these files. Read [Writing documentation](./creating-content/writing-documentation) to know all about that part.
 And your documentation files will be available on your website!
 
 ## Publishing your website
@@ -63,13 +76,28 @@ That's all you need if you just want to have your website running on your machin
 From the ocular folder, type
 
 ```
-ocular build
+yarn build
+```
+or
+```
+npm run build
+```
+And this will generate a static website in the folder `public` (a sub-folder of your Ocular folder) 
+You can go to that folder and test your built website by typing
+```
+yarn serve
+```
+or
+```
+npm run serve
 ```
 
-And this will generate a static website in the folder /dist/. You can now safely upload the contents of this folder on a web server. If you have created your ocular folder inside the folder of a GitHub repository, you can also type
+You can now safely upload the contents of this folder on a web server. If you want to deploy this website to Github Pages, and your project is already hosted on github, you can instead type:
 
 ```
-ocular publish
+yarn deploy
 ```
-
-This will copy your static file to the /docs/ folder of the level above, which is perfect to publish directly on GitHub Pages.
+or
+```
+npm run deploy
+```

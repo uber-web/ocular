@@ -6,6 +6,7 @@
       "entries": [
         {"entry": "docs/README"},
         {"entry": "docs/whats-new"},
+        {"entry": "docs/get-started"},
         {"entry": "docs/faq"}
       ]
     },
@@ -39,6 +40,13 @@
     {
       "title": "Ocular Gatsby",
       "chapters": [
+        {
+          "title": "Creating content",
+          "entries": [
+            {"entry": "docs/gatsby/creating-content/writing-documentation"},
+            {"entry": "docs/gatsby/creating-content/interactive-examples"},
+          ]
+        },
         {
           "title": "Developer Guide",
           "entries": [
