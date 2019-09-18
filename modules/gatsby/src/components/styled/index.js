@@ -2,12 +2,31 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import ChevronDown from 'baseui/icon/chevron-down'
+import ChevronDown from 'baseui/icon/chevron-down';
 import {styled} from 'baseui';
 
-// Typography 
+// Typography
 
-export {A, CodeBlock, H1, H2, H3, H4, H5, H6, List, ListItem, BlockQuote, Table, TableHeaderCell, TableBodyCell, InlineCode, MarkdownBody, P, Pre} from './typography';
+export {
+  A,
+  CodeBlock,
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+  List,
+  ListItem,
+  BlockQuote,
+  Table,
+  TableHeaderCell,
+  TableBodyCell,
+  InlineCode,
+  MarkdownBody,
+  P,
+  Pre
+} from './typography';
 
 // Header
 
@@ -34,58 +53,55 @@ export {
   TocHeader,
   TocLink,
   TocSubpages,
-  TocToggle,
+  TocToggle
 } from './toc';
-
 
 // top-level layoout
 
 export const BodyContainerFull = styled('div', ({$theme, ...props}) => ({
-  margin: '0 auto',
+  margin: '0 auto'
 }));
-
 
 export const BodyContainerToC = styled(
   'div',
-  ({$theme, $isTocOpen, ...props}) => ({
+  ({$theme, $isMenuOpen, $isTocOpen, ...props}) => ({
     width: '100%',
-    padding: $theme.sizing.scale500,
     [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
-      gridColumn: '2 / 3',
-      gridRow: '2 / 3',
+      padding: `${$theme.sizing.scale500} ${$theme.sizing.scale500} ${
+        $theme.sizing.scale500
+      } 300px`,
+      marginTop: '64px', // height of header
+      transform: 'scaleY(1)',
+      opacity: 1
     },
     [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
+      padding: $theme.sizing.scale500,
+      marginTop: 0,
       order: 2,
-      transition: 'opacity 0.3s'
-    },
+      transition: 'opacity 0.3s',
+      ...($isTocOpen || $isMenuOpen
+        ? {
+            transform: 'scaleY(0)',
+            opacity: 0
+          }
+        : {
+            transform: 'scaleY(1)',
+            opacity: 1
+          })
+    }
     // the problem the following is solving is what happens if the document is very long
     // on a responsive device. If the user toggles the table of content, because the
     // document is long, the TOC will be not visible (above the viewport).
     // to address that, when the TOC is open, we are removing the document from the flow, so
     // that the TOC will be visible. Now, there are several ways to do that, some of which
     // introduce another problem - when closing the table of contents, we want the user to be
-    // back exactly where they were before they opened it, as opposed to back on the top. 
-    // that's one way to approach this - 
-    ...($isTocOpen ? {
-      transform: 'scaleY(0)',
-      opacity: 0,
-    } : {
-      transform: 'scaleY(1)',
-      opacity: 1,
-    })
+    // back exactly where they were before they opened it, as opposed to back on the top.
+    // that's one way to approach this -
   })
 );
 
-export const BodyGrid = styled('div', ({$theme, ...props}) => ({
-  height: '100vh',
-  display: 'grid',
-  gridTemplateRows: '64px 1fr',
-  gridTemplateColumns: '300px 1fr',
-  [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: 'inherit'
-  }
+export const Body = styled('div', ({$theme, ...props}) => ({
+  height: '100vh'
 }));
 
 // example

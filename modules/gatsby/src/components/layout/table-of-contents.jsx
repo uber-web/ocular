@@ -47,7 +47,15 @@ export default class TableOfContents extends PureComponent {
     this.toggleEntry = this.toggleEntry.bind(this);
   }
 
+
+  componentDidMount() {
+    console.log('CDM');
+  }
+  componentWillUnmount() {
+    console.log('CWU');
+  }
   componentDidUpdate(prevProps) {
+    console.log('CDU');
     if (this.props.slug !== prevProps.slug) {
       const {chapters, slug} = this.props;
       const {expanded} = this.state;
@@ -79,6 +87,7 @@ export default class TableOfContents extends PureComponent {
   }
 
   render() {
+    console.log('R');
     const {chapters: tree, slug} = this.props;
 
     if (!tree) {

@@ -67,12 +67,13 @@ export const TocSubpages = styled('ul', ({$height, ...props}) => ({
 
 export const TocContainer = styled('div', ({$theme, $isTocOpen, ...props}) => ({
   [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
-    gridColumn: '1 / 2',
-    gridRow: '2 / 3',
+    position: 'fixed',
+    maxWidth: '300px',
+    height: '100%',
+    zIndex: 2,
     borderRight: `1px solid ${$theme.colors.mono500}`,
     overflowY: 'scroll',
     overflowX: 'hidden',
-    position: 'static'
   },
   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     // order: 3,
@@ -123,11 +124,13 @@ const TocToggleChevron = styled('div', ({$theme, $isTocOpen}) => ({
   width: $theme.sizing.scale600
 }));
 
-export const TocToggle = ({toggleToc, isTocOpen}) => (
-  <StyledTocToggle onClick={toggleToc}>
-    <TocToggleChevron $isTocOpen={isTocOpen}>
-      <ChevronDown />
-    </TocToggleChevron>
-    Table of Contents
-  </StyledTocToggle>
-);
+export const TocToggle = ({toggleToc, isTocOpen, isMenuOpen}) => {
+  return isMenuOpen ? null : (
+    <StyledTocToggle onClick={toggleToc}>
+      <TocToggleChevron $isTocOpen={isTocOpen}>
+        <ChevronDown />
+      </TocToggleChevron>
+      Table of Contents
+    </StyledTocToggle>
+  );
+};

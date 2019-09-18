@@ -11,29 +11,29 @@ import {WebsiteConfigProvider} from './website-config';
 import SEO from '../common/SEO';
 
 import TableOfContents from './table-of-contents';
-import Header from './header';
+import Header, {DocsHeader} from './header';
 
 import {
   BodyContainerFull,
   BodyContainerToC,
-  BodyGrid,
+  Body,
   HeaderContainer,
   TocContainer,
-  TocToggle,
+  TocToggle
 } from '../styled';
-
 
 // TODO/ib - restore footer
 // import Footer from './footer';
 
 function ResponsiveHeader(props) {
+  const HeaderComponent = props.isDocHeader ? DocsHeader : Header;
   return (
     <div>
       <MediaQuery maxWidth={575}>
-        <Header {...props} isSmallScreen />
+        <HeaderComponent {...props} isSmallScreen />
       </MediaQuery>
       <MediaQuery minWidth={576}>
-        <Header {...props} />
+        <HeaderComponent {...props} />
       </MediaQuery>
     </div>
   );
@@ -43,16 +43,22 @@ export default class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMenuOpen: false,
+      isProjectsMenuOpen: false,
+      isLinksMenuOpen: false,
       isTocOpen: false
     };
-    this.toggleMenu = this.toggleMenu.bind(this);
+    this.toggleProjectsMenu = this.toggleProjectsMenu.bind(this);
+    this.toggleLinksMenu = this.toggleLinksMenu.bind(this);
     this.toggleToc = this.toggleToc.bind(this);
   }
 
-  toggleMenu() {
-    const {isMenuOpen} = this.state;
-    this.setState({isMenuOpen: !isMenuOpen});
+  toggleLinksMenu() {
+    const {isLinksMenuOpen} = this.state;
+    this.setState({isLinksMenuOpen: !isLinksMenuOpen});
+  }
+  toggleProjectsMenu() {
+    const {isProjectsMenuOpen} = this.state;
+    this.setState({isProjectsMenuOpen: !isProjectsMenuOpen});
   }
   toggleToc() {
     const {isTocOpen} = this.state;
@@ -66,27 +72,36 @@ export default class Layout extends React.Component {
 
   renderBodyWithTOC(config, tableOfContents) {
     const {children} = this.props;
-    const {isMenuOpen, isTocOpen} = this.state;
+    const {isLinksMenuOpen, isProjectsMenuOpen, isTocOpen} = this.state;
+    const isMenuOpen = isLinksMenuOpen || isProjectsMenuOpen;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
       <div>
-        <BodyGrid>
+        <Body>
           <HeaderContainer>
             <ResponsiveHeader
               config={config}
-              isMenuOpen={isMenuOpen}
-              toggleMenu={this.toggleMenu}
+              isLinksMenuOpen={isLinksMenuOpen}
+              isProjectsMenuOpen={isProjectsMenuOpen}
+              toggleLinksMenu={this.toggleLeftMenu}
+              toggleProjectsMenu={this.toggleProjectsMenu}
+              isDocHeader
             />
           </HeaderContainer>
-          <TocToggle toggleToc={this.toggleToc} isTocOpen={isTocOpen} />
-          <TocContainer $isTocOpen={isTocOpen}> 
+          <TocToggle
+            toggleToc={this.toggleToc}
+            isMenuOpen={isMenuOpen}
+            isTocOpen={isTocOpen}
+          />
+          <TocContainer $isTocOpen={isTocOpen}>
             {this.renderTOC(config, tableOfContents)}
           </TocContainer>
 
-          <BodyContainerToC $isTocOpen={isTocOpen}>{children}</BodyContainerToC>
-
+          <BodyContainerToC $isTocOpen={isTocOpen} $isMenuOpen={isMenuOpen}>
+            {children}
+          </BodyContainerToC>
           {/* <Footer /> */}
-        </BodyGrid>
+        </Body>
       </div>
     );
   }
