@@ -8,6 +8,15 @@ const getPageTemplateUrl = require('./get-page-template-url');
 // NOTE: gatsby does automatically build pages from **top level** `/pages`, folder
 // but in ocular we keep those pages in the installed structure so gatsby can't see them
 
+// if using simply path.relative(from, to) to files which are in the same folder, the resolved path is: '../to'.
+// instead we do relative path between folders, then add the name of the target file in the end.
+// in that same scenario, the relative path between folders will be '', and overall path just 'to'. 
+
+function linkFromFileToFile(sourceFile, targetFile) {
+  const relativePathFromDirToDir = path.relative(path.dirname(sourceFile), path.dirname(targetFile));
+  return path.join(relativePathFromDirToDir, path.basename(targetFile));
+}
+
 function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
   // what we are doing here: for each markdown file, we create a mapping of different ways to
   // link to another markdown file that we will honor.
@@ -38,16 +47,15 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
     )();
     return {};
   }
-
-  const relativeToCurrentFile = path.relative(
+  const relativeToCurrentFile = linkFromFileToFile(
     edge.node.fileAbsolutePath,
     source
   );
-  const relativeToRootFolder = rootFolder && path.relative(rootFolder, source);
-  const relativeToCurrentSlug = path.relative(edge.node.fields.path, target);
+  const relativeToRootFolder = rootFolder && linkFromFileToFile(rootFolder, source);
+  const relativeToCurrentSlug = linkFromFileToFile(edge.node.fields.path, target);
 
   const absoluteTarget = `/${target}`;
-
+  
   return {
     ...relativeLinks,
     [relativeToCurrentFile]: absoluteTarget,
