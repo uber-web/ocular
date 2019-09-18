@@ -1,3 +1,4 @@
+/* eslint-disable react/no-did-update-set-state */
 // This is the top-level "Layout" component that doesn't get unmounted between
 // page loads. This component is wrapped around the react component returned by
 // each page by 'gatsby-plugin-layout'
@@ -11,7 +12,8 @@ import {WebsiteConfigProvider} from './website-config';
 import SEO from '../common/SEO';
 
 import TableOfContents from './table-of-contents';
-import Header, {DocsHeader} from './header';
+import Header from './header';
+import DocsHeader from './docs-header';
 
 import {
   BodyContainerFull,
@@ -52,22 +54,25 @@ export default class Layout extends React.Component {
     this.toggleToc = this.toggleToc.bind(this);
   }
 
-  toggleLinksMenu() {
-    const {isLinksMenuOpen} = this.state;
-    this.setState({isLinksMenuOpen: !isLinksMenuOpen});
-  }
-  toggleProjectsMenu() {
-    const {isProjectsMenuOpen} = this.state;
-    this.setState({isProjectsMenuOpen: !isProjectsMenuOpen});
-  }
-  toggleToc() {
-    const {isTocOpen} = this.state;
-    this.setState({isTocOpen: !isTocOpen});
-  }
   componentDidUpdate(prevProps) {
     if (prevProps.pageContext.slug !== this.props.pageContext.slug) {
       this.setState({isTocOpen: false});
     }
+  }
+
+  toggleLinksMenu() {
+    const {isLinksMenuOpen} = this.state;
+    this.setState({isLinksMenuOpen: !isLinksMenuOpen});
+  }
+
+  toggleProjectsMenu() {
+    const {isProjectsMenuOpen} = this.state;
+    this.setState({isProjectsMenuOpen: !isProjectsMenuOpen});
+  }
+  
+  toggleToc() {
+    const {isTocOpen} = this.state;
+    this.setState({isTocOpen: !isTocOpen});
   }
 
   renderBodyWithTOC(config, tableOfContents) {
