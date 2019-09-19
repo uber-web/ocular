@@ -32,7 +32,7 @@ import ControlledHeader, {
 // 2 - Header, which won't and just maintain its own state.
 // both components are wrappers around ControlledHeader.
 
-export default class Header extends Component {
+export default class DocsHeader extends Component {
   constructor(props) {
     super(props);
     // we need to know the number of links before render.
@@ -40,40 +40,19 @@ export default class Header extends Component {
     // some of the links which are hardcoded should come from configuration
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
-      collapsed: true,
       links: generateHeaderLinks(props)
     };
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick() {
-    this.setState({collapsed: !this.state.collapsed});
   }
 
-  // note that rn, we don't render stars per design, but this could change
-  renderStars() {
-    const {config} = this.props;
-    if (config.PROJECT_TYPE === 'github') {
-      return (
-        <GithubStars project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`} />
-      );
-    }
+  renderHeader() {
+    const {links} = this.state;
 
-    return null;
+    return <ControlledHeader links={links} {...this.props} />;
   }
 
   render() {
-    const {links, collapsed} = this.state;
-    return (
-      <ControlledHeader
-        {...this.props}
-        links={links}
-        isLinksMenuOpen={false}
-        isProjectsMenuOpen={!collapsed}
-        toggleProjectsMenu={this.handleClick}
-        toggleLinksMenu={() => {}}
-      />
-    );
+    return this.renderHeader();
   }
 }
 
-Header.propTypes = propTypes;
+DocsHeader.propTypes = propTypes;
