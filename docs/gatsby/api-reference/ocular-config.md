@@ -8,6 +8,7 @@
 | `PROJECT_URL`      | `String` | The project's URL |
 | `PROJECT_DESC`     | `String` | The project's description |
 | `PROJECTS`         | `Array`  | Array of links to related projects (header) |
+| `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
 | `HOME_PATH`        | `String` | |
 | `HOME_HEADING`     | `String` | |
 | `HOME_RIGHT`       | `String` | |
