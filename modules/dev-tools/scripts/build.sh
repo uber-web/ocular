@@ -42,8 +42,7 @@ build_monorepo() {
       case "$1" in
         -t)
             TARGET=$2
-            shift
-            break ;;
+            shift ;;
         *)
             echo "Option $1 not recognized."
             exit 1 ;;
