@@ -58,7 +58,7 @@ build_monorepo() {
 
   cd modules
 
-  if [ -z "$MODULES"]; then
+  if [ -z "$MODULES" ]; then
     # Build all modules
     MODULES=`ls`
   fi
