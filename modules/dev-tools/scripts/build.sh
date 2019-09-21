@@ -7,7 +7,7 @@ CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
 
 check_target() {
   if [[ ! $1 =~ ^es5|es6|esm ]]; then
-    echo "Build target $T not recognized."
+    echo "Build target $1 not recognized."
     exit 1
   fi
 }
