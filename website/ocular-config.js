@@ -6,9 +6,9 @@ module.exports = {
   // Adjusts amount of debug information from ocular-gatsby
   logLevel: 4,
 
-  DOC_FOLDER: '/Users/jerome/code/ocular/website/../docs/',
-  ROOT_FOLDER: '/Users/jerome/code/ocular/website/../',
-  DIR_NAME: '/Users/jerome/code/ocular/website',
+  DOC_FOLDER: `${__dirname}/../docs/`,
+  ROOT_FOLDER: `${__dirname}/../`,
+  DIR_NAME: `${__dirname}`,
 
   EXAMPLES: [
     // {
