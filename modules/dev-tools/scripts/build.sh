@@ -6,8 +6,8 @@ DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
 
 check_target() {
-  if [[ ! $1 =~ ^es5|es6|esm ]]; then
-    echo -e "\033[91mUnknown build target $1. ocular-build [-t es5|es6|esm,...] [module1,...]\033[0m"
+  if [[ ! "$1" =~ ^es5|es6|esm ]]; then
+    echo -e "\033[91mUnknown build target $1. ocular-build [--dist es5|es6|esm,...] [module1,...]\033[0m"
     exit 1
   fi
 }
@@ -38,13 +38,13 @@ build_monorepo() {
   MODULES=""
 
   while [ -n "$1" ]; do
-    if [[ $1 =~ ^\-[A-Za-z] ]]; then
+    if [[ "$1" =~ ^\-\-[A-Za-z]+ ]]; then
       case "$1" in
-        -t)
+        --dist)
             TARGET=$2
             shift ;;
         *)
-            echo -e "\033[91mUnknown option $1. ocular-build [-t es5|es6|esm,...] [module1,...]\033[0m"
+            echo -e "\033[91mUnknown option $1. ocular-build [--dist es5|es6|esm,...] [module1,...]\033[0m"
             exit 1 ;;
       esac
     else

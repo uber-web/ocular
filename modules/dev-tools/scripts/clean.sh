@@ -5,10 +5,10 @@ set -e
 clean() {
   if [ -z "$1" ]; then
     rm -fr dist && mkdir -p dist/es5 dist/esm dist/es6
-  elif [ "$1" = "-a" ]; then
+  elif [ "$1" = "all" ]; then
     rm -fr dist
   else
-    echo -e "\033[91mUnknown option $1. ocular-clean [-a]\033[0m"
+    echo -e "\033[91mUnknown option $1. ocular-clean [all]\033[0m"
     exit 1
   fi
 }
