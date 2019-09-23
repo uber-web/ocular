@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+// ie 11 polyfill
+import 'whatwg-fetch';
+
 
 // Github api has rate-limits. We want to cache the response
 // as much as we can. This component gets re-mounted multiple times.
