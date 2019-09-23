@@ -7,7 +7,7 @@ CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
 
 check_target() {
   if [[ ! $1 =~ ^es5|es6|esm ]]; then
-    echo "Build target $1 not recognized."
+    echo -e "\033[91mUnknown build target $1. ocular-build [-t es5|es6|esm,...] [module1,...]\033[0m"
     exit 1
   fi
 }
@@ -44,7 +44,7 @@ build_monorepo() {
             TARGET=$2
             shift ;;
         *)
-            echo "Option $1 not recognized."
+            echo -e "\033[91mUnknown option $1. ocular-build [-t es5|es6|esm,...] [module1,...]\033[0m"
             exit 1 ;;
       esac
     else

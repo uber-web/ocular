@@ -8,7 +8,7 @@ clean() {
   elif [ "$1" = "-a" ]; then
     rm -fr dist
   else
-    echo "Option $1 not recognized."
+    echo -e "\033[91mUnknown option $1. ocular-clean [-a]\033[0m"
     exit 1
   fi
 }
