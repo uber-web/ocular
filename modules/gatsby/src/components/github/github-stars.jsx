@@ -1,5 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import StarIcon from 'react-icons/lib/go/star';
+// ie 11 polyfill
+import 'whatwg-fetch';
 
 // Github api has rate-limits. We want to cache the response
 // as much as we can. This component gets re-mounted multiple times.
