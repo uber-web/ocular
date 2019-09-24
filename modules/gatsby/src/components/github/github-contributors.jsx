@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-// ie 11 polyfill
-import 'whatwg-fetch';
+
 
 
 // Github api has rate-limits. We want to cache the response
