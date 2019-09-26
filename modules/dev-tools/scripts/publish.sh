@@ -41,7 +41,7 @@ else
   case $MODE in
     "help")
       usage
-      break;;
+      ;;
 
     "beta")
       # -f includes any changes in the version commit
@@ -49,7 +49,7 @@ else
       # push to branch
       git push && git push --tags
       npm publish --tag beta
-      break;;
+      ;;
 
     "prod")
       # -f includes any changes in the version commit
@@ -57,7 +57,7 @@ else
       # push to branch
       git push && git push --tags
       npm publish
-      break;;
+      ;;
 
     *)
       echo -e "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta']\033[0m"
