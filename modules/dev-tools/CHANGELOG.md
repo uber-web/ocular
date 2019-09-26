@@ -1,5 +1,11 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.30
+- test assertions (#248)
+- tweak build to accept options to build selected targets. (#251)
+- Improve pre-commit lint script (#258)
+- Fix warnings in switch case (#259)
+
 ## v0.0.29
 - Fix targets 
 
