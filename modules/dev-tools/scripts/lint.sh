@@ -39,19 +39,25 @@ case $MODE in
   "pre-commit")
     print_yellow "Running prettier & eslint on changed files..."
 
+    NAME_PATTERN=`echo "^$DIRECTORIES/.*\.js$" | sed -e 's/,/|/g' | sed -e 's/{/(/g' | sed -e 's/}/)/g'`
+
     # only check changed files
     set +e
-    FILES=`git diff HEAD --name-only | grep .js$`
+    FILES=`git diff HEAD --name-only | grep -E "${NAME_PATTERN}"`
     set -e
+
+    FILES_LIST=""
 
     if [ ! -z "${FILES}" ]; then
       for f in $FILES
         do
           if [ -e "${f}" ]; then
-            npx prettier --write $f --loglevel warn
-            npx eslint $f
+            FILES_LIST+="${f} "
           fi
       done
+
+      npx prettier-check $FILES_LIST
+      npx eslint $FILES_LIST
     fi
     ;;
 
