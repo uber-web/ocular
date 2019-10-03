@@ -74,6 +74,7 @@ export const TocContainer = styled('div', ({$theme, $isTocOpen, ...props}) => ({
     borderRight: `1px solid ${$theme.colors.mono500}`,
     overflowY: 'scroll',
     overflowX: 'hidden',
+    width: '100%'
   },
   [`@media screen and (max-width: ${$theme.breakpoints.medium}px)`]: {
     // order: 3,
