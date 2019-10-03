@@ -70,7 +70,7 @@ export const BodyContainerToC = styled(
     [`@media screen and (min-width: ${$theme.breakpoints.medium}px)`]: {
       padding: `${$theme.sizing.scale500} ${$theme.sizing.scale500} ${
         $theme.sizing.scale500
-      } 300px`,
+      } calc(300px + ${$theme.sizing.scale500})`,
       marginTop: '64px', // height of header
       transform: 'scaleY(1)',
       opacity: 1
