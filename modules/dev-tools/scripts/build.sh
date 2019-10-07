@@ -56,9 +56,12 @@ build_monorepo() {
     shift
   done
 
-  if [ -z "$MODULES" ]; then
+  if [ -z "$MODULES" ] && [ -z "$WORKSPACES" ]; then
     # Build all modules
     MODULES=`find modules -mindepth 1 -maxdepth 1 -not \( -name ".*" \)`
+  elif [ -z "$MODULES" ]; then
+    # Build the worksplaces
+    MODULES=$WORKSPACES
   fi
 
   for D in ${MODULES}; do (
