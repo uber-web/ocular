@@ -64,6 +64,9 @@
             },
             {
               "entry": "docs/dev-tools/cli/ocular-test"
+            },
+            {
+              "entry": "docs/dev-tools/cli/ocular-bump"
             }
           ]
         }
