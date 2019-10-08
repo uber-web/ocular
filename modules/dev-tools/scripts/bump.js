@@ -5,6 +5,7 @@ const {execSync} = require('child_process');
 
 const PACKAGES = {
   deck: [
+    'deck.gl',
     '@deck.gl/aggregation-layers',
     '@deck.gl/core',
     '@deck.gl/extensions',
@@ -12,14 +13,14 @@ const PACKAGES = {
     '@deck.gl/google-maps',
     '@deck.gl/json',
     '@deck.gl/jupyter-widget',
-    '@deck.gl/json',
     '@deck.gl/layers',
-    '@deck.gl/main',
     '@deck.gl/mapbox',
     '@deck.gl/mesh-layers',
-    '@deck.gl/react'
+    '@deck.gl/react',
+    '@deck.gl/test-utils'
   ],
   luma: [
+    'luma.gl',
     '@luma.gl/addons',
     '@luma.gl/constants',
     '@luma.gl/core',
@@ -27,11 +28,10 @@ const PACKAGES = {
     '@luma.gl/effects',
     '@luma.gl/glfx',
     '@luma.gl/gpgpu',
-    '@luma.gl/main',
-    '@luma.gl/script',
     '@luma.gl/shadertools',
-    '@luma.gl/webgl',
+    '@luma.gl/test-utils',
     '@luma.gl/webgl-state-tracker',
+    '@luma.gl/webgl',
     '@luma.gl/webgl2-polyfill'
   ],
   loaders: [
@@ -57,10 +57,11 @@ const PACKAGES = {
   ],
   math: [
     'math.gl',
+    '@math.gl/core',
     '@math.gl/culling',
     '@math.gl/geospatial',
-    '@math.gl/main',
-    '@math.gl/sun'
+    '@math.gl/sun',
+    'viewport-mercator-project'
   ],
   probe: [
     'probe.gl',
@@ -70,17 +71,8 @@ const PACKAGES = {
   ]
 };
 
-const packageFiles =glob.sync(resolve('\{examples,modules\}/**/package.json'), {ignore: '**/node_modules/**'});
-let packageJsonFiles = [
-  // root
-  resolve('./package.json'),
-  // website
-  resolve('./website/package.json'),
-  // modules and examples dir
-  ...packageFiles
-];
-
-console.log(packageFiles);
+const packageJsonFiles = glob.sync(resolve('**/package.json'), {ignore: '**/node_modules/**'});
+console.log(packageJsonFiles);
 
 function getVersions(packageName) {
   let versions;
@@ -118,15 +110,15 @@ function getTargetVersion(packageAndVersion) {
 }
 
 function bumpPackages(packages) {
-  let changed = false;
   for (const file of packageJsonFiles) {
+    let changed = false;
     let content = JSON.parse(fs.readFileSync(file, 'utf8'));
     const dependencies = content.dependencies || {};
     const devDependencies = content.devDependencies || {};
 
     for (const p of packages) {
       if (dependencies[p.name]) {
-        dependencies[p.name] = p.version;
+        dependencies[p.name] = `^${p.version}`;
         changed = true;
       }
       if (devDependencies[p.name]) {
