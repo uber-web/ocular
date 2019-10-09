@@ -4,7 +4,7 @@ set -e
 
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
-WORKSPACES=`node $DEV_TOOLS_DIR/node/get-config.js ".workspaces" | jq -r 'join(" ")'`
+MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".workspaces" | jq -r 'join(" ")'`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|es6|esm ]]; then
@@ -36,8 +36,6 @@ build_unirepo() {
 }
 
 build_monorepo() {
-  MODULES=""
-
   while [ -n "$1" ]; do
     if [[ "$1" =~ ^\-\-[A-Za-z]+ ]]; then
       case "$1" in
@@ -56,12 +54,9 @@ build_monorepo() {
     shift
   done
 
-  if [ -z "$MODULES" ] && [ -z "$WORKSPACES" ]; then
+  if [ -z "$MODULES" ]; then
     # Build all modules
     MODULES=`find modules -mindepth 1 -maxdepth 1 -not \( -name ".*" \)`
-  elif [ -z "$MODULES" ]; then
-    # Build the worksplaces
-    MODULES=$WORKSPACES
   fi
 
   for D in ${MODULES}; do (
