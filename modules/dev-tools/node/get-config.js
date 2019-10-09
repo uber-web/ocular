@@ -9,6 +9,6 @@ configPath.split('.')
   });
 
 if (typeof config !== 'string') {
-  config = JSON.stringify(config);
+  config = config === undefined ? "" : JSON.stringify(config);
 }
 console.log(config);

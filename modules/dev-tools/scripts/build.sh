@@ -4,6 +4,7 @@ set -e
 
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
+MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules" | jq -r 'join(" ")'`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|es6|esm ]]; then
@@ -35,8 +36,6 @@ build_unirepo() {
 }
 
 build_monorepo() {
-  MODULES=""
-
   while [ -n "$1" ]; do
     if [[ "$1" =~ ^\-\-[A-Za-z]+ ]]; then
       case "$1" in
@@ -55,18 +54,20 @@ build_monorepo() {
     shift
   done
 
-  cd modules
-
   if [ -z "$MODULES" ]; then
     # Build all modules
-    MODULES=`ls`
+    MODULES=`find modules -mindepth 1 -maxdepth 1 -not \( -name ".*" \)`
   fi
 
   for D in ${MODULES}; do (
     if [ -e "${D}/package.json" ]; then
-      echo -e "\033[1mBuilding modules/$D\033[0m"
+      echo -e "\033[1mBuilding $D\033[0m"
       cd $D
       build_module `echo $TARGET | sed -e 's/,/ /g'`
+      echo ""
+    elif [ ! -e "${D}" ]; then
+      echo -e "\033[1mWarning: skipping $D because it doesn't match any file.\033[0m"
+      echo -e "\033[1mHint: modules must be specified using full path relative to the project root.\033[0m"
       echo ""
     fi
   ); done
