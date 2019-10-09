@@ -66,9 +66,13 @@ build_monorepo() {
 
   for D in ${MODULES}; do (
     if [ -e "${D}/package.json" ]; then
-      echo -e "\033[1mBuilding modules/$D\033[0m"
+      echo -e "\033[1mBuilding $D\033[0m"
       cd $D
       build_module `echo $TARGET | sed -e 's/,/ /g'`
+      echo ""
+    elif [ ! -e "${D}" ]; then
+      echo -e "\033[1mWarning: skipping $D because it doesn't match any file.\033[0m"
+      echo -e "\033[1mHint: modules must be specified using full path relative to the project root.\033[0m"
       echo ""
     fi
   ); done
