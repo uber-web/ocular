@@ -4,7 +4,7 @@ const glob = require('glob');
 const {execSync} = require('child_process');
 
 const PACKAGES = {
-  deck: [
+  'deck.gl': [
     'deck.gl',
     '@deck.gl/aggregation-layers',
     '@deck.gl/core',
@@ -19,7 +19,7 @@ const PACKAGES = {
     '@deck.gl/react',
     '@deck.gl/test-utils'
   ],
-  luma: [
+  'luma.gl': [
     'luma.gl',
     '@luma.gl/addons',
     '@luma.gl/constants',
@@ -34,7 +34,7 @@ const PACKAGES = {
     '@luma.gl/webgl',
     '@luma.gl/webgl2-polyfill'
   ],
-  loaders: [
+  'loaders.gl': [
     '@loaders.gl/3d-tiles',
     '@loaders.gl/arrow',
     '@loaders.gl/basis',
@@ -55,7 +55,7 @@ const PACKAGES = {
     '@loaders.gl/potree',
     '@loaders.gl/zip'
   ],
-  math: [
+  'math.gl': [
     'math.gl',
     '@math.gl/core',
     '@math.gl/culling',
@@ -63,7 +63,7 @@ const PACKAGES = {
     '@math.gl/sun',
     'viewport-mercator-project'
   ],
-  probe: [
+  'probe.gl': [
     'probe.gl',
     '@probe.gl/bench',
     '@probe.gl/stats-widget',
@@ -77,19 +77,19 @@ console.log(packageJsonFiles);
 function getVersions(packageName) {
   let versions;
   switch (packageName) {
-  case 'deck':
+  case 'deck.gl':
     versions = execSync('npm v @deck.gl/core dist-tags --json', {encoding: 'utf8'});
     break;
-  case 'luma':
+  case 'luma.gl':
     versions = execSync('npm v @luma.gl/core dist-tags --json', {encoding: 'utf8'});
     break;
-  case 'loaders':
+  case 'loaders.gl':
     versions = execSync('npm v @loaders.gl/core dist-tags --json', {encoding: 'utf8'});
     break;
-  case 'math':
+  case 'math.gl':
     versions = execSync('npm v math.gl dist-tags --json', {encoding: 'utf8'});
     break;
-  case 'probe':
+  case 'probe.gl':
     versions = execSync('npm v probe.gl dist-tags --json', {encoding: 'utf8'});
     break;
   default:
