@@ -15,9 +15,6 @@ export const query = graphql`
       excerpt
       frontmatter {
         title
-        cover
-        category
-        tags
       }
     }
   }
