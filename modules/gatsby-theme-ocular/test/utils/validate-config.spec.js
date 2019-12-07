@@ -55,6 +55,7 @@ test('validateConfig', t => {
       'Examples can\'t be blank',
       'Docs DOCS needs to be an object.',
       'Project type can\'t be blank',
+      'Project name can\'t be blank,Project name should be the project\'s name on Github.',
       'Project url can\'t be blank',
       'Project desc can\'t be blank,Project desc should be the project\'s description',
       'Path prefix should be the prefix added to all paths on the site',
