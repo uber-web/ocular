@@ -5,6 +5,7 @@ const path = require('path');
 // TODO/ib - remove
 const _ = require('lodash');
 const {log, COLOR} = require('../../utils/log');
+const {extractMarkdownTitle} = require('../../utils/parse-markdown');
 
 function parseToc(queue, entry) {
   // this function returns a node in the TOC that has an entry corresponding to
@@ -75,10 +76,10 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     createNodeField({node, name: 'slug', value: relPath});
     node.frontmatter.path = relPath;
   }
+
   if (tocNode) {
     // this means toc node has been created. Any markdown file processed beyond this point wouldn't have its info
-    // in the toc.
-    // but we can inject it afterwards
+    // in the toc, but we can inject it afterwards
 
     // the regular toc node generation process adds the full content of each markdown node to the toc.
     // we don't need as much. The app will only use the title and slug of the corresponding markdown
@@ -179,7 +180,7 @@ function addMissingFrontmatter(node, sourceInstanceName) {
   // Populate frontmatter
   if (node.frontmatter) {
     if (node.rawMarkdownBody) {
-      const title = node.rawMarkdownBody.split('\n')[0].slice(2);
+      const title = extractMarkdownTitle(node.rawMarkdownBody);
       node.frontmatter.title = String(title);
       // console.warn(`Ocular processing doc article '${title}'`);
     }

@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/uber-web/ocular/"
   },
-  "main": "index.js",
+  "main": "gatsby-config.js",
   "bin": {
     "ocular": "./bin/ocular.js"
   },

@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+# v1.1.0-alpha.5
+- Fixes markdown title extraction, handles titles that are not on first line.
+
 # v1.1.0-alpha.4
 - Fixes custom index page (by ensuring ocularOptions are plumbed through to page creation functions).
 - Improved logging of page creation
