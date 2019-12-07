@@ -1,19 +1,19 @@
 # Header.js
 
-The Header is a component that appears on all of your pages. 
-By default, it appears as a top bar that contains a drop down menu on the left, and a series of links on the right. 
+The Header is a component that appears on all of your pages.
+By default, it appears as a top bar that contains a drop down menu on the left, and a series of links on the right.
 
 Both of these parts can be configured through the right options in your config file.
 
 ## Drop-down menu
 
-The drop-down menu on the top left is a way for your site to quickly link to other similar sites, for instance, if you're writing documentation for a library which is part of a family of libraries. 
+The drop-down menu on the top left is a way for your site to quickly link to other similar sites, for instance, if you're writing documentation for a library which is part of a family of libraries.
 
 You can specify these sites using the PROJECTS options in the config file. PROJECTS has to be an object where keys are the names to be displayed and the values are the addresses for the links.
 
 ## Links
 
-The links in the top-right part fall in three sections: 
+The links in the top-right part fall in three sections:
 
 - Documentation trees,
 - Other pages in your ocular app,
@@ -26,7 +26,7 @@ Documentation files in ocular can be arranged in separate, indpendent trees. Eac
 
 ### Additional links
 
-On top of documentation links, you can have links to other pages in your ocular app. These links are defined in the jsRoutes file - see the documentation on routes for more information. These links redirect your user to components within your application, which will still be shown as parts of the App component - they will have a Header and a Toc parts. 
+On top of documentation links, you can have links to other pages in your ocular app. These links are defined in the jsRoutes file - see the documentation on routes for more information. These links redirect your user to components within your application, which will still be shown as parts of the App component - they will have a Header and a Toc parts.
 
 ### External links
 

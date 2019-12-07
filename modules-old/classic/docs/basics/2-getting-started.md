@@ -8,13 +8,13 @@ mkdir website && $_
 
 Initialize that folder as a new project with its own package.json.
 
-From now on, we'll call that folder you've just created the Ocular folder. 
+From now on, we'll call that folder you've just created the Ocular folder.
 
 ```
 npm init -y
 ```
 
-then install Ocular as a devDependency. 
+then install Ocular as a devDependency.
 
 ```
 npm install ocular --save-dev
@@ -38,7 +38,7 @@ ocular start
 
 ## Writing content
 
-Next, create documentation files. 
+Next, create documentation files.
 From the ocular folder, the folder /src/docs/ contains one single .md file, getting-started.md. Add as many files as you want, organize them in folders as you wish...
 
 When you're done, from the ocular folder, type
@@ -59,7 +59,7 @@ From the ocular folder, type
 ocular build
 ```
 
-And this will generate a static website in the folder /dist/. You can now safely upload the contents of this folder on a web server. 
+And this will generate a static website in the folder /dist/. You can now safely upload the contents of this folder on a web server.
 
 If you have created your ocular folder inside the folder of a GitHub repository, you can also type
 
@@ -67,4 +67,4 @@ If you have created your ocular folder inside the folder of a GitHub repository,
 ocular publish
 ```
 
-This will copy your static file to the /docs/ folder of the level above, which is perfect to publish directly on GitHub Pages. 
+This will copy your static file to the /docs/ folder of the level above, which is perfect to publish directly on GitHub Pages.

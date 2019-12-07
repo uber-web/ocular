@@ -11,5 +11,4 @@ Ocular comes with 10 default style modules:
 - __\_toc.scss__, for the table of contents;
 - __\_typography.scss__, which loads custom fonts if needed;
 - __\_utils.scss__, for helper functions throughout the site;
-- __main.scss__, which imports all the others plus provides some styling for the home page. 
-
+- __main.scss__, which imports all the others plus provides some styling for the home page.
