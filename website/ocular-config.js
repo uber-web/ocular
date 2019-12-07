@@ -1,25 +1,27 @@
+const {resolve} = require('path');
 
 // default location for table of contents
 const DOCS = require('../docs/table-of-contents.json');
 
 module.exports = {
-  // Adjusts amount of debug information from ocular-gatsby
-  logLevel: 4,
+  // Adjusts amount of debug information from gatsby-theme-ocular
+  logLevel: 1,
 
   DOC_FOLDER: `${__dirname}/../docs/`,
   ROOT_FOLDER: `${__dirname}/../`,
   DIR_NAME: `${__dirname}`,
 
-  EXAMPLES: [
-    // {
-    //   title: 'my example',
-    //   path: 'examples/my-example/',
-    //   image: 'images/my-example.jpg',
-    //   componentUrl: '../examples/app.js'
-    // }
-  ],
-  // your table of contents go there
+  // your table of contents goes here
   DOCS,
+
+  EXAMPLES: [
+    {
+      title: 'Minimal Example',
+      path: 'examples/minimal/',
+      image: 'images/hero.jpg',
+      componentUrl: resolve('../examples/minimal/app.js')
+    }
+  ],
 
   THEME_OVERRIDES: [
     //  {key: 'primaryFontFamily', value: 'serif'}

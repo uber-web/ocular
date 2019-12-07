@@ -375,7 +375,7 @@ module.exports = function getGatsbyConfig(config) {
   } else {
     log.log(
       {color: COLOR.YELLOW},
-      `DIR_NAME not found in ocular-gatsby config}`
+      `DIR_NAME not found in gatsby-theme-ocular config}`
     )();
   }
 

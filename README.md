@@ -1,5 +1,8 @@
 # ocular
 
-Ocular is a tool primarily designed for building documentation websites for github-based javascript frameworks, built using the gatsbyjs documentation generation system.
+Ocular is a monorepo for development tools primarily designed for building github-based javascript frameworks.
 
-This is the newer gatsby-based version of ocular (v1.0.0 and later). Note that in addition to this gatsbyjs-based generator, Ocular also support a "classic" variant (v0.x) for backwards compatibility. The classic version is not maintained and new sites should be built using the gatsbyjs-based generator. See documentation on [github]().
+It currently contains:
+- `gatsby-theme-ocular` - A documentation generator packaged as a pluggable theme for gatsbyjs documentation generation system.
+- `ocular-dev-tools` - A set tools that packages up extensive installation and configurationof babel, webpack, lint, prettier and other state-of-the art JS build tools.
+

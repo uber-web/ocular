@@ -1,5 +1,7 @@
 # Quick start
+
 ## Installing Ocular
+
 From the project you want to create a website for, create a new folder:
 
 ```
@@ -17,11 +19,11 @@ npm init -y
 then install Ocular as a devDependency.
 
 ```
-yarn add -D ocular-gatsby
+yarn add -D gatsby-theme-ocular
 ```
 or
 ```
-npm install ocular-gatsby --save-dev
+npm install gatsby-theme-ocular --save-dev
 ```
 
 ## Creating and running your Ocular website

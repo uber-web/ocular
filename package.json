@@ -1,9 +1,15 @@
 {
+  "private": true,
+  "name": "ocular-root",
+  "version": "0.0.0",
+  "workspaces": [
+    "modules/*",
+    "website"
+  ],
   "scripts": {
-    "bootstrap": "(cd modules/gatsby; yarn;)",
-    "test": "(cd modules/gatsby; yarn test;)",
-    "publish-beta": "(cd modules/gatsby; npm run publish-beta)",
-    "publish-prod": "(cd modules/gatsby; npm run publish-prod)"
-  },
-  "version": "0.0.0"
+    "bootstrap": "yarn",
+    "test": "(cd modules/gatsby-theme-ocular; yarn test;)",
+    "publish-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
+    "publish-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)"
+  }
 }

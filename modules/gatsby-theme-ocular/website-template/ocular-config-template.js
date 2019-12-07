@@ -12,7 +12,7 @@ module.exports = init => `
 const DOCS = require('../docs/table-of-contents.json');
 
 module.exports = {
-  // Adjusts amount of debug information from ocular-gatsby
+  // Adjusts amount of debug information from gatsby-theme-ocular
   logLevel: 4,
 
   DOC_FOLDER: '${init.websiteFolder}/../docs/',
