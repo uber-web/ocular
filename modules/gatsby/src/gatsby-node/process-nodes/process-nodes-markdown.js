@@ -29,7 +29,6 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   tocNode
 ) {
   const {createNodeField} = actions;
-
   const fileNode = getNode(node.parent);
   const parsedFilePath = path.parse(fileNode.relativePath);
   const hasTitle =
@@ -49,6 +48,7 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
 
   // Update path
   let relPath = node.fields.slug;
+  let entry = relPath;
   if (node.fileAbsolutePath) {
 
     const {ocularConfig} = global;
@@ -69,7 +69,8 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
 
     const basename = path.basename(relPath, '.md');
     const dirname = path.dirname(relPath);
-    relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;
+    entry = `${dirname}/${basename}`;
+    relPath = basename === 'README' ? dirname : entry;
 
     createNodeField({node, name: 'path', value: relPath});
     createNodeField({node, name: 'slug', value: relPath});
@@ -84,7 +85,7 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     // we don't need as much. The app will only use the title and slug of the corresponding markdown
     // node for each toc entry.
 
-    const nodeToEdit = parseToc([tocNode], relPath);
+    const nodeToEdit = parseToc([tocNode], entry);
     if (nodeToEdit) {
       nodeToEdit.childMarkdownRemark = {
         fields: {
