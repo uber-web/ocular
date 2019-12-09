@@ -1,10 +1,10 @@
 {
-  "name": "Ocular",
+  "name": "ocular-website",
   "version": "1.0.0",
-  "description": "Uber's open source documentation system",
+  "description": "Website for the vis.gl open source documentation system",
   "main": "index.js",
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
@@ -14,8 +14,8 @@
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dependencies": {
-    "gatsby": "^2.3.0",
-    "ocular-gatsby": "^1.0.6",
+    "gatsby": "^2.18.0",
+    "gatsby-theme-ocular": "*",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

@@ -1,4 +1,15 @@
-# Configuration Reference
+# Options
+
+Like all gatsby themes and plugins, `gatsby-theme-ocular` accepts an options object.
+
+`gatsby-config.js`:
+```js
+module.exports = {
+  plugins: [{resolve: `gatsby-theme-ocular`, options: {...}],
+};
+```
+
+The following options are available:
 
 | Configuration      | Type | Description |
 | --- | --- | --- |

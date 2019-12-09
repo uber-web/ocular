@@ -1,6 +1,6 @@
 # Deploying
 
-Deploying your ocular-gatsby page to the `gh-pages` branch is easy. Just install `gh-pages` and add the following script to your website's package.json.
+Deploying your `gatsby-theme-ocular` powered website to the `gh-pages` branch is easy. Just install `gh-pages` and add the following script to your website's package.json.
 
 ```bash
 yarn add -D gh-pages

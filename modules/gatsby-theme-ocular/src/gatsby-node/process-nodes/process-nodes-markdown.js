@@ -96,7 +96,7 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
         }
       };
     }
-    log.log({color: COLOR.YELLOW}, `putting ${relPath} back in the TOC`)();
+    log.log({priority: 4, color: COLOR.YELLOW}, `putting ${relPath} back in the TOC`)();
   } else {
     // while toc node isn't created, we can add the docs nodes to docNodes, which is used to add data to the TOC
     // once the toc node is created, there is no reason to keep doing that

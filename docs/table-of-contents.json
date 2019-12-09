@@ -5,7 +5,7 @@
       "title": "Overview",
       "entries": [
         {
-          "entry": "docs/README"
+          "entry": "docs"
         },
         {
           "entry": "docs/whats-new"
@@ -25,7 +25,7 @@
           "title": "Configuration Guide",
           "entries": [
             {
-              "entry": "docs/dev-tools/README"
+              "entry": "docs/dev-tools"
             },
             {
               "entry": "docs/dev-tools/command-line-interface"
@@ -79,10 +79,10 @@
           "title": "Creating content",
           "entries": [
             {
-              "entry": "docs/gatsby/creating-content/writing-documentation"
+              "entry": "docs/gatsby-theme-ocular/creating-content/writing-documentation"
             },
             {
-              "entry": "docs/gatsby/creating-content/interactive-examples"
+              "entry": "docs/gatsby-theme-ocular/creating-content/interactive-examples"
             }
           ]
         },
@@ -90,16 +90,16 @@
           "title": "Developer Guide",
           "entries": [
             {
-              "entry": "docs/gatsby/developer-guide/README"
+              "entry": "docs/gatsby-theme-ocular/developer-guide"
             },
             {
-              "entry": "docs/gatsby/developer-guide/configuring"
+              "entry": "docs/gatsby-theme-ocular/developer-guide/configuring"
             },
             {
-              "entry": "docs/gatsby/developer-guide/deploying"
+              "entry": "docs/gatsby-theme-ocular/developer-guide/deploying"
             },
             {
-              "entry": "docs/gatsby/developer-guide/debugging"
+              "entry": "docs/gatsby-theme-ocular/developer-guide/debugging"
             }
           ]
         },
@@ -107,10 +107,10 @@
           "title": "API Reference",
           "entries": [
             {
-              "entry": "docs/gatsby/api-reference/ocular-config"
+              "entry": "docs/gatsby-theme-ocular/api-reference/options"
             },
             {
-              "entry": "docs/gatsby/api-reference/generated-pages"
+              "entry": "docs/gatsby-theme-ocular/api-reference/generated-pages"
             }
           ]
         }

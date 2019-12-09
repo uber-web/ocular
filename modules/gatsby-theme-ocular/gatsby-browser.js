@@ -1,8 +1,8 @@
 // ie 11 polyfill
 import 'whatwg-fetch';
 
-export {default as wrapPageElement} from './src/gatsby-common/wrap-page';
-
 export function onClientEntry() {
-  console.log('Ocular loaded'); // eslint-disable-line
+  console.log('gatsby-theme-ocular loaded'); // eslint-disable-line
 }
+
+export {default as wrapPageElement} from './src/gatsby-common/wrap-page';
