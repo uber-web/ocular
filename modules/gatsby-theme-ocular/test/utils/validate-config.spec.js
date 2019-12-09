@@ -184,7 +184,7 @@ test('validateConfig', t => {
     [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs/developer-guide/get-started'`],
     `Check if LINK_TO_GET_STARTED is a valid string`
   );
-  
+
 
   // THEME_OVERRIDES
   t.deepEquals(

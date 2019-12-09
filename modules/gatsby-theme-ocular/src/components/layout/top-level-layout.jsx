@@ -69,7 +69,7 @@ export default class Layout extends React.Component {
     const {isProjectsMenuOpen} = this.state;
     this.setState({isProjectsMenuOpen: !isProjectsMenuOpen});
   }
-  
+
   toggleToc() {
     const {isTocOpen} = this.state;
     this.setState({isTocOpen: !isTocOpen});

@@ -1,6 +1,6 @@
   const {log, COLOR} = require('../utils/log');
 
-  const MODULE_NAME = 'ocular-gatsby';
+  const MODULE_NAME = 'gatsby-theme-ocular';
 
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
@@ -39,7 +39,7 @@ class WebpackRule {
       return !exclude.test(path);
     }
     // Webpack supports more overloads: https://webpack.js.org/configuration/module#condition
-    // ignore for now 
+    // ignore for now
     // console.log(exclude);
     return false;
   }

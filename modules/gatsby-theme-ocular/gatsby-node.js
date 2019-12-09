@@ -1,18 +1,49 @@
-const {getGatsbyNodeCallbacks} = require('./src');
-module.exports = getGatsbyNodeCallbacks;
+const {onCreateWebpackConfig} = require('./src/gatsby-node/create-webpack-config');
+const createPages = require('./src/gatsby-node/create-pages');
+const {processNewDocsJsonNode} = require('./src/gatsby-node/process-nodes/process-nodes-json');
+const {sourceNodes} = require('./src/gatsby-node/source-nodes');
+const {
+  processNewMarkdownNode,
+  cleanupMarkdownNode,
+  addSiblingNodes
+} = require('./src/gatsby-node/process-nodes/process-nodes-markdown');
 
-// NOTE: It is possible to override the ocular-provided callbacks
-// and this take control any aspect of gatsby:
+// TODO - avoid globals
+const docNodes = {};
+let tocNode = null;
 
-// exports.onCreateNode = ({ node, actions, getNode }) =>
-//   ocular.onCreateNode({ node, actions, getNode });
+function onCreateNode({node, actions, getNode}) {
+  // Add missing fields to markdown nodes
+  cleanupMarkdownNode({node, actions, getNode});
 
-// exports.setFieldsOnGraphQLNodeType = ({ type, actions }) =>
-//   ocular.setFieldsOnGraphQLNodeType({ type, actions });
+  switch (node.internal.type) {
+    case 'MarkdownRemark':
+      // Note: MarkdownRemark nodes are created by the gatsby-transformer-remark
+      // markdown parser. These are different from the original file nodes
+      // for the markdown files created by the gatsby-source-filesystem plugin.
+      processNewMarkdownNode({node, actions, getNode}, docNodes, tocNode);
+      break;
 
-// // This is a main gatsby entry point
-// // Here we get to programmatically create pages after all nodes are created
-// // by gatsby.
-// // We use graphgl to query for nodes and iterate
-// exports.createPages = ({ graphql, actions }) =>
-//   ocular.createPages({ graphql, actions });
+    case 'DocsJson':
+      tocNode = processNewDocsJsonNode({node, actions, getNode}, docNodes);
+      break;
+
+    default:
+  }
+}
+
+function setFieldsOnGraphQLNodeType({type, actions}) {
+  const {name} = type;
+  const {createNodeField} = actions;
+  if (name === 'MarkdownRemark') {
+    addSiblingNodes(createNodeField);
+  }
+}
+
+module.exports = {
+  onCreateWebpackConfig,
+  onCreateNode,
+  setFieldsOnGraphQLNodeType,
+  createPages,
+  sourceNodes
+};

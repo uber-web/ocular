@@ -29,7 +29,7 @@ try {
   ghpages = require('gh-pages');
   inquirer = require('inquirer');
   slug = require('slug');
-} 
+}
 catch (e) {
   // if either ghpages, inquirer or slug can't be found
   // it's not the end of the world until they are used
@@ -122,21 +122,12 @@ const commands = {
 
         let license = CURRENT_PACKAGE_JSON.license;
 
-        // PACKAGE_JSON.scripts = {
-        //   clean: 'rm -rf ../docs/*{.js,.css,index.html,appcache,fonts,images}',
-        //   start: 'ocular start',
-        //   build: 'ocular build',
-        //   lint: 'ocular lint',
-        //   publish: 'npm run clean && npm run build && mv dist/* ../docs'
-        // }
-        // writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(PACKAGE_JSON, null, 2)}\n`)
-
         // Copy files
         for (const filename of FILENAMES) {
           const file = readFileSync(`${TEMPLATE_DIR}/${filename}`);
           console.log('Writing', `${DIR_PATH}/${filename}`, file.slice(20))
           writeFileSync(`${DIR_PATH}/${filename}`, file);
-        }        
+        }
         const UPDATED_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
         UPDATED_PACKAGE_JSON.name = slug(result.name);
         UPDATED_PACKAGE_JSON.description = result.desc;
@@ -146,18 +137,9 @@ const commands = {
         }
 
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(UPDATED_PACKAGE_JSON, null, 2)}\n`)
-        
+
         const ocularConfig = OCULAR_CONFIG_TEMPLATE(result);
         writeFileSync(`${DIR_PATH}/ocular-config.js`, ocularConfig);
-
-        // writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(PACKAGE_JSON, null, 2)}\n`)
-        // writeFileSync(`${DIR_PATH}/html.config.js`, htmlConfigTemplate(result))
-        // writeFileSync(`${DIR_PATH}/src/docs/getting-started.md`, docTemplate(result))
-        // writeFileSync(`${DIR_PATH}/src/mdRoutes.js`, mdRoutesTemplate(result))
-        // writeFileSync(`${DIR_PATH}/src/build-routes-options.json`, optionsTemplate(result))
-        // writeFileSync(`${DIR_PATH}/src/demos.js`, 'export default {};\n')
-        // writeFileSync(`${DIR_PATH}/src/styles/index.scss`, '')
-        // writeFileSync(`${DIR_PATH}/src/styles/_variables.scss`, variablesTemplate())
       })
   },
 
@@ -180,21 +162,7 @@ const commands = {
       env: Object.assign(env, { NODE_ENV: 'production' })
     })
   },
-  // debug() {
-  //   execSync(`node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop`);
-  // },
-  // serve() {
-  //   execSync(`node node_modules/gatsby/dist/bin/gatsby serve`);
-  // },
 
-  /*
-  lint() {
-    spawn(`${DIR_PATH}/node_modules/.bin/eslint`, [`${DIR_PATH}/src`, '-c', '.eslintrc'], {
-      cwd: __dirname,
-      stdio: 'inherit'
-    })
-  },
-  */
   'build-toc'() {
     let ocularConfig = require(`${DIR_PATH}/ocular-config.js`);
     const docFolder = ocularConfig.DOC_FOLDER;
@@ -202,7 +170,7 @@ const commands = {
     const toc = buildToc(listOfDocs);
     writeFileSync(`${docFolder}/table-of-contents.json`, toc);
   },
-  
+
 
   help() {
     console.log(`
@@ -269,7 +237,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
   return docs
     .sort((a, b) => (a.fullPath > b.fullPath ? 1 : -1))
     .reduce((result, doc) => {
-      
+
       let url = baseUrl;
       // removes accidental '//'s
       const slug = `${baseUrl}/${doc.slug}`.replace(/\/\//g, '/');
@@ -279,7 +247,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
 
       // we'll create chapters in the TOC if needs be
       const chapterKey = doc.path.length ? sentence(doc.path[0]) : nameOfDefaultChapter;
-      
+
       if (!result.chapters.find(chapter => chapter.title === chapterKey)) {
         result.chapters.push({title: chapterKey, entries: []});
       }
@@ -297,11 +265,10 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
       });
 
       location.entries.push({entry: `${baseUrl}${doc.slug}`});
-      
+
       return result;
     }, {
       chapters: [],
       id: 'table-of-contents'
     });
 }
-

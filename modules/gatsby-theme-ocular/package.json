@@ -1,14 +1,14 @@
 {
-  "name": "ocular-gatsby",
-  "description": "GatsbyJS plugin for rendering markdown docs for frameworks.",
+  "name": "gatsby-theme-ocular",
+  "description": "GatsbyJS theme handling markdown docs and examples for frameworks.",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.0.3",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/uber-web/ocular/"
   },
-  "main": "gatsby-browser.js",
+  "main": "index.js",
   "bin": {
     "ocular": "./bin/ocular.js"
   },
@@ -96,19 +96,19 @@
   },
   "devDependencies": {
     "cli-glob": "^0.1.0",
-    "eslint": "^5.8.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.1.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.17.1",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.0",
     "prettier": "^1.17.0",
-    "reify": "^0.19.1",
+    "reify": "^0.20.12",
     "remark-cli": "^6.0.0",
     "remark-preset-lint-recommended": "^3.0.1",
     "stylefmt": "^6.0.3",
-    "stylelint": "^9.7.1",
-    "stylelint-config-standard": "^18.0.0",
+    "stylelint": "^12.0.0",
+    "stylelint-config-standard": "^19.0.0",
     "tape": "^4.10.1",
     "tape-catch": "^1.0.6",
     "write-good": "^0.13.1"

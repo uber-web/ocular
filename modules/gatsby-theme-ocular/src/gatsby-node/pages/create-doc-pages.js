@@ -10,7 +10,7 @@ const getPageTemplateUrl = require('./get-page-template-url');
 
 // if using simply path.relative(from, to) to files which are in the same folder, the resolved path is: '../to'.
 // instead we do relative path between folders, then add the name of the target file in the end.
-// in that same scenario, the relative path between folders will be '', and overall path just 'to'. 
+// in that same scenario, the relative path between folders will be '', and overall path just 'to'.
 
 function linkFromFileToFile(sourceFile, targetFile) {
   const relativePathFromDirToDir = path.relative(path.dirname(sourceFile), path.dirname(targetFile));
@@ -55,7 +55,7 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
   const relativeToCurrentSlug = linkFromFileToFile(edge.node.fields.path, target);
 
   const absoluteTarget = `/${target}`;
-  
+
   return {
     ...relativeLinks,
     [relativeToCurrentFile]: absoluteTarget,

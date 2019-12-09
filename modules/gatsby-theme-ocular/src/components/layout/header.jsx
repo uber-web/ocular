@@ -45,11 +45,13 @@ export default class Header extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
+
   handleClick() {
     this.setState({collapsed: !this.state.collapsed});
   }
 
   // note that rn, we don't render stars per design, but this could change
+  /*
   renderStars() {
     const {config} = this.props;
     if (config.PROJECT_TYPE === 'github') {
@@ -60,6 +62,7 @@ export default class Header extends Component {
 
     return null;
   }
+  */
 
   render() {
     const {links, collapsed} = this.state;

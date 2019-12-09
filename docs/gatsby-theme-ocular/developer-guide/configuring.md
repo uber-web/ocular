@@ -5,7 +5,7 @@
 
 The main way
 
-For details see [ocular-config.js](docs/api-reference/ocular-config.md).
+For details see [ocular-config.js](docs/gatsby-theme-ocular/api-reference/ocular-config.md).
 
 
 ## Static Files
