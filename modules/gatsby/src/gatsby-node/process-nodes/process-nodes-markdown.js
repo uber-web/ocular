@@ -29,7 +29,6 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   tocNode
 ) {
   const {createNodeField} = actions;
-debugger;
   const fileNode = getNode(node.parent);
   const parsedFilePath = path.parse(fileNode.relativePath);
   const hasTitle =
