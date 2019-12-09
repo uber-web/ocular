@@ -29,7 +29,7 @@ try {
   ghpages = require('gh-pages');
   inquirer = require('inquirer');
   slug = require('slug');
-} 
+}
 catch (e) {
   // if either ghpages, inquirer or slug can't be found
   // it's not the end of the world until they are used
@@ -136,7 +136,7 @@ const commands = {
           const file = readFileSync(`${TEMPLATE_DIR}/${filename}`);
           console.log('Writing', `${DIR_PATH}/${filename}`, file.slice(20))
           writeFileSync(`${DIR_PATH}/${filename}`, file);
-        }        
+        }
         const UPDATED_PACKAGE_JSON = require(`${DIR_PATH}/package.json`)
         UPDATED_PACKAGE_JSON.name = slug(result.name);
         UPDATED_PACKAGE_JSON.description = result.desc;
@@ -146,7 +146,7 @@ const commands = {
         }
 
         writeFileSync(`${DIR_PATH}/package.json`, `${JSON.stringify(UPDATED_PACKAGE_JSON, null, 2)}\n`)
-        
+
         const ocularConfig = OCULAR_CONFIG_TEMPLATE(result);
         writeFileSync(`${DIR_PATH}/ocular-config.js`, ocularConfig);
 
@@ -202,7 +202,7 @@ const commands = {
     const toc = buildToc(listOfDocs);
     writeFileSync(`${docFolder}/table-of-contents.json`, toc);
   },
-  
+
 
   help() {
     console.log(`
@@ -269,7 +269,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
   return docs
     .sort((a, b) => (a.fullPath > b.fullPath ? 1 : -1))
     .reduce((result, doc) => {
-      
+
       let url = baseUrl;
       // removes accidental '//'s
       const slug = `${baseUrl}/${doc.slug}`.replace(/\/\//g, '/');
@@ -279,7 +279,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
 
       // we'll create chapters in the TOC if needs be
       const chapterKey = doc.path.length ? sentence(doc.path[0]) : nameOfDefaultChapter;
-      
+
       if (!result.chapters.find(chapter => chapter.title === chapterKey)) {
         result.chapters.push({title: chapterKey, entries: []});
       }
@@ -297,11 +297,10 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
       });
 
       location.entries.push({entry: `${baseUrl}${doc.slug}`});
-      
+
       return result;
     }, {
       chapters: [],
       id: 'table-of-contents'
     });
 }
-

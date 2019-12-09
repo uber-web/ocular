@@ -6,8 +6,8 @@ export const A = styled('a', ({$theme}) => ({
   textDecoration: 'none',
   color: $theme.colors.primary400,
   ':visited': {color: $theme.colors.primary400},
-  ':active': {color: $theme.colors.primary400}, 
-  ':hover': {color: $theme.colors.primary700}, 
+  ':active': {color: $theme.colors.primary400},
+  ':hover': {color: $theme.colors.primary700},
 }))
 
 export const H1 = styled('h1', ({$theme}) => ({
@@ -56,10 +56,10 @@ export const MarkdownBody = styled('div', ({$theme}) => ({
 }))
 
 export const InlineCode = styled('code', ({$theme}) => ({
-  backgroundColor: $theme.colors.mono200,  
+  backgroundColor: $theme.colors.mono200,
   borderRadius: $theme.sizing.scale100,
   padding: '0 5px',
-  fontFamily: `Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`,  
+  fontFamily: `Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace`,
   fontSize: '0.9em',
   margin: '1px 0',
   lineHeight: 'calc(1.5em / 0.9 - 2px)',

@@ -39,7 +39,7 @@ class WebpackRule {
       return !exclude.test(path);
     }
     // Webpack supports more overloads: https://webpack.js.org/configuration/module#condition
-    // ignore for now 
+    // ignore for now
     // console.log(exclude);
     return false;
   }
