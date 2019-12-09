@@ -35,7 +35,7 @@ ocular init
 ```
 
 This will prompt you with a few questions, and create a number of files and folders in the Ocular folder.
-The most important of these file is `ocular-config.js` in the Ocular folder, which contains all the settings for your website. You can edit it later. 
+The most important of these file is `gatsby-config.js` in the Ocular folder, which contains all the settings for your website. You can edit it later. 
 
 Now install any remaining packages:
 ```
@@ -68,7 +68,7 @@ npm run start
 ## Writing content
 
 You're going to need documentation files for your documentation website.
-Your `ocular-config.js` file will contain the location of these files. Read [Writing documentation](./creating-content/writing-documentation) to know all about that part.
+Your `gatsby-config.js` file will contain the location of these files. Read [Writing documentation](./creating-content/writing-documentation) to know all about that part.
 And your documentation files will be available on your website!
 
 ## Publishing your website

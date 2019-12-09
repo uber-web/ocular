@@ -1,3 +1,3 @@
-const getGetsbyConfig = require('./src/gatsby-config/get-gatsby-config');
+const getGatsbyConfig = require('./src/gatsby-config/get-gatsby-config');
 
-module.exports = config => getGetsbyConfig(config);
+module.exports = config => getGatsbyConfig(config);
