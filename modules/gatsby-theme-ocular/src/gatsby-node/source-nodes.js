@@ -72,8 +72,6 @@ function sourceNodes({actions}) {
       siteUrl: String
       pathPrefix: String
       dateFromFormat: String
-      userName: String
-      dateFormat: String
     }
 
     type SiteMetadata implements Node {
@@ -133,4 +131,4 @@ function sourceNodes({actions}) {
   createTypes(typeDefs);
 }
 
-module.exports.sourceNodes = sourceNodes;
+module.exports = sourceNodes;
