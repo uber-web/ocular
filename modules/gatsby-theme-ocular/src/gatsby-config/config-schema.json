@@ -95,8 +95,9 @@
   },
 
   "PROJECT_NAME": {
+    "presence": true,
     "anyString": {
-      "allowEmpty": true,
+      "allowEmpty": false,
       "message": "should be the project's name on Github."
     }
   },

@@ -336,7 +336,17 @@ module.exports = function getGatsbyConfig(config) {
         resolve: 'gatsby-source-filesystem',
         options: {
           name: 'docs',
-          path: folderPath
+          path: folderPath,
+          // Ensure gatsby-source-filesystem doesn't pick up too many files in modules directory
+          // https://www.gatsbyjs.org/packages/gatsby-source-filesystem/#options
+          ignore: [
+            '**/modules/**/test',
+            '**/modules/**/src',
+            '**/modules/**/dist',
+            '**/modules/**/wip',
+            '**/modules/**/*.json',
+            '**/arrowjs/**/*.json'
+          ]
         }
       });
     })
@@ -379,6 +389,6 @@ module.exports = function getGatsbyConfig(config) {
     )();
   }
 
-  // log.log({color: COLOR.CYAN}, `GATSBY CONFIG ${JSON.stringify(gatsbyConfig, null, 3)}`)();
+  log.log({color: COLOR.CYAN, priority: 2}, `GENERATED GATSBY CONFIG: ${JSON.stringify(gatsbyConfig, null, 2)}`)();
   return gatsbyConfig;
 };

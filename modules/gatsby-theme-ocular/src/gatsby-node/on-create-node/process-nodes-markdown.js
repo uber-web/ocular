@@ -37,8 +37,6 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
     Object.prototype.hasOwnProperty.call(node.frontmatter, 'title');
 
-  console.log(JSON.stringify(node, null, 2));
-
   let slug;
   if (hasTitle) {
     slug = `/${_.kebabCase(node.frontmatter.title)}`;

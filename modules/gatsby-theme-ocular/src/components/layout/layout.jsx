@@ -23,7 +23,8 @@ export default class Layout extends React.Component {
     const {config} = data.site.siteMetadata;
     const {tableOfContents, allMarkdown} = data;
 
-    // console.log('StaticQuery result', config, tableOfContents, allMarkdown);
+    console.log('StaticQuery result', config, tableOfContents, allMarkdown);
+
     const themeFromConfig = ((config && config.THEME_OVERRIDES) || []).reduce(
       (prev, curr) => ({...prev, [curr.key]: curr.value}),
       {}
