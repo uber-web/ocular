@@ -1,5 +1,11 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.32
+- ocular-build: babel now called with --copy-files (#276)
+
+## v0.0.31
+- Update bump script to use full package name (#265)
+
 ## v0.0.30
 - test assertions (#248)
 - tweak build to accept options to build selected targets. (#251)
