@@ -22,11 +22,11 @@ build_module() {
   N=`echo "$TARGETS" | wc -w`
   if [ $N -eq 1 ]; then
     check_target $TARGETS
-    BABEL_ENV=$TARGETS npx babel src --config-file $CONFIG --out-dir dist --source-maps
+    BABEL_ENV=$TARGETS npx babel src --config-file $CONFIG --out-dir dist --copy-files --source-maps
   else
     for T in ${TARGETS}; do(
       check_target $T
-      BABEL_ENV=$T npx babel src --config-file $CONFIG --out-dir dist/$T --source-maps
+      BABEL_ENV=$T npx babel src --config-file $CONFIG --out-dir dist/$T --copy-files --source-maps
     ); done
   fi
 }
