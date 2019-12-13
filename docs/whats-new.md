@@ -1,11 +1,14 @@
 # What's New
 
-## ocular-gatsby
+## gatsby-theme-ocular
 
-ocular-gatsby is still in alpha pre-release. Once the gatsby port of ocular is stable, will be published as `ocular@1.0.0` and this module will be deprecated.
+gatsby now supports themes and the ocular documentation generator has been repackaged as `gatsby-theme-ocular`, which is easier to use and maintain.
 
-Some release details are available in the [CHANGELOG](https://github.com/uber-web/ocular/blob/master/modules/gatsby/CHANGELOG.md)
+Release details are available in the [CHANGELOG](https://github.com/uber-web/ocular/blob/master/modules/gatsby-theme-ocular/CHANGELOG.md)
 
+## ocular-gatsby (Deprecated)
+
+Now that gatsby supports themes, development has moved to `gatsby-theme-ocular`. No further fixes will be made to `ocular-gatsby`
 
 ## ocular-dev-tools
 
@@ -14,7 +17,3 @@ ocular-dev-tools is still in experimental pre-release.
 Some release details are available in the [CHANGELOG](https://github.com/uber-web/ocular/blob/master/modules/dev-tools/CHANGELOG.md)
 
 - `ocular-test node-debug` - New mode - starts node debugger
-
-## ocular (classic)
-
-ocular classic is deprecated and no longer maintained, and will removed from this repo when `ocular-gatsby` v1.0 release ships.
