@@ -1,3 +1,5 @@
+#!/usr/bin/env
+
 const fs = require('fs');
 const {resolve} = require('path');
 const glob = require('glob');
