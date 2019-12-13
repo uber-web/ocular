@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.0.33
+- Fix bump script (#278)
+
 ## v0.0.32
 - ocular-build: babel now called with --copy-files (#276)
 
