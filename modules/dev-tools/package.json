@@ -2,7 +2,7 @@
   "name": "ocular-dev-tools",
   "description": "Dev tools for our Javascript frameworks",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "javascript"
   ],
@@ -60,6 +60,7 @@
     "source-map-loader": "^0.2.3",
     "tape": "^4.9.2",
     "tape-catch": "^1.0.4",
+    "tape-promise": "^4.0.0",
     "webpack": "^4.28.4",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",

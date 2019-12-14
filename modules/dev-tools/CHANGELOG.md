@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.1
+- Add `tape-promise` to dependencies
+
 ## v0.1.0
 - Ensure `test` folder is published
 
