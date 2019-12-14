@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.0
+- Ensure `test` folder is published
+
 ## v0.0.33
 - Fix bump script (#278)
 
