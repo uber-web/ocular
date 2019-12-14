@@ -7,7 +7,9 @@ ocular-bump [package_name]=[target_version]
 ```
 This script helps replace packages with specified version inside a repo. Replace the dependency with the target version of all the `package.json` files under directories `root`.
 
-For convenience, the following monorepos can use name shortcut to bump all the modules to the same version. 
+For monerepos, you can use the package name to bump all the modules to the corresponding version.
+
+Given a `package-name`, `modules` to bump are the results from `npm search [package-name]` 
 
 - deck.gl: `ocular-bump deck.gl` or `ocular-bump deck.gl=beta`
 - luma.gl: `ocular-bump luma.gl` or `ocular-bump luma.gl=beta`
