@@ -1,5 +1,5 @@
-const test = require('tape');
-const {tapeEquals, tapeEqualsEpsilon} = require('./tape-assertions');
+import test from 'tape-promise/tape';
+import {tapeEquals, tapeEqualsEpsilon} from './tape-assertions';
 
 class TestCase {
   constructor(t, result) {
@@ -7,7 +7,7 @@ class TestCase {
     this.result = result;
   }
   toBe(value) {
-    this.t.equals(value);
+    this.t.equals(this.result, value);
   }
   toEqual(value) {
     tapeEquals(this.t, this.result, value);

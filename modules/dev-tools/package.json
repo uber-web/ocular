@@ -15,7 +15,8 @@
     "node",
     "scripts",
     "templates",
-    "test"
+    "src",
+    "test-utils.js"
   ],
   "bin": {
     "ocular-bootstrap": "./scripts/bootstrap.sh",
@@ -57,6 +58,7 @@
     "nyc": "^13.3.0",
     "prettier": "1.14.3",
     "prettier-check": "2.0.0",
+    "reify": "^0.20.12",
     "source-map-loader": "^0.2.3",
     "tape": "^4.9.2",
     "tape-catch": "^1.0.4",

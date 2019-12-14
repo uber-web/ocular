@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "bootstrap": "yarn",
-    "test": "(cd modules/gatsby-theme-ocular; yarn test;)",
+    "test": "ocular-test",
+    "lint": "# ocular-lint",
     "publish-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
     "publish-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)"
   }
