@@ -34,7 +34,7 @@ const CustomLinkWrapper = relativeLinks => {
       return <A href={href} {...props} />;
     }
     const hrefWithoutLeadingSlash = href.startsWith('/') ? href.slice(1) : href;
-    return <A {...props} href={relativeLinks[hrefWithoutLeadingSlash]} />;
+    return <A {...props} href={relativeLinks[hrefWithoutLeadingSlash]} || href/>;
   };
   return CustomLink;
 };
