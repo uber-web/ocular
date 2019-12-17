@@ -1,7 +1,6 @@
 {
   "private": true,
   "name": "ocular-root",
-  "version": "0.0.0",
   "workspaces": [
     "modules/*",
     "website"

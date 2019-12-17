@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v1.0.3
+- Fix `test-utils` export
+
 ## v0.1.1
 - Add `tape-promise` to dependencies
 
