@@ -27,14 +27,12 @@ import {
   MarkdownBody
 } from '../components/styled';
 
+import {parseLinks} from '../utils/links-utils.js';
+
 const CustomLinkWrapper = relativeLinks => {
   const CustomLink = ({href, ...props}) => {
-    if (href.startsWith('http') || href.startsWith('#')) {
-      // TODO - we could style them differently though
-      return <A href={href} {...props} />;
-    }
-    const hrefWithoutLeadingSlash = href.startsWith('/') ? href.slice(1) : href;
-    return <A {...props} href={relativeLinks[hrefWithoutLeadingSlash]} />;
+    const updatedLink = parseLinks(href, relativeLinks);
+    return <A href={updatedLink} {...props} />;
   };
   return CustomLink;
 };
