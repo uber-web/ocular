@@ -31,17 +31,17 @@ function bumpPackages(packages) {
     const devDependencies = content.devDependencies || {};
     const peerDependencies = content.peerDependencies || {};
 
-    for (const p of packages) {
-      if (dependencies[p.name]) {
-        dependencies[p.name] = `^${p.version}`;
+    for (const package of packages) {
+      if (dependencies[package.name]) {
+        dependencies[package.name] = `^${package.version}`;
         changed = true;
       }
-      if (devDependencies[p.name]) {
-        devDependencies[p.name] = `^${p.version}`;
+      if (devDependencies[package.name]) {
+        devDependencies[package.name] = `^${package.version}`;
         changed = true;
       }
-      if (peerDependencies[p.name]) {
-        peerDependencies[p.name] = `^${p.version}`;
+      if (peerDependencies[package.name]) {
+        peerDependencies[package.name] = `^${package.version}`;
         changed = true;
       }
     }
