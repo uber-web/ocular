@@ -49,7 +49,7 @@ build_monorepo() {
     else
       # Build selected modules
       # build.sh MODULE1,MODULE2
-      MODULES=`echo $1 | sed -e 's/,/ /g'`
+      MODULES=`echo $1 | sed -e 's/,/ modules\//g' | sed -e 's/^/modules\//g'`
     fi
     shift
   done
