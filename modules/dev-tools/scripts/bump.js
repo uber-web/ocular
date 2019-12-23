@@ -29,6 +29,7 @@ function bumpPackages(packages) {
     let content = JSON.parse(fs.readFileSync(file, 'utf8'));
     const dependencies = content.dependencies || {};
     const devDependencies = content.devDependencies || {};
+    const peerDependencies = content.peerDependencies || {};
 
     for (const p of packages) {
       if (dependencies[p.name]) {
@@ -37,6 +38,10 @@ function bumpPackages(packages) {
       }
       if (devDependencies[p.name]) {
         devDependencies[p.name] = `^${p.version}`;
+        changed = true;
+      }
+      if (peerDependencies[p.name]) {
+        peerDependencies[p.name] = `^${p.version}`;
         changed = true;
       }
     }

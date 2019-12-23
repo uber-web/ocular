@@ -25,7 +25,7 @@
     "ocular-test": "./scripts/test.sh",
     "ocular-metrics": "./scripts/metrics.sh",
     "ocular-publish": "./scripts/publish.sh",
-    "ocular-bump": "node ./scripts/bump.js"
+    "ocular-bump": "./scripts/bump.js"
   },
   "scripts": {
     "clean": "echo No build needed",
