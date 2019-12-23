@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.4
+- Fix building selected modules (#282)
+
 ## v0.1.1
 - Add `tape-promise` to dependencies
 
