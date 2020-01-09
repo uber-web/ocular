@@ -66,7 +66,7 @@ case $MODE in
     npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
 
     print_yellow "Running eslint in $DIRECTORIES..."
-    npx eslint --fix "$DIRECTORIES"
+    npx eslint --fix "$DIRECTORIES/**/*.js"
     ;;
 
   *)
