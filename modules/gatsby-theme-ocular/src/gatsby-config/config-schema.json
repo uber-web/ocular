@@ -26,6 +26,17 @@
     }
   },
 
+  "SOURCE": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "anyString": {
+          "message": "should be the local path to the website assets."
+        }
+      }
+    }
+  },
+
   "ROOT_FOLDER": {
     "anyString": {
       "allowEmpty": true,

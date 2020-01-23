@@ -141,7 +141,7 @@ module.exports = function getGatsbyConfig(config) {
       */
 
       // Transforms JSON files in the data source into JSON nodes
-      'gatsby-transformer-json',
+      'gatsby-transformer-json'
 
       /*
       // Gatsby’s manifest plugin creates a manifest.webmanifest file on every build.
@@ -261,7 +261,9 @@ module.exports = function getGatsbyConfig(config) {
   // conditional plug-ins - only added depending on options on config
 
   // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
-  const docDirs = [paddedConfig.DOC_FOLDER].concat(paddedConfig.DOC_FOLDERS).filter(Boolean);
+  const docDirs = [paddedConfig.DOC_FOLDER]
+    .concat(paddedConfig.DOC_FOLDERS)
+    .filter(Boolean);
 
   if (docDirs.length > 0) {
     // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
@@ -292,7 +294,9 @@ module.exports = function getGatsbyConfig(config) {
 
   if (paddedConfig.SOURCE) {
     // Generates gatsby nodes for files in the website's src folder
-    const srcDirs = Array.isArray(paddedConfig.SOURCE) ? paddedConfig.SOURCE : [paddedConfig.SOURCE];
+    const srcDirs = Array.isArray(paddedConfig.SOURCE)
+      ? paddedConfig.SOURCE
+      : [paddedConfig.SOURCE];
     for (const path of srcDirs) {
       gatsbyConfig.plugins.push({
         resolve: 'gatsby-source-filesystem',
@@ -314,6 +318,9 @@ module.exports = function getGatsbyConfig(config) {
     paddedConfig.THEME_OVERRIDES = JSON.stringify(paddedConfig.THEME_OVERRIDES);
   }
 
-  log.log({color: COLOR.CYAN, priority: 2}, `GENERATED GATSBY CONFIG: ${JSON.stringify(gatsbyConfig, null, 2)}`)();
+  log.log(
+    {color: COLOR.CYAN, priority: 2},
+    `GENERATED GATSBY CONFIG: ${JSON.stringify(gatsbyConfig, null, 2)}`
+  )();
   return gatsbyConfig;
 };

@@ -67,12 +67,14 @@ validate.validators.arrayValidate = function arrayValidate(
     return `${key} cannot be empty.`;
   }
   // check every element in the array
-  const messages = value.map(v => {
-    if (validate.isObject(v)) {
-      return validate(v, constraint);
-    }
-    return validate.single(v, constraint);
-  }).filter(Boolean);
+  const messages = value
+    .map(v => {
+      if (validate.isObject(v)) {
+        return validate(v, constraint);
+      }
+      return validate.single(v, constraint);
+    })
+    .filter(Boolean);
   if (messages.length > 0) {
     // consolidate error messages of each element
     return messages.map((m, idx) => `${key}[${idx}]: ${Object.values(m)}`);
@@ -129,7 +131,9 @@ const WILL_DEPRECATED = ['DOC_FOLDER'];
 module.exports = function validateConfig(config, constraints) {
   // check unused/deprecated config
   const unusedProperties = Object.keys(config).filter(key => !constraints[key]);
-  const deprecatedProperties = Object.keys(config).filter(key => WILL_DEPRECATED.includes(key));
+  const deprecatedProperties = Object.keys(config).filter(key =>
+    WILL_DEPRECATED.includes(key)
+  );
   // check config, validate function will return a object with corresponding warnings.
   // ex: {GITHUB_KEY: ['must be provided if your project is hosted on Github.']}
   const messages = validate(config, constraints) || {};

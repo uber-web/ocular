@@ -17,7 +17,7 @@ const GOOD_CONFIG = {
   PROJECT_URL: 'https://github.com/uber-web/ocular',
   PROJECT_DESC: 'A documentation website for Ocular, made with Ocular',
   PATH_PREFIX: '/ocular',
-  FOOTER_LOGO: '',
+  PROJECT_ORG_LOGO: '',
   PROJECTS: [],
   HOME_PATH: '/',
   HOME_MARKDOWN: '',
@@ -46,8 +46,6 @@ test('validateConfig', t => {
       'Project url can\'t be blank',
       'Project desc can\'t be blank,Project desc should be the project\'s description',
       'Path prefix should be the prefix added to all paths on the site',
-      'Home heading can\'t be blank,Home heading should be ...',
-      'Home bullets can\'t be blank,Home bullets HOME_BULLETS needs to be an array.',
       'Additional links can\'t be blank',
       'Webpack webpack needs to be an object.'
     ],
@@ -104,19 +102,6 @@ test('validateConfig', t => {
     ),
     ["Project url can't be blank"],
     'Check if PROJECT_URL is null'
-  );
-
-  // HOME_BULLETS
-  t.deepEquals(
-    validateConfig(
-      {
-        ...GOOD_CONFIG,
-        HOME_BULLETS: [{text: 'Project 1', desc: '', img: ''}]
-      },
-      CONFIG_SCHEMA
-    ),
-    ["Home bullets HOME_BULLETS[0]: Img can't be blank"],
-    'Check HOME_BULLETS with empty img'
   );
 
   // ADDITIONAL_LINKS

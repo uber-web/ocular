@@ -1,4 +1,4 @@
-const {onCreateWebpackConfig} = require('gatsby-theme-ocular/gatsby-node');
+const {onCreateWebpackConfig} = require('./on-create-webpack-config');
 
 module.exports.onCreateWebpackConfig = function onCreateWebpackConfigOverride(opts) {
   onCreateWebpackConfig(opts);

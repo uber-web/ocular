@@ -7,12 +7,20 @@ const OCULAR_MODULE_NAME = 'gatsby-theme-ocular';
 function getOcularOptions(config) {
   for (const plugin of config.plugins) {
     if (plugin === OCULAR_MODULE_NAME) {
-      throw new Error(`${OCULAR_MODULE_NAME} used without options in gatsby config`);
+      throw new Error(
+        `${OCULAR_MODULE_NAME} used without options in gatsby config`
+      );
     }
-    if (plugin && typeof plugin === 'object' && plugin.resolve === OCULAR_MODULE_NAME) {
+    if (
+      plugin &&
+      typeof plugin === 'object' &&
+      plugin.resolve === OCULAR_MODULE_NAME
+    ) {
       const {options} = plugin;
       if (!options) {
-        throw new Error(`${OCULAR_MODULE_NAME} used without options in gatsby config`);
+        throw new Error(
+          `${OCULAR_MODULE_NAME} used without options in gatsby config`
+        );
       }
       return options;
     }

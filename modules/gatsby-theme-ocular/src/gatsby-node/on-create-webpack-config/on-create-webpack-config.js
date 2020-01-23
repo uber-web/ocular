@@ -1,7 +1,51 @@
-  const {log, COLOR} = require('../../utils/log');
-  const {getOcularOptions} = require('../../utils/get-ocular-options');
+const {log, COLOR} = require('../../utils/log');
 
-  const MODULE_NAME = 'gatsby-theme-ocular';
+const MODULE_NAME = 'gatsby-theme-ocular';
+
+// Makes JSON.stringify print regexps
+function stringify(key, value) {
+  if (value instanceof RegExp) {
+    return value.toString();
+  }
+  if (value instanceof Function) {
+    return '[function]';
+  }
+
+  // Prune webpack config dump
+  switch (key) {
+    case 'schemaString':
+      if (log.priority < 5) {
+        return '...logLevel<5...';
+      }
+      break;
+    case 'options':
+      if (log.priority < 4) {
+        return '...logLevel<4...';
+      }
+      break;
+    case 'use':
+      if (log.priority < 3) {
+        return '...logLevel<3...';
+      }
+      break;
+    default:
+  }
+  return value;
+}
+
+function logWebpackConfig(stage, config) {
+  if (log.priority >= 2) {
+    log.log(
+      {color: COLOR.MAGENTA, priority: 3},
+      `STAGE ${stage}: webpack config: ${JSON.stringify(config, stringify, 2)}`
+    )();
+  } else {
+    log.log(
+      {color: COLOR.CYAN, priority: 1},
+      `STAGE ${stage}: Webpack started with aliases ${JSON.stringify(config.WEBPACK_ALIAS || {}, stringify, 2)}`
+    )();
+  }
+}
 
 // See
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/add-custom-webpack-config.md#modifying-the-babel-loader
@@ -57,7 +101,7 @@ class WebpackRule {
 
     if (excludeNeedsReplace) {
       rule.exclude = WebpackRule.getExcludeOverride(rule, ocularOptions);
-      log.log({priority: 1, color: COLOR.RED}, `Replaced excludes for webpack rule ${WebpackRule.getLoader(rule)}`);
+      log.log({priority: 1, color: COLOR.RED}, `Replaced excludes for webpack rule ${WebpackRule.getLoader(rule)}`)();
     }
   }
 
@@ -71,26 +115,26 @@ class WebpackRule {
       // }
       const isExcluded = typeof exclude === 'function' ? exclude(path) : exclude.test(path);
       if (isExcluded && /.*\.css$/.test(path)) {
-        log.log(4, 'Prevented exclusion of css', path);
+        log.log(4, 'Prevented exclusion of css', path)();
         return false;
       }
       const ModuleRegEx = new RegExp(MODULE_NAME);
       if (isExcluded && ModuleRegEx.test(path)) {
-        log.log(4, `Prevented exclusion of ocular gatsby ${path}`);
+        log.log(4, `Prevented exclusion of ocular gatsby ${path}`)();
         return false;
       }
       if (isExcluded && /examples/.test(path)) {
-        log.log(4, `Prevented exclusion of example ${path}`);
+        log.log(4, `Prevented exclusion of example ${path}`)();
         return false;
       }
 
       const {WEBPACK_EXCLUDE_REGEXP, WEBPACK_INCLUDE_REGEXP} = ocularOptions;
       if (!isExcluded && WEBPACK_INCLUDE_REGEXP && WEBPACK_INCLUDE_REGEXP.test(path)) {
-        log.log(3, 'Webpack loaders will include file', path);
+        log.log(3, 'Webpack loaders will include file', path)();
         return true;
       }
       if (!isExcluded && WEBPACK_EXCLUDE_REGEXP && WEBPACK_EXCLUDE_REGEXP.test(path)) {
-        log.log(3, 'Enforced webpack will exclude file', path);
+        log.log(3, 'Enforced webpack will exclude file', path)();
         return true;
       }
       return isExcluded;
@@ -137,51 +181,6 @@ function onCreateWebpackConfig(opts, ocularOptions = global.ocularOptions) {
   actions.replaceWebpackConfig(newConfig);
 
   logWebpackConfig(stage, newConfig);
-}
-
-// Makes JSON.stringify print regexps
-function stringify(key, value) {
-  if (value instanceof RegExp) {
-    return value.toString();
-  }
-  if (value instanceof Function) {
-    return '[function]';
-  }
-
-  // Prune webpack config dump
-  switch (key) {
-    case 'schemaString':
-      if (log.priority < 5) {
-        return '...logLevel<5...';
-      }
-      break;
-    case 'options':
-      if (log.priority < 4) {
-        return '...logLevel<4...';
-      }
-      break;
-    case 'use':
-      if (log.priority < 3) {
-        return '...logLevel<3...';
-      }
-      break;
-    default:
-  }
-  return value;
-}
-
-function logWebpackConfig(stage, config) {
-  if (log.priority >= 2) {
-    log.log(
-      {color: COLOR.MAGENTA, priority: 3},
-      `STAGE ${stage}: webpack config: ${JSON.stringify(config, stringify, 2)}`
-    )();
-  } else {
-    log.log(
-      {color: COLOR.CYAN, priority: 1},
-      `STAGE ${stage}: Webpack started with aliases ${JSON.stringify(config.WEBPACK_ALIAS || {}, stringify, 2)}`
-    )();
-  }
 }
 
 module.exports = onCreateWebpackConfig;
