@@ -23,11 +23,6 @@ function sourceNodes({actions}) {
       image: String
     }
 
-    type ThemeOverrides implements Node {
-      key: String
-      value: String
-    }
-
     type HomeBullets implements Node {
       text: String
       desc: String
@@ -53,8 +48,9 @@ function sourceNodes({actions}) {
       PROJECT_URL: String
       WEBSITE_PATH: String
 
-      FOOTER_LOGO: String
-      HOME_HEADING: String
+      PROJECT_ORG_LOGO: String
+
+      HOME_MARKDOWN: String
 
       ROOT_FOLDER: String
       DOC_FOLDER: String
@@ -65,9 +61,7 @@ function sourceNodes({actions}) {
       ADDITIONAL_LINKS: [AdditionalLinks]
       LINK_TO_GET_STARTED: String
       PROJECTS: [Projects]
-      HOME_BULLETS: [HomeBullets]
       EXAMPLES: [Examples]
-      THEME_OVERRIDES: [ThemeOverrides]
 
       siteUrl: String
       pathPrefix: String

@@ -16,14 +16,13 @@ The following options are available:
 | `PROJECT_TYPE`     | `String` | Should be set to `"github"` if your project is hosted on Github. `GITHUB_KEY` (below) must be provided so the site can display star counts and contributors. |
 | `PROJECT_NAME`     | `String` | The project's name (on github). |
 | `PROJECT_ORG`      | `String` | The project's Github organization. |
+| `PROJECT_ORG_LOGO`     | `String`  | URL to an image of the organization's logo. |
 | `PROJECT_URL`      | `String` | The project's URL |
 | `PROJECT_DESC`     | `String` | The project's description |
 | `PROJECTS`         | `Array`  | Array of links to related projects (header) |
 | `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
 | `HOME_PATH`        | `String` | |
-| `HOME_HEADING`     | `String` | |
-| `HOME_RIGHT`       | `String` | |
-| `HOME_BULLETS`     | `Array`  | See below |
+| `HOME_MARKDOWN`     | `String`  | URL to a markdown that should be displayed in the index page. |
 | `ADDITIONAL_LINKS` | `Array` | See below |
 | `GA_TRACKING`      | `String` | |
 | `GITHUB_KEY`       | `String` | The Github key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
@@ -46,16 +45,6 @@ Projects are links to related projects in the header drop down menu.
 | `title`    | `String` | The header of the link |
 | `url`    | `String` | The URL of the link |
 
-
-## HOME BULLETS
-
-These are bullets on the home page, typically the main selling points of your framework:
-
-| Field     | Type     | Name  |
-| ---       | ---      | ---   |
-| `text`    | `String` | The header of the bullet point |
-| `desc`    | `String` | The text of the bullet point |
-| `image`   | `String` | The icon for the bullet. Typically `images/<icon>.svg`. Images are resolved in the `static` folder. |
 
 ## ADDITIONAL_LINKS
 

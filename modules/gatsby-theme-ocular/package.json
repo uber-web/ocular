@@ -38,8 +38,6 @@
     "sharp": "0.22.1"
   },
   "dependencies": {
-    "baseui": "^8.3.1",
-    "classnames": "^2.2.6",
     "gatsby-cli": "^2.5.7",
     "gatsby-image": "^2.0.38",
     "gatsby-plugin-catch-links": "^2.0.13",
@@ -53,11 +51,9 @@
     "gatsby-plugin-nprogress": "^2.0.10",
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-react-helmet": "^3.0.12",
-    "gatsby-plugin-sass": "^2.0.7",
     "gatsby-plugin-sharp": "^2.1.0",
     "gatsby-plugin-sitemap": "^2.0.12",
     "gatsby-plugin-styled-components": "^3.0.4",
-    "gatsby-plugin-styletron": "^4.1.0",
     "gatsby-remark-autolink-headers": "^2.0.16",
     "gatsby-remark-copy-linked-files": "^2.0.11",
     "gatsby-remark-frontmatter-defaults": "^0.0.2",
@@ -75,7 +71,6 @@
     "lodash.debounce": "^4.0.8",
     "lodash.template": "^4.5.0",
     "moment": "^2.22.2",
-    "node-sass": "^4.11.0",
     "prismjs": "^1.15.0",
     "probe.gl": "^3.0.1",
     "prop-types": "^15.6.2",

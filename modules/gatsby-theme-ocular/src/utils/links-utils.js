@@ -1,4 +1,5 @@
 const path = require('path');
+const {log, COLOR} = require('./log');
 
 const parseLinks = (href, relativeLinks) => {
   // external link

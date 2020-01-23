@@ -20,21 +20,8 @@ const GOOD_CONFIG = {
   FOOTER_LOGO: '',
   PROJECTS: [],
   HOME_PATH: '/',
-  HOME_HEADING: 'A documentation website for Ocular, made with Ocular',
-  HOME_RIGHT: null,
-  HOME_BULLETS: [
-    {
-      text: 'Designed for React',
-      desc: 'Seamless integration.',
-      img: 'images/icon-react.svg'
-    }
-  ],
-  THEME_OVERRIDES: [
-    {
-      key: 'none',
-      value: 'none'
-    }
-  ],
+  HOME_MARKDOWN: '',
+  THEME_OVERRIDES: '',
 
   ADDITIONAL_LINKS: [],
   GA_TRACKING: null,
@@ -61,7 +48,6 @@ test('validateConfig', t => {
       'Path prefix should be the prefix added to all paths on the site',
       'Home heading can\'t be blank,Home heading should be ...',
       'Home bullets can\'t be blank,Home bullets HOME_BULLETS needs to be an array.',
-      'Theme overrides THEME_OVERRIDES needs to be an array.',
       'Additional links can\'t be blank',
       'Webpack webpack needs to be an object.'
     ],
@@ -184,20 +170,6 @@ test('validateConfig', t => {
     ),
     [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs/developer-guide/get-started'`],
     `Check if LINK_TO_GET_STARTED is a valid string`
-  );
-
-
-  // THEME_OVERRIDES
-  t.deepEquals(
-    validateConfig(
-      {
-        ...GOOD_CONFIG,
-        THEME_OVERRIDES: []
-      },
-      CONFIG_SCHEMA
-    ),
-    ['Theme overrides THEME_OVERRIDES cannot be empty.'],
-    'Check if THEME_OVERRIDES is empty'
   );
 
   t.end();
