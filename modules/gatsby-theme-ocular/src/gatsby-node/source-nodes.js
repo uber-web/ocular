@@ -10,7 +10,6 @@ function sourceNodes({actions}) {
   // it requires it to have a very strict shape by defining the schema independently
   // of the content of the file we can be more flexible.
 
-
   // Having ImageSharp type is to enfore the `allImageSharp` node exists in the schema
   // Original disussion: https://github.com/gatsbyjs/gatsby/issues/14304
   // PR: https://github.com/uber-web/ocular/pull/195
@@ -21,11 +20,6 @@ function sourceNodes({actions}) {
       componentUrl: String
       path: String
       image: String
-    }
-
-    type ThemeOverrides implements Node {
-      key: String
-      value: String
     }
 
     type HomeBullets implements Node {
@@ -53,8 +47,9 @@ function sourceNodes({actions}) {
       PROJECT_URL: String
       WEBSITE_PATH: String
 
-      FOOTER_LOGO: String
-      HOME_HEADING: String
+      PROJECT_ORG_LOGO: String
+
+      HOME_MARKDOWN: String
 
       ROOT_FOLDER: String
       DOC_FOLDER: String
@@ -65,9 +60,7 @@ function sourceNodes({actions}) {
       ADDITIONAL_LINKS: [AdditionalLinks]
       LINK_TO_GET_STARTED: String
       PROJECTS: [Projects]
-      HOME_BULLETS: [HomeBullets]
       EXAMPLES: [Examples]
-      THEME_OVERRIDES: [ThemeOverrides]
 
       siteUrl: String
       pathPrefix: String

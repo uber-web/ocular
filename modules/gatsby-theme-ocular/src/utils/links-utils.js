@@ -1,4 +1,5 @@
 const path = require('path');
+const {log, COLOR} = require('./log');
 
 const parseLinks = (href, relativeLinks) => {
   // external link
@@ -10,16 +11,21 @@ const parseLinks = (href, relativeLinks) => {
   // relative link ie doc to doc
   const relativeLink = relativeLinks[hrefWithoutLeadingSlash];
 
-  return relativeLink ||
+  return (
+    relativeLink ||
     // if relative link not found then return href untouched
-    href;
+    href
+  );
 };
 // if using simply path.relative(from, to) to files which are in the same folder, the resolved path is: '../to'.
 // instead we do relative path between folders, then add the name of the target file in the end.
 // in that same scenario, the relative path between folders will be '', and overall path just 'to'.
 
 function linkFromFileToFile(sourceFile, targetFile) {
-  const relativePathFromDirToDir = path.relative(path.dirname(sourceFile), path.dirname(targetFile));
+  const relativePathFromDirToDir = path.relative(
+    path.dirname(sourceFile),
+    path.dirname(targetFile)
+  );
   return path.join(relativePathFromDirToDir, path.basename(targetFile));
 }
 
@@ -57,8 +63,12 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
     edge.node.fileAbsolutePath,
     source
   );
-  const relativeToRootFolder = rootFolder && linkFromFileToFile(rootFolder, source);
-  const relativeToCurrentSlug = linkFromFileToFile(edge.node.fields.path, target);
+  const relativeToRootFolder =
+    rootFolder && linkFromFileToFile(rootFolder, source);
+  const relativeToCurrentSlug = linkFromFileToFile(
+    edge.node.fields.path,
+    target
+  );
 
   const absoluteTarget = `/${target}`;
 

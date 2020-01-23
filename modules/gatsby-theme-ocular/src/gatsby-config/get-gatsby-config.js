@@ -9,30 +9,21 @@ const defaults = {
   DOC_FOLDER: '',
   DOC_FOLDERS: [],
   ROOT_FOLDER: './',
-  DIR_NAME: 'website',
+  SOURCE: 'website/src',
   EXAMPLES: [],
   DOCS: {},
-  LINK_TO_GET_STARTED: '/docs/developer-guide/get-started',
+  LINK_TO_GET_STARTED: '/docs',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'Ocular',
   PROJECT_ORG: 'uber-web',
   PROJECT_URL: 'http://localhost/',
   PROJECT_DESC: '',
+  HOME_MARKDOWN: '',
   PATH_PREFIX: '/',
-  FOOTER_LOGO: '',
+  PROJECT_ORG_LOGO: '',
   PROJECTS: [],
   HOME_PATH: '/',
-  HOME_HEADING: 'A documentation website made with Ocular',
-  HOME_RIGHT: null,
-  // TODO(@javidhsueh): not sure why HOME_BULLETS can't be an empty array
-  HOME_BULLETS: [{text: '', desc: '', img: ''}],
-  // TODO(@javidhsueh): not sure why THEME_OVERRIDES can't be an empty array
-  THEME_OVERRIDES: [
-    {
-      key: 'none',
-      value: 'none'
-    }
-  ],
+  THEME_OVERRIDES: '',
   ADDITIONAL_LINKS: [],
   GA_TRACKING: null,
   GITHUB_KEY: null,
@@ -75,42 +66,13 @@ module.exports = function getGatsbyConfig(config) {
     plugins: [
       // Reads metadata from the React Helmet component
       'gatsby-plugin-react-helmet',
-      'gatsby-plugin-styletron',
       // A Gatsby plugin for styled-components with built-in server-side rendering support.
       'gatsby-plugin-styled-components',
+      // Exposes several image processing functions built on the Sharp image processing library.
+      // This is a low-level helper plugin generally used by other Gatsby plugins.
+      // You generally shouldn't be using this directly unless doing custom image processing.
       'gatsby-plugin-sharp',
       'gatsby-transformer-sharp',
-      // Drop-in support for SASS/SCSS stylesheets
-      {
-        resolve: `gatsby-plugin-sass`
-        /*
-        options: {
-          includePaths: [
-            path.resolve(__dirname, '../../styles'),
-            path.resolve(__dirname, '../../../styles')
-          ],
-        }
-        */
-      },
-
-      /*
-      // Bring Google Fonts to Gatsby.
-      {
-        resolve: `gatsby-plugin-google-fonts`,
-        options: {
-          fonts: [`crimson text:400, 400i, 700, 700i`, `space mono:400,700`]
-        }
-      },
-      */
-
-      // Generates gatsby nodes for files in the ocular static folder
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: 'assets',
-          path: `${__dirname}/../../static/`
-        }
-      },
 
       // Transforms markdown (.md) nodes, converting the raw markdown to HTML
       {
@@ -135,9 +97,7 @@ module.exports = function getGatsbyConfig(config) {
             // Wraps iframes or objects (e.g. embedded YouTube videos) within markdown files
             // in a responsive elastic container with a fixed aspect ratio. This ensures that
             // the iframe or object will scale proportionally and to the full width of its container.
-            {
-              resolve: 'gatsby-remark-responsive-iframe'
-            },
+            'gatsby-remark-responsive-iframe',
             // Adds syntax highlighting to code blocks in markdown files using PrismJS.
             // To load a theme, just require its CSS file in your gatsby-browser.js file, e.g.
             // require('prismjs/themes/prism-solarizedlight.css')
@@ -170,11 +130,6 @@ module.exports = function getGatsbyConfig(config) {
 
       */
 
-      // Exposes several image processing functions built on the Sharp image processing library.
-      // This is a low-level helper plugin generally used by other Gatsby plugins.
-      // You generally shouldn't be using this directly unless doing custom image processing.
-      'gatsby-plugin-sharp',
-
       /*
       // Intercepts local links from markdown and other non-react pages and
       // does a client-side pushState to avoid the browser having to refresh the page.
@@ -186,20 +141,7 @@ module.exports = function getGatsbyConfig(config) {
       */
 
       // Transforms JSON files in the data source into JSON nodes
-      {
-        resolve: `gatsby-transformer-json`
-        // options: {
-        //   typeName: ({ node, object, isArray }) =>
-        //     console.log('json', node, object, isArray) && object.level,
-        // },
-      },
-
-      {
-        resolve: `gatsby-plugin-env-variables`,
-        options: {
-          whitelist: ['MapboxAccessToken']
-        }
-      }
+      'gatsby-transformer-json'
 
       /*
       // Gatsby’s manifest plugin creates a manifest.webmanifest file on every build.
@@ -319,76 +261,66 @@ module.exports = function getGatsbyConfig(config) {
   // conditional plug-ins - only added depending on options on config
 
   // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
-  if (paddedConfig.DOC_FOLDER) {
-    gatsbyConfig.plugins.push({
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'docs',
-        path: paddedConfig.DOC_FOLDER
-      }
-    });
-  }
+  const docDirs = [paddedConfig.DOC_FOLDER]
+    .concat(paddedConfig.DOC_FOLDERS)
+    .filter(Boolean);
 
-  if (paddedConfig.DOC_FOLDERS && paddedConfig.DOC_FOLDERS.length > 0) {
+  if (docDirs.length > 0) {
     // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
-    paddedConfig.DOC_FOLDERS.forEach(folderPath => {
+    for (const path of docDirs) {
       gatsbyConfig.plugins.push({
         resolve: 'gatsby-source-filesystem',
         options: {
           name: 'docs',
-          path: folderPath,
+          path,
           // Ensure gatsby-source-filesystem doesn't pick up too many files in modules directory
           // https://www.gatsbyjs.org/packages/gatsby-source-filesystem/#options
           ignore: [
-            '**/modules/**/test',
-            '**/modules/**/src',
-            '**/modules/**/dist',
-            '**/modules/**/wip',
-            '**/modules/**/*.json',
-            '**/arrowjs/**/*.json'
+            '**/src/**',
+            '**/test/**',
+            '**/dist/**',
+            '**/package.json',
+            '**/*.js'
           ]
         }
       });
-    })
-  }
-
-  if (paddedConfig.DIR_NAME) {
-    // Generates gatsby nodes for files in the website's src folder
-    gatsbyConfig.plugins.push({
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'src',
-        path: `${paddedConfig.DIR_NAME}/src/`
-      }
-    });
-    gatsbyConfig.plugins.push({
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'src',
-        path: `${paddedConfig.DIR_NAME}/static/`
-      }
-    });
-    // TODO(@javidhsueh):
-    // Should we fs.stat these directories before we add the plugins?
-    // Or fs.stat and warn if they don't exist?
-    // Or fs.stat and create them if they don't exist?
-    gatsbyConfig.plugins.push({
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: `${paddedConfig.DIR_NAME}/static/images`,
-        plugins: [
-          `gatsby-plugin-sharp`
-        ]
-      }
-    });
+    }
   } else {
     log.log(
       {color: COLOR.YELLOW},
-      `DIR_NAME not found in gatsby-theme-ocular config}`
+      `DOC_FOLDERS not specified in gatsby-theme-ocular config}`
     )();
   }
 
-  log.log({color: COLOR.CYAN, priority: 2}, `GENERATED GATSBY CONFIG: ${JSON.stringify(gatsbyConfig, null, 2)}`)();
+  if (paddedConfig.SOURCE) {
+    // Generates gatsby nodes for files in the website's src folder
+    const srcDirs = Array.isArray(paddedConfig.SOURCE)
+      ? paddedConfig.SOURCE
+      : [paddedConfig.SOURCE];
+    for (const path of srcDirs) {
+      gatsbyConfig.plugins.push({
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: 'src',
+          path
+        }
+      });
+    }
+  } else {
+    log.log(
+      {color: COLOR.YELLOW},
+      `SOURCE not found in gatsby-theme-ocular config}`
+    )();
+  }
+
+  if (paddedConfig.THEME_OVERRIDES) {
+    // GraphQL does not handle arbitrary objects
+    paddedConfig.THEME_OVERRIDES = JSON.stringify(paddedConfig.THEME_OVERRIDES);
+  }
+
+  log.log(
+    {color: COLOR.CYAN, priority: 2},
+    `GENERATED GATSBY CONFIG: ${JSON.stringify(gatsbyConfig, null, 2)}`
+  )();
   return gatsbyConfig;
 };

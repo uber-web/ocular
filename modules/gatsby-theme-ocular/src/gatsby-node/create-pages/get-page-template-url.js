@@ -1,24 +1,26 @@
 const path = require('path');
 const assert = require('assert');
 
+const templatePath = path.resolve(__dirname, '../../react/templates');
+
 // PATHS TO REACT PAGES
-const INDEX_PAGE_URL = path.resolve(__dirname, '../../templates/index.jsx');
+const INDEX_PAGE_URL = path.resolve(templatePath, 'home.jsx');
 
 const DOC_MARKDOWN_PAGE_URL = path.resolve(
-  __dirname,
-  '../../templates/doc-page-markdown.jsx'
+  templatePath,
+  'documentation.jsx'
 );
 
 const EXAMPLE_GALLERY_PAGE_URL = path.resolve(
-  __dirname,
-  '../../templates/examples.jsx'
+  templatePath,
+  'examples.jsx'
 );
 const EXAMPLE_PAGE_URL = path.resolve(
-  __dirname,
-  '../../templates/example-n.jsx'
+  templatePath,
+  'example-n.jsx'
 );
 
-const SEARCH_PAGE_URL = path.resolve(__dirname, '../../templates/search.jsx');
+const SEARCH_PAGE_URL = path.resolve(templatePath, 'search.jsx');
 
 // All templates are overridable by top-level fields in ocular config
 const PAGE_TEMPLATES = {

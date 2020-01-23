@@ -1,1 +1,1 @@
-module.exports.wrapPageElement = require(`./src/gatsby-common/wrap-page`);
+module.exports.wrapPageElement = require(`./src/react/wrap-page`);

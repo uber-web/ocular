@@ -5,27 +5,29 @@ const DOCS = require('../docs/table-of-contents.json');
 
 module.exports = {
   plugins: [{
-    resolve: `gatsby-theme-ocular`,
+    resolve: 'gatsby-theme-ocular',
     options: {
       // Adjusts amount of debug information from gatsby-theme-ocular
       logLevel: 1,
 
       DOC_FOLDER: `${__dirname}/../docs/`,
       ROOT_FOLDER: `${__dirname}/../`,
-      DIR_NAME: `${__dirname}`,
+      SOURCE: [
+        `${__dirname}/static`,
+        `${__dirname}/src`
+      ],
 
       PROJECT_TYPE: 'github',
       PROJECT_NAME: 'Ocular',
       PROJECT_ORG: 'uber-web',
+      PROJECT_ORG_LOGO: 'images/uber-logo.png',
       PROJECT_URL: 'https://github.com/uber-web/ocular',
       PROJECT_DESC: 'Uber\'s open source documentation system',
       PATH_PREFIX: '',
 
-      FOOTER_LOGO: '',
-
       HOME_PATH: '/',
-      HOME_HEADING: 'Uber\'s open source documentation system',
-      HOME_RIGHT: null,
+      LINK_TO_GET_STARTED: '/docs',
+      HOME_MARKDOWN: resolve('./src/home.md'),
 
       // your table of contents goes here
       DOCS,
@@ -39,21 +41,7 @@ module.exports = {
         }
       ],
 
-      THEME_OVERRIDES: [
-        //  {key: 'primaryFontFamily', value: 'serif'}
-      ],
-
-      HOME_BULLETS: [
-        {
-          text: 'Designed for React',
-          desc: 'Seamless integration.',
-          img: 'images/icon-react.svg'
-        },
-        {
-          text: 'Totally ready for production',
-          img: 'images/icon-layers.svg'
-        }
-      ],
+      // THEME_OVERRIDES: require('./src/theme.json'),
 
       PROJECTS: [
         // {name: 'Project name', url: 'http://project.url'},

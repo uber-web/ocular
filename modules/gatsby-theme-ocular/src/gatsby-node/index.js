@@ -1,45 +1,15 @@
-const {
-  onCreateWebpackConfig,
-  logWebpackConfig,
-  getWebpackConfigOverrides
-} = require('./create-webpack-config');
-const createPages = require('./create-pages');
-const {
-  processNewMarkdownNode,
-  cleanupMarkdownNode,
-  addSiblingNodes
-} = require('./process-nodes/process-nodes-markdown');
-const {processNewDocsJsonNode} = require('./process-nodes/process-nodes-json');
-const {sourceNodes} = require('./source-nodes');
+// Import gatsby hook implementations and register them by exporting them with the right names
+const sourceNodes = require('./source-nodes');
+const onCreateNode = require('./on-create-node/on-create-node');
+const onCreateWebpackConfig = require('./on-create-webpack-config/on-create-webpack-config');
+const createPages = require('./create-pages/create-pages');
 
-// TODO/ib - avoid globals
-const docNodes = {};
-let tocNode = null;
+// TODO - move to the src directory
+const {addSiblingNodes} = require('./on-create-node/process-nodes-markdown');
 
-function setOcularConfig(config) {
-  global.ocularConfig = config;
-}
-
-function onCreateNode({node, actions, getNode}) {
-  // log.log({color: COLOR.CYAN}, `Processed node`)();
-
-  // Add missing fields to markdown nodes
-  cleanupMarkdownNode({node, actions, getNode});
-
-  switch (node.internal.type) {
-    case 'MarkdownRemark':
-      // Note: MarkdownRemark nodes are created by the gatsby-transformer-remark
-      // markdown parser. These are different from the original file nodes
-      // for the markdown files created by the gatsby-source-filesystem plugin.
-      processNewMarkdownNode({node, actions, getNode}, docNodes, tocNode);
-      break;
-
-    case 'DocsJson':
-      tocNode = processNewDocsJsonNode({node, actions, getNode}, docNodes);
-      break;
-
-    default:
-  }
+function onPreBootstrap(context, ocularOptions) {
+  // TODO - save these for onCreateWebpackConfig which does not seem to get them
+  global.ocularOptions = ocularOptions;
 }
 
 function setFieldsOnGraphQLNodeType({type, actions}) {
@@ -50,25 +20,11 @@ function setFieldsOnGraphQLNodeType({type, actions}) {
   }
 }
 
-const GATSBY_NODE_CALLBACKS = {
-  onCreateWebpackConfig,
-  onCreateNode,
+module.exports = {
+  onPreBootstrap,
+  sourceNodes,
   setFieldsOnGraphQLNodeType,
-  createPages,
-  sourceNodes
+  onCreateNode,
+  onCreateWebpackConfig,
+  createPages
 };
-
-// gatsby-node default implementation, user can just export these from gatsby-node
-module.exports = function getGatsbyNodeCallbacks(config) {
-  if (config) {
-    setOcularConfig(config);
-  }
-  return GATSBY_NODE_CALLBACKS;
-};
-
-Object.assign(module.exports, GATSBY_NODE_CALLBACKS, {
-  // Helpers
-  setOcularConfig,
-  logWebpackConfig,
-  getWebpackConfigOverrides
-});

@@ -1,7 +1,5 @@
 module.exports.getGatsbyNodeCallbacks = require('./gatsby-node');
 
-module.exports.getGatsbyConfig = require('./gatsby-config/get-gatsby-config');
-
 // UTILS
 const {log, COLOR} = require('./utils/log');
 
