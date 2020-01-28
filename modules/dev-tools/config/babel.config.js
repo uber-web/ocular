@@ -8,7 +8,7 @@ const ES6_TARGETS = {
   firefox: '60', // Released: 2018-May-9, https://en.wikipedia.org/wiki/Firefox_version_history
   safari: '12', // Released: 2018-09-07 (OSX Mojave) - https://en.wikipedia.org/wiki/Safari_version_history
   ios: '12', // Track Safari
-  node: '8' // Node 8 is LTS until December 31, 2019.
+  node: '10' // Node 8 LTS expired December 31, 2019.
 };
 
 const COMMON_CONFIG = {
@@ -42,10 +42,11 @@ const ENV_CONFIG = {
     presets: [
       [ '@babel/env', {
         targets: ES6_TARGETS,
+        // debug: true, // shows which plugins are selected by targets
         modules: false,
-	exclude: [
-	  "@babel/plugin-transform-regenerator"
-	]
+        exclude: [
+          "@babel/plugin-transform-regenerator"
+        ]
       }]
     ],
     plugins: [
