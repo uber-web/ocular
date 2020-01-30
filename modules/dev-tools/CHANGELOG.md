@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.5
+- Fix bump script to detect peerDependencies (#284)
+
 ## v0.1.4
 - Fix building selected modules (#282)
 
