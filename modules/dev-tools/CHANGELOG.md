@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.6
+- dev-tools: Bump es6 build targets to Node 10 (#287)
+- Fix eslint error when using 'ocular-lint fix' (#286)
+
 ## v0.1.5
 - Fix bump script to detect peerDependencies (#284)
 
