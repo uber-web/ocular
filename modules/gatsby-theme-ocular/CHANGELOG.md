@@ -1,5 +1,10 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+# v1.2.0-alpha.0
+- Clean up gatsby-theme-ocular (#288)
+
+# v1.1.0
+
 # v1.1.0-alpha.4
 - Fixes custom index page (by ensuring ocularOptions are plumbed through to page creation functions).
 - Improved logging of page creation
