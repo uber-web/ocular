@@ -17,18 +17,22 @@ export const BodyContainerFull = styled.div`
 export const BodyContainerToC = styled.div`
   height: 100%;
   width: 100%;
-  @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
-    padding: ${props => props.theme.sizing.scale500} ${props => props.theme.sizing.scale500} ${props => props.theme.sizing.scale500} calc(300px + ${props => props.theme.sizing.scale500});
-    transform: scaleY(1);
-    opacity: 1
-  }
+  padding: ${props => props.theme.sizing.scale1600} 0 0 300px;
+  transform: scaleY(1);
+  opacity: 1;
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
-    padding: ${props => props.theme.sizing.scale500};
+    padding-left: 0;
     order: 2;
     transition: opacity 0.3s;
     transform: ${props => props.$isTocOpen || props.$isMenuOpen ? 'scaleY(0)' : 'scaleY(1)'};
     opacity: ${props => props.$isTocOpen || props.$isMenuOpen ? 0 : 1};
   }
+`;
+
+export const BodyContainerInner = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
 `;
 
 export const Body = styled.div`

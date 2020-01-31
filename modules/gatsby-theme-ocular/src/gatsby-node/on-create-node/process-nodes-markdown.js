@@ -49,32 +49,16 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   }
 
   // Update path
-  let relPath = node.fields.slug;
-  if (node.fileAbsolutePath) {
+  let relPath = path.relative(ocularOptions.ROOT_FOLDER, node.fileAbsolutePath);
 
-    if (ocularOptions.DOC_FOLDER) {
-      const src = path.resolve(ocularOptions.DOC_FOLDER);
-      const pathBeforeDir = src.substr(0, src.lastIndexOf('/') + 1);
-      relPath = node.fileAbsolutePath.replace(pathBeforeDir, '');
-    } else if (ocularOptions.DOC_FOLDERS) {
-      const index = ocularOptions.DOC_FOLDERS.findIndex(
-        folder => node.fileAbsolutePath.includes(path.resolve(folder))
-      );
-      if (index !== -1) {
-        const src = path.resolve(ocularOptions.DOC_FOLDERS[index]);
-        const pathBeforeDir = src.substr(0, src.lastIndexOf('/') + 1);
-        relPath = node.fileAbsolutePath.replace(pathBeforeDir, '');
-      }
-    }
+  const basename = path.basename(relPath, '.md');
+  const dirname = path.dirname(relPath);
+  relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;
 
-    const basename = path.basename(relPath, '.md');
-    const dirname = path.dirname(relPath);
-    relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;
+  createNodeField({node, name: 'path', value: relPath});
+  createNodeField({node, name: 'slug', value: relPath});
+  node.frontmatter.path = relPath;
 
-    createNodeField({node, name: 'path', value: relPath});
-    createNodeField({node, name: 'slug', value: relPath});
-    node.frontmatter.path = relPath;
-  }
   if (tocNode) {
     // this means toc node has been created. Any markdown file processed beyond this point wouldn't have its info
     // in the toc.

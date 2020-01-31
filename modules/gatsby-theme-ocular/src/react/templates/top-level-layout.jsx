@@ -57,18 +57,16 @@ export default class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isProjectsMenuOpen: false,
-      isLinksMenuOpen: false,
+      isMenuOpen: false,
       isTocOpen: false
     };
-    this.toggleProjectsMenu = this.toggleProjectsMenu.bind(this);
-    this.toggleLinksMenu = this.toggleLinksMenu.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
     this.toggleToc = this.toggleToc.bind(this);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.pageContext.slug !== this.props.pageContext.slug) {
-      this.setState({isTocOpen: false});
+      this.setState({isTocOpen: false, isMenuOpen: false});
     }
   }
 
@@ -82,14 +80,9 @@ export default class Layout extends React.Component {
     return createTheme(primitives);
   }
 
-  toggleLinksMenu() {
-    const {isLinksMenuOpen} = this.state;
-    this.setState({isLinksMenuOpen: !isLinksMenuOpen});
-  }
-
-  toggleProjectsMenu() {
-    const {isProjectsMenuOpen} = this.state;
-    this.setState({isProjectsMenuOpen: !isProjectsMenuOpen});
+  toggleMenu() {
+    const {isMenuOpen} = this.state;
+    this.setState({isMenuOpen: !isMenuOpen});
   }
 
   toggleToc() {
@@ -99,8 +92,7 @@ export default class Layout extends React.Component {
 
   renderBodyWithTOC(config, tableOfContents) {
     const {children} = this.props;
-    const {isLinksMenuOpen, isProjectsMenuOpen, isTocOpen} = this.state;
-    const isMenuOpen = isLinksMenuOpen || isProjectsMenuOpen;
+    const {isMenuOpen, isTocOpen} = this.state;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
       <div>
@@ -108,17 +100,15 @@ export default class Layout extends React.Component {
           <HeaderContainer>
             <ResponsiveHeader
               config={config}
-              isLinksMenuOpen={isLinksMenuOpen}
-              isProjectsMenuOpen={isProjectsMenuOpen}
-              toggleLinksMenu={this.toggleLeftMenu}
-              toggleProjectsMenu={this.toggleProjectsMenu}
+              isMenuOpen={isMenuOpen}
+              toggleMenu={this.toggleMenu}
               isDocHeader
             />
           </HeaderContainer>
           <TocToggle
             toggleToc={this.toggleToc}
-            isMenuOpen={isMenuOpen}
-            isTocOpen={isTocOpen}
+            $isMenuOpen={isMenuOpen}
+            $isTocOpen={isTocOpen}
           />
           <TocContainer $isTocOpen={isTocOpen}>
             {this.renderTOC(config, tableOfContents)}

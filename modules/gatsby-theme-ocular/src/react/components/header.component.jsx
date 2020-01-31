@@ -21,7 +21,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-// import GithubIcon from 'react-icons/lib/go/mark-github';
+import GithubIcon from 'react-icons/lib/go/mark-github';
 
 import {
   HamburgerMenu,
@@ -33,7 +33,8 @@ import {
   HeaderLogo,
   HeaderMenuBlock,
   HeaderMenu,
-  HeaderMenuLink
+  HeaderMenuLink,
+  HeaderMenuDivider
 } from '../styled/header';
 
 // import GithubStars from './github-stars.jsx';
@@ -44,10 +45,10 @@ export const propTypes = {
 
 function GithubLink() {
   return (
-    <div className="github-link">
-      <span>Github</span>
-      {/* <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} /> */}
-    </div>
+    <>
+      Github
+      <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} />
+    </>
   );
 }
 
@@ -70,7 +71,6 @@ export function generateHeaderLinks(props) {
     config.EXAMPLES.length > 0 && {label: 'Examples', to: '/examples'};
 
   const githubLink = config.PROJECT_TYPE === 'github' && {
-    classnames: 'z',
     href: `https://github.com/${config.PROJECT_ORG}/${config.PROJECT_NAME}`,
     label: <GithubLink />
   };
@@ -78,15 +78,13 @@ export function generateHeaderLinks(props) {
   const links = [
     exampleLink,
     {label: 'Documentation', to: '/docs'},
-    {label: 'Search', to: '/search'},
-    {label: 'Blog', href: 'https://medium.com/vis-gl'},
-    githubLink
+    {label: 'Search', to: '/search'}
   ];
 
   if (config.ADDITIONAL_LINKS && config.ADDITIONAL_LINKS.length > 0) {
     config.ADDITIONAL_LINKS.map(link => ({...link, label: link.name})).forEach(
       link => {
-        if (link.index !== undefined) {
+        if (Number.isFinite(link.index)) {
           links.splice(link.index, 0, link);
         } else {
           links.push(link);
@@ -95,27 +93,43 @@ export function generateHeaderLinks(props) {
     );
   }
 
+  links.push(githubLink);
+
   return links.filter(Boolean);
 }
+
+const HeaderLinks = ({links}) => {
+  return (
+    <HeaderLinksBlock>
+      {/* If the no examples marker, return without creating pages */}
+      {links.map((link, index) => (
+        <HeaderLinkContainer key={`link-${index}`}>
+          <HeaderLink {...link} />
+        </HeaderLinkContainer>
+      ))}
+      {/* this.renderStars() */}
+    </HeaderLinksBlock>
+  );
+};
 
 const ControlledHeader = ({
   links,
   config = {},
-  isSmallScreen,
-  isLinksMenuOpen,
-  isProjectsMenuOpen,
-  toggleLinksMenu,
-  toggleProjectsMenu
+  toggleMenu,
+  isMenuOpen,
+  isSmallScreen
 }) => {
   const {PROJECT_NAME, PROJECTS = []} = config;
   return (
     <StyledHeader>
       <HeaderMenuBlock>
         {PROJECTS.length ? (
-          <HamburgerMenu onClick={toggleProjectsMenu} />
+          <HamburgerMenu onClick={toggleMenu} />
         ) : null}
         <HeaderLogo href="/">{PROJECT_NAME}</HeaderLogo>
-        <HeaderMenu $collapsed={!isProjectsMenuOpen} $nbItems={PROJECTS.length}>
+        <HeaderMenu $collapsed={!isMenuOpen} $nbItems={PROJECTS.length}>
+          {isSmallScreen && <HeaderLinks links={links} />}
+          {isSmallScreen && <HeaderMenuDivider />}
           {PROJECTS.map(({name, url}) => (
             <HeaderMenuLink key={`menulink-${name}`} href={url}>
               {name}
@@ -123,33 +137,8 @@ const ControlledHeader = ({
           ))}
         </HeaderMenu>
       </HeaderMenuBlock>
-      <HeaderLinksBlock
-        style={{
-          maxHeight:
-            isSmallScreen && isLinksMenuOpen
-              ? `${4 * links.length}rem`
-              : undefined
-        }}
-      >
-        {/* If the no examples marker, return without creating pages */}
-        {links.map((link, index) => (
-          <HeaderLinkContainer key={`link-${index}`}>
-            <HeaderLink {...link} />
-          </HeaderLinkContainer>
-        ))}
-        {/* this.renderStars() */}
-
-        <div
-          className="menu-toggle"
-          onClick={() => {
-            toggleLinksMenu(!isLinksMenuOpen);
-          }}
-        >
-          {/* currently, this isn't rendered. but this is in place if we want to have
-          the links on the header collapsible for small displays */}
-          <i className={`icon icon-${isLinksMenuOpen ? 'close' : 'menu'}`} />
-        </div>
-      </HeaderLinksBlock>
+      
+      {!isSmallScreen && <HeaderLinks links={links} />}
     </StyledHeader>
   );
 };

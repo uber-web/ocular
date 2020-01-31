@@ -58,7 +58,8 @@ export const TocSubpages = styled.ul`
 export const TocContainer = styled.div`
   @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
     position: fixed;
-    top: ${props => props.theme.sizing.scale1600};
+    top: 0;
+    padding: ${props => props.theme.sizing.scale1600} 0;
     max-width: 300px;
     height: 100%;
     z-index: 2;
@@ -66,11 +67,11 @@ export const TocContainer = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
-  },
+  }
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
     border-right: none;
     position: sticky;
-    top: 56px; /* height of toc toggle, ie 20 + 18 * 2 */
+    padding: ${props => props.$isTocOpen ? props.theme.sizing.scale1600 : 0} 0;
     transition: opacity 0.3s, transform 0.3s;
     opacity: ${props => props.$isTocOpen ? 1 : 0};
     max-height: ${props => props.$isTocOpen ? 'unset' : 0};
@@ -80,38 +81,24 @@ export const TocContainer = styled.div`
 `;
 
 const StyledTocToggle = styled.div`
-  font: ${props => props.theme.typography.font350};
-  background: ${props => props.theme.colors.mono1000};
+  font: ${props => props.theme.typography.font300};
   color: ${props => props.theme.colors.mono100};
-  align-ttems: center;
-  padding: 18px 24px;
-  position: sticky;
-  top: 0,
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  right: ${props => props.theme.sizing.scale800};
+  line-height: ${props => props.theme.sizing.scale1600};
   user-select: none;
   z-index: 10;
+  display: none;
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
-    display: flex;
-  },
-  @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
-    display: none;
+    display: block;
   }
 `;
 
-const TocToggleChevron = styled.div`
-  display: inline;
-  height: ${props => props.theme.sizing.scale600};
-  margin-right: ${props => props.theme.sizing.scale600};
-  transform: ${props => props.$isTocOpen ? 'none' : 'rotate(-90deg)'};
-  transition: transform 0.3s;
-  width: ${props => props.theme.sizing.scale600};
-`;
-
-export const TocToggle = ({toggleToc, isTocOpen, isMenuOpen}) => {
-  return isMenuOpen ? null : (
+export const TocToggle = ({toggleToc, $isTocOpen, $isMenuOpen}) => {
+  return $isMenuOpen ? null : (
     <StyledTocToggle onClick={toggleToc}>
-      <TocToggleChevron $isTocOpen={isTocOpen}>
-        <TocChevron />
-      </TocToggleChevron>
       Table of Contents
     </StyledTocToggle>
   );

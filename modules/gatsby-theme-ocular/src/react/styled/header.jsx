@@ -14,7 +14,7 @@ export const Header = styled.header`
   padding: 0 36px;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   user-select: none;
   white-space: nowrap;
   @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
@@ -26,9 +26,12 @@ export const Header = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
+  position: fixed;
+  width: 100%;
   grid-column: 1/3;
   grid-row: 1/2;
-  z-index: 2;
+  z-index: 3;
+  height: ${props => props.theme.sizing.scale1600};
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
     order: 1;
   }
@@ -45,7 +48,7 @@ export const HeaderLogo = styled.a`
   text-decoration: none;
   &:visited {
     color: ${props => props.theme.colors.mono100};
-  },
+  }
   &:active {
     color: ${props => props.theme.colors.mono200};
   }
@@ -55,12 +58,12 @@ export const HeaderLogo = styled.a`
 `;
 
 export const HeaderMenu = styled.div`
-  background: $theme.colors.mono1000,
-  display: 'flex',
-  flexDirection: 'column',
+  background: ${props => props.theme.colors.mono1000};
+  display: flex;
+  flex-direction: column;
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
     height: calc(100% - ${props => props.theme.sizing.scale1600});
-    left: -36px;
+    left: 0;
     marginLeft: 36px;
     padding: ${props => props.theme.sizing.scale2400} ${props => props.theme.sizing.scale800} ${props => props.theme.sizing.scale1600} ${props => props.theme.sizing.scale500};
     position: fixed;
@@ -68,9 +71,9 @@ export const HeaderMenu = styled.div`
     transform: ${props => props.$collapsed ? 'translate(-100%)' : 'translate(0)'};
     overflow: hidden;
     transition: transform 0.3s;
-    width: 100%;
+    width: 90%;
     z-index: 100;
-  },
+  }
   @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
     position: fixed;
     min-width: 180px;
@@ -84,14 +87,13 @@ export const HeaderMenu = styled.div`
 
 export const HeaderMenuLink = styled.a`
   display: block;
-  padding: 0 ${props => props.theme.sizing.scale1600};
+  padding: ${props => props.theme.sizing.scale400} ${props => props.theme.sizing.scale1600};
   text-decoration: none;
   font: ${props => props.theme.typography.font300};
 
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
-    font-size: 36px;
-    line-height: ${props => props.theme.sizing.scale1600};
-  },
+    font: ${props => props.theme.typography.font500};
+  }
   &:visited {
     color: ${props => props.theme.colors.mono100};
   }
@@ -103,9 +105,20 @@ export const HeaderMenuLink = styled.a`
   }
 `;
 
+export const HeaderMenuDivider = styled.hr`
+  margin: ${props => props.theme.sizing.scale800} 0;
+  width: 100%;
+  border-color: ${props => props.theme.colors.mono500};
+`;
+
 export const HeaderLinksBlock = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+    display: block;
+  }
 `;
 
 const StyledHamburgerMenu = styled.div`
@@ -164,5 +177,10 @@ export const HeaderLink = styled(Link)`
 export const HeaderLinkContainer = styled.div`
   font: ${props => props.theme.typography.font300};
   flex: 1 1 0;
-  margin-left: ${props => props.theme.sizing.scale700}
+  padding-left: ${props => props.theme.sizing.scale700};
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+    font: ${props => props.theme.typography.font500};
+    padding: ${props => props.theme.sizing.scale400} ${props => props.theme.sizing.scale1600};
+  }
 `;

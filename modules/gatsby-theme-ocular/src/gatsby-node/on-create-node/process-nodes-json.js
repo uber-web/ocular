@@ -1,3 +1,4 @@
+const path = require('path');
 const {log, COLOR} = require('../../utils/log');
 /* eslint-disable no-param-reassign */
 let tableOfContents = [];
@@ -14,13 +15,13 @@ function processEntry(chapter, entry, docNodes) {
     )();
     return;
   }
-  const slug = entry.entry.replace(/\.[^/.]+$/, '').replace('/README', '');
-  const docNode = docNodes[slug] || null;
+  const relPath = entry.entry.replace(/^\//, '').replace(/\.[^/.]+$/, '').replace('/README', '');
+  const docNode = docNodes[relPath] || null;
   if (!docNode || !docNode.id) {
     // TODO/ib - make probe's log.warn emit color
     log.log(
       {priority: 4, color: COLOR.RED},
-      `unmatched toc entry for "${slug}" ${chapter.title}`,
+      `unmatched toc entry for "${relPath}" ${chapter.title}`,
       docNode
     )();
   } else {
@@ -59,13 +60,14 @@ module.exports.processNewDocsJsonNode = function processNewDocsJsonNode(
   docNodes
 ) {
   traverseTableOfContents(node.chapters, docNodes, 1);
-  tableOfContents = node;
+  // merge table of contents
+  tableOfContents = tableOfContents.concat(node);
 
   log.log(
     {color: COLOR.CYAN, priority: 3},
     `Processing tableOfContents \
 ${Object.keys(docNodes).length}
-${Object.keys(tableOfContents.chapters).length}
+${tableOfContents.length}
 //${JSON.stringify(Object.keys(docNodes), null, 0)}
 `
     // ${JSON.stringify(tableOfContents, null, 0)}

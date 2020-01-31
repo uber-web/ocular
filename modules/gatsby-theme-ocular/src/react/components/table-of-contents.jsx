@@ -141,9 +141,11 @@ export default class TableOfContents extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {chapters, slug} = this.props;
-    if (slug !== prevProps.slug) {
-      const {expanded} = this.state;
+    const {chapters, slug, firstItemIsExpanded} = this.props;
+    if (slug !== prevProps.slug || chapters !== prevProps.chapters) {
+      const expanded = chapters === prevProps.chapters
+        ? this.state.expanded
+        : (firstItemIsExpanded ? {0: true} : {});
       const tocState = getTocState({chapters, slug, expanded});
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({

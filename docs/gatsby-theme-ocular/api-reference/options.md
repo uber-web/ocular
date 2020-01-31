@@ -42,7 +42,7 @@ Projects are links to related projects in the header drop down menu.
 
 | Field     | Type     | Name  |
 | ---       | ---      | ---   |
-| `title`    | `String` | The header of the link |
+| `name`    | `String` | The header of the link |
 | `url`    | `String` | The URL of the link |
 
 

@@ -70,7 +70,6 @@ export default class GithubContributors extends Component {
       .then(response => {
         cachedResponse = response;
         this.setState({response});
-        console.log(response);
       });
   }
 
