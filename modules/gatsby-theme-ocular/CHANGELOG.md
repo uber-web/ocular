@@ -1,21 +1,24 @@
 # CHANGELOG (gatsby-theme-ocular)
 
-# v1.2.0-alpha.0
+## v1.2.1-alpha.1
+- UI bug fixes (#290)
+
+## v1.2.0-alpha.0
 - Clean up gatsby-theme-ocular (#288)
 
-# v1.1.0
+## v1.1.0
 
-# v1.1.0-alpha.4
+## v1.1.0-alpha.4
 - Fixes custom index page (by ensuring ocularOptions are plumbed through to page creation functions).
 - Improved logging of page creation
 
-# v1.1.0-alpha.3
+## v1.1.0-alpha.3
 - Fixes support for multiple doc directories, removes need to add ignores to gatsby-config.js
 
-# v1.1.0-alpha.2
+## v1.1.0-alpha.2
 Fixes
 
-# v1.1.0-alpha.1
+## v1.1.0-alpha.1
 Refactor config handling:
 - Removes need for `ocular-config.js`: config goes into the theme in the normal `gatsby-config.js`.
 - Removes need for `gatsby-node.js` in most websites, meaning that most websites can just have a `gatsby-config.js`
