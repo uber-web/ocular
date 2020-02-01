@@ -83,7 +83,7 @@ test('validateConfig', t => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        PROJECTS: [{title: 'Project 1', url: ''}]
+        PROJECTS: [{name: 'Project 1', url: ''}]
       },
       CONFIG_SCHEMA
     ),

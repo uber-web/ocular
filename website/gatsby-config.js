@@ -10,7 +10,9 @@ module.exports = {
       // Adjusts amount of debug information from gatsby-theme-ocular
       logLevel: 1,
 
-      DOC_FOLDER: `${__dirname}/../docs/`,
+      DOC_FOLDERS: [
+        `${__dirname}/../docs/`
+      ],
       ROOT_FOLDER: `${__dirname}/../`,
       SOURCE: [
         `${__dirname}/static`,
@@ -44,10 +46,12 @@ module.exports = {
       // THEME_OVERRIDES: require('./src/theme.json'),
 
       PROJECTS: [
-        // {name: 'Project name', url: 'http://project.url'},
+        {name: 'deck.gl', url: 'https://deck.gl'},
+        {name: 'luma.gl', url: 'https://luma.gl'},
+        {name: 'loaders.gl', url: 'https://loaders.gl'}
       ],
       ADDITIONAL_LINKS: [
-        // {name: 'link label', href: 'http://link.url'}
+        {name: 'Blog', href: 'http://medium.com/vis-gl'}
       ],
 
       GA_TRACKING: null,

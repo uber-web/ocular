@@ -6,18 +6,17 @@ import {Link} from 'gatsby';
 export const MainExample = styled.main`
   height: calc(100vh - 96px);
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}) {
-    margin-top: 64px;
+    padding-top: 96px;
   }
 `;
 
 // examples
 
 export const MainExamples = styled.main`
-  background: ${props => props.theme.colors.mono100};
   display: flex;
   flex-wrap: wrap;
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}) {
-    margin-top: 64px;
+    padding-top: 96px;
   }
 `;
 

@@ -6,7 +6,6 @@ const CONFIG_SCHEMA = require('./config-schema');
 
 const defaults = {
   logLevel: 3,
-  DOC_FOLDER: '',
   DOC_FOLDERS: [],
   ROOT_FOLDER: './',
   SOURCE: 'website/src',
@@ -40,8 +39,6 @@ module.exports = function getGatsbyConfig(config) {
     `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
   )();
 
-  // validate the entire config and print the errors/warnings in the console
-  validateConfig(config, CONFIG_SCHEMA);
   // TODO/javidhsueh: we might want to throw an error if the config is invalid
   // Right now we only print out warning/error messages
 
@@ -52,6 +49,8 @@ module.exports = function getGatsbyConfig(config) {
     ...defaults,
     ...config
   };
+  // validate the entire config and print the errors/warnings in the console
+  validateConfig(paddedConfig, CONFIG_SCHEMA);
 
   const gatsbyConfig = {
     pathPrefix: paddedConfig.PATH_PREFIX,

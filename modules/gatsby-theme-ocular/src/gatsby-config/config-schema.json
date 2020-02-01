@@ -149,10 +149,10 @@
     "arrayValidate": {
       "allowEmpty": true,
       "constraint": {
-        "title": {
+        "name": {
           "presence": true,
           "anyString": {
-            "message": "is the title of the project."
+            "message": "is the name of the project."
           }
         },
         "url": {

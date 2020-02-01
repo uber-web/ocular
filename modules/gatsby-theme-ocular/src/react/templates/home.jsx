@@ -37,7 +37,7 @@ import {
   FooterLogo
 } from '../styled/home';
 
-function renderPage({config, HeroExample, htmlAst}) {
+function renderPage({config, HeroExample, projectDesc}) {
   // Note: The Layout "wrapper" component adds header and footer etc
   return (
     <>
@@ -51,11 +51,13 @@ function renderPage({config, HeroExample, htmlAst}) {
           </GetStartedLink>
         </BannerContainer>
       </Banner>
-      <Section>
-        <Container>
-          <Markdown htmlAst={htmlAst} />
-        </Container>
-      </Section>
+      {projectDesc && (
+        <Section>
+          <Container>
+            <Markdown htmlAst={projectDesc.htmlAst} />
+          </Container>
+        </Section>
+      )}
       {config.PROJECT_TYPE === 'github' && (
         <Section>
           <Container>
@@ -83,11 +85,11 @@ function renderPage({config, HeroExample, htmlAst}) {
 
 export default class IndexPage extends Component {
   render() {
-    const {HeroExample} = this.props;
+    const {HeroExample, pageContext: {projectDesc}} = this.props;
     return (
       <main>
         <WebsiteConfigConsumer>
-          {({config}) => renderPage({config, HeroExample, htmlAst: this.props.pageContext.projectDesc.htmlAst})}
+          {({config}) => renderPage({config, HeroExample, projectDesc})}
         </WebsiteConfigConsumer>
       </main>
     );
