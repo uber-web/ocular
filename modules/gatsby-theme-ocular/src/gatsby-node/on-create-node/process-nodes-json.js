@@ -1,7 +1,7 @@
 const path = require('path');
 const {log, COLOR} = require('../../utils/log');
 /* eslint-disable no-param-reassign */
-let tableOfContents = [];
+let tableOfContents = null;
 
 function processEntry(chapter, entry, docNodes) {
   if (!entry.entry) {
@@ -61,7 +61,11 @@ module.exports.processNewDocsJsonNode = function processNewDocsJsonNode(
 ) {
   traverseTableOfContents(node.chapters, docNodes, 1);
   // merge table of contents
-  tableOfContents = tableOfContents.concat(node);
+  if (tableOfContents) {
+    tableOfContents.chapters = tableOfContents.chapters.concat(node.chapters);
+  } else {
+    tableOfContents = node;
+  }
 
   log.log(
     {color: COLOR.CYAN, priority: 3},
@@ -72,15 +76,5 @@ ${tableOfContents.length}
 `
     // ${JSON.stringify(tableOfContents, null, 0)}
   )(); // , Object.keys(docNodes));
-  return node;
-};
-
-// not used AFAIK
-module.exports.getTableOfContents = function getTableOfContents() {
-  log.log(
-    'QUERIED tableOfContents',
-    Object.keys(tableOfContents.chapters).length
-  )();
-  // , Object.keys(docNodes));
   return tableOfContents;
 };
