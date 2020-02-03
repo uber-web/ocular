@@ -1,5 +1,9 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.1-alpha.2
+- Fix table of contents parsing (#291)
+- Fix UI bugs
+
 ## v1.2.1-alpha.1
 - UI bug fixes (#290)
 
