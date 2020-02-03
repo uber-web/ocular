@@ -59,6 +59,53 @@ export const PanelContainer = styled.div`
   overflow-y: auto;
   overflow-y: overlay;
   outline: none;
+
+  >* {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  label {
+    display: inline-block;
+    width: 40%;
+    margin-right: 10%;
+    color: ${props => props.theme.colors.momo800};
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  input, a, button, select {
+    background: ${props => props.theme.colors.white};
+    font: ${props => props.theme.typography.font100};
+    line-height: ${props => props.theme.sizing.scale700};
+    text-transform: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    padding: 0 ${props => props.theme.sizing.scale100};
+    width: 50%;
+    height: ${props => props.theme.sizing.scale700};
+    text-align: left;
+  }
+  button {
+    color: initial;
+  }
+  button:disabled {
+    color: ${props => props.theme.colors.mono300};
+    cursor: default;
+    background: ${props => props.theme.colors.mono300};
+  }
+  input {
+    border: ${props => props.theme.borders.border300};
+    &:disabled {
+      background: ${props => props.theme.colors.white};
+    }
+    &[type="checkbox"] {
+      height: auto;
+    }
+  }
+  p {
+    margin-bottom: 16px;
+    white-space: initial;
+  }
 `;
 
 export const PanelTitle = styled.h3`
