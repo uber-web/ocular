@@ -21,7 +21,7 @@ export const IconContainer = styled.div`
 
 export const SearchInput = styled.input`
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0) 0px 2px 6px;
+  box-shadow: 0 0px 2px hsla(0, 0%, 0%, 0.16);
   border: 1px solid transparent;
   transition: 0.3s;
   font-size: 14px;
@@ -29,7 +29,7 @@ export const SearchInput = styled.input`
   line-jeight: 20px;
   padding: 10px 10px 10px 40px;
   &:focus {
-    box-shadow: rgba(39, 110, 241, 0.32) 0px 2px 6px;
+    box-shadow: ${props => props.theme.lighting.shadow600};
     border-color: rgb(39, 110, 241);
     outline: none;
   }
@@ -37,8 +37,9 @@ export const SearchInput = styled.input`
 
 export const MainSearch = styled.main`
   font: ${props => props.theme.typography.font300};
-  max-width: 600px;
-  margin: 104px auto 0px;
+  width: 600px;
+  max-width: 90%;
+  margin: ${props => props.theme.sizing.scale2400} auto 0px;
 `;
 
 export const SearchResultItem = styled.div`

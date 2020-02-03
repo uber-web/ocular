@@ -24,12 +24,8 @@ export const Header = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
-  position: fixed;
-  width: 100%;
   grid-column: 1/3;
   grid-row: 1/2;
-  z-index: 3;
-  height: ${props => props.theme.sizing.scale1600};
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
     order: 1;
   }
