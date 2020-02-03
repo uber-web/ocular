@@ -59,12 +59,20 @@ export const PanelContainer = styled.div`
   overflow-y: auto;
   overflow-y: overlay;
   outline: none;
+  z-index: 1;
+`;
 
-  >* {
+export const PanelTitle = styled.h3`
+  font: ${props => props.theme.typography.font450};
+  margin: ${props => props.theme.sizing.scale300} 0;
+`;
+
+export const PanelContent = styled.div`
+  div >* {
     vertical-align: middle;
     white-space: nowrap;
   }
-  label {
+  div >label {
     display: inline-block;
     width: 40%;
     margin-right: 10%;
@@ -72,7 +80,7 @@ export const PanelContainer = styled.div`
     margin-top: 2px;
     margin-bottom: 2px;
   }
-  input, a, button, select {
+  div >input, div >a, div >button, div >select {
     background: ${props => props.theme.colors.white};
     font: ${props => props.theme.typography.font100};
     line-height: ${props => props.theme.sizing.scale700};
@@ -85,15 +93,15 @@ export const PanelContainer = styled.div`
     height: ${props => props.theme.sizing.scale700};
     text-align: left;
   }
-  button {
+  div >button {
     color: initial;
   }
-  button:disabled {
+  div >button:disabled {
     color: ${props => props.theme.colors.mono300};
     cursor: default;
     background: ${props => props.theme.colors.mono300};
   }
-  input {
+  div >input {
     border: ${props => props.theme.borders.border300};
     &:disabled {
       background: ${props => props.theme.colors.white};
@@ -103,14 +111,9 @@ export const PanelContainer = styled.div`
     }
   }
   p {
-    margin-bottom: 16px;
+    margin-bottom: ${props => props.theme.sizing.scale600};
     white-space: initial;
   }
-`;
-
-export const PanelTitle = styled.h3`
-  font: ${props => props.theme.typography.font450};
-  margin: ${props => props.theme.sizing.scale300} 0;
 `;
 
 export const SourceLink = styled.a`

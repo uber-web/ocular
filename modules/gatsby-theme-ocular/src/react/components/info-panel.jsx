@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {
   PanelContainer,
+  PanelContent,
   PanelTitle,
   SourceLink
 } from '../styled/example';
@@ -12,7 +13,7 @@ export default class InfoPanel extends PureComponent {
     return (
       <PanelContainer>
         <PanelTitle>{title}</PanelTitle>
-        {children}
+        <PanelContent>{children}</PanelContent>
         <SourceLink href={sourceLink} target="_new" >
           View Code ↗
         </SourceLink>

@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.3
+- Fix InfoPanel styling bug
+
 ## v1.2.0-beta.2
 - Add InfoPanel styling (#293)
 
