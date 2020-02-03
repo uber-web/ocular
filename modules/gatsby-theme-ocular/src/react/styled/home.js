@@ -6,6 +6,7 @@ export const Banner = styled.section`
   height: 30rem;
   background: ${props => props.theme.colors.mono900};
   color: ${props => props.theme.colors.mono100};
+  z-index: 0;
 `;
 
 export const Container = styled.div`
@@ -20,6 +21,17 @@ export const Container = styled.div`
 
 export const BannerContainer = styled(Container)`
   padding-top: 192px;
+  z-index: 0;
+  pointer-events: none;
+`;
+
+export const HeroExampleContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 `;
 
 export const Section = styled.section`
@@ -39,6 +51,7 @@ export const ProjectName = styled.h1`
 `;
 
 export const GetStartedLink = styled(Link)`
+  pointer-events: all;
   font-size: 12px;
   line-height: 44px;
   letter-spacing: 2px;

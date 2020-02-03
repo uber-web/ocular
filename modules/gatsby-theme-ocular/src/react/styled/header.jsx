@@ -17,9 +17,7 @@ export const Header = styled.header`
   width: 100vw;
   user-select: none;
   white-space: nowrap;
-  @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
-    position: fixed;
-  }
+  position: fixed;
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
     position: static;
   }
@@ -61,27 +59,26 @@ export const HeaderMenu = styled.div`
   background: ${props => props.theme.colors.mono1000};
   display: flex;
   flex-direction: column;
+  position: fixed;
+  overflow: hidden;
+  min-width: 180px;
+  max-height: ${props => props.$collapsed ? 0 : props.$nbItems * 48}px;
+  top: ${props => props.theme.sizing.scale1600};
+  left: ${props => props.theme.sizing.scale600};
+  transition: max-height 0.3s;
+
   @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+    min-height: initial;
+    max-height: initial;
     height: calc(100% - ${props => props.theme.sizing.scale1600});
     left: 0;
     marginLeft: 36px;
     padding: ${props => props.theme.sizing.scale2400} ${props => props.theme.sizing.scale800} ${props => props.theme.sizing.scale1600} ${props => props.theme.sizing.scale500};
-    position: fixed;
     top: ${props => props.theme.sizing.scale1600};
     transform: ${props => props.$collapsed ? 'translate(-100%)' : 'translate(0)'};
-    overflow: hidden;
     transition: transform 0.3s;
     width: 90%;
     z-index: 100;
-  }
-  @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
-    position: fixed;
-    min-width: 180px;
-    max-height: ${props => props.$collapsed ? 0 : props.$nbItems * 48}px;
-    top: ${props => props.theme.sizing.scale1600};
-    left: ${props => props.theme.sizing.scale600};
-    overflow: hidden;
-    transition: max-height 0.3s;
   }
 `;
 

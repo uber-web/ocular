@@ -29,6 +29,7 @@ import {
   Banner,
   Container,
   BannerContainer,
+  HeroExampleContainer,
   Section,
   ProjectName,
   GetStartedLink,
@@ -37,12 +38,14 @@ import {
   FooterLogo
 } from '../styled/home';
 
-function renderPage({config, HeroExample, projectDesc}) {
+function renderPage({config, HeroExample, projectDesc, children}) {
   // Note: The Layout "wrapper" component adds header and footer etc
   return (
     <>
       <Banner>
-        {HeroExample && (<HeroExample />)}
+        <HeroExampleContainer>
+          {HeroExample && <HeroExample />}
+        </HeroExampleContainer>
         <BannerContainer>
           <ProjectName>{config.PROJECT_NAME}</ProjectName>
           <p>{config.PROJECT_DESC}</p>
@@ -55,6 +58,13 @@ function renderPage({config, HeroExample, projectDesc}) {
         <Section>
           <Container>
             <Markdown htmlAst={projectDesc.htmlAst} />
+          </Container>
+        </Section>
+      )}
+      {children && (
+        <Section>
+          <Container>
+            {children}
           </Container>
         </Section>
       )}
@@ -85,11 +95,11 @@ function renderPage({config, HeroExample, projectDesc}) {
 
 export default class IndexPage extends Component {
   render() {
-    const {HeroExample, pageContext: {projectDesc}} = this.props;
+    const {HeroExample, pageContext, children} = this.props;
     return (
       <main>
         <WebsiteConfigConsumer>
-          {({config}) => renderPage({config, HeroExample, projectDesc})}
+          {({config}) => renderPage({config, HeroExample, projectDesc: pageContext && pageContext.projectDesc, children})}
         </WebsiteConfigConsumer>
       </main>
     );
