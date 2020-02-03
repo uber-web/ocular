@@ -16,3 +16,5 @@ export {
 } from './src/react/components/table-of-contents';
 
 export {default as Home} from './src/react/templates/home';
+
+export {default as InfoPanel} from './src/react/components/info-panel';

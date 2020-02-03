@@ -30,6 +30,7 @@ import {TocContainer, TocToggle} from '../styled/toc';
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
+    overflow-x: hidden;
   }
   * {
     box-sizing: border-box;
@@ -43,10 +44,10 @@ function ResponsiveHeader(props) {
   const HeaderComponent = props.isDocHeader ? DocsHeader : Header;
   return (
     <div>
-      <MediaQuery maxWidth={575}>
+      <MediaQuery maxWidth={599}>
         <HeaderComponent {...props} isSmallScreen />
       </MediaQuery>
-      <MediaQuery minWidth={576}>
+      <MediaQuery minWidth={600}>
         <HeaderComponent {...props} />
       </MediaQuery>
     </div>
