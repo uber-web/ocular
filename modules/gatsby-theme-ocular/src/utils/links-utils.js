@@ -1,25 +1,21 @@
 const path = require('path');
 const {log, COLOR} = require('./log');
 
-const parseLinks = (href, relativeLinks) => {
+const parseLinks = (href, source, relativeLinks) => {
   // external link
   if (href.startsWith('http') || href.startsWith('#')) {
-    return href;
+    return null;
   }
 
+  const relPath = linkFromFileToFile(source, href.replace(/#.*/, ''));
   const anchor = href.match(/#.*/);
-  const relPath = href.replace(/^\//, '').replace(/#.*/, '').replace(/\.[^/.]+$/, '').replace(/\/$/, '').replace('/README', '');
   // relative link ie doc to doc
-  let relativeLink = relativeLinks[relPath];
-  if (relativeLink && anchor) {
-    relativeLink += anchor[0];
+  const relativeLink = relativeLinks[relPath];
+  if (relativeLink) {
+    return anchor ? relativeLink + anchor[0] : relativeLink;
   }
 
-  return (
-    relativeLink ||
-    // if relative link not found then return href untouched
-    href
-  );
+  return null;
 };
 // if using simply path.relative(from, to) to files which are in the same folder, the resolved path is: '../to'.
 // instead we do relative path between folders, then add the name of the target file in the end.
@@ -27,10 +23,10 @@ const parseLinks = (href, relativeLinks) => {
 
 function linkFromFileToFile(sourceFile, targetFile) {
   const relativePathFromDirToDir = path.relative(
-    path.dirname(sourceFile),
+    sourceFile,
     path.dirname(targetFile)
   );
-  return path.join(relativePathFromDirToDir, path.basename(targetFile));
+  return path.join(relativePathFromDirToDir, path.basename(targetFile, '.md'));
 }
 
 function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
@@ -63,10 +59,6 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
     )();
     return {};
   }
-  const relativeToCurrentFile = linkFromFileToFile(
-    edge.node.fileAbsolutePath,
-    source
-  );
   const relativeToRootFolder =
     rootFolder && linkFromFileToFile(rootFolder, source);
   const relativeToCurrentSlug = linkFromFileToFile(
@@ -78,8 +70,6 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
 
   return {
     ...relativeLinks,
-    [relativeToCurrentFile]: absoluteTarget,
-    [relativeToCurrentFile]: absoluteTarget,
     [relativeToRootFolder]: absoluteTarget,
     [relativeToCurrentSlug]: absoluteTarget,
     [target]: absoluteTarget

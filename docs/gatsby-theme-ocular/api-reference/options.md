@@ -27,6 +27,7 @@ The following options are available:
 | `GA_TRACKING`      | `String` | |
 | `GITHUB_KEY`       | `String` | The Github key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
 | `EXAMPLES`         | `Array` | See below |
+| `STYLESHEETS`      | `Array` | Additional CSS stylesheets |
 | `INDEX_PAGE_URL` | `String`  | Optional URL to a replacement component for the home page. |
 | `DOC_PAGE_URL` | `String`  | Optional URL to a replacement component for doc pages. |
 | `DOC_FOLDERS` | `Array`  | A set of paths to the doc folders to source all markdown files. |

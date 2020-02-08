@@ -37,7 +37,7 @@ export const HeaderMenuBlock = styled.div`
   flex-direction: row;
 `;
 
-export const HeaderLogo = styled.a`
+export const HeaderLogo = styled(Link)`
   font: ${props => props.theme.typography.font450};
   text-decoration: none;
   &:visited {

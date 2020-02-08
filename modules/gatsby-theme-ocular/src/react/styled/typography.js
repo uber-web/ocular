@@ -1,6 +1,21 @@
 import styled from 'styled-components';
+import {Link} from 'gatsby';
 
 export const A = styled.a`
+  text-decoration: none;
+  color: ${props => props.theme.colors.linkText};
+  &:visited {
+    color: ${props => props.theme.colors.linkVisited};
+  }
+  &:active {
+    color: ${props => props.theme.colors.linkHover};
+  }
+  &:hover {
+    color: ${props => props.theme.colors.linkHover};
+  }
+`;
+
+export const GatsbyA = styled(Link)`
   text-decoration: none;
   color: ${props => props.theme.colors.linkText};
   &:visited {

@@ -126,7 +126,7 @@ const ControlledHeader = ({
         {PROJECTS.length ? (
           <HamburgerMenu onClick={toggleMenu} />
         ) : null}
-        <HeaderLogo href="/">{PROJECT_NAME}</HeaderLogo>
+        <HeaderLogo to="/">{PROJECT_NAME}</HeaderLogo>
         <HeaderMenu $collapsed={!isMenuOpen} $nbItems={PROJECTS.length}>
           {isSmallScreen && <HeaderLinks links={links} />}
           {isSmallScreen && <HeaderMenuDivider />}

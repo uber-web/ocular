@@ -214,7 +214,7 @@ export default class Layout extends React.Component {
             <Helmet>
               <title>{config.PROJECT_NAME}</title>
               {
-                config.STYLESHEETS.map(url => <link rel="stylesheet" href={url} type="text/css" />)
+                config.STYLESHEETS.map((url, i) => <link key={i} rel="stylesheet" href={url} type="text/css" />)
               }
               <link rel="icon" type="img/ico" href="favicon.ico" />
             </Helmet>
