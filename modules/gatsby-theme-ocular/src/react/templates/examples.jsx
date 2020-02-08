@@ -12,7 +12,7 @@ export default class Examples extends Component {
         {examples.map(exampleData => (
           <ExampleCard key={exampleData.title} to={`/${exampleData.path}`}>
             {exampleData.imageSrc ? (
-              <img src={exampleData.imageSrc} alt={exampleData.title} />
+              <img width="100%" src={exampleData.imageSrc} alt={exampleData.title} />
             ) : null}
             <ExampleTitle>{exampleData.title}</ExampleTitle>
           </ExampleCard>

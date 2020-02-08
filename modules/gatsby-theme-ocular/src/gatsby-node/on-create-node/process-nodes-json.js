@@ -15,7 +15,7 @@ function processEntry(chapter, entry, docNodes) {
     )();
     return;
   }
-  const relPath = entry.entry.replace(/^\//, '').replace(/\.[^/.]+$/, '').replace('/README', '');
+  const relPath = entry.entry.replace(/^\//, '').replace(/\.[^/.]+$/, '').replace(/\/$/, '').replace('/README', '');
   const docNode = docNodes[relPath] || null;
   if (!docNode || !docNode.id) {
     // TODO/ib - make probe's log.warn emit color

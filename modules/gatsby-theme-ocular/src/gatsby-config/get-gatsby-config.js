@@ -23,6 +23,7 @@ const defaults = {
   PROJECTS: [],
   HOME_PATH: '/',
   THEME_OVERRIDES: '',
+  STYLESHEETS: [],
   ADDITIONAL_LINKS: [],
   GA_TRACKING: null,
   GITHUB_KEY: null,
@@ -104,7 +105,14 @@ module.exports = function getGatsbyConfig(config) {
             // Copies local files linked to/from markdown to your public folder.
             'gatsby-remark-copy-linked-files',
             // Adds GitHub-style hover links to headers in your markdown files when they’re rendered.
-            'gatsby-remark-autolink-headers'
+            {
+              resolve: 'gatsby-remark-autolink-headers',
+              options: {
+                offsetY: 64,
+                removeAccents: true,
+                enableCustomId: true
+              }
+            }
           ]
         }
       },

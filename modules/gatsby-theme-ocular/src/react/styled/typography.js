@@ -86,6 +86,22 @@ export const CodeBlock = styled.code`
 
 export const Pre = styled.pre`
   background-color: ${props => props.theme.colors.mono200};
+  padding: ${props => props.theme.sizing.scale200};
+  overflow-x: auto;
+
+  .keyword {
+    color: #339;
+    font-weight: bold;
+  }
+  .operator {
+    color: #d14;
+  }
+  .punctuation {
+    color: #458;
+  }
+  .string, .number {
+    color: #008080;
+  }
 `;
 
 export const BlockQuote = styled.blockquote`

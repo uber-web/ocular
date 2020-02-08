@@ -28,6 +28,7 @@ const QUERY = graphql`
           path
         }
         THEME_OVERRIDES
+        STYLESHEETS
         PROJECTS {
           name
           url

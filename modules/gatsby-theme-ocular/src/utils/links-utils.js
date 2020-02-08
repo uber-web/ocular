@@ -7,9 +7,13 @@ const parseLinks = (href, relativeLinks) => {
     return href;
   }
 
-  const hrefWithoutLeadingSlash = href.startsWith('/') ? href.slice(1) : href;
+  const anchor = href.match(/#.*/);
+  const relPath = href.replace(/^\//, '').replace(/#.*/, '').replace(/\.[^/.]+$/, '').replace(/\/$/, '').replace('/README', '');
   // relative link ie doc to doc
-  const relativeLink = relativeLinks[hrefWithoutLeadingSlash];
+  let relativeLink = relativeLinks[relPath];
+  if (relativeLink && anchor) {
+    relativeLink += anchor[0];
+  }
 
   return (
     relativeLink ||
