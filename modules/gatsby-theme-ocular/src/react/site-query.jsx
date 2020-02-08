@@ -23,11 +23,13 @@ const QUERY = graphql`
         PROJECT_ORG_LOGO
         LINK_TO_GET_STARTED
         HOME_MARKDOWN
+        PATH_PREFIX
         EXAMPLES {
           title
           path
         }
         THEME_OVERRIDES
+        STYLESHEETS
         PROJECTS {
           name
           url

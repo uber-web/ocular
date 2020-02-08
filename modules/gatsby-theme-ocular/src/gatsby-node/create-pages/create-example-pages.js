@@ -65,7 +65,7 @@ function queryExamplesData(graphql) {
             parent {
               id
             }
-            resize(width: 150, height: 150) {
+            resize(width: 400, height: 400, quality: 80) {
               src
             }
           }

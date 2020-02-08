@@ -170,6 +170,13 @@
     }
   },
 
+  "INDEX_PAGE_URL": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the path to the home page"
+    }
+  },
+
   "HOME_MARKDOWN": {
     "anyString": {
       "allowEmpty": true,
@@ -203,6 +210,17 @@
           "anyString": {
             "message": "should be a local path."
           }
+        }
+      }
+    }
+  },
+
+  "STYLESHEETS": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "anyString": {
+          "message": "should be the url to stylesheets"
         }
       }
     }

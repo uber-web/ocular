@@ -23,12 +23,15 @@ export const ExampleCard = styled(Link)`
   border: ${props => props.theme.borders.border300};
   cursor: pointer;
   text-decoration: none;
+  width: 200px;
   outline: none;
   margin: ${props => props.theme.sizing.scale400};
   padding: ${props => props.theme.sizing.scale700} ${props => props.theme.sizing.scale600} ${props => props.theme.sizing.scale700} ${props => props.theme.sizing.scale600};
-  transition: background ${props => props.theme.animation.timing400} border-color ${props => props.theme.animation.timing400};
+  transition-property: background, border-color, box-shadow;
+  transition-duration: ${props => props.theme.animation.timing400};
   transition-timing-function: ${props => props.theme.animation.easeInOutCurve};
   &:hover {
+    box-shadow: ${props => props.theme.lighting.shadow600};
     background: ${props => props.theme.colors.mono200};
     border-color: transparent;
   }

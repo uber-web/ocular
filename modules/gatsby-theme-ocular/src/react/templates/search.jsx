@@ -32,13 +32,33 @@ export default class SearchPage extends React.Component {
     if (currentQuery === lastQuery) {
       return;
     }
-    const results = currentQuery
-      ? pathContext.data.filter(
-          node =>
-            (node.title && node.title.match(currentQuery)) ||
-            (node.rawMarkdownBody && node.rawMarkdownBody.match(currentQuery))
-        )
-      : [];
+    let results;
+    if (currentQuery) {
+      const regex = new RegExp(currentQuery, 'i');
+      const headingRegex = new RegExp(`^#.*${currentQuery}`, 'im');
+
+      // Sort order:
+      // appearance in title
+      results = pathContext.data.filter(
+        node => node.title && regex.test(node.title)
+      );
+
+      // appearance in headings
+      results = results.concat(pathContext.data.filter(
+        node =>
+          !results.includes(node) &&
+          node.rawMarkdownBody && headingRegex.test(node.rawMarkdownBody)
+      ));
+
+      // any appearance
+      results = results.concat(pathContext.data.filter(
+        node =>
+          !results.includes(node) &&
+          node.rawMarkdownBody && regex.test(node.rawMarkdownBody)
+      ));
+    } else {
+      results = [];
+    }
     this.setState({results, lastQuery: currentQuery});
   }
 

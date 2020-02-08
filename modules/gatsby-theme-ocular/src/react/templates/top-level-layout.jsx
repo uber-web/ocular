@@ -210,13 +210,14 @@ export default class Layout extends React.Component {
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <div>
-            {allMarkdown ? (
-              <SEO postEdges={allMarkdown} />
-            ) : (
-              <Helmet>
-                <title>{config.PROJECT_NAME}</title>
-              </Helmet>
-            )}
+            {allMarkdown && <SEO postEdges={allMarkdown} />}
+            <Helmet>
+              <title>{config.PROJECT_NAME}</title>
+              {
+                config.STYLESHEETS.map((url, i) => <link key={i} rel="stylesheet" href={url} type="text/css" />)
+              }
+              <link rel="icon" type="img/ico" href="favicon.ico" />
+            </Helmet>
             {pageContext.toc
               ? this.renderBodyWithTOC(config, tableOfContents)
               : this.renderBodyFull(config)}

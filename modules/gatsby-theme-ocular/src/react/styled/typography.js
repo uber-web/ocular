@@ -1,6 +1,21 @@
 import styled from 'styled-components';
+import {Link} from 'gatsby';
 
 export const A = styled.a`
+  text-decoration: none;
+  color: ${props => props.theme.colors.linkText};
+  &:visited {
+    color: ${props => props.theme.colors.linkVisited};
+  }
+  &:active {
+    color: ${props => props.theme.colors.linkHover};
+  }
+  &:hover {
+    color: ${props => props.theme.colors.linkHover};
+  }
+`;
+
+export const GatsbyA = styled(Link)`
   text-decoration: none;
   color: ${props => props.theme.colors.linkText};
   &:visited {
@@ -86,6 +101,22 @@ export const CodeBlock = styled.code`
 
 export const Pre = styled.pre`
   background-color: ${props => props.theme.colors.mono200};
+  padding: ${props => props.theme.sizing.scale200};
+  overflow-x: auto;
+
+  .keyword {
+    color: #339;
+    font-weight: bold;
+  }
+  .operator {
+    color: #d14;
+  }
+  .punctuation {
+    color: #458;
+  }
+  .string, .number {
+    color: #008080;
+  }
 `;
 
 export const BlockQuote = styled.blockquote`
