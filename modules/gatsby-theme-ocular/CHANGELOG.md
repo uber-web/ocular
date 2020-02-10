@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.6
+- Fix relative path in stylesheets (#297)
+
 ## v1.2.0-beta.5
 - [gatsby-theme-ocular] Sanitize anchor ids (#296)
 - [gatsby-theme-ocular] Various fixes: search, path prefix, anchor position (#295)
