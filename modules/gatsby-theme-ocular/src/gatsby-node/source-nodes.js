@@ -61,6 +61,7 @@ function sourceNodes({actions}) {
       LINK_TO_GET_STARTED: String
       PROJECTS: [Projects]
       EXAMPLES: [Examples]
+      STYLESHEETS: [String]
 
       siteUrl: String
       pathPrefix: String

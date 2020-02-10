@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.7
+- Fix graphql type definition
+
 ## v1.2.0-beta.6
 - Fix relative path in stylesheets (#297)
 
