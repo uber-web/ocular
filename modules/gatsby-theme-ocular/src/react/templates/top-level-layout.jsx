@@ -7,6 +7,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import MediaQuery from 'react-responsive';
 import {ThemeProvider, createGlobalStyle} from 'styled-components';
+import {withPrefix} from "gatsby";
 
 import {WebsiteConfigProvider} from '../components/website-config';
 import SEO from '../components/SEO';
@@ -214,7 +215,10 @@ export default class Layout extends React.Component {
             <Helmet>
               <title>{config.PROJECT_NAME}</title>
               {
-                config.STYLESHEETS.map((url, i) => <link key={i} rel="stylesheet" href={url} type="text/css" />)
+                config.STYLESHEETS.map((url, i) => {
+                  url = url.startsWith('http') ? url : withPrefix(url);
+                  return <link key={i} rel="stylesheet" href={url} type="text/css" />
+                })
               }
               <link rel="icon" type="img/ico" href="favicon.ico" />
             </Helmet>
