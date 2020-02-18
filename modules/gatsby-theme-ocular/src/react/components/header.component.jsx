@@ -46,7 +46,7 @@ export const propTypes = {
 function GithubLink() {
   return (
     <>
-      Github
+      GitHub
       <GithubIcon style={{marginLeft: '0.5rem', display: 'inline'}} />
     </>
   );
@@ -137,7 +137,7 @@ const ControlledHeader = ({
           ))}
         </HeaderMenu>
       </HeaderMenuBlock>
-      
+
       {!isSmallScreen && <HeaderLinks links={links} />}
     </StyledHeader>
   );

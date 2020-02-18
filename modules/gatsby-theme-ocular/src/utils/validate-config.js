@@ -113,7 +113,7 @@ validate.validators.objectValidate = function objectValidate(
  * @param  {Object} attributes The entire object to be examined.
  * @return {String|Array}   The validation result(a string). Return null if passes.
  */
-validate.validators.requiredForGithubProject = function prerequisite(
+validate.validators.requiredForGitHubProject = function prerequisite(
   value,
   options,
   key,
@@ -135,7 +135,7 @@ module.exports = function validateConfig(config, constraints) {
     WILL_DEPRECATED.includes(key)
   );
   // check config, validate function will return a object with corresponding warnings.
-  // ex: {GITHUB_KEY: ['must be provided if your project is hosted on Github.']}
+  // ex: {GITHUB_KEY: ['must be provided if your project is hosted on GitHub.']}
   const messages = validate(config, constraints) || {};
   const allMessages = [
     ...unusedProperties.map(key => `${key} is not used in the gatsby config.`),

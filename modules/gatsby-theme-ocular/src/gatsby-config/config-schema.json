@@ -101,7 +101,7 @@
     "inclusion": {
       "within": ["github", ""],
       "message":
-        "should be set to 'github' if your project is hosted on Github, or leave it empty."
+        "should be set to 'github' if your project is hosted on GitHub, or leave it empty."
     }
   },
 
@@ -109,14 +109,14 @@
     "presence": true,
     "anyString": {
       "allowEmpty": false,
-      "message": "should be the project's name on Github."
+      "message": "should be the project's name on GitHub."
     }
   },
 
   "PROJECT_ORG": {
     "anyString": {
       "allowEmpty": true,
-      "message": "should be the project's Github organization"
+      "message": "should be the project's GitHub organization"
     }
   },
 
@@ -233,8 +233,8 @@
     }
   },
   "GITHUB_KEY": {
-    "requiredForGithubProject": {
-      "message": "must be provided if your project is hosted on Github."
+    "requiredForGitHubProject": {
+      "message": "^GitHub key must be provided if your project is hosted on GitHub."
     }
   },
 
