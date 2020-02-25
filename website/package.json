@@ -13,9 +13,10 @@
     "serve": "gatsby serve --prefix-paths",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
+  "dep_comment": "Ensure gatsby-theme-ocular references unpublished version to trigger local workspaces link",
   "dependencies": {
     "gatsby": "^2.18.0",
-    "gatsby-theme-ocular": "*",
+    "gatsby-theme-ocular": "1.2.0-beta.8",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
