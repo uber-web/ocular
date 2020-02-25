@@ -37,11 +37,6 @@ const PAGE_TEMPLATES = {
 module.exports = function getPageTemplateUrl(templateName, ocularOptions) {
   assert(ocularOptions, 'Must pass ocularOptions to getPageTemplate');
 
-  // Deprecated
-  if (templateName === 'DOC_PAGE_URL') {
-    templateName = 'DOC_MARKDOWN_PAGE_URL'; // eslint-disable-line
-  }
-
   const templateUrl = PAGE_TEMPLATES[templateName];
   // If this is a valid template, look for an override in the config
   if (templateUrl) {

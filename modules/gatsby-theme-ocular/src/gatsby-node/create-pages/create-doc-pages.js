@@ -65,7 +65,7 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
 
       // console.log('Creating doc page at', edge.node.fields.path);
 
-      const componentUrl = getPageTemplateUrl('DOC_PAGE_URL', ocularOptions);
+      const componentUrl = getPageTemplateUrl('DOC_MARKDOWN_PAGE_URL', ocularOptions);
 
       createPage({
         path: edge.node.fields.path,
