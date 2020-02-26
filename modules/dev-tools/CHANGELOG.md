@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.7
+- remove dependency on jq (#302)
+
 ## v0.1.6
 - dev-tools: Bump es6 build targets to Node 10 (#287)
 - Fix eslint error when using 'ocular-lint fix' (#286)
