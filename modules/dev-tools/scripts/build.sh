@@ -4,7 +4,7 @@ set -e
 
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
-MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules" | jq -r 'join(" ")'`
+MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules"`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|es6|esm ]]; then
