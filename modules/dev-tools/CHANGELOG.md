@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.1.8
+- remove more jq usage
+
 ## v0.1.7
 - remove dependency on jq (#302)
 
