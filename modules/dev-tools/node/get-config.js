@@ -12,6 +12,6 @@ if (config === undefined) {
   config = '';
 }
 if (Array.isArray(config)) {
-  config = config.join(' ');
+  config = config.join(',');
 }
 console.log(config);
