@@ -100,7 +100,7 @@ const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
 
   // leaves
 
-  const remark = route.childMarkdownRemark;
+  const remark = route.childMdx;
   // first syntax is toc for documentation, second is toc for examples
   const name =
     (remark && remark.frontmatter && remark.frontmatter.title) || route.title;

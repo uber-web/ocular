@@ -6,14 +6,14 @@ module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
 
   return graphql(`
     {
-      allMarkdownRemark {
+      allMdx {
         edges {
           node {
             excerpt
             frontmatter {
               title
             }
-            rawMarkdownBody
+            rawBody
             fields {
               slug
             }
@@ -34,7 +34,7 @@ module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
       path: '/search',
       component: componentUrl,
       context: {
-        data: results.data.allMarkdownRemark.edges.map(e => ({
+        data: results.data.allMdx.edges.map(e => ({
           excerpt: e.node.excerpt,
           rawMarkdownBody: e.node.rawMarkdownBody,
           slug: e.node.fields.slug,

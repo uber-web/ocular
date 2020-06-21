@@ -84,13 +84,18 @@ function sourceNodes({actions}) {
       slug: String
     }
 
-    type EntrychildMarkdownRemark implements Node {
+    type EntryHeading implements Node {
+      value: String
+    }
+
+    type EntrychildMdx implements Node {
       frontmatter: EntryFrontMatter
       fields: EntryFields
+      headings: [EntryHeading]
     }
 
     type Entry implements Node {
-      childMarkdownRemark: EntrychildMarkdownRemark
+      childMdx: EntrychildMdx
     }
 
     type lvl2Chapter implements Node {

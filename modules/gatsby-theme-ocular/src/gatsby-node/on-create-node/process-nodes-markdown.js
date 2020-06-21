@@ -33,13 +33,20 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
 
   const fileNode = getNode(node.parent);
   const parsedFilePath = path.parse(fileNode.relativePath);
-  const hasTitle =
-    Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
-    Object.prototype.hasOwnProperty.call(node.frontmatter, 'title');
+  let title;
+  if (node.frontmatter) {
+    title = node.frontmatter.title;
+  }
+  if (!title && node.rawBody) {
+    const heading = node.rawBody.match(/^#+ (.*)$/m);
+    if (heading) {
+      title = heading[1];
+    }
+  }
 
   let slug;
-  if (hasTitle) {
-    slug = `/${_.kebabCase(node.frontmatter.title)}`;
+  if (title) {
+    slug = `/${_.kebabCase(title)}`;
   } else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
     slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
   } else if (parsedFilePath.dir === '') {
@@ -51,13 +58,15 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   // Update path
   let relPath = path.relative(ocularOptions.ROOT_FOLDER, node.fileAbsolutePath);
 
-  const basename = path.basename(relPath, '.md');
+  let basename = path.basename(relPath, '.md');
+  basename = path.basename(basename, '.mdx');
   const dirname = path.dirname(relPath);
   relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;
 
   createNodeField({node, name: 'path', value: relPath});
   createNodeField({node, name: 'slug', value: relPath});
   node.frontmatter.path = relPath;
+  node.frontmatter.title = title || '';
 
   if (tocNode) {
     // this means toc node has been created. Any markdown file processed beyond this point wouldn't have its info
@@ -70,7 +79,7 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
 
     const nodeToEdit = parseToc([tocNode], relPath);
     if (nodeToEdit) {
-      nodeToEdit.childMarkdownRemark = {
+      nodeToEdit.childMdx = {
         fields: {
           slug: relPath
         },
@@ -196,6 +205,7 @@ module.exports.cleanupMarkdownNode = function cleanupMarkdownNode(
     switch (node.internal.type) {
       case 'MarkdownRemark':
       case 'Markdown':
+      case 'Mdx':
         addSourceInstanceName(...arguments);
         processed = true;
         break;

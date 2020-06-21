@@ -8,14 +8,17 @@
   "scripts": {
     "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
-    "develop": "gatsby develop --port=8002",
+    "develop": "yarn clean && gatsby develop --port=8002",
     "build": "yarn clean && gatsby build --prefix-paths",
     "serve": "gatsby serve --prefix-paths",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dep_comment": "Ensure gatsby-theme-ocular references unpublished version to trigger local workspaces link",
   "dependencies": {
+    "@mdx-js/mdx": "^1.6.6",
+    "@mdx-js/react": "^1.6.6",
     "gatsby": "^2.18.0",
+    "gatsby-plugin-mdx": "^1.2.16",
     "gatsby-theme-ocular": "1.2.0-beta.8",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"

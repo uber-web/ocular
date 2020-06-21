@@ -8,10 +8,10 @@ const getPageTemplateUrl = require('./get-page-template-url');
 function queryMarkdown(graphql, path) {
   return graphql(
     `{
-      markdownRemark(fileAbsolutePath: {
+      mdx(fileAbsolutePath: {
         eq: "${path}"
       }) {
-        htmlAst
+        mdxAST
       }
     }`
   ).then(result => {

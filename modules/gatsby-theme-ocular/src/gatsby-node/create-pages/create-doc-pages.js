@@ -10,7 +10,7 @@ function queryMarkdownDocs(graphql) {
   return graphql(
     `
       {
-        allMarkdownRemark {
+        allMdx {
           edges {
             node {
               fileAbsolutePath
@@ -46,12 +46,12 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
 
   return queryMarkdownDocs(graphql).then(result => {
     const rootFolder = ocularOptions.ROOT_FOLDER;
-    const pathToSlug = result.data.allMarkdownRemark.edges.map(({node}) => ({
+    const pathToSlug = result.data.allMdx.edges.map(({node}) => ({
       source: node.fileAbsolutePath,
       target: node.fields.slug
     }));
 
-    result.data.allMarkdownRemark.edges.forEach(edge => {
+    result.data.allMdx.edges.forEach(edge => {
       let relativeLinks = {};
       pathToSlug.forEach(({source, target}) => {
         relativeLinks = addToRelativeLinks({
