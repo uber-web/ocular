@@ -34,7 +34,9 @@ module.exports = function createIndexPage({graphql, actions}, ocularOptions) {
   } else {
     indexPage = {
       path: '/',
-      componentUrl: PAGE_TEMPLATES['INDEX_PAGE_URL']
+      // Deprecated options
+      componentUrl: ocularOptions.INDEX_PAGE_URL || PAGE_TEMPLATES['INDEX_PAGE_URL'],
+      content: ocularOptions.HOME_MARKDOWN
     };
     pages.push(indexPage);
   }
