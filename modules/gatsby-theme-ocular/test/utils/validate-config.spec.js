@@ -20,9 +20,9 @@ const GOOD_CONFIG = {
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],
   HOME_PATH: '/',
-  HOME_MARKDOWN: '',
   THEME_OVERRIDES: '',
 
+  PAGES: [],
   ADDITIONAL_LINKS: [],
   GA_TRACKING: null,
   GITHUB_KEY: null,
@@ -42,7 +42,7 @@ test('validateConfig', t => {
       'Examples can\'t be blank',
       'Docs DOCS needs to be an object.',
       'Project type can\'t be blank',
-      'Project name can\'t be blank,Project name should be the project\'s name on Github.',
+      'Project name can\'t be blank,Project name should be the project\'s name on Github',
       'Project url can\'t be blank',
       'Project desc can\'t be blank,Project desc should be the project\'s description',
       'Path prefix should be the prefix added to all paths on the site',
@@ -109,11 +109,11 @@ test('validateConfig', t => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        ADDITIONAL_LINKS: [{index: 0, name: 'Project 1', href: ''}]
+        ADDITIONAL_LINKS: [{index: 0, name: '', hrefs: 'https://google.com'}]
       },
       CONFIG_SCHEMA
     ),
-    ["Additional links ADDITIONAL_LINKS[0]: Href can't be blank"],
+    ["Additional links ADDITIONAL_LINKS[0]: Name can\'t be blank"],
     'Check ADDITIONAL_LINKS with empty href'
   );
 
@@ -127,7 +127,7 @@ test('validateConfig', t => {
       },
       CONFIG_SCHEMA
     ),
-    ['Github key must be provided if your project is hosted on Github.'],
+    ['Github key must be provided if your project is hosted on Github'],
     'Check if PROJECT_TYPE == github and GITHUB_KEY is null'
   );
 

@@ -37,12 +37,6 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   if (node.frontmatter) {
     title = node.frontmatter.title;
   }
-  if (!title && node.rawBody) {
-    const heading = node.rawBody.match(/^#+ (.*)$/m);
-    if (heading) {
-      title = heading[1];
-    }
-  }
 
   let slug;
   if (title) {
@@ -170,9 +164,9 @@ function addSourceInstanceName(
 function addMissingFrontmatter(node, sourceInstanceName) {
   // Populate frontmatter
   if (node.frontmatter) {
-    if (node.rawMarkdownBody) {
-      const title = node.rawMarkdownBody.split('\n')[0].slice(2);
-      node.frontmatter.title = String(title);
+    if (node.rawBody) {
+      const heading = node.rawBody.match(/^#+ (.*)$/m);
+      node.frontmatter.title = heading ? heading[1] : '';
       // console.warn(`Ocular processing doc article '${title}'`);
     }
     node.frontmatter.tags = ['default'];

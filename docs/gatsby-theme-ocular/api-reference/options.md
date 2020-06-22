@@ -22,7 +22,7 @@ The following options are available:
 | `PROJECTS`         | `Array`  | Array of links to related projects (header) |
 | `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
 | `HOME_PATH`        | `String` | |
-| `HOME_MARKDOWN`     | `String`  | URL to a markdown that should be displayed in the index page. |
+| `PAGES`     | `Array`  | See below |
 | `ADDITIONAL_LINKS` | `Array` | See below |
 | `GA_TRACKING`      | `String` | |
 | `GITHUB_KEY`       | `String` | The Github key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
@@ -46,6 +46,17 @@ Projects are links to related projects in the header drop down menu.
 | `name`    | `String` | The header of the link |
 | `url`    | `String` | The URL of the link |
 
+## PAGES
+
+Pages to render. If `componentUrl` is supplied, the page is rendered with the React component. If `content` is supplied, the page is generated from Markdown.
+
+Use `path: '/'` to customize the home page.
+
+| Field     | Type     | Name  |
+| ---       | ---      | ---   |
+| `path`    | `String` | The path to the page |
+| `componentUrl`    | `String` | The URL of the React component |
+| `content`    | `String` | The URL of the markdown |
 
 ## ADDITIONAL_LINKS
 

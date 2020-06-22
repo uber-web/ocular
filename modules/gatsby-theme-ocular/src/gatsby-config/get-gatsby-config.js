@@ -17,7 +17,7 @@ const defaults = {
   PROJECT_ORG: 'uber-web',
   PROJECT_URL: 'http://localhost/',
   PROJECT_DESC: '',
-  HOME_MARKDOWN: '',
+  PAGES: [],
   PATH_PREFIX: '/',
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],

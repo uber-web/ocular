@@ -1,5 +1,5 @@
 const {log, COLOR} = require('../../utils/log');
-const getPageTemplateUrl = require('./get-page-template-url');
+const PAGE_TEMPLATES = require('./page-templates');
 const {addToRelativeLinks} = require('../../utils/links-utils');
 
 // Create static pages
@@ -65,7 +65,7 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
 
       // console.log('Creating doc page at', edge.node.fields.path);
 
-      const componentUrl = getPageTemplateUrl('DOC_MARKDOWN_PAGE_URL', ocularOptions);
+      const componentUrl = PAGE_TEMPLATES['DOC_MARKDOWN_PAGE_URL'];
 
       createPage({
         path: edge.node.fields.path,

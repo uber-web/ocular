@@ -47,14 +47,14 @@ export default class SearchPage extends React.Component {
       results = results.concat(pathContext.data.filter(
         node =>
           !results.includes(node) &&
-          node.rawMarkdownBody && headingRegex.test(node.rawMarkdownBody)
+          node.rawBody && headingRegex.test(node.rawBody)
       ));
 
       // any appearance
       results = results.concat(pathContext.data.filter(
         node =>
           !results.includes(node) &&
-          node.rawMarkdownBody && regex.test(node.rawMarkdownBody)
+          node.rawBody && regex.test(node.rawBody)
       ));
     } else {
       results = [];
@@ -106,7 +106,7 @@ export default class SearchPage extends React.Component {
           <div>
             {results.map(result => (
               <SearchResultItem key={result.slug}>
-                <SearchResultLink to={result.slug}>{result.title}</SearchResultLink>
+                <SearchResultLink to={`/${result.slug}`}>{result.title}</SearchResultLink>
                 <SearchResultContent>{result.excerpt}</SearchResultContent>
               </SearchResultItem>
             ))}

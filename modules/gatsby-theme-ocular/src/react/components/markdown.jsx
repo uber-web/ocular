@@ -21,6 +21,7 @@ import {
   List,
   ListItem,
   Pre,
+  Img,
   BlockQuote,
   Table,
   TableHeaderCell,
@@ -65,6 +66,10 @@ const CODE_REGEX = /code-classlanguage-text(.*?)code/g;
 
 // Sanitize auto generated anchor ids
 const CustomHeader = (ComponentType, id, props, anchors) => {
+  if (!id) {
+    return <ComponentType {...props} />
+  }
+
   if (API_REGEX.test(id)) {
     id = id.match(API_REGEX)[1];
   } else {
@@ -106,6 +111,7 @@ export default props => {
     ul: List,
     li: ListItem,
     pre: CustomPre,
+    img: Img,
     code: InlineCode,
     table: Table,
     th: TableHeaderCell,

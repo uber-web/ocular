@@ -22,7 +22,6 @@ const QUERY = graphql`
         PROJECT_ORG
         PROJECT_ORG_LOGO
         LINK_TO_GET_STARTED
-        HOME_MARKDOWN
         PATH_PREFIX
         EXAMPLES {
           title
@@ -36,6 +35,7 @@ const QUERY = graphql`
         }
         ADDITIONAL_LINKS {
           name
+          to
           href
           index
         }

@@ -119,6 +119,10 @@ export const Pre = styled.pre`
   }
 `;
 
+export const Img = styled.img`
+  max-width: 100%;
+`;
+
 export const BlockQuote = styled.blockquote`
   background-color: ${props => props.theme.colors.warning100};
   margin-inline-start: 0;

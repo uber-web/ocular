@@ -25,11 +25,13 @@ export default class DocTemplate extends React.Component {
     const {body} = this.props.data.docBySlug;
     const {relativeLinks} = this.props.pageContext;
     return (
-      <MarkdownBody>
-        <Markdown path={this.props.location.pathname}
-          relativeLinks={relativeLinks}
-          body={body} />
-      </MarkdownBody>
+      <div style={{position: 'relative'}}>
+        <MarkdownBody>
+          <Markdown path={this.props.location.pathname}
+            relativeLinks={relativeLinks}
+            body={body} />
+        </MarkdownBody>
+      </div>
     );
   }
 }

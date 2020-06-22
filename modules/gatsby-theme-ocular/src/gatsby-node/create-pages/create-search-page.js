@@ -1,5 +1,5 @@
 const {log, COLOR} = require('../../utils/log');
-const getPageTemplateUrl = require('./get-page-template-url');
+const PAGE_TEMPLATES = require('./page-templates');
 
 module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
   const {createPage} = actions;
@@ -22,7 +22,7 @@ module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
       }
     }
   `).then(results => {
-    const componentUrl = getPageTemplateUrl('SEARCH_PAGE_URL', ocularOptions);
+    const componentUrl = PAGE_TEMPLATES['SEARCH_PAGE_URL'];
 
     log.log(
       {color: COLOR.CYAN, priority: 1},
@@ -36,7 +36,7 @@ module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
       context: {
         data: results.data.allMdx.edges.map(e => ({
           excerpt: e.node.excerpt,
-          rawMarkdownBody: e.node.rawMarkdownBody,
+          rawBody: e.node.rawBody,
           slug: e.node.fields.slug,
           title: e.node.frontmatter.title
         }))

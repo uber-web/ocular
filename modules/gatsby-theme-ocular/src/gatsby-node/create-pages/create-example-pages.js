@@ -1,6 +1,6 @@
 const {log, COLOR} = require('../../utils/log');
 
-const getPageTemplateUrl = require('./get-page-template-url');
+const PAGE_TEMPLATES = require('./page-templates');
 
 // assert(CONFIG.EXAMPLES_GALLERY_TEMPLATE_URL && EXAMPLE_TEMPLATE_URL);
 
@@ -143,7 +143,7 @@ function createExampleGalleryPage(examples, createPage, ocularOptions) {
     `with data ${JSON.stringify(examples)}`
   )();
 
-  const componentUrl = getPageTemplateUrl('EXAMPLE_GALLERY_PAGE_URL', ocularOptions);
+  const componentUrl = PAGE_TEMPLATES['EXAMPLE_GALLERY_PAGE_URL'];
 
   createPage({
     component: componentUrl,
@@ -164,18 +164,19 @@ function createIndividualExamplePages(EXAMPLES, createPage, ocularOptions) {
       `Creating example page ${example.title}}`
     )();
 
-    const componentUrl =
-      example.componentUrl || getPageTemplateUrl('EXAMPLE_PAGE_URL', ocularOptions);
+    const componentUrl = example.componentUrl;
 
-    createPage({
-      path: example.path,
-      component: componentUrl,
-      context: {
-        slug: exampleName,
-        toc: 'examples',
-        exampleConfig: example
-      }
-    });
+    if (componentUrl) {
+      createPage({
+        path: example.path,
+        component: componentUrl,
+        context: {
+          slug: exampleName,
+          toc: 'examples',
+          exampleConfig: example
+        }
+      });
+    }
   });
 }
 
