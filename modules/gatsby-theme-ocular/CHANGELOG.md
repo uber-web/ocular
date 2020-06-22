@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.9
+- Support MDX (#312)
+
 ## v1.2.0-beta.7
 - Fix graphql type definition
 
