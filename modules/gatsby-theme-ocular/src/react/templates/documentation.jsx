@@ -9,8 +9,8 @@ import {MarkdownBody} from '../styled/typography';
 // (Note: We could just search the allMarkdown from WebsiteConfig ourselves)
 export const query = graphql`
   query DocBySlug($slug: String!) {
-    docBySlug: markdownRemark(fields: {slug: {eq: $slug}}) {
-      htmlAst
+    docBySlug: mdx(fields: {slug: {eq: $slug}}) {
+      body
       timeToRead
       excerpt
       frontmatter {
@@ -22,14 +22,16 @@ export const query = graphql`
 
 export default class DocTemplate extends React.Component {
   render() {
-    const {htmlAst} = this.props.data.docBySlug;
+    const {body} = this.props.data.docBySlug;
     const {relativeLinks} = this.props.pageContext;
     return (
-      <MarkdownBody>
-        <Markdown path={this.props.location.pathname}
-          relativeLinks={relativeLinks}
-          htmlAst={htmlAst} />
-      </MarkdownBody>
+      <div style={{position: 'relative'}}>
+        <MarkdownBody>
+          <Markdown path={this.props.location.pathname}
+            relativeLinks={relativeLinks}
+            body={body} />
+        </MarkdownBody>
+      </div>
     );
   }
 }

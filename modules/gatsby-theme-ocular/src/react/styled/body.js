@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // top-level layoout
 export const BodyContainerFull = styled.div`
   margin: 0 auto;
+  padding: ${props => props.theme.sizing.scale1600} 0 0;
 `;
 
 

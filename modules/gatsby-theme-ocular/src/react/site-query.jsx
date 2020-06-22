@@ -22,7 +22,6 @@ const QUERY = graphql`
         PROJECT_ORG
         PROJECT_ORG_LOGO
         LINK_TO_GET_STARTED
-        HOME_MARKDOWN
         PATH_PREFIX
         EXAMPLES {
           title
@@ -36,6 +35,7 @@ const QUERY = graphql`
         }
         ADDITIONAL_LINKS {
           name
+          to
           href
           index
         }
@@ -43,13 +43,16 @@ const QUERY = graphql`
     }
   }
 
-  fragment MarkdownNodeFragment on MarkdownRemark {
+  fragment MarkdownNodeFragment on Mdx {
     id
     fields {
       slug
     }
     frontmatter {
       title
+    }
+    headings(depth: h1) {
+      value
     }
   }
 
@@ -58,7 +61,7 @@ const QUERY = graphql`
       ...SiteConfigFragment
     }
 
-    allMarkdown: allMarkdownRemark(limit: 2000) {
+    allMarkdown: allMdx(limit: 2000) {
       edges {
         node {
           ...MarkdownNodeFragment
@@ -74,23 +77,29 @@ const QUERY = graphql`
           title
           level
           entries {
-            childMarkdownRemark {
+            childMdx {
               frontmatter {
                 title
               }
               fields {
                 slug
               }
+              headings {
+                value
+              }
             }
           }
         }
         entries {
-          childMarkdownRemark {
+          childMdx {
             frontmatter {
               title
             }
             fields {
               slug
+            }
+            headings {
+              value
             }
           }
         }

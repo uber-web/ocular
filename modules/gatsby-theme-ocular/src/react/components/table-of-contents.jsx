@@ -98,18 +98,18 @@ function getTocState({chapters, slug, expanded}) {
       entries[id].children = children.map(c => c.id);
     }
     children.forEach(c => queue.push(c));
-    if (current.childMarkdownRemark) {
+    if (current.childMdx) {
       // only happens for leave nodes
       current.parents.forEach(parent => {
-        if (current.childMarkdownRemark.fields.slug === slug) {
+        if (current.childMdx.fields.slug === slug) {
           entries[parent].childIsSelected = true;
         }
         // currently the behavior of entries is to toggle them
         // if we switch to using them as link to the first child (as before)
         // we can just uncomment that line
-        // entries[parent].pathToFirstChild = current.childMarkdownRemark.fields.slug;
+        // entries[parent].pathToFirstChild = current.childMdx.fields.slug;
       });
-      entries[id].isSelected = current.childMarkdownRemark.fields.slug === slug;
+      entries[id].isSelected = current.childMdx.fields.slug === slug;
     }
   }
   return updateHeights(entries, expanded);

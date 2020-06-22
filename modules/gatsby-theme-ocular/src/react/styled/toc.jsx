@@ -64,7 +64,7 @@ export const TocContainer = styled.div`
     height: 100%;
     z-index: 2;
     border-right: 1px solid ${props => props.theme.colors.mono500};
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     width: 100%;
   }

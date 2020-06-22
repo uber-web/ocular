@@ -30,8 +30,15 @@ function sourceNodes({actions}) {
 
     type AdditionalLinks implements Node {
       name: String
+      to: String
       href: String
       index: Int
+    }
+
+    type PageDesc implements Node {
+      path: String
+      componentUrl: String
+      content: String
     }
 
     type Projects implements Node {
@@ -49,7 +56,7 @@ function sourceNodes({actions}) {
 
       PROJECT_ORG_LOGO: String
 
-      HOME_MARKDOWN: String
+      PAGES: [PageDesc]
 
       ROOT_FOLDER: String
       DOC_FOLDER: String
@@ -84,13 +91,18 @@ function sourceNodes({actions}) {
       slug: String
     }
 
-    type EntrychildMarkdownRemark implements Node {
+    type EntryHeading implements Node {
+      value: String
+    }
+
+    type EntrychildMdx implements Node {
       frontmatter: EntryFrontMatter
       fields: EntryFields
+      headings: [EntryHeading]
     }
 
     type Entry implements Node {
-      childMarkdownRemark: EntrychildMarkdownRemark
+      childMdx: EntrychildMdx
     }
 
     type lvl2Chapter implements Node {

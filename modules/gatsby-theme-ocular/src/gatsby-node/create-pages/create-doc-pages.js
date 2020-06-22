@@ -1,5 +1,5 @@
 const {log, COLOR} = require('../../utils/log');
-const getPageTemplateUrl = require('./get-page-template-url');
+const PAGE_TEMPLATES = require('./page-templates');
 const {addToRelativeLinks} = require('../../utils/links-utils');
 
 // Create static pages
@@ -10,7 +10,7 @@ function queryMarkdownDocs(graphql) {
   return graphql(
     `
       {
-        allMarkdownRemark {
+        allMdx {
           edges {
             node {
               fileAbsolutePath
@@ -46,12 +46,12 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
 
   return queryMarkdownDocs(graphql).then(result => {
     const rootFolder = ocularOptions.ROOT_FOLDER;
-    const pathToSlug = result.data.allMarkdownRemark.edges.map(({node}) => ({
+    const pathToSlug = result.data.allMdx.edges.map(({node}) => ({
       source: node.fileAbsolutePath,
       target: node.fields.slug
     }));
 
-    result.data.allMarkdownRemark.edges.forEach(edge => {
+    result.data.allMdx.edges.forEach(edge => {
       let relativeLinks = {};
       pathToSlug.forEach(({source, target}) => {
         relativeLinks = addToRelativeLinks({
@@ -65,7 +65,7 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
 
       // console.log('Creating doc page at', edge.node.fields.path);
 
-      const componentUrl = getPageTemplateUrl('DOC_MARKDOWN_PAGE_URL', ocularOptions);
+      const componentUrl = PAGE_TEMPLATES['DOC_MARKDOWN_PAGE_URL'];
 
       createPage({
         path: edge.node.fields.path,

@@ -38,8 +38,9 @@ import {
   FooterLogo
 } from '../styled/home';
 
-function renderPage({config, HeroExample, projectDesc, children}) {
+function renderPage({config, HeroExample, content, children}) {
   // Note: The Layout "wrapper" component adds header and footer etc
+  console.log(content)
   return (
     <>
       <Banner>
@@ -54,10 +55,10 @@ function renderPage({config, HeroExample, projectDesc, children}) {
           </GetStartedLink>
         </BannerContainer>
       </Banner>
-      {projectDesc && (
+      {content && (
         <Section>
           <Container>
-            <Markdown htmlAst={projectDesc.htmlAst} />
+            <Markdown body={content.body} />
           </Container>
         </Section>
       )}
@@ -99,7 +100,7 @@ export default class IndexPage extends Component {
     return (
       <main>
         <WebsiteConfigConsumer>
-          {({config}) => renderPage({config, HeroExample, projectDesc: pageContext && pageContext.projectDesc, children})}
+          {({config}) => renderPage({config, HeroExample, content: pageContext && pageContext.content, children})}
         </WebsiteConfigConsumer>
       </main>
     );

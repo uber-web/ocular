@@ -4,14 +4,14 @@
       "onlyInteger": true,
       "greaterThanOrEqualTo": 0,
       "lessThanOrEqualTo": 5,
-      "notValid": "should be between 0 to 5."
+      "notValid": "should be between 0 to 5"
     }
   },
 
   "DOC_FOLDER": {
     "anyString": {
       "allowEmpty": true,
-      "message": "should be the local path to the doc folder."
+      "message": "should be the local path to the doc folder"
     }
   },
 
@@ -20,7 +20,7 @@
       "allowEmpty": true,
       "constraint": {
         "anyString": {
-          "message": "should be the local path to the doc folder."
+          "message": "should be the local path to the doc folder"
         }
       }
     }
@@ -31,7 +31,7 @@
       "allowEmpty": true,
       "constraint": {
         "anyString": {
-          "message": "should be the local path to the website assets."
+          "message": "should be the local path to the website assets"
         }
       }
     }
@@ -40,14 +40,14 @@
   "ROOT_FOLDER": {
     "anyString": {
       "allowEmpty": true,
-      "message": "should be the local path to the root folder."
+      "message": "should be the local path to the root folder"
     }
   },
 
   "DIR_NAME": {
     "anyString": {
       "allowEmpty": true,
-      "message": "should be the local path to the gatsby website folder."
+      "message": "should be the local path to the gatsby website folder"
     }
   },
 
@@ -59,26 +59,26 @@
         "title": {
           "presence": true,
           "anyString": {
-            "message": "title is the title of the example."
+            "message": "title is the title of the example"
           }
         },
         "image": {
           "presence": true,
           "anyString": {
             "message":
-              "image should be the local path to the image in /static folder."
+              "image should be the local path to the image in /static folder"
           }
         },
         "componentUrl": {
-          "presence": true,
           "anyString": {
-            "message": "componentUrl should be the local path to the component."
+            "allowEmpty": true,
+            "message": "componentUrl should be the local path to the component"
           }
         },
         "path": {
           "presence": true,
           "anyString": {
-            "message": "should be the URL path to the example."
+            "message": "should be the URL path to the example"
           }
         }
       }
@@ -101,7 +101,7 @@
     "inclusion": {
       "within": ["github", ""],
       "message":
-        "should be set to 'github' if your project is hosted on Github, or leave it empty."
+        "should be set to 'github' if your project is hosted on Github, or leave it empty"
     }
   },
 
@@ -109,7 +109,7 @@
     "presence": true,
     "anyString": {
       "allowEmpty": false,
-      "message": "should be the project's name on Github."
+      "message": "should be the project's name on Github"
     }
   },
 
@@ -152,7 +152,7 @@
         "name": {
           "presence": true,
           "anyString": {
-            "message": "is the name of the project."
+            "message": "is the name of the project"
           }
         },
         "url": {
@@ -170,17 +170,29 @@
     }
   },
 
-  "INDEX_PAGE_URL": {
-    "anyString": {
+  "PAGES": {
+    "arrayValidate": {
       "allowEmpty": true,
-      "message": "should be the path to the home page"
-    }
-  },
-
-  "HOME_MARKDOWN": {
-    "anyString": {
-      "allowEmpty": true,
-      "message": "markdown description of the project"
+      "constraint": {
+        "path": {
+          "presence": {"allowEmpty": false},
+          "anyString": {
+            "message": "is the path to the page"
+          }
+        },
+        "componentURL": {
+          "anyString": {
+            "allowEmpty": true,
+            "message": "should be a local path"
+          }
+        },
+        "url": {
+          "anyString": {
+            "allowEmpty": true,
+            "message": "should be a remote path"
+          }
+        }
+      }
     }
   },
 
@@ -202,13 +214,19 @@
         "name": {
           "presence": {"allowEmpty": false},
           "anyString": {
-            "message": "is the title of the link."
+            "message": "is the title of the link"
           }
         },
         "href": {
-          "presence": {"allowEmpty": false},
           "anyString": {
-            "message": "should be a local path."
+            "allowEmpty": true,
+            "message": "should be a remote path"
+          }
+        },
+        "to": {
+          "anyString": {
+            "allowEmpty": true,
+            "message": "should be an in-site path"
           }
         }
       }
@@ -234,7 +252,7 @@
   },
   "GITHUB_KEY": {
     "requiredForGithubProject": {
-      "message": "must be provided if your project is hosted on Github."
+      "message": "must be provided if your project is hosted on Github"
     }
   },
 

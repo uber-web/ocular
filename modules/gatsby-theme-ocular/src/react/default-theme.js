@@ -46,5 +46,5 @@ export default {
   mono900: '#333333',
   mono1000: '#000000',
 
-  primaryFontFamily: '"Uber Move", Helvetica, Arial, sans-serif'
+  primaryFontFamily: 'UberMove, Helvetica, Arial, sans-serif'
 };
