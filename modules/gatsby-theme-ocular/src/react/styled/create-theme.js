@@ -3,7 +3,7 @@ export default function createTheme(primitives) {
   return {
     breakpoints: {
       small: 320,
-      medium: 600,
+      medium: 768,
       large: 1280
     },
 

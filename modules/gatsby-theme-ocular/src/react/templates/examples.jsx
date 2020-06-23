@@ -15,7 +15,7 @@ export default class Examples extends Component {
             {exampleData.imageSrc ? (
               <img width="100%" src={withPrefix(exampleData.imageSrc)} alt={exampleData.title} />
             ) : null}
-            <ExampleTitle>{exampleData.title}</ExampleTitle>
+            <ExampleTitle><span>{exampleData.title}</span></ExampleTitle>
           </ExampleCard>
         ))}
       </MainExamples>

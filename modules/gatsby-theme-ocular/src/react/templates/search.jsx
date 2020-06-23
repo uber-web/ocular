@@ -10,8 +10,28 @@ import {
   SearchInput,
   SearchResultItem,
   SearchResultLink,
-  SearchResultContent
+  SearchResultHighlight,
+  SearchResultPager
 } from '../styled/search';
+
+const RESULTS_PER_PAGE = 10;
+const MAX_EXCERPT_LENGTH = 200;
+
+function renderHighlightedText(lines, regex, lineNumber = 0) {
+  if (Array.isArray(lines)) {
+    return lines.map((line, i) => {
+      const elements = renderHighlightedText(line, regex, i);
+      elements.unshift(<br key={i} />);
+      return elements;
+    });
+  }
+
+  return lines.split(regex).map((part, i) => {
+    return i % 2 === 0
+      ? <span key={`${lineNumber}-${i}`}>{part}</span>
+      : <SearchResultHighlight key={`${lineNumber}-${i}`}>{part}</SearchResultHighlight>
+  });
+}
 
 export default class SearchPage extends React.Component {
   constructor(props) {
@@ -19,6 +39,7 @@ export default class SearchPage extends React.Component {
     this.state = {
       currentQuery: '',
       lastQuery: '',
+      visibleResultsCount: RESULTS_PER_PAGE,
       results: []
     };
     this.findResults = debounce(this.findResults.bind(this), 250);
@@ -29,37 +50,57 @@ export default class SearchPage extends React.Component {
     const {lastQuery} = this.state;
     const {pathContext} = this.props;
     this.setState({debouncing: false});
+    currentQuery = currentQuery.replace(/[^\w-]/g, ' ').replace(/\s+/g, ' ').trim();
+
     if (currentQuery === lastQuery) {
       return;
     }
-    let results;
+    let regex = null;
+    const results = [];
     if (currentQuery) {
-      const regex = new RegExp(currentQuery, 'i');
-      const headingRegex = new RegExp(`^#.*${currentQuery}`, 'im');
+      regex = new RegExp(`(${currentQuery})`, 'i');
 
-      // Sort order:
-      // appearance in title
-      results = pathContext.data.filter(
-        node => node.title && regex.test(node.title)
-      );
-
-      // appearance in headings
-      results = results.concat(pathContext.data.filter(
-        node =>
-          !results.includes(node) &&
-          node.rawBody && headingRegex.test(node.rawBody)
-      ));
-
-      // any appearance
-      results = results.concat(pathContext.data.filter(
-        node =>
-          !results.includes(node) &&
-          node.rawBody && regex.test(node.rawBody)
-      ));
-    } else {
-      results = [];
+      for (let i = 0; i < pathContext.data.length; i++) {
+        const node = pathContext.data[i];
+        const matches = [];
+        let priority = Infinity;
+        if (node.title && regex.test(node.title)) {
+          priority = 0;
+        }
+        if (node.headings) {
+          let totalLength = 0;
+          for (const heading of node.headings) {
+            if (regex.test(heading.value)) {
+              priority = Math.min(priority, heading.depth);
+              totalLength += heading.value.length;
+              matches.push(heading.value);
+            }
+            if (totalLength >= MAX_EXCERPT_LENGTH) {
+              break;
+            }
+          }
+        }
+        if (!Number.isFinite(priority) && node.excerpt) {
+          const index = node.excerpt.search(regex);
+          if (index >= 0) {
+            priority = 100;
+            let excerpt = node.excerpt.slice(index - 30);
+            excerpt = excerpt.slice(excerpt.indexOf(' ') + 1).slice(0, MAX_EXCERPT_LENGTH) + '...';
+            matches.push(excerpt);
+          }
+        }
+        if (Number.isFinite(priority)) {
+          results.push({node, priority, matches});
+        }
+      }
     }
-    this.setState({results, lastQuery: currentQuery});
+    results.sort((r1, r2) => r1.priority - r2.priority);
+    this.setState({
+      results,
+      regex,
+      visibleResultsCount: RESULTS_PER_PAGE,
+      lastQuery: currentQuery
+    });
   }
 
   handleChange(event) {
@@ -68,9 +109,25 @@ export default class SearchPage extends React.Component {
     this.findResults(currentQuery);
   }
 
+  renderResults() {
+    const {results, regex, visibleResultsCount} = this.state;
+
+    return results.slice(0, visibleResultsCount).map(result => {
+      if (!result.element) {
+        result.element = (
+          <SearchResultItem key={result.node.slug}>
+            <SearchResultLink to={`/${result.node.slug}`}>{result.node.title}</SearchResultLink>
+            {renderHighlightedText(result.matches, regex)}
+          </SearchResultItem>
+        );
+      }
+      return result.element;
+    });
+  }
+
   renderPage() {
     // Note: The Layout "wrapper" component adds header and footer etc
-    const {debouncing, results, currentQuery} = this.state;
+    const {debouncing, results, visibleResultsCount, currentQuery} = this.state;
     const {pathContext} = this.props;
     return (
       <MainSearch>
@@ -104,13 +161,10 @@ export default class SearchPage extends React.Component {
             </div>
           )}
           <div>
-            {results.map(result => (
-              <SearchResultItem key={result.slug}>
-                <SearchResultLink to={`/${result.slug}`}>{result.title}</SearchResultLink>
-                <SearchResultContent>{result.excerpt}</SearchResultContent>
-              </SearchResultItem>
-            ))}
+            {this.renderResults()}
           </div>
+          {visibleResultsCount < results.length &&
+            <SearchResultPager onClick={() => this.setState({visibleResultsCount: visibleResultsCount + RESULTS_PER_PAGE})} >Load more...</SearchResultPager>}
         </div>
       </MainSearch>
     );

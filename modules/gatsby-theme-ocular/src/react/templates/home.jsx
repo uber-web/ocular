@@ -38,19 +38,18 @@ import {
   FooterLogo
 } from '../styled/home';
 
-function renderPage({config, HeroExample, content, children}) {
+function renderPage({config, theme = 'dark', HeroExample, content, children}) {
   // Note: The Layout "wrapper" component adds header and footer etc
-  console.log(content)
   return (
     <>
-      <Banner>
+      <Banner colortheme={theme}>
         <HeroExampleContainer>
           {HeroExample && <HeroExample />}
         </HeroExampleContainer>
         <BannerContainer>
           <ProjectName>{config.PROJECT_NAME}</ProjectName>
           <p>{config.PROJECT_DESC}</p>
-          <GetStartedLink to={config.LINK_TO_GET_STARTED}>
+          <GetStartedLink to={config.LINK_TO_GET_STARTED} colortheme={theme}>
             GET STARTED
           </GetStartedLink>
         </BannerContainer>
@@ -62,18 +61,10 @@ function renderPage({config, HeroExample, content, children}) {
           </Container>
         </Section>
       )}
-      {children && (
-        <Section>
-          <Container>
-            {children}
-          </Container>
-        </Section>
-      )}
+      {children}
       {config.PROJECT_TYPE === 'github' && (
         <Section>
           <Container>
-            <h3>Contributors</h3>
-            <span>Join us!</span>
             <GithubContributors
               project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`}
             />
@@ -96,11 +87,11 @@ function renderPage({config, HeroExample, content, children}) {
 
 export default class IndexPage extends Component {
   render() {
-    const {HeroExample, pageContext, children} = this.props;
+    const {HeroExample, theme, pageContext, children} = this.props;
     return (
       <main>
         <WebsiteConfigConsumer>
-          {({config}) => renderPage({config, HeroExample, content: pageContext && pageContext.content, children})}
+          {({config}) => renderPage({config, HeroExample, theme, content: pageContext && pageContext.content, children})}
         </WebsiteConfigConsumer>
       </main>
     );

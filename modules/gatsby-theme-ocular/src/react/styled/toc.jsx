@@ -1,7 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import ChevronDown from '../components/chevron-down';
+import {isMobile} from './body';
 
 export const TocChevron = styled(ChevronDown)`
   height: 16px;
@@ -56,22 +56,23 @@ export const TocSubpages = styled.ul`
 `;
 
 export const TocContainer = styled.div`
-  @media screen and (min-width: ${props => props.theme.breakpoints.medium}px) {
-    position: fixed;
-    top: 0;
-    padding: ${props => props.theme.sizing.scale1600} 0;
-    max-width: 300px;
-    height: 100%;
-    z-index: 2;
-    border-right: 1px solid ${props => props.theme.colors.mono500};
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: 100%;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+  position: fixed;
+  top: 0;
+  padding: ${props => props.theme.sizing.scale1600} 0;
+  max-width: 300px;
+  height: 100%;
+  z-index: 2;
+  border-right: 1px solid ${props => props.theme.colors.mono500};
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+
+  ${isMobile} {
+    max-width: 100%;
+    height: initial;
     border-right: none;
     position: sticky;
-    padding: ${props => props.$isTocOpen ? props.theme.sizing.scale1600 : 0} 0;
+    padding: 0;
     transition: opacity 0.3s, transform 0.3s;
     opacity: ${props => props.$isTocOpen ? 1 : 0};
     max-height: ${props => props.$isTocOpen ? 'unset' : 0};
@@ -79,27 +80,3 @@ export const TocContainer = styled.div`
     transform: ${props => props.$isTocOpen ? 'translateY(0)' : 'translateY(30px)'};
   }
 `;
-
-const StyledTocToggle = styled.div`
-  font: ${props => props.theme.typography.font300};
-  color: ${props => props.theme.colors.mono100};
-  cursor: pointer;
-  position: fixed;
-  top: 0;
-  right: ${props => props.theme.sizing.scale800};
-  line-height: ${props => props.theme.sizing.scale1600};
-  user-select: none;
-  z-index: 10;
-  display: none;
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
-    display: block;
-  }
-`;
-
-export const TocToggle = ({toggleToc, $isTocOpen, $isMenuOpen}) => {
-  return $isMenuOpen ? null : (
-    <StyledTocToggle onClick={toggleToc}>
-      Table of Contents
-    </StyledTocToggle>
-  );
-};

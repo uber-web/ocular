@@ -9,11 +9,14 @@ module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
       allMdx {
         edges {
           node {
-            excerpt
+            excerpt(pruneLength: 100000)
             frontmatter {
               title
             }
-            rawBody
+            headings {
+              value
+              depth
+            }
             fields {
               slug
             }
@@ -36,7 +39,7 @@ module.exports = function createSearchPage({graphql, actions}, ocularOptions) {
       context: {
         data: results.data.allMdx.edges.map(e => ({
           excerpt: e.node.excerpt,
-          rawBody: e.node.rawBody,
+          headings: e.node.headings,
           slug: e.node.fields.slug,
           title: e.node.frontmatter.title
         }))

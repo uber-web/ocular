@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'gatsby';
+import {isMobile} from './body';
 
 import styled from 'styled-components';
 
@@ -18,7 +19,7 @@ export const Header = styled.header`
   user-select: none;
   white-space: nowrap;
   position: fixed;
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+  ${isMobile} {
     position: static;
   }
 `;
@@ -26,7 +27,7 @@ export const Header = styled.header`
 export const HeaderContainer = styled.div`
   grid-column: 1/3;
   grid-row: 1/2;
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+  ${isMobile} {
     order: 1;
   }
 `;
@@ -54,27 +55,37 @@ export const HeaderLogo = styled(Link)`
 export const HeaderMenu = styled.div`
   background: ${props => props.theme.colors.mono1000};
   display: flex;
+  box-sizing: content-box;
   flex-direction: column;
   position: fixed;
   overflow: hidden;
   min-width: 180px;
   max-height: ${props => props.$collapsed ? 0 : props.$nbItems * 48}px;
+  padding-bottom: ${props => props.$collapsed ? 0 : props.theme.sizing.scale800};
   top: ${props => props.theme.sizing.scale1600};
   left: ${props => props.theme.sizing.scale600};
-  transition: max-height 0.3s;
+  transition-property: max-height,padding-bottom;
+  transition-duration: ${props => props.theme.animation.timing400};
+  transition-timing-function: ${props => props.theme.animation.easeInOutCurve};
+  z-index: 100;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
-    min-height: initial;
-    max-height: initial;
-    height: calc(100% - ${props => props.theme.sizing.scale1600});
+  ${isMobile} {
+    width: 100%;
     left: 0;
-    marginLeft: 36px;
-    padding: ${props => props.theme.sizing.scale2400} ${props => props.theme.sizing.scale800} ${props => props.theme.sizing.scale1600} ${props => props.theme.sizing.scale500};
-    top: ${props => props.theme.sizing.scale1600};
-    transform: ${props => props.$collapsed ? 'translate(-100%)' : 'translate(0)'};
-    transition: transform 0.3s;
-    width: 90%;
-    z-index: 100;
+  }
+`;
+
+export const HeaderMenuBackground = styled.div`
+  position: fixed;
+  top: ${props => props.theme.sizing.scale1600};
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  z-index: 1;
+
+  ${isMobile} {
+    background: rgba(0, 0, 0, 0.3);
   }
 `;
 
@@ -84,7 +95,7 @@ export const HeaderMenuLink = styled.a`
   text-decoration: none;
   font: ${props => props.theme.typography.font300};
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+  ${isMobile} {
     font: ${props => props.theme.typography.font500};
   }
   &:visited {
@@ -98,18 +109,12 @@ export const HeaderMenuLink = styled.a`
   }
 `;
 
-export const HeaderMenuDivider = styled.hr`
-  margin: ${props => props.theme.sizing.scale800} 0;
-  width: 100%;
-  border-color: ${props => props.theme.colors.mono500};
-`;
-
 export const HeaderLinksBlock = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+  ${isMobile} {
     display: block;
   }
 `;
@@ -127,7 +132,7 @@ const StyledHamburgerMenu = styled.div`
 
 const HamburgerBar = styled.div`
   background-color: ${props => props.theme.colors.mono100};
-  height: 3px;
+  height: 1px;
   width: 100%;
 `;
 
@@ -138,20 +143,6 @@ export const HamburgerMenu = ({onClick}) => (
     <HamburgerBar />
   </StyledHamburgerMenu>
 );
-
-export const HeaderA = styled.a`
-  color: ${props => props.theme.colors.mono100};
-  text-decoration: none;
-  &:visited {
-    color: ${props => props.theme.colors.mono100};
-  }
-  &:active {
-    color: ${props => props.theme.colors.mono200};
-  }
-  &:hover {
-    color: ${props => props.theme.colors.mono200};
-  }
-`;
 
 export const HeaderLink = styled(Link)`
   color: ${props => props.theme.colors.mono100};
@@ -172,8 +163,15 @@ export const HeaderLinkContainer = styled.div`
   flex: 1 1 0;
   padding-left: ${props => props.theme.sizing.scale700};
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
+  ${isMobile} {
     font: ${props => props.theme.typography.font500};
     padding: ${props => props.theme.sizing.scale400} ${props => props.theme.sizing.scale1600};
   }
+`;
+
+export const TocToggle = styled.div`
+  color: ${props => props.theme.colors.mono100};
+  cursor: pointer;
+  line-height: ${props => props.theme.sizing.scale1600};
+  user-select: none;
 `;

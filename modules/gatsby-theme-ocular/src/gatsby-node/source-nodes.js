@@ -30,7 +30,6 @@ function sourceNodes({actions}) {
 
     type AdditionalLinks implements Node {
       name: String
-      to: String
       href: String
       index: Int
     }
