@@ -35,7 +35,6 @@ const QUERY = graphql`
         }
         ADDITIONAL_LINKS {
           name
-          to
           href
           index
         }

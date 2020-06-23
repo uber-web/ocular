@@ -1,6 +1,8 @@
 import {Link} from 'gatsby';
 import styled from 'styled-components';
 
+import {A} from './typography';
+
 // search
 
 export const SearchContainer = styled.div`
@@ -21,8 +23,7 @@ export const IconContainer = styled.div`
 
 export const SearchInput = styled.input`
   width: 100%;
-  box-shadow: 0 0px 2px hsla(0, 0%, 0%, 0.16);
-  border: 1px solid transparent;
+  border: 1px solid ${props => props.theme.colors.mono500};
   transition: 0.3s;
   font-size: 14px;
   font-weight: 500;
@@ -62,7 +63,12 @@ export const SearchResultLink = styled(Link)`
   }
 `;
 
-export const SearchResultContent = styled.div`
-  max-height: 5rem;
-  overflow: hidden;
+export const SearchResultHighlight = styled.span`
+  display: inline-block;
+  background: yellow;
+`;
+
+export const SearchResultPager = styled(A)`
+  cursor: pointer;
+  padding: 20px 0 80px;
 `;

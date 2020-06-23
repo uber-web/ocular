@@ -218,15 +218,9 @@
           }
         },
         "href": {
+          "presence": {"allowEmpty": false},
           "anyString": {
-            "allowEmpty": true,
-            "message": "should be a remote path"
-          }
-        },
-        "to": {
-          "anyString": {
-            "allowEmpty": true,
-            "message": "should be an in-site path"
+            "message": "should be a valid link"
           }
         }
       }

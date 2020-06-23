@@ -27,8 +27,8 @@ function queryMarkdown(graphql, path) {
 module.exports = function createIndexPage({graphql, actions}, ocularOptions) {
   const {createPage} = actions;
 
-  const pages = ocularOptions.PAGES.slice();
-  const indexPage = pages.find(p => p.path === '/');
+  const pages = ocularOptions.PAGES ? ocularOptions.PAGES.slice() : [];
+  let indexPage = pages.find(p => p.path === '/');
   if (indexPage) {
     indexPage.componentUrl = indexPage.componentUrl || PAGE_TEMPLATES['INDEX_PAGE_URL'];
   } else {

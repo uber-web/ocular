@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {Link} from 'gatsby';
+import {isMobile} from './body';
 
 // example
 
@@ -14,37 +15,59 @@ export const MainExample = styled.main`
 export const MainExamples = styled.main`
   display: flex;
   flex-wrap: wrap;
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}) {
-    padding-top: 96px;
-  }
+  padding: ${props => props.theme.sizing.scale600};
 `;
 
 export const ExampleCard = styled(Link)`
-  border: ${props => props.theme.borders.border300};
   cursor: pointer;
   text-decoration: none;
-  width: 200px;
+  width: 50%;
+  max-width: 240px;
+  line-height: 0;
   outline: none;
-  margin: ${props => props.theme.sizing.scale400};
-  padding: ${props => props.theme.sizing.scale700} ${props => props.theme.sizing.scale600} ${props => props.theme.sizing.scale700} ${props => props.theme.sizing.scale600};
-  transition-property: background, border-color, box-shadow;
-  transition-duration: ${props => props.theme.animation.timing400};
-  transition-timing-function: ${props => props.theme.animation.easeInOutCurve};
+  padding: ${props => props.theme.sizing.scale100};
+  position: relative;
+  img {
+    transition-property: filter;
+    transition-duration: ${props => props.theme.animation.timing400};
+    transition-timing-function: ${props => props.theme.animation.easeInOutCurve};
+  }
   &:hover {
     box-shadow: ${props => props.theme.lighting.shadow600};
-    background: ${props => props.theme.colors.mono200};
-    border-color: transparent;
+  }
+  &:hover img {
+    filter: contrast(0.2);
+  }
+  ${isMobile} {
+    width: 33%;
+    min-width: 200px;
+  }
+  @media screen and (max-width: 632px) {
+    width: 50%;
   }
 `;
 
 export const ExampleTitle = styled.div`
-  color: ${props => props.theme.colors.mono1000};
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: ${props => props.theme.colors.mono100};
   font: ${props => props.theme.typography.font300};
-  margin-bottom: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 150px;
+  font-size: 1.5em;
+  text-align: center;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  border: solid 1px ${props => props.theme.colors.mono100};
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: ${props => props.theme.animation.timing400};
+  transition-timing-function: ${props => props.theme.animation.easeInOutCurve};
+  &:hover {
+    opacity: 1
+  }
 `;
 
 export const PanelContainer = styled.div`
@@ -53,7 +76,7 @@ export const PanelContainer = styled.div`
   top: 0;
   right: 0;
   width: 344px;
-  background: ${props => props.theme.colors.white};
+  background: ${props => props.theme.colors.mono100};
   box-shadow: ${props => props.theme.lighting.shadow400};
   margin: ${props => props.theme.sizing.scale800};
   padding: ${props => props.theme.sizing.scale400} ${props => props.theme.sizing.scale800};
@@ -63,11 +86,38 @@ export const PanelContainer = styled.div`
   overflow-y: overlay;
   outline: none;
   z-index: 1;
+
+  ${isMobile} {
+    width: auto;
+    left: 0;
+  }
 `;
 
-export const PanelTitle = styled.h3`
+export const PanelExpander = styled.div`
+  display: none;
+  width: ${props => props.theme.sizing.scale600};
+  height: ${props => props.theme.sizing.scale600};
+  font-family: serif;
+  font-size: 0.8em;
+  text-align: center;
+  line-height: ${props => props.theme.sizing.scale600};
+  border-radius: 50%;
+  background: ${props => props.$expanded ? 'none' : props.theme.colors.mono900};
+  color: ${props => props.$expanded ? props.theme.colors.mono1000 : props.theme.colors.mono100};
+  ${isMobile} {
+    display: block;
+  }
+`;
+
+export const PanelTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font: ${props => props.theme.typography.font450};
   margin: ${props => props.theme.sizing.scale300} 0;
+  ${isMobile} {
+    cursor: pointer;
+  }
 `;
 
 export const PanelContent = styled.div`
@@ -84,7 +134,7 @@ export const PanelContent = styled.div`
     margin-bottom: 2px;
   }
   div >input, div >a, div >button, div >select {
-    background: ${props => props.theme.colors.white};
+    background: ${props => props.theme.colors.mono100};
     font: ${props => props.theme.typography.font100};
     line-height: ${props => props.theme.sizing.scale700};
     text-transform: none;
@@ -107,7 +157,7 @@ export const PanelContent = styled.div`
   div >input {
     border: ${props => props.theme.borders.border300};
     &:disabled {
-      background: ${props => props.theme.colors.white};
+      background: ${props => props.theme.colors.mono100};
     }
     &[type="checkbox"] {
       height: auto;
@@ -117,6 +167,9 @@ export const PanelContent = styled.div`
     margin-bottom: ${props => props.theme.sizing.scale600};
     white-space: initial;
   }
+  ${isMobile} {
+    display: ${props => props.$expanded ? 'block' : 'none'};
+  }
 `;
 
 export const SourceLink = styled.a`
@@ -125,4 +178,7 @@ export const SourceLink = styled.a`
   margin-top: ${props => props.theme.sizing.scale300};
   font: ${props => props.theme.typography.font250};
   color: ${props => props.theme.colors.mono800};
+  ${isMobile} {
+    display: ${props => props.$expanded ? 'block' : 'none'};
+  }
 `;
