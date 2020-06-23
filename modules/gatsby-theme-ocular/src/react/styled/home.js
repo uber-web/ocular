@@ -15,7 +15,7 @@ export const Banner = styled.section`
 
 export const Container = styled.div`
   position: relative;
-  padding: 2rem 2rem 2rem 4rem;
+  padding: 2rem;
   max-width: 80rem;
   width: 100%;
   height: 100%;
@@ -26,6 +26,7 @@ export const BannerContainer = styled(Container)`
   position: absolute;
   bottom: 0;
   height: auto;
+  padding-left: 2rem;
   z-index: 0;
   pointer-events: none;
 `;

@@ -7,7 +7,7 @@ export const TocChevron = styled(ChevronDown)`
   height: 16px;
   width: 16px;
   position: absolute;
-  left: ${props => props.$depth * 24 + 36}px;
+  left: ${props => props.$depth * 12 + 24}px;
   top: 20px;
   transform: ${props => props.$isTocOpen ? 'none' : 'rotate(-90deg)'};
   transition: transform 0.3s;
@@ -15,8 +15,7 @@ export const TocChevron = styled(ChevronDown)`
 
 export const TocEntry = styled.div`
   font: ${props => props.theme.typography.font350};
-  border-top: 1px solid ${props => props.$depth ? 'tranparent' : props.theme.colors.mono500};
-  border-bottom: 1px solid ${props => props.$depth ? 'tranparent' : props.theme.colors.mono500};
+  border-top: 1px solid ${props => props.$depth || props.$index == 0 ? 'tranparent' : props.theme.colors.mono400};
   color: ${props => props.$depth ? props.theme.colors.mono800 : props.theme.colors.mono1000};
   cursor: pointer;
   margin: -0.5px 0;
@@ -28,7 +27,7 @@ export const TocEntry = styled.div`
 
 export const TocHeader = styled.span`
   display: block;
-  padding: 16px 16px 16px ${props => props.$depth * 24 + 60}px;
+  padding: 16px 16px 16px ${props => props.$depth * 12 + 48}px;
   &:hover {
     background: ${props => props.theme.colors.mono200}
   }
@@ -37,7 +36,7 @@ export const TocHeader = styled.span`
 export const TocLink = styled.div`
   a {
     display: block;
-    padding: 16px 16px 16px ${props => props.$depth * 24 + 60}px;
+    padding: 16px 16px 16px ${props => props.$depth * 12 + 48}px;
     color: ${props => props.$active ? props.theme.colors.primary400 : (props.$depth ? props.theme.colors.mono800 : props.theme.colors.mono1000)} !important;
     text-decoration: none;
   }

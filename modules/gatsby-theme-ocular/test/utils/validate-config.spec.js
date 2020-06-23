@@ -109,11 +109,11 @@ test('validateConfig', t => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        ADDITIONAL_LINKS: [{index: 0, name: '', hrefs: 'https://google.com'}]
+        ADDITIONAL_LINKS: [{index: 0, name: 'Blog', href: ''}]
       },
       CONFIG_SCHEMA
     ),
-    ["Additional links ADDITIONAL_LINKS[0]: Name can\'t be blank"],
+    ["Additional links ADDITIONAL_LINKS[0]: Href can't be blank"],
     'Check ADDITIONAL_LINKS with empty href'
   );
 
