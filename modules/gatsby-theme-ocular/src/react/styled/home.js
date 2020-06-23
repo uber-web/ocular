@@ -26,7 +26,7 @@ export const BannerContainer = styled(Container)`
   position: absolute;
   bottom: 0;
   height: auto;
-  padding-left: 2rem;
+  padding-left: 4rem;
   z-index: 0;
   pointer-events: none;
 `;

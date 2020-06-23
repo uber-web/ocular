@@ -57,7 +57,7 @@ export const HeaderMenu = styled.div`
   display: flex;
   box-sizing: content-box;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   overflow: hidden;
   min-width: 180px;
   max-height: ${props => props.$collapsed ? 0 : props.$nbItems * 48}px;
@@ -77,7 +77,7 @@ export const HeaderMenu = styled.div`
 
 export const HeaderMenuBackground = styled.div`
   position: fixed;
-  top: ${props => props.theme.sizing.scale1600};
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -165,7 +165,7 @@ export const HeaderLinkContainer = styled.div`
 
   ${isMobile} {
     font: ${props => props.theme.typography.font500};
-    padding: ${props => props.theme.sizing.scale400} ${props => props.theme.sizing.scale1600};
+    padding: ${props => props.theme.sizing.scale400} ${props => props.theme.sizing.scale1000};
   }
 `;
 

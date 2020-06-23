@@ -100,6 +100,7 @@ export const CodeBlock = styled.code`
 `;
 
 export const Pre = styled.pre`
+  font-size: 14px;
   background-color: ${props => props.theme.colors.mono200};
   padding: ${props => props.theme.sizing.scale200};
   overflow-x: auto;
