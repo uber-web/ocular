@@ -16,16 +16,15 @@ import TopLevelLayout from './templates/top-level-layout';
 // and makes it available on React context
 export default function wrapPage({element, props}) {
   const onQueryComplete = data => {
-    const {site: {siteMetadata: {config}}, tableOfContents, allMarkdown} = data;
+    const {site: {siteMetadata: {config}}, tableOfContents} = data;
 
-    // console.log('StaticQuery result', config, tableOfContents, allMarkdown);
+    // console.log('StaticQuery result', config, tableOfContents);
 
     return (
       <TopLevelLayout
         {...props}
         config={config}
         tableOfContents={tableOfContents}
-        allMarkdown={allMarkdown}
       >
         {element}
       </TopLevelLayout>

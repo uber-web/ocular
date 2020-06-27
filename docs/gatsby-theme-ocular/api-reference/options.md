@@ -19,6 +19,7 @@ The following options are available:
 | `PROJECT_ORG_LOGO`     | `String`  | URL to an image of the organization's logo. |
 | `PROJECT_URL`      | `String` | The project's URL |
 | `PROJECT_DESC`     | `String` | The project's description |
+| `PROJECT_IMAGE`    | `String` | Featured image of the project |
 | `PROJECTS`         | `Array`  | Array of links to related projects (header) |
 | `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
 | `HOME_PATH`        | `String` | |

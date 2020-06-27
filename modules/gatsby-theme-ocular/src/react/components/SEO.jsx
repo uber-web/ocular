@@ -1,42 +1,32 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 
+function joinPath(...parts) {
+  return parts.map(part => part && part.replace(/^\//, '').replace(/\/$/, '')).filter(Boolean).join('/');
+}
+
 // TODO/ib - modify this component to work with ocular content
 class SEO extends Component {
   render() {
-    const config = this.props;
+    const {config, path} = this.props;
+    let {pageContext: {title, description}} = this.props;
 
-    const {postNode, postPath, postSEO} = this.props;
-    let title;
-    let description;
-    let image;
-    let postURL;
-    if (postSEO) {
-      const postMeta = postNode.frontmatter;
-      title = postMeta.title;
-      description = postMeta.description
-        ? postMeta.description
-        : postNode.excerpt;
-      image = postMeta.cover;
-      postURL = config.siteUrl + config.pathPrefix + postPath;
-    } else {
-      title = config.PROJECT_NAME;
-      description = config.PROJECT_DESC;
-      image = config.siteLogo;
-    }
-    const realPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix;
-    image = config.siteUrl + realPrefix + image;
-    const blogURL = config.siteUrl + config.pathPrefix;
+    const isPost = Boolean(title);
+    const siteURL = joinPath(config.PROJECT_URL, config.pathPrefix);
+    const image = joinPath(siteURL, config.PROJECT_IMAGE || config.PROJECT_ORG_LOGO);
+    const postURL = joinPath(siteURL, path);
+    title = title || config.PROJECT_NAME;
+    description = description || config.PROJECT_DESC;
+
     const schemaOrgJSONLD = [
       {
         '@context': 'http://schema.org',
         '@type': 'WebSite',
-        url: blogURL,
-        name: title,
-        alternateName: config.siteTitleAlt ? config.siteTitleAlt : ''
+        url: siteURL,
+        name: config.PROJECT_NAME
       }
     ];
-    if (postSEO) {
+    if (isPost) {
       schemaOrgJSONLD.push([
         {
           '@context': 'http://schema.org',
@@ -56,9 +46,8 @@ class SEO extends Component {
         {
           '@context': 'http://schema.org',
           '@type': 'BlogPosting',
-          url: blogURL,
+          url: siteURL,
           name: title,
-          alternateName: config.siteTitleAlt ? config.siteTitleAlt : '',
           headline: title,
           image: {
             '@type': 'ImageObject',
@@ -80,8 +69,8 @@ class SEO extends Component {
         </script>
 
         {/* OpenGraph tags */}
-        <meta property="og:url" content={postSEO ? postURL : blogURL} />
-        {postSEO ? <meta property="og:type" content="article" /> : null}
+        <meta property="og:url" content={isPost ? postURL : siteURL} />
+        {isPost ? <meta property="og:type" content="article" /> : null}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />

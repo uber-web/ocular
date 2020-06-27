@@ -6,7 +6,6 @@ import Markdown from '../components/markdown';
 import {MarkdownBody} from '../styled/typography';
 
 // Query for the markdown doc by slug
-// (Note: We could just search the allMarkdown from WebsiteConfig ourselves)
 export const query = graphql`
   query DocBySlug($slug: String!) {
     docBySlug: mdx(fields: {slug: {eq: $slug}}) {

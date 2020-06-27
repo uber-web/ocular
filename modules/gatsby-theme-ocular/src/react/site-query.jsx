@@ -20,6 +20,7 @@ const QUERY = graphql`
         PROJECT_DESC
         PROJECT_URL
         PROJECT_ORG
+        PROJECT_IMAGE
         PROJECT_ORG_LOGO
         LINK_TO_GET_STARTED
         PATH_PREFIX
@@ -58,14 +59,6 @@ const QUERY = graphql`
   query ConfigQuery {
     site {
       ...SiteConfigFragment
-    }
-
-    allMarkdown: allMdx(limit: 2000) {
-      edges {
-        node {
-          ...MarkdownNodeFragment
-        }
-      }
     }
 
     tableOfContents: docsJson {
