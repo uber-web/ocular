@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.11
+- [gatsby-theme-ocular] Fix SEO headers (#314)
+
 ## v1.2.0-beta.10
 - [gatsby-theme-ocular] styling and compatibility (#313)
 
