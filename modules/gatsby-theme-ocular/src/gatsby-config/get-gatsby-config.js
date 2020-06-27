@@ -19,6 +19,7 @@ const defaults = {
   PROJECT_DESC: '',
   PAGES: [],
   PATH_PREFIX: '/',
+  PROJECT_IMAGE: '',
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],
   HOME_PATH: '/',

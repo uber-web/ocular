@@ -14,6 +14,10 @@ function queryMarkdownDocs(graphql) {
           edges {
             node {
               fileAbsolutePath
+              excerpt
+              frontmatter {
+                title
+              }
               fields {
                 slug
                 path
@@ -72,6 +76,8 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
         component: componentUrl,
         context: {
           relativeLinks,
+          title: edge.node.frontmatter.title,
+          description: edge.node.fields.excerpt,
           slug: edge.node.fields.path,
           toc: 'docs'
         }

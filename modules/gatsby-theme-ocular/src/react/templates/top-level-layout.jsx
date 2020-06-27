@@ -190,19 +190,19 @@ export default class Layout extends React.Component {
       pageContext,
       config,
       tableOfContents,
-      allMarkdown
+      path
     } = this.props;
 
     const theme = this.getTheme();
 
     return (
       <WebsiteConfigProvider
-        value={{config, theme, tableOfContents, allMarkdown}}
+        value={{config, theme, tableOfContents}}
       >
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <div>
-            {allMarkdown && <SEO postEdges={allMarkdown} />}
+            <SEO path={path} pageContext={pageContext} config={config} />
             <Helmet>
               <title>{config.PROJECT_NAME}</title>
               {

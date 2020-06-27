@@ -108,5 +108,6 @@ export const FooterText = styled.div`
 
 export const FooterLogo = styled.img`
   max-height: 64px;
+  max-width: 64px;
   display: inline-block;
 `;
