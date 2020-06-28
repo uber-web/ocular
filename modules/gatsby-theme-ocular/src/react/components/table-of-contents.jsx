@@ -98,19 +98,19 @@ function getTocState({chapters, slug, expanded}) {
       entries[id].children = children.map(c => c.id);
     }
     children.forEach(c => queue.push(c));
-    if (current.childMdx) {
+
+    let isSelected = current.childMdx ? current.childMdx.fields.slug === slug : current.path === slug;
+    if (isSelected) {
       // only happens for leave nodes
       current.parents.forEach(parent => {
-        if (current.childMdx.fields.slug === slug) {
-          entries[parent].childIsSelected = true;
-        }
+        entries[parent].childIsSelected = true;
         // currently the behavior of entries is to toggle them
         // if we switch to using them as link to the first child (as before)
         // we can just uncomment that line
         // entries[parent].pathToFirstChild = current.childMdx.fields.slug;
       });
-      entries[id].isSelected = current.childMdx.fields.slug === slug;
     }
+    entries[id].isSelected = isSelected;
   }
   return updateHeights(entries, expanded);
 }
