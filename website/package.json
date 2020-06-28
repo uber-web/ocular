@@ -16,7 +16,7 @@
   "dep_comment": "Ensure gatsby-theme-ocular references unpublished version to trigger local workspaces link",
   "dependencies": {
     "gatsby": "^2.18.0",
-    "gatsby-theme-ocular": "1.2.0-beta.8",
+    "gatsby-theme-ocular": "./modules/gatsby-theme-ocular",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
