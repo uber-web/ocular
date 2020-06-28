@@ -1,5 +1,9 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.12
+- [gatsby-theme-ocular] Remove unused dependencies (#316)
+- Fix google analytics (#315)
+
 ## v1.2.0-beta.11
 - [gatsby-theme-ocular] Fix SEO headers (#314)
 
