@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0
+- More descriptive page titles (#318)
+
 ## v1.2.0-beta.13
 - Support grouped examples (#317)
 
