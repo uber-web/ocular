@@ -105,7 +105,7 @@ export default class Layout extends React.Component {
           />
         </HeaderContainer>
         <TocContainer $isTocOpen={isTocOpen}>
-          {this.renderTOC(config, tableOfContents)}
+          {this.renderTOC(tableOfContents)}
         </TocContainer>
 
         <BodyContainerToC>
@@ -136,51 +136,24 @@ export default class Layout extends React.Component {
     );
   }
 
-  renderTOC(config, tableOfContents) {
+  renderTOC(tableOfContents) {
     const {pageContext} = this.props;
-    switch (pageContext.toc) {
-      case 'docs':
-        return (
-          <TableOfContents
-            chapters={tableOfContents.chapters}
-            slug={pageContext.slug}
-          />
-        );
-
-      case 'examples': {
-        const {EXAMPLES} = config;
-
-        const examplesTOC = [
-          {
-            title: 'Examples',
-            entries: []
-          }
-        ];
-
-        // eslint-disable-next-line
-        for (const example of EXAMPLES) {
-          const exampleEntry = Object.assign(
-            {
-              entry: example.title
-            },
-            example
-          );
-          examplesTOC[0].entries.push(exampleEntry);
-        }
-
-        return (
-          <TableOfContents
-            chapters={examplesTOC}
-            firstItemIsExpanded
-            slug={pageContext.slug}
-          />
-        );
-      }
-
-      default:
-        console.warn(`Unknown toc type ${pageContext.toc}`); // eslint-disable-line
-        return null;
+    let toc;
+    if (pageContext.toc === 'docs') {
+      toc = tableOfContents.chapters;
+    } else {
+      toc = pageContext.toc;
     }
+    if (!Array.isArray(toc)) {
+      throw new Error(`Unknown toc type ${pageContext.toc}`);
+    }
+
+    return (
+      <TableOfContents
+        chapters={toc}
+        slug={pageContext.slug}
+      />
+    );
   }
 
   render() {

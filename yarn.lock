@@ -8182,7 +8182,7 @@ gatsby-telemetry@^1.1.49:
     uuid "3.3.3"
 
 gatsby-theme-ocular@./modules/gatsby-theme-ocular:
-  version "1.2.0-beta.11"
+  version "1.2.0-beta.12"
   dependencies:
     "@mdx-js/mdx" "^1.6.6"
     "@mdx-js/react" "^1.6.6"

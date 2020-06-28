@@ -12,7 +12,20 @@ export const MainExample = styled.main`
 
 // examples
 
+export const ExampleHeader = styled.div`
+  font: ${props => props.theme.typography.font500};
+  color: ${props => props.theme.colors.mono800};
+  margin: 0 ${props => props.theme.sizing.scale700};
+  border-bottom: 1px solid ${props => props.theme.colors.mono500};
+  display: inline-block;
+  padding: ${props => props.theme.sizing.scale700} ${props => props.theme.sizing.scale700} ${props => props.theme.sizing.scale100} 0;
+`;
+
 export const MainExamples = styled.main`
+  padding: ${props => props.theme.sizing.scale600} 0;
+`;
+
+export const ExamplesGroup = styled.main`
   display: flex;
   flex-wrap: wrap;
   padding: ${props => props.theme.sizing.scale600};
