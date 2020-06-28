@@ -8,7 +8,10 @@ configPath.split('.')
     config = config[path];
   });
 
-if (typeof config !== 'string') {
-  config = config === undefined ? "" : JSON.stringify(config);
+if (config === undefined) {
+  config = '';
+}
+if (Array.isArray(config)) {
+  config = config.join(',');
 }
 console.log(config);

@@ -29,7 +29,16 @@ module.exports = {
 
       HOME_PATH: '/',
       LINK_TO_GET_STARTED: '/docs',
-      HOME_MARKDOWN: resolve('./src/home.md'),
+      PAGES: [
+        {
+          path: '/',
+          content: resolve('./src/home.md')
+        },
+        {
+          path: '/about',
+          content: resolve('./src/about.md')
+        }
+      ],
 
       // your table of contents goes here
       DOCS,
@@ -51,10 +60,10 @@ module.exports = {
         {name: 'loaders.gl', url: 'https://loaders.gl'}
       ],
       ADDITIONAL_LINKS: [
-        {name: 'Blog', href: 'http://medium.com/vis-gl'}
+        {name: 'About', href: '/about'}
       ],
 
-      GA_TRACKING: null,
+      GA_TRACKING_ID: 'dummy_tracking_id',
 
       // For showing star counts and contributors.
       // Should be like btoa('YourUsername:YourKey') and should be readonly.

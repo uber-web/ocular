@@ -19,17 +19,18 @@ The following options are available:
 | `PROJECT_ORG_LOGO`     | `String`  | URL to an image of the organization's logo. |
 | `PROJECT_URL`      | `String` | The project's URL |
 | `PROJECT_DESC`     | `String` | The project's description |
+| `PROJECT_IMAGE`    | `String` | Featured image of the project |
 | `PROJECTS`         | `Array`  | Array of links to related projects (header) |
 | `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
 | `HOME_PATH`        | `String` | |
-| `HOME_MARKDOWN`     | `String`  | URL to a markdown that should be displayed in the index page. |
+| `PAGES`     | `Array`  | See below |
 | `ADDITIONAL_LINKS` | `Array` | See below |
-| `GA_TRACKING`      | `String` | |
+| `GA_TRACKING_ID`      | `String` | Google analytics tracking ID |
 | `GITHUB_KEY`       | `String` | The GitHub key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
 | `EXAMPLES`         | `Array` | See below |
 | `STYLESHEETS`      | `Array` | Additional CSS stylesheets |
 | `INDEX_PAGE_URL` | `String`  | Optional URL to a replacement component for the home page. |
-| `DOC_PAGE_URL` | `String`  | Optional URL to a replacement component for doc pages. |
+| `DOC_MARKDOWN_PAGE_URL` | `String`  | Optional URL to a replacement component for doc pages. |
 | `DOC_FOLDERS` | `Array`  | A set of paths to the doc folders to source all markdown files. |
 | `EXAMPLE_GALLERY_PAGE_URL` | `String`  | Optional URL to a replacement component for the example gallery page (`/examples`). |
 | `EXAMPLE_PAGE_URL` | `String`  | Optional URL to a replacement component for the default example page. Normally `EXAMPLES[].componentUrl` is used instead. |
@@ -46,6 +47,17 @@ Projects are links to related projects in the header drop down menu.
 | `name`    | `String` | The header of the link |
 | `url`    | `String` | The URL of the link |
 
+## PAGES
+
+Pages to render. If `componentUrl` is supplied, the page is rendered with the React component. If `content` is supplied, the page is generated from Markdown.
+
+Use `path: '/'` to customize the home page.
+
+| Field     | Type     | Name  |
+| ---       | ---      | ---   |
+| `path`    | `String` | The path to the page |
+| `componentUrl`    | `String` | The URL of the React component |
+| `content`    | `String` | The URL of the markdown |
 
 ## ADDITIONAL_LINKS
 
@@ -68,6 +80,7 @@ Each EXAMPLE entry has the following fields
 | Field          | Type     | Name  |
 | ---            | ---      | ---   |
 | `componentUrl` | `String` | The filename of a React (`.jsx`) file |
+| `category`     | `String` | If provided, the examples will be grouped by category name. |
 | `title`        | `String` | The title of example. |
 | `image`        | `String` | The icon for the bullet. Typically `images/<example-screenshot>.png`. Images are resolved in the `static` folder. (Right now only support png files) |
 | `path`         | `String` | The relative URL of the example in the website, typically `example/example-name` |

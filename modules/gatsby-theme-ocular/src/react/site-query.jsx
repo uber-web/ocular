@@ -20,10 +20,11 @@ const QUERY = graphql`
         PROJECT_DESC
         PROJECT_URL
         PROJECT_ORG
+        PROJECT_IMAGE
         PROJECT_ORG_LOGO
         LINK_TO_GET_STARTED
-        HOME_MARKDOWN
         PATH_PREFIX
+        GA_TRACKING_ID
         EXAMPLES {
           title
           path
@@ -43,7 +44,7 @@ const QUERY = graphql`
     }
   }
 
-  fragment MarkdownNodeFragment on MarkdownRemark {
+  fragment MarkdownNodeFragment on Mdx {
     id
     fields {
       slug
@@ -51,19 +52,14 @@ const QUERY = graphql`
     frontmatter {
       title
     }
+    headings(depth: h1) {
+      value
+    }
   }
 
   query ConfigQuery {
     site {
       ...SiteConfigFragment
-    }
-
-    allMarkdown: allMarkdownRemark(limit: 2000) {
-      edges {
-        node {
-          ...MarkdownNodeFragment
-        }
-      }
     }
 
     tableOfContents: docsJson {
@@ -74,23 +70,29 @@ const QUERY = graphql`
           title
           level
           entries {
-            childMarkdownRemark {
+            childMdx {
               frontmatter {
                 title
               }
               fields {
                 slug
               }
+              headings {
+                value
+              }
             }
           }
         }
         entries {
-          childMarkdownRemark {
+          childMdx {
             frontmatter {
               title
             }
             fields {
               slug
+            }
+            headings {
+              value
             }
           }
         }

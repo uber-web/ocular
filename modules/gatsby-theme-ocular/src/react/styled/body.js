@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
+export const isMobile = props => `@media screen and (max-width: ${props.theme.breakpoints.medium}px)`;
+
 // top-level layoout
 export const BodyContainerFull = styled.div`
   margin: 0 auto;
+  padding: ${props => props.theme.sizing.scale1600} 0 0;
+  ${isMobile} {
+    padding: 0;
+    order: 2;
+  }
 `;
-
 
 // the problem the following is solving is what happens if the document is very long
 // on a responsive device. If the user toggles the table of content, because the
@@ -18,14 +24,10 @@ export const BodyContainerToC = styled.div`
   height: 100%;
   width: 100%;
   padding: ${props => props.theme.sizing.scale1600} 0 0 300px;
-  transform: scaleY(1);
-  opacity: 1;
-  @media screen and (max-width: ${props => props.theme.breakpoints.medium}px) {
-    padding-left: 0;
+  ${isMobile} {
+    height: calc(100vh - ${props => props.theme.sizing.scale1600});
+    padding: 0;
     order: 2;
-    transition: opacity 0.3s;
-    transform: ${props => props.$isTocOpen || props.$isMenuOpen ? 'scaleY(0)' : 'scaleY(1)'};
-    opacity: ${props => props.$isTocOpen || props.$isMenuOpen ? 0 : 1};
   }
 `;
 
@@ -36,5 +38,7 @@ export const BodyContainerInner = styled.div`
 `;
 
 export const Body = styled.div`
+  font: ${props => props.theme.typography.font300};
+  width: 100vw;
   height: 100vh;
 `;

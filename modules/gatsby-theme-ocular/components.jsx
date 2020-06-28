@@ -15,6 +15,14 @@ export {
   default as TableOfContents
 } from './src/react/components/table-of-contents';
 
-export {default as Home} from './src/react/templates/home';
-
 export {default as InfoPanel} from './src/react/components/info-panel';
+
+// ENABLES REDEFINING DOCUMENTATION.JSX
+export * from './src/react/styled/typography';
+export {default as Markdown} from './src/react/components/markdown';
+
+// TODO
+// - don't export templates from components
+// - templates should import components from this file
+// - we can have separate exports from these
+export {default as Home} from './src/react/templates/home';

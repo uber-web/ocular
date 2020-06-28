@@ -33,6 +33,7 @@ import {TocChevron, TocHeader, TocLink, TocEntry, TocSubpages} from '../styled/t
 const SafeLink = ({
   active,
   depth,
+  index,
   hasChildren,
   isTocOpen,
   id,
@@ -48,7 +49,7 @@ const SafeLink = ({
   }
 
   return (
-    <TocEntry $depth={depth} title={name} onClick={() => toggleEntry(id)}>
+    <TocEntry $depth={depth} $index={index} title={name} onClick={() => toggleEntry(id)}>
       {hasChildren && <TocChevron $depth={depth} $isTocOpen={isTocOpen} />}
       {!path || typeof path !== 'string' ? (
         <TocHeader $depth={depth}>{name}</TocHeader>
@@ -74,6 +75,7 @@ const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
       <div key={index}>
         <SafeLink
           depth={depth}
+          index={index}
           hasChildren
           isTocOpen={routeInfo && routeInfo.height > 0}
           id={updatedId}
@@ -100,7 +102,7 @@ const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
 
   // leaves
 
-  const remark = route.childMarkdownRemark;
+  const remark = route.childMdx;
   // first syntax is toc for documentation, second is toc for examples
   const name =
     (remark && remark.frontmatter && remark.frontmatter.title) || route.title;

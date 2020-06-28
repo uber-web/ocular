@@ -1,6 +1,6 @@
 const {log, COLOR} = require('../../utils/log');
 
-const getPageTemplateUrl = require('./get-page-template-url');
+const PAGE_TEMPLATES = require('./page-templates');
 
 // assert(CONFIG.EXAMPLES_GALLERY_TEMPLATE_URL && EXAMPLE_TEMPLATE_URL);
 
@@ -51,6 +51,7 @@ function queryExamplesData(graphql) {
         siteMetadata {
           config {
             EXAMPLES {
+              category
               image
               title
               path
@@ -130,7 +131,7 @@ function queryExamplesData(graphql) {
     });
 }
 
-function createExampleGalleryPage(examples, createPage, ocularOptions) {
+function createExampleGalleryPage(examples, examplesToc, createPage, ocularOptions) {
   if (examples.length === 0) {
     return;
   }
@@ -143,20 +144,19 @@ function createExampleGalleryPage(examples, createPage, ocularOptions) {
     `with data ${JSON.stringify(examples)}`
   )();
 
-  const componentUrl = getPageTemplateUrl('EXAMPLE_GALLERY_PAGE_URL', ocularOptions);
+  const componentUrl = PAGE_TEMPLATES['EXAMPLE_GALLERY_PAGE_URL'];
 
   createPage({
     component: componentUrl,
     path: '/examples',
     context: {
-      toc: 'examples',
-      examples
+      toc: examplesToc
     }
   });
 }
 
-function createIndividualExamplePages(EXAMPLES, createPage, ocularOptions) {
-  EXAMPLES.forEach(example => {
+function createIndividualExamplePages(examples, examplesToc, createPage, ocularOptions) {
+  examples.forEach(example => {
     const exampleName = example.title;
 
     log.log(
@@ -164,26 +164,47 @@ function createIndividualExamplePages(EXAMPLES, createPage, ocularOptions) {
       `Creating example page ${example.title}}`
     )();
 
-    const componentUrl =
-      example.componentUrl || getPageTemplateUrl('EXAMPLE_PAGE_URL', ocularOptions);
+    const componentUrl = example.componentUrl;
 
-    createPage({
-      path: example.path,
-      component: componentUrl,
-      context: {
-        slug: exampleName,
-        toc: 'examples',
-        exampleConfig: example
-      }
-    });
+    if (componentUrl) {
+      createPage({
+        path: example.path,
+        component: componentUrl,
+        context: {
+          slug: exampleName,
+          toc: examplesToc,
+          exampleConfig: example
+        }
+      });
+    }
   });
+}
+
+function createExamplesToc(examples) {
+  const examplesByCategory = {};
+
+  for (const example of examples) {
+    examplesByCategory[example.category] = examplesByCategory[example.category] || {
+      title: example.category,
+      entries: []
+    };
+
+    examplesByCategory[example.category].entries.push({
+      title: example.title,
+      path: example.path,
+      image: example.imageSrc
+    });
+  }
+
+  return Object.values(examplesByCategory);
 }
 
 module.exports = function createExamplePages({graphql, actions}, ocularOptions) {
   const {createPage} = actions;
 
   return queryExamplesData(graphql).then(examples => {
-    createExampleGalleryPage(examples, createPage, ocularOptions);
-    createIndividualExamplePages(examples, createPage, ocularOptions);
+    const examplesToc = createExamplesToc(examples);
+    createExampleGalleryPage(examples, examplesToc, createPage, ocularOptions);
+    createIndividualExamplePages(examples, examplesToc, createPage, ocularOptions);
   });
 };

@@ -26,7 +26,6 @@ import GithubIcon from 'react-icons/lib/go/mark-github';
 import {
   HamburgerMenu,
   Header as StyledHeader,
-  HeaderA,
   HeaderLink as StyledLink,
   HeaderLinksBlock,
   HeaderLinkContainer,
@@ -34,7 +33,8 @@ import {
   HeaderMenuBlock,
   HeaderMenu,
   HeaderMenuLink,
-  HeaderMenuDivider
+  HeaderMenuBackground,
+  TocToggle
 } from '../styled/header';
 
 // import GithubStars from './github-stars.jsx';
@@ -53,10 +53,7 @@ function GithubLink() {
 }
 
 function HeaderLink({to, href, label}) {
-  if (to) {
-    return <StyledLink to={to}>{label}</StyledLink>;
-  }
-  return <HeaderA href={href}>{label}</HeaderA>;
+  return <StyledLink to={to || href}>{label}</StyledLink>;
 }
 
 /**
@@ -116,29 +113,55 @@ const ControlledHeader = ({
   links,
   config = {},
   toggleMenu,
+  toggleToc,
+  isTocOpen,
   isMenuOpen,
   isSmallScreen
 }) => {
   const {PROJECT_NAME, PROJECTS = []} = config;
-  return (
-    <StyledHeader>
+
+  const externalLinks = PROJECTS.map(({name, url}) => (
+    <HeaderMenuLink key={`menulink-${name}`} href={url}>
+      {name}
+    </HeaderMenuLink>
+  ));
+
+  const onClickHamburger = event => {
+    toggleMenu(!isMenuOpen);
+    event.stopPropagation();
+  };
+
+  return isSmallScreen ? (
+    <StyledHeader onClick={() => toggleMenu(false)} >
       <HeaderMenuBlock>
-        {PROJECTS.length ? (
-          <HamburgerMenu onClick={toggleMenu} />
-        ) : null}
         <HeaderLogo to="/">{PROJECT_NAME}</HeaderLogo>
-        <HeaderMenu $collapsed={!isMenuOpen} $nbItems={PROJECTS.length}>
-          {isSmallScreen && <HeaderLinks links={links} />}
-          {isSmallScreen && <HeaderMenuDivider />}
-          {PROJECTS.map(({name, url}) => (
-            <HeaderMenuLink key={`menulink-${name}`} href={url}>
-              {name}
-            </HeaderMenuLink>
-          ))}
+        <HeaderMenu $collapsed={!isMenuOpen} $nbItems={links.length + 1}>
+          <HeaderLinks links={links} />
         </HeaderMenu>
       </HeaderMenuBlock>
 
-      {!isSmallScreen && <HeaderLinks links={links} />}
+      {toggleToc && <TocToggle onClick={() => {
+        toggleMenu(false);
+        toggleToc(!isTocOpen);
+      }} >Table of Contents</TocToggle>}
+
+      <HamburgerMenu onClick={onClickHamburger} />
+
+      {isMenuOpen && <HeaderMenuBackground/>}
+    </StyledHeader>
+  ) : (
+    <StyledHeader onClick={() => toggleMenu(false)} >
+      <HeaderMenuBlock>
+        <HamburgerMenu onClick={onClickHamburger} />
+        <HeaderLogo to="/">{PROJECT_NAME}</HeaderLogo>
+        <HeaderMenu $collapsed={!isMenuOpen} $nbItems={PROJECTS.length}>
+          {externalLinks}
+        </HeaderMenu>
+      </HeaderMenuBlock>
+      
+      <HeaderLinks links={links} />
+
+      {isMenuOpen && <HeaderMenuBackground />}
     </StyledHeader>
   );
 };

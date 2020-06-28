@@ -20,7 +20,7 @@ function processEntry(chapter, entry, docNodes) {
   if (!docNode || !docNode.id) {
     // TODO/ib - make probe's log.warn emit color
     log.log(
-      {priority: 4, color: COLOR.RED},
+      {priority: 0, color: COLOR.RED},
       `unmatched toc entry for "${relPath}" ${chapter.title}`,
       docNode
     )();
@@ -29,7 +29,7 @@ function processEntry(chapter, entry, docNodes) {
     entry.markdown = [docNode.id];
     // note - we don't need to have the entire docNode put in here.
     // the app will only use the fields/slug and frontmatter/title properties.
-    entry.childMarkdownRemark = docNode;
+    entry.childMdx = docNode;
     log.log(
       {color: COLOR.CYAN, priority: 2},
       'doc page',

@@ -25,7 +25,7 @@ import {
 } from '../styled/body';
 
 import {HeaderContainer} from '../styled/header';
-import {TocContainer, TocToggle} from '../styled/toc';
+import {TocContainer} from '../styled/toc';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -45,10 +45,10 @@ function ResponsiveHeader(props) {
   const HeaderComponent = props.isDocHeader ? DocsHeader : Header;
   return (
     <div>
-      <MediaQuery maxWidth={599}>
+      <MediaQuery maxWidth={768}>
         <HeaderComponent {...props} isSmallScreen />
       </MediaQuery>
-      <MediaQuery minWidth={600}>
+      <MediaQuery minWidth={769}>
         <HeaderComponent {...props} />
       </MediaQuery>
     </div>
@@ -62,8 +62,6 @@ export default class Layout extends React.Component {
       isMenuOpen: false,
       isTocOpen: false
     };
-    this.toggleMenu = this.toggleMenu.bind(this);
-    this.toggleToc = this.toggleToc.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -82,14 +80,12 @@ export default class Layout extends React.Component {
     return createTheme(primitives);
   }
 
-  toggleMenu() {
-    const {isMenuOpen} = this.state;
-    this.setState({isMenuOpen: !isMenuOpen});
+  toggleMenu(on) {
+    this.setState({isMenuOpen: on});
   }
 
-  toggleToc() {
-    const {isTocOpen} = this.state;
-    this.setState({isTocOpen: !isTocOpen});
+  toggleToc(on) {
+    this.setState({isTocOpen: on});
   }
 
   renderBodyWithTOC(config, tableOfContents) {
@@ -97,31 +93,26 @@ export default class Layout extends React.Component {
     const {isMenuOpen, isTocOpen} = this.state;
     // first div is to avoid the BodyGrid div className to be overwritten
     return (
-      <div>
-        <Body>
-          <HeaderContainer>
-            <ResponsiveHeader
-              config={config}
-              isMenuOpen={isMenuOpen}
-              toggleMenu={this.toggleMenu}
-              isDocHeader
-            />
-          </HeaderContainer>
-          <TocToggle
-            toggleToc={this.toggleToc}
-            $isMenuOpen={isMenuOpen}
-            $isTocOpen={isTocOpen}
+      <Body>
+        <HeaderContainer>
+          <ResponsiveHeader
+            config={config}
+            isMenuOpen={isMenuOpen}
+            isTocOpen={isTocOpen}
+            toggleToc={this.toggleToc.bind(this)}
+            toggleMenu={this.toggleMenu.bind(this)}
+            isDocHeader
           />
-          <TocContainer $isTocOpen={isTocOpen}>
-            {this.renderTOC(config, tableOfContents)}
-          </TocContainer>
+        </HeaderContainer>
+        <TocContainer $isTocOpen={isTocOpen}>
+          {this.renderTOC(tableOfContents)}
+        </TocContainer>
 
-          <BodyContainerToC $isTocOpen={isTocOpen} $isMenuOpen={isMenuOpen}>
-            {children}
-          </BodyContainerToC>
-          {/* <Footer /> */}
-        </Body>
-      </div>
+        <BodyContainerToC>
+          {children}
+        </BodyContainerToC>
+        {/* <Footer /> */}
+      </Body>
     );
   }
 
@@ -129,67 +120,40 @@ export default class Layout extends React.Component {
     const {children} = this.props;
     const {isMenuOpen} = this.state;
     return (
-      <div>
+      <Body>
         <HeaderContainer>
           <ResponsiveHeader
             config={config}
             isMenuOpen={isMenuOpen}
-            toggleMenu={this.toggleMenu}
+            toggleMenu={this.toggleMenu.bind(this)}
           />
         </HeaderContainer>
 
         <BodyContainerFull>{children}</BodyContainerFull>
 
         {/* <Footer /> */}
-      </div>
+      </Body>
     );
   }
 
-  renderTOC(config, tableOfContents) {
+  renderTOC(tableOfContents) {
     const {pageContext} = this.props;
-    switch (pageContext.toc) {
-      case 'docs':
-        return (
-          <TableOfContents
-            chapters={tableOfContents.chapters}
-            slug={pageContext.slug}
-          />
-        );
-
-      case 'examples': {
-        const {EXAMPLES} = config;
-
-        const examplesTOC = [
-          {
-            title: 'Examples',
-            entries: []
-          }
-        ];
-
-        // eslint-disable-next-line
-        for (const example of EXAMPLES) {
-          const exampleEntry = Object.assign(
-            {
-              entry: example.title
-            },
-            example
-          );
-          examplesTOC[0].entries.push(exampleEntry);
-        }
-
-        return (
-          <TableOfContents
-            chapters={examplesTOC}
-            firstItemIsExpanded
-            slug={pageContext.slug}
-          />
-        );
-      }
-
-      default:
-        console.warn(`Unknown toc type ${pageContext.toc}`); // eslint-disable-line
-        return null;
+    let toc;
+    if (pageContext.toc === 'docs') {
+      toc = tableOfContents.chapters;
+    } else {
+      toc = pageContext.toc;
     }
+    if (!Array.isArray(toc)) {
+      throw new Error(`Unknown toc type ${pageContext.toc}`);
+    }
+
+    return (
+      <TableOfContents
+        chapters={toc}
+        slug={pageContext.slug}
+      />
+    );
   }
 
   render() {
@@ -199,25 +163,24 @@ export default class Layout extends React.Component {
       pageContext,
       config,
       tableOfContents,
-      allMarkdown
+      path
     } = this.props;
 
     const theme = this.getTheme();
 
     return (
       <WebsiteConfigProvider
-        value={{config, theme, tableOfContents, allMarkdown}}
+        value={{config, theme, tableOfContents}}
       >
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <div>
-            {allMarkdown && <SEO postEdges={allMarkdown} />}
+            <SEO path={path} pageContext={pageContext} config={config} />
             <Helmet>
               <title>{config.PROJECT_NAME}</title>
               {
                 config.STYLESHEETS.map((url, i) => {
-                  url = url.startsWith('http') ? url : withPrefix(url);
-                  return <link key={i} rel="stylesheet" href={url} type="text/css" />
+                  return <link key={i} rel="stylesheet" href={withPrefix(url)} type="text/css" />
                 })
               }
               <link rel="icon" type="img/ico" href="favicon.ico" />

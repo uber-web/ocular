@@ -1,26 +1,32 @@
 import styled from 'styled-components';
 import {Link} from 'gatsby';
+import {isMobile} from './body';
 
 export const Banner = styled.section`
   position: relative;
   height: 30rem;
-  background: ${props => props.theme.colors.mono900};
-  color: ${props => props.theme.colors.mono100};
+  background: ${props => props.theme.colors[props.colortheme === 'dark' ? 'mono900' : 'mono400']};
+  color: ${props => props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
   z-index: 0;
+  ${isMobile} {
+    height: 80vh;
+  }
 `;
 
 export const Container = styled.div`
   position: relative;
-  padding: 2rem 2rem 2rem 4rem;
+  padding: 2rem;
   max-width: 80rem;
   width: 100%;
   height: 100%;
-  font: ${props => props.theme.typography.font400};
   margin: 0;
 `;
 
 export const BannerContainer = styled(Container)`
-  padding-top: 192px;
+  position: absolute;
+  bottom: 0;
+  height: auto;
+  padding-left: 4rem;
   z-index: 0;
   pointer-events: none;
 `;
@@ -63,11 +69,11 @@ export const GetStartedLink = styled(Link)`
   text-decoration: none;
   transition: background-color 250ms ease-in, color 250ms ease-in;
   border: solid 2px ${props => props.theme.colors.primary400};
-  color: ${props => props.theme.colors.mono100};
-  border-image: linear-gradient(to right, ${props => props.theme.colors.primary400} 0%, ${props => props.theme.colors.primary100} 100%);
+  color: ${props => props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
+  border-image: linear-gradient(to right, ${props => props.theme.colors[props.colortheme === 'dark' ? 'primary400' : 'primary700']} 0%, ${props => props.theme.colors[props.colortheme === 'dark' ? 'primary100' : 'primary400']} 100%);
   border-image-slice: 2;
   &:visited {
-    color: ${props => props.theme.colors.mono100};
+    color: ${props => props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
   }
   &:active {
     color: ${props => props.theme.colors.mono100};
@@ -101,6 +107,7 @@ export const FooterText = styled.div`
 `;
 
 export const FooterLogo = styled.img`
-  max-height: 32px;
+  max-height: 64px;
+  max-width: 64px;
   display: inline-block;
 `;

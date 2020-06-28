@@ -1,6 +1,6 @@
 const {log, COLOR} = require('../../utils/log');
 
-const getPageTemplateUrl = require('./get-page-template-url');
+const PAGE_TEMPLATES = require('./page-templates');
 
 // Create static pages
 // NOTE: gatsby does automatically build pages from **top level** `/pages`, folder
@@ -8,10 +8,10 @@ const getPageTemplateUrl = require('./get-page-template-url');
 function queryMarkdown(graphql, path) {
   return graphql(
     `{
-      markdownRemark(fileAbsolutePath: {
+      mdx(fileAbsolutePath: {
         eq: "${path}"
       }) {
-        htmlAst
+        body
       }
     }`
   ).then(result => {
@@ -20,28 +20,45 @@ function queryMarkdown(graphql, path) {
       console.log(result.errors);
       return '';
     }
-    return result.data.markdownRemark;
+    return result.data.mdx;
   });
 }
 
 module.exports = function createIndexPage({graphql, actions}, ocularOptions) {
   const {createPage} = actions;
 
-  const componentUrl = getPageTemplateUrl('INDEX_PAGE_URL', ocularOptions);
+  const pages = ocularOptions.PAGES ? ocularOptions.PAGES.slice() : [];
+  let indexPage = pages.find(p => p.path === '/');
+  if (indexPage) {
+    indexPage.componentUrl = indexPage.componentUrl || PAGE_TEMPLATES['INDEX_PAGE_URL'];
+  } else {
+    indexPage = {
+      path: '/',
+      // Deprecated options
+      componentUrl: ocularOptions.INDEX_PAGE_URL || PAGE_TEMPLATES['INDEX_PAGE_URL'],
+      content: ocularOptions.HOME_MARKDOWN
+    };
+    pages.push(indexPage);
+  }
 
   log.log(
     {color: COLOR.CYAN, priority: 1},
-    `Creating index page from url ${componentUrl}}`
+    `Creating index page from url ${indexPage.componentUrl}}`
   )();
 
-  queryMarkdown(graphql, ocularOptions.HOME_MARKDOWN).then(result => {
-    createPage({
-      component: componentUrl,
-      path: '/',
-      context: {
-        projectDesc: result
-      }
-    });
-  });
+  for (const page of pages) {
+    const loadContent = page.content
+      ? queryMarkdown(graphql, page.content)
+      : Promise.resolve(null);
 
+    loadContent.then(result => {
+      createPage({
+        component: page.componentUrl || PAGE_TEMPLATES['MARKDOWN_PAGE_URL'],
+        path: page.path,
+        context: {
+          content: result
+        }
+      });
+    });
+  }
 };

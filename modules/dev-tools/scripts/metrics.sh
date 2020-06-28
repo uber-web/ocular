@@ -13,7 +13,7 @@ TMP_DIR=$WORKING_DIR/tmp
 WEBPACK_CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".webpack.configPath"`
 
 # Get name from package.json
-module=$(jq '.name' ./package.json)
+module=`node -e "console.log(require('./package.json').name)"`
 # Get version
 if [ -d "modules" ]; then
   # Use lerna version if monorepo
@@ -23,7 +23,7 @@ else
   packageInfo=./package.json
 fi
 # Get version from packag.json and remove quotes
-version=$(jq -r '.version' $packageInfo)
+version=`node -e "console.log(require('${packageInfo}').version)"`
 
 # Helper functions
 

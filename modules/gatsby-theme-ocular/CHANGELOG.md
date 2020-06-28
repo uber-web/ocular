@@ -1,5 +1,21 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.0-beta.13
+- Support grouped examples (#317)
+
+## v1.2.0-beta.12
+- [gatsby-theme-ocular] Remove unused dependencies (#316)
+- Fix google analytics (#315)
+
+## v1.2.0-beta.11
+- [gatsby-theme-ocular] Fix SEO headers (#314)
+
+## v1.2.0-beta.10
+- [gatsby-theme-ocular] styling and compatibility (#313)
+
+## v1.2.0-beta.9
+- Support MDX (#312)
+
 ## v1.2.0-beta.7
 - Fix graphql type definition
 

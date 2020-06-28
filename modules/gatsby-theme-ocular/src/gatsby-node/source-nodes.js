@@ -16,6 +16,7 @@ function sourceNodes({actions}) {
   const typeDefs = `
 
     type Examples implements Node {
+      category: String
       title: String
       componentUrl: String
       path: String
@@ -34,6 +35,12 @@ function sourceNodes({actions}) {
       index: Int
     }
 
+    type PageDesc implements Node {
+      path: String
+      componentUrl: String
+      content: String
+    }
+
     type Projects implements Node {
       name: String
       url: String
@@ -49,13 +56,13 @@ function sourceNodes({actions}) {
 
       PROJECT_ORG_LOGO: String
 
-      HOME_MARKDOWN: String
+      PAGES: [PageDesc]
 
       ROOT_FOLDER: String
       DOC_FOLDER: String
       DOC_FOLDERS: [String]
 
-      GA_TRACKING: String
+      GA_TRACKING_ID: String
       GITHUB_KEY: String
       ADDITIONAL_LINKS: [AdditionalLinks]
       LINK_TO_GET_STARTED: String
@@ -84,13 +91,18 @@ function sourceNodes({actions}) {
       slug: String
     }
 
-    type EntrychildMarkdownRemark implements Node {
+    type EntryHeading implements Node {
+      value: String
+    }
+
+    type EntrychildMdx implements Node {
       frontmatter: EntryFrontMatter
       fields: EntryFields
+      headings: [EntryHeading]
     }
 
     type Entry implements Node {
-      childMarkdownRemark: EntrychildMarkdownRemark
+      childMdx: EntrychildMdx
     }
 
     type lvl2Chapter implements Node {

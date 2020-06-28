@@ -100,6 +100,7 @@ export const CodeBlock = styled.code`
 `;
 
 export const Pre = styled.pre`
+  font-size: 14px;
   background-color: ${props => props.theme.colors.mono200};
   padding: ${props => props.theme.sizing.scale200};
   overflow-x: auto;
@@ -117,6 +118,10 @@ export const Pre = styled.pre`
   .string, .number {
     color: #008080;
   }
+`;
+
+export const Img = styled.img`
+  max-width: 100%;
 `;
 
 export const BlockQuote = styled.blockquote`
