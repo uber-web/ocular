@@ -26,7 +26,7 @@ export default function SEO({config, path, pageContext}) {
   const siteURL = joinPath(config.PROJECT_URL, config.pathPrefix);
   const image = joinPath(siteURL, config.PROJECT_IMAGE || config.PROJECT_ORG_LOGO);
   const postURL = joinPath(siteURL, path);
-  title = title || config.PROJECT_NAME;
+  title = title ? `${config.PROJECT_NAME} | ${title}` : config.PROJECT_NAME;
   description = description || config.PROJECT_DESC;
 
   const schemaOrgJSONLD = [

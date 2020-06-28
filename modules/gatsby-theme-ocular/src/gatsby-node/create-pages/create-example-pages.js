@@ -150,6 +150,7 @@ function createExampleGalleryPage(examples, examplesToc, createPage, ocularOptio
     component: componentUrl,
     path: '/examples',
     context: {
+      title: 'Examples',
       toc: examplesToc
     }
   });
@@ -171,6 +172,7 @@ function createIndividualExamplePages(examples, examplesToc, createPage, ocularO
         path: example.path,
         component: componentUrl,
         context: {
+          title: `${example.title} Example`,
           slug: exampleName,
           toc: examplesToc,
           exampleConfig: example

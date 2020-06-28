@@ -167,6 +167,10 @@ export default class Layout extends React.Component {
     } = this.props;
 
     const theme = this.getTheme();
+    let title = config.PROJECT_NAME;
+    if (pageContext.title) {
+      title += ` | ${pageContext.title}`;
+    }
 
     return (
       <WebsiteConfigProvider
@@ -177,7 +181,7 @@ export default class Layout extends React.Component {
           <div>
             <SEO path={path} pageContext={pageContext} config={config} />
             <Helmet>
-              <title>{config.PROJECT_NAME}</title>
+              <title>{title}</title>
               {
                 config.STYLESHEETS.map((url, i) => {
                   return <link key={i} rel="stylesheet" href={withPrefix(url)} type="text/css" />
