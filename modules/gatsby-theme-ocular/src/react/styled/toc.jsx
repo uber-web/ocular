@@ -15,7 +15,7 @@ export const TocChevron = styled(ChevronDown)`
 
 export const TocEntry = styled.div`
   font: ${props => props.theme.typography.font350};
-  border-top: 1px solid ${props => props.$depth || props.$index == 0 ? 'tranparent' : props.theme.colors.mono400};
+  border-top: 1px solid ${props => props.$depth || props.$index === 0 ? 'tranparent' : props.theme.colors.mono400};
   color: ${props => props.$depth ? props.theme.colors.mono800 : props.theme.colors.mono1000};
   cursor: pointer;
   margin: -0.5px 0;

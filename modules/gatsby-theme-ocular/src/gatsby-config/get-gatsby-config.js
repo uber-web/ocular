@@ -26,7 +26,7 @@ const defaults = {
   THEME_OVERRIDES: '',
   STYLESHEETS: [],
   ADDITIONAL_LINKS: [],
-  GA_TRACKING: null,
+  GA_TRACKING_ID: null,
   GITHUB_KEY: null,
   webpack: {}
 };
@@ -124,22 +124,11 @@ module.exports = function getGatsbyConfig(config) {
         }
       },
 
-      /*
-      // Configures google analytics
-      {
-        resolve: 'gatsby-plugin-google-analytics',
-        options: {
-          trackingId: paddedConfig.googleAnalyticsID
-        }
-      },
-      */
       // Transforms JSON files in the data source into JSON nodes
       'gatsby-transformer-json'
 
     ]
   };
-
-  // conditional plug-ins - only added depending on options on config
 
   // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
   const docDirs = [paddedConfig.DOC_FOLDER]

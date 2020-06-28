@@ -63,7 +63,7 @@ module.exports = {
         {name: 'About', href: '/about'}
       ],
 
-      GA_TRACKING: null,
+      GA_TRACKING_ID: 'dummy_tracking_id',
 
       // For showing star counts and contributors.
       // Should be like btoa('YourUsername:YourKey') and should be readonly.
