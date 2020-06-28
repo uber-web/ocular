@@ -1,5 +1,8 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.1
+- Fix TOC expansion in examples page (#319)
+
 ## v1.2.0
 - More descriptive page titles (#318)
 
