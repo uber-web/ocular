@@ -173,7 +173,7 @@ function createIndividualExamplePages(examples, examplesToc, createPage, ocularO
         component: componentUrl,
         context: {
           title: `${example.title} Example`,
-          slug: exampleName,
+          slug: example.path,
           toc: examplesToc,
           exampleConfig: example
         }
