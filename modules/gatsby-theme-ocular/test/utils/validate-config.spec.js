@@ -43,7 +43,7 @@ test('validateConfig', t => {
       'Examples can\'t be blank',
       'Docs DOCS needs to be an object.',
       'Project type can\'t be blank',
-      'Project name can\'t be blank,Project name should be the project\'s name on Github',
+      'Project name can\'t be blank,Project name should be the project\'s name on GitHub.',
       'Project url can\'t be blank',
       'Project desc can\'t be blank,Project desc should be the project\'s description',
       'Project image can\'t be blank,Project image should be the project\'s social media image',
@@ -129,7 +129,7 @@ test('validateConfig', t => {
       },
       CONFIG_SCHEMA
     ),
-    ['Github key must be provided if your project is hosted on Github'],
+    ['GitHub key must be provided if your project is hosted on GitHub.'],
     'Check if PROJECT_TYPE == github and GITHUB_KEY is null'
   );
 

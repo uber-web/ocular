@@ -95,7 +95,7 @@ class Header extends Component {
             {PROJECT_TYPE === 'github' && (
               <div className="z">
                 <a href={PROJECT_URL}>
-                  {'Github'}
+                  {'GitHub'}
                   <GithubIcon style={{marginLeft: '0.5rem'}} />
                 </a>
                 <span className="Stars fac fje">

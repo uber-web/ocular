@@ -13,9 +13,9 @@ The following options are available:
 
 | Configuration      | Type | Description |
 | --- | --- | --- |
-| `PROJECT_TYPE`     | `String` | Should be set to `"github"` if your project is hosted on Github. `GITHUB_KEY` (below) must be provided so the site can display star counts and contributors. |
+| `PROJECT_TYPE`     | `String` | Should be set to `"github"` if your project is hosted on GitHub. `GITHUB_KEY` (below) must be provided so the site can display star counts and contributors. |
 | `PROJECT_NAME`     | `String` | The project's name (on github). |
-| `PROJECT_ORG`      | `String` | The project's Github organization. |
+| `PROJECT_ORG`      | `String` | The project's GitHub organization. |
 | `PROJECT_ORG_LOGO`     | `String`  | URL to an image of the organization's logo. |
 | `PROJECT_URL`      | `String` | The project's URL |
 | `PROJECT_DESC`     | `String` | The project's description |
@@ -26,7 +26,7 @@ The following options are available:
 | `PAGES`     | `Array`  | See below |
 | `ADDITIONAL_LINKS` | `Array` | See below |
 | `GA_TRACKING_ID`      | `String` | Google analytics tracking ID |
-| `GITHUB_KEY`       | `String` | The Github key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
+| `GITHUB_KEY`       | `String` | The GitHub key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
 | `EXAMPLES`         | `Array` | See below |
 | `STYLESHEETS`      | `Array` | Additional CSS stylesheets |
 | `INDEX_PAGE_URL` | `String`  | Optional URL to a replacement component for the home page. |

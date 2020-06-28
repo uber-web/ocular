@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-// Github api has rate-limits. We want to cache the response
+// GitHub api has rate-limits. We want to cache the response
 // as much as we can. This component gets re-mounted multiple times.
 let cachedResponse = null;
 

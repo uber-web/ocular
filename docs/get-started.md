@@ -46,7 +46,7 @@ or
 npm install
 ```
 
-Your project will need a `table-of-contents.json` file in the same location you have your documentation files. You can create one manually but Ocular can also create one for you by typing: 
+Your project will need a `table-of-contents.json` file in the same location you have your documentation files. You can create one manually but Ocular can also create one for you by typing:
 ```
 yarn build-toc
 ```
@@ -84,7 +84,7 @@ or
 ```
 npm run build
 ```
-And this will generate a static website in the folder `public` (a sub-folder of your Ocular folder) 
+And this will generate a static website in the folder `public` (a sub-folder of your Ocular folder)
 You can go to that folder and test your built website by typing
 ```
 yarn serve
@@ -94,7 +94,7 @@ or
 npm run serve
 ```
 
-You can now safely upload the contents of this folder on a web server. If you want to deploy this website to Github Pages, and your project is already hosted on github, you can instead type:
+You can now safely upload the contents of this folder on a web server. If you want to deploy this website to GitHub Pages, and your project is already hosted on github, you can instead type:
 
 ```
 yarn deploy
