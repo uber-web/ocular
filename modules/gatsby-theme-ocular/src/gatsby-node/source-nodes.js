@@ -16,6 +16,7 @@ function sourceNodes({actions}) {
   const typeDefs = `
 
     type Examples implements Node {
+      category: String
       title: String
       componentUrl: String
       path: String

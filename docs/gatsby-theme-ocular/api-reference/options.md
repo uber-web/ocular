@@ -80,6 +80,7 @@ Each EXAMPLE entry has the following fields
 | Field          | Type     | Name  |
 | ---            | ---      | ---   |
 | `componentUrl` | `String` | The filename of a React (`.jsx`) file |
+| `category`     | `String` | If provided, the examples will be grouped by category name. |
 | `title`        | `String` | The title of example. |
 | `image`        | `String` | The icon for the bullet. Typically `images/<example-screenshot>.png`. Images are resolved in the `static` folder. (Right now only support png files) |
 | `path`         | `String` | The relative URL of the example in the website, typically `example/example-name` |

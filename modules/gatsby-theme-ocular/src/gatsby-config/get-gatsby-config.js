@@ -188,6 +188,12 @@ module.exports = function getGatsbyConfig(config) {
     paddedConfig.THEME_OVERRIDES = JSON.stringify(paddedConfig.THEME_OVERRIDES);
   }
 
+  if (paddedConfig.EXAMPLES.length) {
+    for (const example of paddedConfig.EXAMPLES) {
+      example.category = example.category || 'Examples';
+    }
+  }
+
   log.log(
     {color: COLOR.CYAN, priority: 2},
     `GENERATED GATSBY CONFIG: ${JSON.stringify(gatsbyConfig, null, 2)}`

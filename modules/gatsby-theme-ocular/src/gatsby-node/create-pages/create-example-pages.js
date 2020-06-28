@@ -51,6 +51,7 @@ function queryExamplesData(graphql) {
         siteMetadata {
           config {
             EXAMPLES {
+              category
               image
               title
               path
@@ -130,7 +131,7 @@ function queryExamplesData(graphql) {
     });
 }
 
-function createExampleGalleryPage(examples, createPage, ocularOptions) {
+function createExampleGalleryPage(examples, examplesToc, createPage, ocularOptions) {
   if (examples.length === 0) {
     return;
   }
@@ -149,14 +150,13 @@ function createExampleGalleryPage(examples, createPage, ocularOptions) {
     component: componentUrl,
     path: '/examples',
     context: {
-      toc: 'examples',
-      examples
+      toc: examplesToc
     }
   });
 }
 
-function createIndividualExamplePages(EXAMPLES, createPage, ocularOptions) {
-  EXAMPLES.forEach(example => {
+function createIndividualExamplePages(examples, examplesToc, createPage, ocularOptions) {
+  examples.forEach(example => {
     const exampleName = example.title;
 
     log.log(
@@ -172,7 +172,7 @@ function createIndividualExamplePages(EXAMPLES, createPage, ocularOptions) {
         component: componentUrl,
         context: {
           slug: exampleName,
-          toc: 'examples',
+          toc: examplesToc,
           exampleConfig: example
         }
       });
@@ -180,11 +180,31 @@ function createIndividualExamplePages(EXAMPLES, createPage, ocularOptions) {
   });
 }
 
+function createExamplesToc(examples) {
+  const examplesByCategory = {};
+
+  for (const example of examples) {
+    examplesByCategory[example.category] = examplesByCategory[example.category] || {
+      title: example.category,
+      entries: []
+    };
+
+    examplesByCategory[example.category].entries.push({
+      title: example.title,
+      path: example.path,
+      image: example.imageSrc
+    });
+  }
+
+  return Object.values(examplesByCategory);
+}
+
 module.exports = function createExamplePages({graphql, actions}, ocularOptions) {
   const {createPage} = actions;
 
   return queryExamplesData(graphql).then(examples => {
-    createExampleGalleryPage(examples, createPage, ocularOptions);
-    createIndividualExamplePages(examples, createPage, ocularOptions);
+    const examplesToc = createExamplesToc(examples);
+    createExampleGalleryPage(examples, examplesToc, createPage, ocularOptions);
+    createIndividualExamplePages(examples, examplesToc, createPage, ocularOptions);
   });
 };

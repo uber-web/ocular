@@ -12,10 +12,12 @@ export default function SEO({config, path, pageContext}) {
     if (!config.GA_TRACKING_ID) {
       return;
     }
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', config.GA_TRACKING_ID);
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', config.GA_TRACKING_ID);
+    }
   }, [config.GA_TRACKING_ID]);
 
   let {title, description} = pageContext;
