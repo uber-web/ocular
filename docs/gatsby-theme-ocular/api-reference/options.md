@@ -25,7 +25,7 @@ The following options are available:
 | `HOME_PATH`        | `String` | |
 | `PAGES`     | `Array`  | See below |
 | `ADDITIONAL_LINKS` | `Array` | See below |
-| `GA_TRACKING`      | `String` | |
+| `GA_TRACKING_ID`      | `String` | Google analytics tracking ID |
 | `GITHUB_KEY`       | `String` | The Github key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
 | `EXAMPLES`         | `Array` | See below |
 | `STYLESHEETS`      | `Array` | Additional CSS stylesheets |

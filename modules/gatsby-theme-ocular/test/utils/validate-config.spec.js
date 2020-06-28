@@ -16,6 +16,7 @@ const GOOD_CONFIG = {
   PROJECT_ORG: 'uber-web',
   PROJECT_URL: 'https://github.com/uber-web/ocular',
   PROJECT_DESC: 'A documentation website for Ocular, made with Ocular',
+  PROJECT_IMAGE: '/images/seo.jpg',
   PATH_PREFIX: '/ocular',
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],
@@ -24,7 +25,7 @@ const GOOD_CONFIG = {
 
   PAGES: [],
   ADDITIONAL_LINKS: [],
-  GA_TRACKING: null,
+  GA_TRACKING_ID: null,
   GITHUB_KEY: null,
   webpack: {}
 };
@@ -45,6 +46,7 @@ test('validateConfig', t => {
       'Project name can\'t be blank,Project name should be the project\'s name on Github',
       'Project url can\'t be blank',
       'Project desc can\'t be blank,Project desc should be the project\'s description',
+      'Project image can\'t be blank,Project image should be the project\'s social media image',
       'Path prefix should be the prefix added to all paths on the site',
       'Additional links can\'t be blank',
       'Webpack webpack needs to be an object.'

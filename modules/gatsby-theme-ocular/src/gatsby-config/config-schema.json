@@ -132,6 +132,13 @@
     }
   },
 
+  "PROJECT_IMAGE": {
+    "presence": true,
+    "anyString": {
+      "message": "should be the project's social media image"
+    }
+  },
+
   "PATH_PREFIX": {
     "anyString": {
       "message": "should be the prefix added to all paths on the site"
@@ -238,7 +245,7 @@
     }
   },
 
-  "GA_TRACKING": {
+  "GA_TRACKING_ID": {
     "anyString": {
       "allowEmpty": true,
       "message": "should be the Google analytics key"

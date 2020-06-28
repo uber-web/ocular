@@ -24,6 +24,7 @@ const QUERY = graphql`
         PROJECT_ORG_LOGO
         LINK_TO_GET_STARTED
         PATH_PREFIX
+        GA_TRACKING_ID
         EXAMPLES {
           title
           path
