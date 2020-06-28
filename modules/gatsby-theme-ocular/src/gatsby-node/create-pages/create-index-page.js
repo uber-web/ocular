@@ -56,6 +56,7 @@ module.exports = function createIndexPage({graphql, actions}, ocularOptions) {
         component: page.componentUrl || PAGE_TEMPLATES['MARKDOWN_PAGE_URL'],
         path: page.path,
         context: {
+          title: page.title,
           content: result
         }
       });
