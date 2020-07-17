@@ -20,7 +20,7 @@ function processEntry(chapter, entry, docNodes) {
   if (!docNode || !docNode.id) {
     // TODO/ib - make probe's log.warn emit color
     log.log(
-      {priority: 0, color: COLOR.RED},
+      {priority: 4, color: COLOR.RED},
       `unmatched toc entry for "${relPath}" ${chapter.title}`,
       docNode
     )();
