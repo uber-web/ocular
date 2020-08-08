@@ -1,11 +1,15 @@
-// The goal of the `es6` target is a very clean build (minimally trannsformed) that runs on recent browsers only.
+// The goal of the `es6` target is a very clean build (minimally transformed).
+// - It is intended to enable debugging using non-transpiled code.
+// - It intentionally runs on recent browsers only.
+//
 // In particular, it does not transform async/await constructs, which is very helpful when debugging
 // Because of this, we only try to support ~1 year old browsers + Node LTS
-// Including older versions dramatically increases the number of transforms
+// Including older versions dramatically increases the number of transforms preset-env will apply
+// Note: uncomment `debug` flag in preset env to see what gets included
 const ES6_TARGETS = {
-  chrome: '64', // Released: 2018-Jan-24, https://en.wikipedia.org/wiki/Google_Chrome_version_history
-  edge: '18', // Released: 2018-Nov-13, https://en.wikipedia.org/wiki/Microsoft_Edge
-  firefox: '60', // Released: 2018-May-9, https://en.wikipedia.org/wiki/Firefox_version_history
+  chrome: '79', // Released: 2019-Dec-10, https://en.wikipedia.org/wiki/Google_Chrome_version_history
+  edge: '79', // Released: 2020-Jan-15, https://en.wikipedia.org/wiki/Microsoft_Edge
+  firefox: '68', // Released: 2019-Jul-9, https://en.wikipedia.org/wiki/Firefox_version_history
   safari: '12', // Released: 2018-09-07 (OSX Mojave) - https://en.wikipedia.org/wiki/Safari_version_history
   ios: '12', // Track Safari
   node: '10' // Node 8 LTS expired December 31, 2019.
