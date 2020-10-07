@@ -6,6 +6,7 @@ import CONFIG_SCHEMA from '../../src/gatsby-config/config-schema';
 const GOOD_CONFIG = {
   logLevel: 4,
   DOC_FOLDERS: [],
+  CODESANDBOX_FOLDER: './',
   ROOT_FOLDER: `/`,
   DIR_NAME: '/',
   EXAMPLES: [],
