@@ -32,6 +32,7 @@ The following options are available:
 | `INDEX_PAGE_URL` | `String`  | Optional URL to a replacement component for the home page. |
 | `DOC_MARKDOWN_PAGE_URL` | `String`  | Optional URL to a replacement component for doc pages. |
 | `DOC_FOLDERS` | `Array`  | A set of paths to the doc folders to source all markdown files. |
+| `CODESANDBOX_FOLDER` | `String`  | Root directory for the CodeSandbox examples. Used in markdown with `[embedded example](embedded-codesandbox://example1)`, where `example1` folder must be in the root directory listed here. |
 | `EXAMPLE_GALLERY_PAGE_URL` | `String`  | Optional URL to a replacement component for the example gallery page (`/examples`). |
 | `EXAMPLE_PAGE_URL` | `String`  | Optional URL to a replacement component for the default example page. Normally `EXAMPLES[].componentUrl` is used instead. |
 | `WEBPACK_ALIAS` | `Object` | Optional map that will be added to webpack aliases |
