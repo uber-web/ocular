@@ -7,6 +7,7 @@ const CONFIG_SCHEMA = require('./config-schema');
 const defaults = {
   logLevel: 3,
   DOC_FOLDERS: [],
+  CODESANDBOX_FOLDER: './',
   ROOT_FOLDER: './',
   SOURCE: 'website/src',
   EXAMPLES: [],
@@ -31,41 +32,62 @@ const defaults = {
   webpack: {}
 };
 
-const remarkPlugins = [
-  // Processes images in markdown so they can be used in the production build.
-  // In the processing, it make images responsive by:
-  // Adding an elastic container to hold the size of the image while it loads
-  // to avoid layout jumps. Generating multiple versions of images at different
-  // widths and sets the srcset and sizes of the img element so regardless
-  // of the width of the device, the correct image is downloaded.
-  // Using the 'blur up' technique popularized by Medium and Facebook where a small
-  // 20px wide version is shown as placeholder until actual image is downloaded.
-  {
-    resolve: 'gatsby-remark-images',
-    options: {
-      maxWidth: 690
+function getRemarkPlugins(paddedConfig) {
+  const remarkPlugins = [
+    // Processes images in markdown so they can be used in the production build.
+    // In the processing, it make images responsive by:
+    // Adding an elastic container to hold the size of the image while it loads
+    // to avoid layout jumps. Generating multiple versions of images at different
+    // widths and sets the srcset and sizes of the img element so regardless
+    // of the width of the device, the correct image is downloaded.
+    // Using the 'blur up' technique popularized by Medium and Facebook where a small
+    // 20px wide version is shown as placeholder until actual image is downloaded.
+    {
+      resolve: 'gatsby-remark-images',
+      options: {
+        maxWidth: 690
+      }
+    },
+    // Wraps iframes or objects (e.g. embedded YouTube videos) within markdown files
+    // in a responsive elastic container with a fixed aspect ratio. This ensures that
+    // the iframe or object will scale proportionally and to the full width of its container.
+    'gatsby-remark-responsive-iframe',
+    // Adds syntax highlighting to code blocks in markdown files using PrismJS.
+    // To load a theme, just require its CSS file in your gatsby-browser.js file, e.g.
+    // require('prismjs/themes/prism-solarizedlight.css')
+    'gatsby-remark-prismjs',
+    // Copies local files linked to/from markdown to your public folder.
+    'gatsby-remark-copy-linked-files',
+    // Adds GitHub-style hover links to headers in your markdown files when they’re rendered.
+    {
+      resolve: 'gatsby-remark-autolink-headers',
+      options: {
+        offsetY: 64,
+        removeAccents: true,
+        enableCustomId: true
+      }
+    },
+    {
+      resolve: 'gatsby-remark-embedded-codesandbox',
+      options: {
+        directory: `${paddedConfig.CODESANDBOX_FOLDER}`,
+        protocol: 'embedded-codesandbox://',
+        embedOptions: {
+          // https://codesandbox.io/docs/embedding#embed-options
+          codemirror: 1,
+          fontsize: 12,
+          hidenavigation: 1,
+          view: 'split',
+        },
+        getIframe: (url) =>
+          `<iframe src="${url}" style="width: 70vw; height: 70vh;" class="embedded-codesandbox" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>`,
+      }
     }
-  },
-  // Wraps iframes or objects (e.g. embedded YouTube videos) within markdown files
-  // in a responsive elastic container with a fixed aspect ratio. This ensures that
-  // the iframe or object will scale proportionally and to the full width of its container.
-  'gatsby-remark-responsive-iframe',
-  // Adds syntax highlighting to code blocks in markdown files using PrismJS.
-  // To load a theme, just require its CSS file in your gatsby-browser.js file, e.g.
-  // require('prismjs/themes/prism-solarizedlight.css')
-  'gatsby-remark-prismjs',
-  // Copies local files linked to/from markdown to your public folder.
-  'gatsby-remark-copy-linked-files',
-  // Adds GitHub-style hover links to headers in your markdown files when they’re rendered.
-  {
-    resolve: 'gatsby-remark-autolink-headers',
-    options: {
-      offsetY: 64,
-      removeAccents: true,
-      enableCustomId: true
-    }
-  }
-];
+  ];
+
+  return remarkPlugins;
+}
+
 
 module.exports = function getGatsbyConfig(config) {
   const {logLevel = 0} = config;
@@ -89,6 +111,7 @@ module.exports = function getGatsbyConfig(config) {
   };
   // validate the entire config and print the errors/warnings in the console
   validateConfig(paddedConfig, CONFIG_SCHEMA);
+  const remarkPlugins = getRemarkPlugins(paddedConfig);
 
   const gatsbyConfig = {
     pathPrefix: paddedConfig.PATH_PREFIX,

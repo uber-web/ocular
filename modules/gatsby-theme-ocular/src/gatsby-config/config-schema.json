@@ -26,6 +26,13 @@
     }
   },
 
+  "CODESANDBOX_FOLDER": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the local path to the examples folder used by codesandbox"
+    }
+  },
+
   "SOURCE": {
     "arrayValidate": {
       "allowEmpty": true,

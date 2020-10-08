@@ -61,6 +61,7 @@ function sourceNodes({actions}) {
       ROOT_FOLDER: String
       DOC_FOLDER: String
       DOC_FOLDERS: [String]
+      CODESANDBOX_FOLDER: String
 
       GA_TRACKING_ID: String
       GITHUB_KEY: String
