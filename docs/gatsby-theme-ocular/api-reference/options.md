@@ -69,7 +69,7 @@ Each link entry has the following fields:
 | Field     | Type     | Name  |
 | ---       | ---      | ---   |
 | `name`    | `String` | Required. The displayed text in the header link. |
-| `href`    | `String` | Optional. The hyperlink you want to redirect to. This can be internal or external link. |
+| `href`    | `String` | Required. The hyperlink you want to redirect to. This can be internal or external link. |
 | `classnames` | `String` | Optional. The classname of the header link.
 | `index`      | `Int`    | Optional. Use 0 to push before first item. |
 
