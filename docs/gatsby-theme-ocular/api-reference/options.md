@@ -24,6 +24,7 @@ The following options are available:
 | `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
 | `HOME_PATH`        | `String` | |
 | `PAGES`     | `Array`  | See below |
+| `HEADER_LINK_URL`        | `String` | Link that will be added on the anchor used for the header logo. It defaults to `/` if it's not defined.|
 | `ADDITIONAL_LINKS` | `Array` | See below |
 | `GA_TRACKING_ID`      | `String` | Google analytics tracking ID |
 | `GITHUB_KEY`       | `String` | The GitHub key for showing star counts and contributors. The value should be like `btoa('YourUsername:YourKey')` and the key should have readonly access. | |
@@ -68,8 +69,7 @@ Each link entry has the following fields:
 | Field     | Type     | Name  |
 | ---       | ---      | ---   |
 | `name`    | `String` | Required. The displayed text in the header link. |
-| `href`    | `String` | Optional. The hyperlink you want to redirect to. |
-| `to`   | `String` | Optional. The path to an internal gatsby page. Each entry will either only has `href` or `to`. |
+| `href`    | `String` | Optional. The hyperlink you want to redirect to. This can be internal or external link. |
 | `classnames` | `String` | Optional. The classname of the header link.
 | `index`      | `Int`    | Optional. Use 0 to push before first item. |
 

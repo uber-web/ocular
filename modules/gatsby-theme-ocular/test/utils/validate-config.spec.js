@@ -11,6 +11,7 @@ const GOOD_CONFIG = {
   DIR_NAME: '/',
   EXAMPLES: [],
   DOCS: {},
+  HEADER_LINK_URL: '/',
   LINK_TO_GET_STARTED: '',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'ocular',

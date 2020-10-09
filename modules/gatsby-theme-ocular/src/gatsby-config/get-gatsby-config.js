@@ -12,6 +12,7 @@ const defaults = {
   SOURCE: 'website/src',
   EXAMPLES: [],
   DOCS: {},
+  HEADER_LINK_URL: '/',
   LINK_TO_GET_STARTED: '/docs',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'Ocular',

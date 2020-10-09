@@ -23,13 +23,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GithubIcon from 'react-icons/lib/go/mark-github';
 
+import {isInternalURL} from '../../utils/links-utils.js';
 import {
   HamburgerMenu,
   Header as StyledHeader,
-  HeaderLink as StyledLink,
+  HeaderLink,
+  HeaderLinkExternal,
+  HeaderLogo,
+  HeaderLogoExternal,
   HeaderLinksBlock,
   HeaderLinkContainer,
-  HeaderLogo,
   HeaderMenuBlock,
   HeaderMenu,
   HeaderMenuLink,
@@ -52,8 +55,24 @@ function GithubLink() {
   );
 }
 
-function HeaderLink({to, href, label}) {
-  return <StyledLink to={to || href}>{label}</StyledLink>;
+function UniversalHeaderLink({to, href, label}) {
+  const isInternal = href ? isInternalURL(href) : isInternalURL(to);
+
+  if (isInternal) {
+    return (<HeaderLink to={to || href}>{label}</HeaderLink>);
+  } else {
+    return (<HeaderLinkExternal href={to || href} target="_blank">{label}</HeaderLinkExternal>);
+  }
+}
+
+function UniversalLogoLink({to, label}) {
+  const isInternal = isInternalURL(to);
+
+  if (isInternal) {
+    return (<HeaderLogo to={to}>{label}</HeaderLogo>);
+  } else {
+    return (<HeaderLogoExternal href={to} target="_blank">{label}</HeaderLogoExternal>);
+  }
 }
 
 /**
@@ -101,7 +120,7 @@ const HeaderLinks = ({links}) => {
       {/* If the no examples marker, return without creating pages */}
       {links.map((link, index) => (
         <HeaderLinkContainer key={`link-${index}`}>
-          <HeaderLink {...link} />
+          <UniversalHeaderLink {...link} />
         </HeaderLinkContainer>
       ))}
       {/* this.renderStars() */}
@@ -118,7 +137,7 @@ const ControlledHeader = ({
   isMenuOpen,
   isSmallScreen
 }) => {
-  const {PROJECT_NAME, PROJECTS = []} = config;
+  const {PROJECT_NAME, PROJECTS = [], HEADER_LINK_URL = '/'} = config;
 
   const externalLinks = PROJECTS.map(({name, url}) => (
     <HeaderMenuLink key={`menulink-${name}`} href={url}>
@@ -134,7 +153,7 @@ const ControlledHeader = ({
   return isSmallScreen ? (
     <StyledHeader onClick={() => toggleMenu(false)} >
       <HeaderMenuBlock>
-        <HeaderLogo to="/">{PROJECT_NAME}</HeaderLogo>
+        <UniversalLogoLink to={HEADER_LINK_URL} label={PROJECT_NAME} />
         <HeaderMenu $collapsed={!isMenuOpen} $nbItems={links.length + 1}>
           <HeaderLinks links={links} />
         </HeaderMenu>
@@ -153,7 +172,7 @@ const ControlledHeader = ({
     <StyledHeader onClick={() => toggleMenu(false)} >
       <HeaderMenuBlock>
         <HamburgerMenu onClick={onClickHamburger} />
-        <HeaderLogo to="/">{PROJECT_NAME}</HeaderLogo>
+        <UniversalLogoLink to={HEADER_LINK_URL} label={PROJECT_NAME} />
         <HeaderMenu $collapsed={!isMenuOpen} $nbItems={PROJECTS.length}>
           {externalLinks}
         </HeaderMenu>

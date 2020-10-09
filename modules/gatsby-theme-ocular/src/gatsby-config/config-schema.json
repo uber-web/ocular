@@ -96,6 +96,13 @@
     "objectValidate": true
   },
 
+  "HEADER_LINK_URL": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the path to the url used on the header logo'"
+    }
+  },
+
   "LINK_TO_GET_STARTED": {
     "anyString": {
       "allowEmpty": true,

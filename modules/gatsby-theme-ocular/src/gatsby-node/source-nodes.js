@@ -54,6 +54,8 @@ function sourceNodes({actions}) {
       PROJECT_URL: String
       WEBSITE_PATH: String
 
+      HEADER_LINK_URL: String
+
       PROJECT_ORG_LOGO: String
 
       PAGES: [PageDesc]

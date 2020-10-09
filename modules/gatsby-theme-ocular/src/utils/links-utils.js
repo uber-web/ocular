@@ -76,5 +76,15 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
   };
 }
 
+function isInternalURL(to) {
+  try {
+    const url = new URL(to, window.location.origin);
+    return url.hostname === window.location.hostname;
+  } catch {
+    return false;
+  }
+}
+
 module.exports.addToRelativeLinks = addToRelativeLinks;
 module.exports.parseLinks = parseLinks;
+module.exports.isInternalURL = isInternalURL;
