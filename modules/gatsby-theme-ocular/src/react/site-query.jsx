@@ -22,6 +22,7 @@ const QUERY = graphql`
         PROJECT_ORG
         PROJECT_IMAGE
         PROJECT_ORG_LOGO
+        HEADER_LINK_URL
         LINK_TO_GET_STARTED
         PATH_PREFIX
         GA_TRACKING_ID

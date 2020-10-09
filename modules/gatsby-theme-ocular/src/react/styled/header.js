@@ -52,6 +52,20 @@ export const HeaderLogo = styled(Link)`
   }
 `;
 
+export const HeaderLogoExternal = styled.a`
+  font: ${props => props.theme.typography.font450};
+  text-decoration: none;
+  &:visited {
+    color: ${props => props.theme.colors.mono100};
+  }
+  &:active {
+    color: ${props => props.theme.colors.mono200};
+  }
+  &:hover {
+    color: ${props => props.theme.colors.mono200};
+  }
+`;
+
 export const HeaderMenu = styled.div`
   background: ${props => props.theme.colors.mono1000};
   display: flex;
@@ -145,6 +159,20 @@ export const HamburgerMenu = ({onClick}) => (
 );
 
 export const HeaderLink = styled(Link)`
+  color: ${props => props.theme.colors.mono100};
+  text-decoration: none;
+  &:visited {
+    color: ${props => props.theme.colors.mono100};
+  }
+  &:active {
+    color: ${props => props.theme.colors.mono200};
+  }
+  &:hover {
+    color: ${props => props.theme.colors.mono200};
+  }
+`;
+
+export const HeaderLinkExternal = styled.a`
   color: ${props => props.theme.colors.mono100};
   text-decoration: none;
   &:visited {
