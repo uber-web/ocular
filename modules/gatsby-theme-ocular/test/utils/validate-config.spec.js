@@ -12,7 +12,7 @@ const GOOD_CONFIG = {
   EXAMPLES: [],
   DOCS: {},
   HEADER_LINK_URL: '/',
-  LINK_TO_GET_STARTED: '',
+  LINK_TO_GET_STARTED: '/docs',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'ocular',
   PROJECT_ORG: 'uber-web',
@@ -157,7 +157,7 @@ test('validateConfig', t => {
       },
       CONFIG_SCHEMA
     ),
-    [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs/developer-guide/get-started'`],
+    [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs'`],
     `Check if LINK_TO_GET_STARTED is a valid string`
   );
 
