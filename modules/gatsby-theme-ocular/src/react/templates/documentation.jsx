@@ -28,6 +28,7 @@ export default class DocTemplate extends React.Component {
         <MarkdownBody>
           <Markdown path={this.props.location.pathname}
             relativeLinks={relativeLinks}
+            config={this.props.config}
             body={body} />
         </MarkdownBody>
       </div>

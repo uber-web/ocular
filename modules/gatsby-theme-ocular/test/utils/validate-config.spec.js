@@ -22,7 +22,7 @@ const GOOD_CONFIG = {
   PATH_PREFIX: '/ocular',
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],
-  HOME_PATH: '/',
+  HOME_PATH: '',
   THEME_OVERRIDES: '',
 
   PAGES: [],

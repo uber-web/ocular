@@ -1,9 +1,10 @@
 const path = require('path');
 const {log, COLOR} = require('../../utils/log');
+const {removeURLPath} = require('../../utils/links-utils');
 /* eslint-disable no-param-reassign */
 let tableOfContents = null;
 
-function processEntry(chapter, entry, docNodes) {
+function processEntry(chapter, entry, docNodes, ocularOptions) {
   if (!entry.entry) {
     // TODO/ib - make probe's log.warn emit color
     // log.warn({color: COLOR.RED}, 'missing entry in chapter', chapter.title, entry)();
@@ -15,7 +16,11 @@ function processEntry(chapter, entry, docNodes) {
     )();
     return;
   }
-  const relPath = entry.entry.replace(/^\//, '').replace(/\.[^/.]+$/, '').replace(/\/$/, '').replace('/README', '');
+  let relPath = entry.entry.replace(/^\//, '').replace(/\.[^/.]+$/, '').replace(/\/$/, '').replace('/README', '');
+  // remove part of the path to move root docs dir to index
+  if (ocularOptions.HOME_PATH) {
+    relPath = removeURLPath(relPath, ocularOptions.HOME_PATH);
+  }
   const docNode = docNodes[relPath] || null;
   if (!docNode || !docNode.id) {
     // TODO/ib - make probe's log.warn emit color
@@ -39,15 +44,15 @@ function processEntry(chapter, entry, docNodes) {
   }
 }
 
-function traverseTableOfContents(chapters, docNodes, level) {
+function traverseTableOfContents(chapters, docNodes, level, ocularOptions) {
   (chapters || []).forEach(chapter => {
     chapter.level = level;
     if (chapter.chapters) {
-      traverseTableOfContents(chapter.chapters, docNodes, level + 1);
+      traverseTableOfContents(chapter.chapters, docNodes, level + 1, ocularOptions);
     }
     const entries = chapter.entries || [];
     (entries || []).forEach(entry => {
-      processEntry(chapter, entry, docNodes);
+      processEntry(chapter, entry, docNodes, ocularOptions);
     });
   });
 }
@@ -59,7 +64,7 @@ module.exports.processNewDocsJsonNode = function processNewDocsJsonNode(
   ocularOptions,
   docNodes
 ) {
-  traverseTableOfContents(node.chapters, docNodes, 1);
+  traverseTableOfContents(node.chapters, docNodes, 1, ocularOptions);
   // merge table of contents
   if (tableOfContents) {
     tableOfContents.chapters = tableOfContents.chapters.concat(node.chapters);

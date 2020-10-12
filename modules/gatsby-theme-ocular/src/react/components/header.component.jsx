@@ -93,7 +93,7 @@ export function generateHeaderLinks(props) {
 
   const links = [
     exampleLink,
-    {label: 'Documentation', to: '/docs'},
+    {label: 'Documentation', to: config.HOME_PATH ? '/' : '/docs'},
     {label: 'Search', to: '/search'}
   ];
 

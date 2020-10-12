@@ -109,7 +109,7 @@ export default class Layout extends React.Component {
         </TocContainer>
 
         <BodyContainerToC>
-          {children}
+          {React.cloneElement(children, { config: config })}
         </BodyContainerToC>
         {/* <Footer /> */}
       </Body>
@@ -129,7 +129,9 @@ export default class Layout extends React.Component {
           />
         </HeaderContainer>
 
-        <BodyContainerFull>{children}</BodyContainerFull>
+        <BodyContainerFull>
+          {React.cloneElement(children, { config: config })}
+        </BodyContainerFull>
 
         {/* <Footer /> */}
       </Body>

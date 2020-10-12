@@ -63,7 +63,8 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
           target,
           rootFolder,
           edge,
-          relativeLinks
+          relativeLinks,
+          ocularOptions
         });
       });
 
