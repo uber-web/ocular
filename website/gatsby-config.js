@@ -27,7 +27,6 @@ module.exports = {
       PROJECT_DESC: 'Uber\'s open source documentation system',
       PATH_PREFIX: '',
 
-      HOME_PATH: '/',
       LINK_TO_GET_STARTED: '/docs',
       PAGES: [
         {

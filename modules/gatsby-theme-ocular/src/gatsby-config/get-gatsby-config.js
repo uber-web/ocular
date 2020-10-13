@@ -24,7 +24,7 @@ const defaults = {
   PROJECT_IMAGE: '',
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],
-  HOME_PATH: '/',
+  HOME_PATH: '',
   THEME_OVERRIDES: '',
   STYLESHEETS: [],
   ADDITIONAL_LINKS: [],

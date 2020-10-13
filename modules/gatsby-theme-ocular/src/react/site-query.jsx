@@ -41,6 +41,7 @@ const QUERY = graphql`
           href
           index
         }
+        HOME_PATH
       }
     }
   }

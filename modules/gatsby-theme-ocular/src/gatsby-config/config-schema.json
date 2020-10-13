@@ -106,7 +106,7 @@
   "LINK_TO_GET_STARTED": {
     "anyString": {
       "allowEmpty": true,
-      "message": "should be the path to the 'Get Started' doc, or default to '/docs/developer-guide/get-started'"
+      "message": "should be the path to the 'Get Started' doc. Defaults to '/docs/'"
     }
   },
 

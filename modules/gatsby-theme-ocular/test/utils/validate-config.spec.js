@@ -12,7 +12,7 @@ const GOOD_CONFIG = {
   EXAMPLES: [],
   DOCS: {},
   HEADER_LINK_URL: '/',
-  LINK_TO_GET_STARTED: '',
+  LINK_TO_GET_STARTED: '/docs',
   PROJECT_TYPE: '',
   PROJECT_NAME: 'ocular',
   PROJECT_ORG: 'uber-web',
@@ -22,7 +22,7 @@ const GOOD_CONFIG = {
   PATH_PREFIX: '/ocular',
   PROJECT_ORG_LOGO: '',
   PROJECTS: [],
-  HOME_PATH: '/',
+  HOME_PATH: '',
   THEME_OVERRIDES: '',
 
   PAGES: [],
@@ -157,7 +157,7 @@ test('validateConfig', t => {
       },
       CONFIG_SCHEMA
     ),
-    [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs/developer-guide/get-started'`],
+    [`Link to get started should be the path to the 'Get Started' doc. Defaults to '/docs/'`],
     `Check if LINK_TO_GET_STARTED is a valid string`
   );
 

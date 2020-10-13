@@ -1,13 +1,19 @@
 const path = require('path');
 const {log, COLOR} = require('./log');
 
-const parseLinks = (href, source, relativeLinks) => {
+const parseLinks = (href, source, relativeLinks, config) => {
   // external link
   if (href.startsWith('http') || href.startsWith('#')) {
     return null;
   }
 
-  const relPath = linkFromFileToFile(source, href.replace(/#.*/, ''));
+  let relPath = href.replace(/#.*/, '');
+  if (config.HOME_PATH) {
+    relPath = removeURLPathPrefix(relPath, config.HOME_PATH);
+  } else {
+    relPath = linkFromFileToFile(source, relPath);
+  }
+  
   const anchor = href.match(/#.*/);
   // relative link ie doc to doc
   const relativeLink = relativeLinks[relPath];
@@ -76,6 +82,18 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
   };
 }
 
+function removeURLPathPrefix(relPath, pathToRemove) {
+  let result = relPath;
+  if (relPath.includes(`/${pathToRemove}/`)) {
+    result = relPath.replace(`/${pathToRemove}/`, '/');
+  } else if (relPath.includes(`${pathToRemove}/`)) {
+    result = relPath.replace(`${pathToRemove}/`, '');
+  } else if (relPath.includes(pathToRemove)) {
+    result = relPath.replace(pathToRemove, '/');
+  }
+  return result;
+}
+
 function isInternalURL(to) {
   try {
     const url = new URL(to, window.location.origin);
@@ -88,3 +106,4 @@ function isInternalURL(to) {
 module.exports.addToRelativeLinks = addToRelativeLinks;
 module.exports.parseLinks = parseLinks;
 module.exports.isInternalURL = isInternalURL;
+module.exports.removeURLPathPrefix = removeURLPathPrefix;

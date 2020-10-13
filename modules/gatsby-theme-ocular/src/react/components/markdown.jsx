@@ -30,9 +30,9 @@ import {
 
 import {parseLinks} from '../../utils/links-utils.js';
 
-const CustomLinkWrapper = (path, relativeLinks) => {
+const CustomLinkWrapper = (path, relativeLinks, config) => {
   const CustomLink = ({href, ...props}) => {
-    const updatedLink = parseLinks(href, path, relativeLinks);
+    const updatedLink = parseLinks(href, path, relativeLinks, config);
     return updatedLink ? <GatsbyA to={updatedLink} {...props} /> : <A href={href} {...props} />;
   };
   return CustomLink;
@@ -92,7 +92,7 @@ const CustomHeader = (ComponentType, id, props, anchors) => {
 }
 
 export default props => {
-  const {relativeLinks, path} = props;
+  const {relativeLinks, path, config} = props;
   // note - we can add many other custom components.
 
   const anchors = {};
@@ -117,7 +117,7 @@ export default props => {
     th: TableHeaderCell,
     td: TableBodyCell,
     blockquote: BlockQuote,
-    a: relativeLinks ? CustomLinkWrapper(path, relativeLinks) : A
+    a: relativeLinks ? CustomLinkWrapper(path, relativeLinks, config) : A
   };
 
   return <MDXProvider components={components} ><MDXRenderer>{props.body}</MDXRenderer></MDXProvider>;

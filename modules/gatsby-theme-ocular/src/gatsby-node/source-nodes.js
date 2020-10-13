@@ -53,6 +53,7 @@ function sourceNodes({actions}) {
 
       PROJECT_URL: String
       WEBSITE_PATH: String
+      HOME_PATH: String
 
       HEADER_LINK_URL: String
 
