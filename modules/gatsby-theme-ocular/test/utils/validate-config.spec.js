@@ -157,7 +157,7 @@ test('validateConfig', t => {
       },
       CONFIG_SCHEMA
     ),
-    [`Link to get started should be the path to the 'Get Started' doc, or default to '/docs'`],
+    [`Link to get started should be the path to the 'Get Started' doc. Defaults to '/docs/'`],
     `Check if LINK_TO_GET_STARTED is a valid string`
   );
 

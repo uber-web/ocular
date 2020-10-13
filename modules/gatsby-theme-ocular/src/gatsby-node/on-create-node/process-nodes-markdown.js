@@ -5,7 +5,7 @@ const path = require('path');
 // TODO/ib - remove
 const _ = require('lodash');
 const {log, COLOR} = require('../../utils/log');
-const {removeURLPath} = require('../../utils/links-utils');
+const {removeURLPathPrefix} = require('../../utils/links-utils');
 
 function parseToc(queue, entry) {
   // this function returns a node in the TOC that has an entry corresponding to
@@ -57,9 +57,9 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   basename = path.basename(basename, '.mdx');
   const dirname = path.dirname(relPath);
   relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;
-  // remove part of the path to move root docs dir to index
+  // remove prefix from the path to set HOME_PATH as root url (index)
   if (ocularOptions.HOME_PATH) {
-    relPath = removeURLPath(relPath, ocularOptions.HOME_PATH);
+    relPath = removeURLPathPrefix(relPath, ocularOptions.HOME_PATH);
   }
 
   createNodeField({node, name: 'path', value: relPath});

@@ -22,7 +22,7 @@ The following options are available:
 | `PROJECT_IMAGE`    | `String` | Featured image of the project |
 | `PROJECTS`         | `Array`  | Array of links to related projects (header) |
 | `PATH_PREFIX`        | `String` | Subdirectory in which the site will be hosted, e.g. `'/site'`. Note that `gatsby` must be run with the `--prefix-paths` option for this to work.|
-| `HOME_PATH`        | `String` | Path to be removed in the relative path. If it equals `'docs'`, docs page will be the home page. If present, no other home page is generated. It defaults to `''` (empty string). |
+| `HOME_PATH`        | `String` | Path to be removed in the relative path. As an example, if it equals `'docs'`, docs page will be the home page. If present, no other home page is generated. Defaults to `''` (empty string). |
 | `PAGES`     | `Array`  | See below |
 | `HEADER_LINK_URL`        | `String` | Link that will be added on the anchor used for the header logo. It defaults to `/` if it's not defined.|
 | `ADDITIONAL_LINKS` | `Array` | See below |

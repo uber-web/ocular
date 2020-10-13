@@ -19,7 +19,7 @@ module.exports = function createPages({graphql, actions}, ocularOptions) {
     searchPage = true // TODO - autodetect based on DEMOS config
   } = ocularOptions;
 
-  // don't create the index page if the Docs page is set to be index
+  // don't create the index page if HOME_PATH value is defined
   if (!ocularOptions.HOME_PATH) {
     createIndexPage({graphql, actions}, ocularOptions);
   }

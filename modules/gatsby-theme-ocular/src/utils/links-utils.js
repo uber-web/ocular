@@ -9,7 +9,7 @@ const parseLinks = (href, source, relativeLinks, config) => {
 
   let relPath = href.replace(/#.*/, '');
   if (config.HOME_PATH) {
-    relPath = removeURLPath(relPath, config.HOME_PATH);
+    relPath = removeURLPathPrefix(relPath, config.HOME_PATH);
   } else {
     relPath = linkFromFileToFile(source, relPath);
   }
@@ -82,7 +82,7 @@ function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
   };
 }
 
-function removeURLPath(relPath, pathToRemove) {
+function removeURLPathPrefix(relPath, pathToRemove) {
   let result = relPath;
   if (relPath.includes(`/${pathToRemove}/`)) {
     result = relPath.replace(`/${pathToRemove}/`, '/');
@@ -106,4 +106,4 @@ function isInternalURL(to) {
 module.exports.addToRelativeLinks = addToRelativeLinks;
 module.exports.parseLinks = parseLinks;
 module.exports.isInternalURL = isInternalURL;
-module.exports.removeURLPath = removeURLPath;
+module.exports.removeURLPathPrefix = removeURLPathPrefix;

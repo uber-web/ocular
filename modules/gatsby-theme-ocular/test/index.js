@@ -5,3 +5,4 @@ require('reify');
 // start to import tests
 require('./utils/validate-config.spec.js');
 require('./utils/get-ocular-options.spec.js');
+require('./utils/links-utils.spec.js');

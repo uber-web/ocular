@@ -1,6 +1,6 @@
 const path = require('path');
 const {log, COLOR} = require('../../utils/log');
-const {removeURLPath} = require('../../utils/links-utils');
+const {removeURLPathPrefix} = require('../../utils/links-utils');
 /* eslint-disable no-param-reassign */
 let tableOfContents = null;
 
@@ -17,9 +17,9 @@ function processEntry(chapter, entry, docNodes, ocularOptions) {
     return;
   }
   let relPath = entry.entry.replace(/^\//, '').replace(/\.[^/.]+$/, '').replace(/\/$/, '').replace('/README', '');
-  // remove part of the path to move root docs dir to index
+  // remove prefix from the path to set HOME_PATH as root url (index)
   if (ocularOptions.HOME_PATH) {
-    relPath = removeURLPath(relPath, ocularOptions.HOME_PATH);
+    relPath = removeURLPathPrefix(relPath, ocularOptions.HOME_PATH);
   }
   const docNode = docNodes[relPath] || null;
   if (!docNode || !docNode.id) {
