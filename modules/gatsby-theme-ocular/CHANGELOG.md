@@ -1,5 +1,10 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.2 
+- Added CodeSandbox plugin to support interactive code examples (#331)
+- Expanded the theme config with `HEADER_LINK_URL` field to add a link (internal or external) on the header logo (#332)
+- Expanded the theme config with `HOME_PATH` field to allow using existing markdown page as index page (#333)
+
 ## v1.2.1
 - Fix TOC expansion in examples page (#319)
 
