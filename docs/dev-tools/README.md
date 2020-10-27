@@ -87,6 +87,8 @@ A file `ocular-dev-tools.config.js` can be placed at the root of the package to 
 - `lint`
   + `paths` (Arrray) - directories to include when linting. Default `['modules', 'src']`
   + `extensions` (Array) - file extensions to include when linting. Default `['js', 'md']`
+- `babel`
+  + `extensions` - List of file extensions (prefixed with `.`) that `babel` will process. Default `['.es6', '.js', '.es', '.jsx', '.mjs']`
 - `aliases` (Object) - additional [module aliases](https://www.npmjs.com/package/module-alias) to use in tests. Default {}.
 - `entry` (Object) - entry points for tests.
   + `test` (String) - unit test entry point. Default `./test/index`.

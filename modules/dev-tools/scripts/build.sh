@@ -5,7 +5,7 @@ set -e
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
 MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules" | sed -E "s/,/ /g"`
-EXTENSIONS=".es6,.js,.es,.jsx,.mjs"
+EXTENSIONS=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.extensions"`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|es6|esm ]]; then
@@ -47,9 +47,6 @@ build_monorepo() {
       case "$1" in
         --dist)
             TARGET=$2
-            shift ;;
-        --extensions)
-            EXTENSIONS=$2
             shift ;;
         *)
             echo -e "\033[91mUnknown option $1. ocular-build [--dist es5|es6|esm,...] [module1,...]\033[0m"

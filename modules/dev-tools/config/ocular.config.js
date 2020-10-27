@@ -32,7 +32,8 @@ module.exports = (opts = {}) => {
         resolve(packageRoot, './babel.config.js'),
         resolve(packageRoot, './.babelrc'),
         resolve(__dirname, './babel.config.js')
-      ])
+      ]),
+      extensions: ['.es6', '.js', '.es', '.jsx', '.mjs']
     },
 
     lint: {
