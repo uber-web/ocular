@@ -5,12 +5,20 @@ set -e
 DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
 MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules" | sed -E "s/,/ /g"`
+EXTENSIONS=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.extensions"`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|es6|esm ]]; then
     echo -e "\033[91mUnknown build target $1. ocular-build [--dist es5|es6|esm,...] [module1,...]\033[0m"
     exit 1
   fi
+}
+
+build_src() {
+  OUT_DIR=$1
+  TARGET=$2
+  check_target $TARGET
+  BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS
 }
 
 build_module() {
@@ -21,12 +29,10 @@ build_module() {
   fi
   N=`echo "$TARGETS" | wc -w`
   if [ $N -eq 1 ]; then
-    check_target $TARGETS
-    BABEL_ENV=$TARGETS npx babel src --config-file $CONFIG --out-dir dist --copy-files --source-maps
+    build_src dist $TARGETS
   else
     for T in ${TARGETS}; do(
-      check_target $T
-      BABEL_ENV=$T npx babel src --config-file $CONFIG --out-dir dist/$T --copy-files --source-maps
+       build_src dist/$T $T
     ); done
   fi
 }
