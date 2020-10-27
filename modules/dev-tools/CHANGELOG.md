@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.2.0
+- Support `extensions` setting for Babel in config
+
 ## v0.1.8
 - remove more jq usage
 
