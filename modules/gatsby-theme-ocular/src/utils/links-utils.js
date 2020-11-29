@@ -32,7 +32,11 @@ function linkFromFileToFile(sourceFile, targetFile) {
     sourceFile,
     path.dirname(targetFile)
   );
-  return path.join(relativePathFromDirToDir, path.basename(targetFile, '.md'));
+  const fileName = path.basename(targetFile, '.md');
+  if (fileName === 'README') {
+    return relativePathFromDirToDir;
+  }
+  return path.join(relativePathFromDirToDir, fileName);
 }
 
 function addToRelativeLinks({source, target, rootFolder, edge, relativeLinks}) {
