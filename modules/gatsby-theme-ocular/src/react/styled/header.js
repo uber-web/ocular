@@ -41,6 +41,7 @@ export const HeaderMenuBlock = styled.div`
 export const HeaderLogo = styled(Link)`
   font: ${props => props.theme.typography.font450};
   text-decoration: none;
+  color: ${props => props.theme.colors.mono100};
   &:visited {
     color: ${props => props.theme.colors.mono100};
   }

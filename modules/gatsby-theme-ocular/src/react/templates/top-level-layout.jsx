@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
   }
   * {
     box-sizing: border-box;
