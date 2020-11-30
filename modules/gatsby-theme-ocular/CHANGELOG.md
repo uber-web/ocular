@@ -1,5 +1,9 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## v1.2.3
+- Fix page styling on mobile (#337)
+- fix link mapping from README.md (#338)
+
 ## v1.2.2 
 - Added CodeSandbox plugin to support interactive code examples (#331)
 - Expanded the theme config with `HEADER_LINK_URL` field to add a link (internal or external) on the header logo (#332)
