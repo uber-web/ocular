@@ -6,21 +6,29 @@
       "entries": [
         {
           "entry": "docs"
-        },
-        {
-          "entry": "docs/whats-new"
-        },
-        {
-          "entry": "docs/get-started"
-        },
-        {
-          "entry": "docs/faq"
         }
       ]
     },
     {
-      "title": "Ocular Dev Tools",
+      "title": "ocular-dev-tools",
       "chapters": [
+        {
+          "title": "Overview",
+          "entries": [
+            {
+              "entry": "docs/dev-tools"
+            },
+            {
+              "entry": "docs/dev-tools/whats-new"
+            },
+            {
+              "entry": "docs/dev-tools/upgrade-guide"
+            },
+            {
+              "entry": "docs/dev-tools/faq"
+            }
+          ]
+        },
         {
           "title": "Configuration Guide",
           "entries": [
@@ -28,16 +36,16 @@
               "entry": "docs/dev-tools"
             },
             {
-              "entry": "docs/dev-tools/command-line-interface"
+              "entry": "docs/dev-tools/developer-guide/command-line-interface"
             },
             {
-              "entry": "docs/dev-tools/configuring-tests"
+              "entry": "docs/dev-tools/developer-guide/configuring-tests"
             },
             {
-              "entry": "docs/dev-tools/webpack-config"
+              "entry": "docs/dev-tools/developer-guide/webpack-config"
             },
             {
-              "entry": "docs/dev-tools/aliases"
+              "entry": "docs/dev-tools/developer-guide/aliases"
             }
           ]
         },
@@ -73,8 +81,25 @@
       ]
     },
     {
-      "title": "Ocular Gatsby",
+      "title": "gatsby-theme-ocular",
       "chapters": [
+        {
+          "title": "Overview",
+          "entries": [
+            {
+              "entry": "docs/gatsby-theme-ocular"
+            },
+            {
+              "entry": "docs/gatsby-theme-ocular/get-started"
+            },
+            {
+              "entry": "docs/gatsby-theme-ocular/whats-new"
+            },
+            {
+              "entry": "docs/gatsby-theme-ocular/upgrade-guide"
+            }
+          ]
+        },
         {
           "title": "Creating content",
           "entries": [
@@ -89,9 +114,6 @@
         {
           "title": "Developer Guide",
           "entries": [
-            {
-              "entry": "docs/gatsby-theme-ocular/developer-guide"
-            },
             {
               "entry": "docs/gatsby-theme-ocular/developer-guide/configuring"
             },
