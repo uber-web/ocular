@@ -1,0 +1,277 @@
+{
+  "logLevel": {
+    "numericality": {
+      "onlyInteger": true,
+      "greaterThanOrEqualTo": 0,
+      "lessThanOrEqualTo": 5,
+      "notValid": "should be between 0 to 5"
+    }
+  },
+
+  "DOC_FOLDER": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the local path to the doc folder"
+    }
+  },
+
+  "DOC_FOLDERS": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "anyString": {
+          "message": "should be the local path to the doc folder"
+        }
+      }
+    }
+  },
+
+  "CODESANDBOX_FOLDER": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the local path to the examples folder used by codesandbox"
+    }
+  },
+
+  "SOURCE": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "anyString": {
+          "message": "should be the local path to the website assets"
+        }
+      }
+    }
+  },
+
+  "ROOT_FOLDER": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the local path to the root folder"
+    }
+  },
+
+  "DIR_NAME": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the local path to the gatsby website folder"
+    }
+  },
+
+  "EXAMPLES": {
+    "presence": true,
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "title": {
+          "presence": true,
+          "anyString": {
+            "message": "title is the title of the example"
+          }
+        },
+        "image": {
+          "presence": true,
+          "anyString": {
+            "message":
+              "image should be the local path to the image in /static folder"
+          }
+        },
+        "componentUrl": {
+          "anyString": {
+            "allowEmpty": true,
+            "message": "componentUrl should be the local path to the component"
+          }
+        },
+        "path": {
+          "presence": true,
+          "anyString": {
+            "message": "should be the URL path to the example"
+          }
+        }
+      }
+    }
+  },
+
+  "DOCS": {
+    "objectValidate": true
+  },
+
+  "HEADER_LINK_URL": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the path to the url used on the header logo'"
+    }
+  },
+
+  "LINK_TO_GET_STARTED": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the path to the 'Get Started' doc. Defaults to '/docs/'"
+    }
+  },
+
+  "PROJECT_TYPE": {
+    "presence": true,
+    "inclusion": {
+      "within": ["github", ""],
+      "message":
+        "should be set to 'github' if your project is hosted on GitHub, or leave it empty."
+    }
+  },
+
+  "PROJECT_NAME": {
+    "presence": true,
+    "anyString": {
+      "allowEmpty": false,
+      "message": "should be the project's name on GitHub."
+    }
+  },
+
+  "PROJECT_ORG": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the project's GitHub organization"
+    }
+  },
+
+  "PROJECT_URL": {
+    "presence": true,
+    "url": true
+  },
+
+  "PROJECT_DESC": {
+    "presence": true,
+    "anyString": {
+      "message": "should be the project's description"
+    }
+  },
+
+  "PROJECT_IMAGE": {
+    "presence": true,
+    "anyString": {
+      "message": "should be the project's social media image"
+    }
+  },
+
+  "PATH_PREFIX": {
+    "anyString": {
+      "message": "should be the prefix added to all paths on the site"
+    }
+  },
+
+  "PROJECT_ORG_LOGO": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the local path to organization logo"
+    }
+  },
+
+  "PROJECTS": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "name": {
+          "presence": true,
+          "anyString": {
+            "message": "is the name of the project"
+          }
+        },
+        "url": {
+          "presence": true,
+          "url": true
+        }
+      }
+    }
+  },
+
+  "HOME_PATH": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the path to the home page"
+    }
+  },
+
+  "PAGES": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "path": {
+          "presence": {"allowEmpty": false},
+          "anyString": {
+            "message": "is the path to the page"
+          }
+        },
+        "componentURL": {
+          "anyString": {
+            "allowEmpty": true,
+            "message": "should be a local path"
+          }
+        },
+        "url": {
+          "anyString": {
+            "allowEmpty": true,
+            "message": "should be a remote path"
+          }
+        }
+      }
+    }
+  },
+
+  "THEME_OVERRIDES": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "serialized JSON of the theme"
+    }
+  },
+
+  "ADDITIONAL_LINKS": {
+    "presence": true,
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "index": {
+          "numericality": true
+        },
+        "name": {
+          "presence": {"allowEmpty": false},
+          "anyString": {
+            "message": "is the title of the link"
+          }
+        },
+        "href": {
+          "presence": {"allowEmpty": false},
+          "anyString": {
+            "message": "should be a valid link"
+          }
+        }
+      }
+    }
+  },
+
+  "STYLESHEETS": {
+    "arrayValidate": {
+      "allowEmpty": true,
+      "constraint": {
+        "anyString": {
+          "message": "should be the url to stylesheets"
+        }
+      }
+    }
+  },
+
+  "GA_TRACKING_ID": {
+    "anyString": {
+      "allowEmpty": true,
+      "message": "should be the Google analytics key"
+    }
+  },
+  "GITHUB_KEY": {
+    "requiredForGitHubProject": {
+      "message": "^GitHub key must be provided if your project is hosted on GitHub."
+    }
+  },
+
+  "webpack": {
+    "objectValidate": true
+  }
+}
