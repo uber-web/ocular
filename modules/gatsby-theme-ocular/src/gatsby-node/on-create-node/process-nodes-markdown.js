@@ -57,6 +57,10 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
   basename = path.basename(basename, '.mdx');
   const dirname = path.dirname(relPath);
   relPath = basename === 'README' ? dirname : `${dirname}/${basename}`;
+
+  // Store the path before potentially modifying as we want to keep the HOME_PATH for ToC lookup
+  const tocNodePath = relPath;
+  
   // remove prefix from the path to set HOME_PATH as root url (index)
   if (ocularOptions.HOME_PATH) {
     relPath = removeURLPathPrefix(relPath, ocularOptions.HOME_PATH);
@@ -76,7 +80,7 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     // we don't need as much. The app will only use the title and slug of the corresponding markdown
     // node for each toc entry.
 
-    const nodeToEdit = parseToc([tocNode], relPath);
+    const nodeToEdit = parseToc([tocNode], tocNodePath);
     if (nodeToEdit) {
       nodeToEdit.childMdx = {
         fields: {

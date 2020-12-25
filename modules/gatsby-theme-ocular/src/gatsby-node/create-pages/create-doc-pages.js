@@ -93,5 +93,5 @@ module.exports = function createDocPages({graphql, actions}, ocularOptions) {
     `Creating docs pages...`
   )();
 
-  createDocMarkdownPages({graphql, actions}, ocularOptions);
+  return createDocMarkdownPages({graphql, actions}, ocularOptions);
 };
