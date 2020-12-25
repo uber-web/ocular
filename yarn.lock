@@ -9344,7 +9344,7 @@ gatsby-telemetry@^1.1.49:
     uuid "3.3.3"
 
 gatsby-theme-ocular@./modules/gatsby-theme-ocular:
-  version "1.2.1"
+  version "1.2.3"
   dependencies:
     "@mdx-js/mdx" "^1.6.6"
     "@mdx-js/react" "^1.6.6"
@@ -9359,6 +9359,7 @@ gatsby-theme-ocular@./modules/gatsby-theme-ocular:
     gatsby-plugin-styled-components "^3.0.4"
     gatsby-remark-autolink-headers "^2.0.16"
     gatsby-remark-copy-linked-files "^2.0.11"
+    gatsby-remark-embedded-codesandbox "^1.2.0"
     gatsby-remark-frontmatter-defaults "^0.0.2"
     gatsby-remark-images "^3.0.12"
     gatsby-remark-prismjs "^3.2.8"

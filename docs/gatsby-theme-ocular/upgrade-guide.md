@@ -1,6 +1,14 @@
 # Upgrade Guide
 
-## Upgrading from ocular-gatsby to gatsby-theme-ocular
+
+## gatsby-theme-ocular
+
+### Upgrading from v1.1 to v1.2
+
+Breaking changes:
+- INDEX_PAGE_URL
+
+### Upgrading from ocular-gatsby to gatsby-theme-ocular
 
 Your website needs to update its `gatsby-config.js` and `gatsby-node.js` in the root, and unless you have added additional code, you can remove your `gatsby-browser.js` and `gatsby-ssr.js` as the default implementations can now be supplied by `gatsby-theme-ocular`.
 
