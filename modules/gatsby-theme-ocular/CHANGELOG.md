@@ -1,5 +1,9 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+## 1.2.4
+- Fix `createDocPages` not returning a Promise (#342)
+- Fix table of contents backfill when `HOME_PATH` is used (#342)
+
 ## v1.2.3
 - Fix page styling on mobile (#337)
 - fix link mapping from README.md (#338)
