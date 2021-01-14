@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.2.1
+- Fix: extensions list from config wasn't used when executing ESLint (#345)
+
 ## v0.2.0
 - Support `extensions` setting for Babel in config
 
