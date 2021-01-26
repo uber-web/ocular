@@ -47,6 +47,8 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.12.13",
     "@babel/runtime": "7.12.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "8.2.2",
     "babel-plugin-istanbul": "^5.0.0",
@@ -60,6 +62,7 @@
     "eslint-config-prettier": "^6.7.0",
     "eslint-config-uber-es2015": "^3.0.0",
     "eslint-config-uber-jsx": "^3.3.3",
+    "eslint-plugin-markdown": "^1.0.2",
     "glob": "^7.1.4",
     "handlebars": "^4.1.2",
     "html-webpack-plugin": "^3.2.0",
@@ -75,10 +78,10 @@
     "tape-catch": "^1.0.4",
     "tape-promise": "^4.0.0",
     "typescript": "^4.2.3",
-    "webpack": "^4.28.4",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "webpack": "^4.28.4"
   },
   "devDependencies": {
     "@probe.gl/test-utils": "^3.0.2",
