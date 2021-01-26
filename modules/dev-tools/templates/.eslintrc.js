@@ -15,13 +15,13 @@ module.exports = {
     'no-inline-comments': 0,
     'camelcase': 0
   },
+  env: {browser: true, es6: true, node: true},
   overrides: [
     {
       // babel-eslint can process TS files, but it doesn't understand types
       // typescript-eslint has some more advanced rules with type checking
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
-      env: {browser: true, es6: true, node: true},
       parserOptions: {
         sourceType: 'module',   // we want to use ES modules
         project: './tsconfig.json'
