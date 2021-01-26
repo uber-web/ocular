@@ -39,7 +39,7 @@ case $MODE in
   "pre-commit")
     print_yellow "Running prettier & eslint on changed files..."
 
-    NAME_PATTERN=`echo "^$DIRECTORIES/.*\.js$" | sed -e 's/,/|/g' | sed -e 's/{/(/g' | sed -e 's/}/)/g'`
+    NAME_PATTERN=`echo "^$DIRECTORIES/.*\.$EXTENSIONS$" | sed -e 's/,/|/g' | sed -e 's/{/(/g' | sed -e 's/}/)/g'`
 
     # only check changed files
     set +e
@@ -66,7 +66,7 @@ case $MODE in
     npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
 
     print_yellow "Running eslint in $DIRECTORIES..."
-    npx eslint --fix "$DIRECTORIES/**/*.js"
+    npx eslint --fix "$DIRECTORIES/**/*.$EXTENSIONS"
     ;;
 
   *)
@@ -76,7 +76,7 @@ case $MODE in
       exit 1)
 
     print_yellow "Running eslint in $DIRECTORIES..."
-    npx eslint "$DIRECTORIES/**/*.js"
+    npx eslint "$DIRECTORIES/**/*.$EXTENSIONS"
     ;;
   esac
 
