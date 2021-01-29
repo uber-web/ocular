@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.2.2
+- Support custom tag in publish script (#347)
+
 ## v0.2.1
 - Fix: extensions list from config wasn't used when executing ESLint (#345)
 
