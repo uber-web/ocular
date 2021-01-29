@@ -16,6 +16,8 @@ ocular-test dist
 
 # beta or prod
 MODE=$1
+# custom tag
+TAG=$2
 
 if [ -d "modules" ]; then
   case $MODE in
@@ -26,11 +28,22 @@ if [ -d "modules" ]; then
     "beta")
       # npm-tag argument: npm publish --tag <beta>
       # cd-version argument: increase <prerelease> version
-      lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease
+      if [ -z "$TAG" ]
+      then
+        lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease
+      else
+        lerna publish --force-publish --exact --npm-tag $TAG --cd-version prerelease
+      fi
       ;;
 
     "prod")
-      lerna publish --force-publish --exact --cd-version patch
+      if [ -z "$TAG" ]
+      then
+        # latest
+        lerna publish --force-publish --exact --cd-version patch
+      else
+        lerna publish --force-publish --exact --npm-tag $TAG --cd-version patch
+      fi
       ;;
 
     *)
@@ -48,7 +61,12 @@ else
       npm version prerelease --force
       # push to branch
       git push && git push --tags
-      npm publish --tag beta
+      if [ -z "$TAG" ]
+      then
+        npm publish --tag beta
+      else
+        npm publish --tag $TAG
+      fi
       ;;
 
     "prod")
@@ -56,7 +74,14 @@ else
       npm version patch --force
       # push to branch
       git push && git push --tags
-      npm publish
+
+      if [ -z "$TAG" ]
+      then
+        # latest
+        npm publish
+      else
+        npm publish --tag $TAG
+      fi
       ;;
 
     *)
