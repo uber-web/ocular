@@ -54,7 +54,7 @@
     "lodash": "^4.17.13",
     "lodash.template": "^4.5.0",
     "module-alias": "^2.0.0",
-    "nyc": "^13.3.0",
+    "nyc": "^15.0.0",
     "prettier": "1.14.3",
     "prettier-check": "2.0.0",
     "source-map-loader": "^0.2.3",
