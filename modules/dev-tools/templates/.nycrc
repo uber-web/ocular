@@ -3,7 +3,8 @@
   "sourceMap": false,
   "instrument": true,
   "include": [
-    "**/src/**/*.js"
+    "src/**/*.js",
+    "modules/**/src/**/*.js"
   ],
   "exclude": [
     "**/deprecated"
