@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.2.3
+- Fix coverage calculation (#348)
+
 ## v0.2.2
 - Support custom tag in publish script (#347)
 
