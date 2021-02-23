@@ -8,8 +8,8 @@ MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules" | sed -E "s/,/ /g"`
 EXTENSIONS=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.extensions"`
 
 check_target() {
-  if [[ ! "$1" =~ ^es5|es6|esm ]]; then
-    echo -e "\033[91mUnknown build target $1. ocular-build [--dist es5|es6|esm,...] [module1,...]\033[0m"
+  if [[ ! "$1" =~ ^es5|esm ]]; then
+    echo -e "\033[91mUnknown build target $1. ocular-build [--dist es5|esm,...] [module1,...]\033[0m"
     exit 1
   fi
 }
@@ -23,7 +23,7 @@ build_src() {
 
 build_module() {
   if [ -z "$1" ]; then
-    TARGETS="es6 esm es5"
+    TARGETS="esm es5"
   else
     TARGETS=$*
   fi
@@ -49,7 +49,7 @@ build_monorepo() {
             TARGET=$2
             shift ;;
         *)
-            echo -e "\033[91mUnknown option $1. ocular-build [--dist es5|es6|esm,...] [module1,...]\033[0m"
+            echo -e "\033[91mUnknown option $1. ocular-build [--dist es5|esm,...] [module1,...]\033[0m"
             exit 1 ;;
       esac
     else

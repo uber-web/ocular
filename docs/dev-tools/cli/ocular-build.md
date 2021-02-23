@@ -1,3 +1,7 @@
 # ocular-build
 
-Build the src
+Build the source.
+
+```bash
+ocular-build [module_name]
+```
