@@ -1,10 +1,11 @@
 // The following targets are designed to support the most commonly used evergreen browsers.
 // As of Feb 2021 they all support async function, async iterator, and spread operator.
 const TARGETS = [
-  ">0.2%",
-  "not ie 11",
-  "not dead",
-  "not chrome 49"
+  '>0.2%',
+  'maintained node versions',
+  'not ie 11',
+  'not dead',
+  'not chrome 49'
 ];
 
 const COMMON_CONFIG = {
@@ -37,7 +38,7 @@ const ENV_CONFIG = {
   test: {
     presets: [
       [ '@babel/preset-env', {
-        targets: {node: '14'}
+        targets: 'maintained node versions'
       }]
     ],
     plugins: [
