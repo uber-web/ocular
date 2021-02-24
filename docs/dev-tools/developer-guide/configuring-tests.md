@@ -8,29 +8,16 @@ There are some things that may need to be configured:
 
 ### Using import/export
 
-The first thing you usually need to address is to sing import/export in Node.js requires taking extra steps
+The first thing you usually need to address is to sing import/export in Node.js requires taking extra steps.
 
-While Node 12 will soon enable `import`/`export` by default, you will typically want to at least add support for `import`/`export` under Node.js
+While Node 13 supports `import`/`export` by default, it requires:
+- a [type](https://nodejs.org/api/packages.html#packages_determining_module_system) field in every `package.json` that matches the module type. This becomes tricky when you import from a npm package that is missing this field.
+- the whole repo to use one of esm module or commonjs style
 
-Two tested options are:
-
-* `require('reify')` - This makes Node.js understand `import`/`export`, but otherwise does not transpile your code. This is a great option if you want to test your source code directly, either because you want to debug untranspiled code, or you want to ensure that your code runs untranspiled to ensure you don't use unsupported syntax. You can simply require `reify` at the entry point of your test. Note that you cannot use import in the same file, only inside files required after requiring reify.
-
-```
-// test/index.js
-require('reify');
-
-// start to require your tests
-require('./test1.js');
-
-```
-
-* `require('@babel/register')` - This option runs the babel transpiler. This is ideal if you want to use non-standard syntax such as stage-x babel plugins, flow etc.
-
-You can import `@bable/register`, and that is how babel config is accessed in dev mode. Unless that module is imported, no transpilation is done on your source.
+Alternatively, you may use `require('@babel/register')` - This option runs the babel transpiler. The default babel config transforms all code for Node.js >=14, which allows the usage of import/export without too much meddling with the source code.
 
 You may also manually set the `BABEL_ENV` environment variable when running your test command to control which config to use.
 
 ```sh
-BABEL_ENV=es6 yarn test
+BABEL_ENV=es5 yarn test
 ```
