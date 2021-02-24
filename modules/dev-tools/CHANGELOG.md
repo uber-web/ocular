@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.3.0
+- Change build targets (#349)
+
 ## v0.2.3
 - Fix coverage calculation (#348)
 
