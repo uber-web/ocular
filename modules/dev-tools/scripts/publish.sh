@@ -30,9 +30,9 @@ if [ -d "modules" ]; then
       # cd-version argument: increase <prerelease> version
       if [ -z "$TAG" ]
       then
-        lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease
+        (set -x; lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease)
       else
-        lerna publish --force-publish --exact --npm-tag $TAG --cd-version prerelease
+        (set -x; lerna publish --force-publish --exact --npm-tag $TAG --cd-version prerelease)
       fi
       ;;
 
@@ -40,9 +40,9 @@ if [ -d "modules" ]; then
       if [ -z "$TAG" ]
       then
         # latest
-        lerna publish --force-publish --exact --cd-version patch
+        (set -x; lerna publish --force-publish --exact --cd-version patch)
       else
-        lerna publish --force-publish --exact --npm-tag $TAG --cd-version patch
+        (set -x; lerna publish --force-publish --exact --npm-tag $TAG --cd-version patch)
       fi
       ;;
 
@@ -58,29 +58,29 @@ else
 
     "beta")
       # -f includes any changes in the version commit
-      npm version prerelease --force
+      (set -x; npm version prerelease --force)
       # push to branch
-      git push && git push --tags
+      (set -x; git push && git push --tags)
       if [ -z "$TAG" ]
       then
-        npm publish --tag beta
+        (set -x; npm publish --tag beta)
       else
-        npm publish --tag $TAG
+        (set -x; npm publish --tag $TAG)
       fi
       ;;
 
     "prod")
       # -f includes any changes in the version commit
-      npm version patch --force
+      (set -x; npm version patch --force)
       # push to branch
-      git push && git push --tags
+      (set -x; git push && git push --tags)
 
       if [ -z "$TAG" ]
       then
         # latest
-        npm publish
+        (set -x; npm publish)
       else
-        npm publish --tag $TAG
+        (set -x; npm publish --tag $TAG)
       fi
       ;;
 

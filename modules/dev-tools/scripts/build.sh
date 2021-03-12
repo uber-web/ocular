@@ -18,7 +18,7 @@ build_src() {
   OUT_DIR=$1
   TARGET=$2
   check_target $TARGET
-  BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS
+  (set -x; BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS)
 }
 
 build_module() {
