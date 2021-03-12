@@ -1,4 +1,7 @@
 {
+  "name": "ocular-examples-minimal",
+  "version": "0.0.0",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --progress --hot --open",

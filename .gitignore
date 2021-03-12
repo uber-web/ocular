@@ -1,4 +1,6 @@
 node_modules/
+dist/
+
 .idea/
 yarn-error.log
 .DS_Store

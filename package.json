@@ -1,15 +1,21 @@
 {
   "private": true,
-  "name": "ocular-root",
+  "name": "ocular-monorepo",
   "version": "0.0.0",
   "workspaces": [
-    "modules/*",
-    "website"
+    "examples/*",
+    "modules/*"
   ],
   "scripts": {
     "bootstrap": "yarn",
     "test": "(cd modules/gatsby-theme-ocular; yarn test;)",
     "publish-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
     "publish-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)"
+  },
+  "devDependencies": {
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.22.0",
+    "reify": "^0.20.12"
   }
 }
