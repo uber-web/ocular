@@ -55,7 +55,7 @@ print_size() {
 
 build_bundle() {
   DIST=$1
-  NODE_ENV=production webpack --config $WEBPACK_CONFIG --output-path "$TMP_DIR" --display errors-only --env.mode=size --env.dist=$DIST
+  (set -x; NODE_ENV=production webpack --config $WEBPACK_CONFIG --output-path "$TMP_DIR" --display errors-only --env.mode=size --env.dist=$DIST)
 }
 
 print_bundle_size() {

@@ -50,8 +50,8 @@ case $MODE in
     ;;
 
   "cover")
-    NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover
-    npx nyc report --reporter=lcov
+    (set -x; NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover)
+    (set -x; npx nyc report --reporter=lcov)
     ;;
 
   "ci")
@@ -65,7 +65,7 @@ case $MODE in
 
   "node-debug")
     echo "Open chrome://inspect/#devices to attach debugger."
-    node --inspect-brk $MODULE_DIR/node/test.js node
+    (set -x; node --inspect-brk $MODULE_DIR/node/test.js node)
     ;;
 
   *)
