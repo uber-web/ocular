@@ -3,6 +3,7 @@
   "name": "ocular-monorepo",
   "version": "0.0.0",
   "workspaces": [
+    "examples",
     "modules/dev-tools"
   ],
   "scripts": {
