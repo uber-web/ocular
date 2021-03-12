@@ -10,7 +10,7 @@ const TARGETS = [
   'not chrome 49'
 ];
 
-const COMMON_CONFIG = {
+const DEFAULT_CONFIG = {
   comments: false
 };
 
@@ -53,7 +53,11 @@ const ENV_CONFIG = {
 ENV_CONFIG.development = ENV_CONFIG.es5;
 
 /** @type {types['getBabelConfig']} */
-module.exports = function getBabelConfig(api) {
+module.exports = function getBabelConfig(api, options = {}) {
   api.cache.using(() => process.env.BABEL_ENV);
-  return Object.assign({}, COMMON_CONFIG, ENV_CONFIG[api.env()]);
+  const config = {...DEFAULT_CONFIG, ...ENV_CONFIG[api.env()]};
+  if (options.react) {
+    config.presets = (config.presets || []).concat(['@babel/preset-react']);
+  }
+  return config;
 };

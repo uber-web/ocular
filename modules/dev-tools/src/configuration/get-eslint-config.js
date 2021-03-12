@@ -1,10 +1,14 @@
+const DEFAULT_OPTIONS = {
+  react: false
+};
+
 const DEFAULT_CONFIG = {
+  extends: ['uber-es2015', 'prettier', 'prettier/react', 'plugin:import/errors'],
+  plugins: ['import'],
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2018
   },
-  extends: ['uber-es2015', 'prettier', 'plugin:import/errors'],
-  plugins: ['import'],
   globals: {
     globalThis: 'readonly',
     __VERSION__: 'readonly'
@@ -21,6 +25,24 @@ const DEFAULT_CONFIG = {
   }
 };
 
-module.exports = function getESLintConfig() {
-  return DEFAULT_CONFIG;
+function getReactConfig(options) {
+  return {
+    extends: ['uber-es2015', 'uber-jsx', 'prettier', 'prettier/react', 'plugin:import/errors'],
+    plugins: ['import', 'react'],
+    settings: {
+      react: {
+        version: options.react
+      }
+    }
+  };
+}
+
+module.exports = function getESLintConfig(options) {
+  options = {...DEFAULT_OPTIONS, ...options};
+  let config = DEFAULT_CONFIG;
+  if (options.react) {
+    config = {...config, ...getReactConfig(options)};
+  }
+
+  return config;
 }

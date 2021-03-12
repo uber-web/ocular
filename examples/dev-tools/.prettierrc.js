@@ -1,6 +1,6 @@
-const {getESLintConfig} = require('ocular-dev-tools');
+const {getPrettierConfig} = require('ocular-dev-tools');
 
-const config = getESLintConfig({react: '16.8.2'});
+const config = getPrettierConfig({react: '16.8.2'});
 
 // Make any changes to default config here
 

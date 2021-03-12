@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { render } from "react-dom";
+import React, {PureComponent} from 'react';
+import {render} from 'react-dom';
 
 export default class App extends PureComponent {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class App extends PureComponent {
 
   render() {
     return (
-      <div style={{ color: "red" }}>
+      <div style={{color: 'red'}}>
         <p>This is a minimal React example</p>
         <p>Line...</p>
         <p>Line...</p>
