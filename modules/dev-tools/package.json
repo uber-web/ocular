@@ -2,7 +2,7 @@
   "name": "ocular-dev-tools",
   "description": "Dev tools for our Javascript frameworks",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.4.0-alpha.1",
   "keywords": [
     "javascript"
   ],
@@ -11,12 +11,15 @@
     "url": "https://github.com/uber-web/ocular/"
   },
   "files": [
+    "src",
     "config",
     "node",
     "scripts",
     "templates",
     "test"
   ],
+  "types": "./src/index.d.ts",
+  "main": "./src/index.js",
   "bin": {
     "ocular-bootstrap": "./scripts/bootstrap.sh",
     "ocular-clean": "./scripts/clean.sh",
@@ -42,6 +45,7 @@
     "@babel/plugin-transform-runtime": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "babel-eslint": "^10.0.3",
+    "babel-loader": "8.2.2",
     "babel-plugin-istanbul": "^5.0.0",
     "babel-plugin-version-inline": "^1.0.0",
     "eslint": "^6.7.2",
@@ -49,7 +53,7 @@
     "eslint-config-uber-es2015": "^3.0.0",
     "glob": "^7.1.4",
     "handlebars": "^4.1.2",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.2.0",
     "lerna": "^3.14.1",
     "lodash": "^4.17.13",
     "lodash.template": "^4.5.0",
@@ -57,14 +61,16 @@
     "nyc": "^15.0.0",
     "prettier": "1.14.3",
     "prettier-check": "2.0.0",
-    "source-map-loader": "^0.2.3",
-    "tape": "^4.9.2",
+    "source-map-loader": "^2.0.1",
+    "source-map-support": "^0.5.19",
+    "tape": "^5.2.2",
     "tape-catch": "^1.0.4",
     "tape-promise": "^4.0.0",
-    "webpack": "^4.28.4",
-    "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack": "^5.24.3",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "4.0.0-beta.0",
+    "@babel/runtime": "7.12.0"
   },
   "devDependencies": {
     "@probe.gl/test-utils": "^3.0.2",

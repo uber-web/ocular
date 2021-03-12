@@ -1,10 +1,9 @@
 {
   "private": true,
-  "name": "ocular-root",
+  "name": "ocular-monorepo",
   "version": "0.0.0",
   "workspaces": [
-    "modules/*",
-    "website"
+    "modules/dev-tools"
   ],
   "scripts": {
     "bootstrap": "yarn",
