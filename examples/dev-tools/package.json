@@ -21,6 +21,6 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
-    "@ocular.gl/dev-tools": "0.4.0"
+    "ocular-dev-tools": "0.4.0"
   }
 }

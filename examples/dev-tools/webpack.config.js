@@ -1,12 +1,28 @@
+/* eslint-disable import/no-extraneous-dependencies */
+const getWebpackConfig = require("ocular-dev-tools/config/webpack.config");
+
+module.exports = (env = {}) => {
+  const config = getWebpackConfig(env);
+
+  // Make any changes to default config here
+
+  // Uncomment to debug config
+  // console.log(JSON.stringify(config, null, 2));
+
+  return [config];
+};
+
+/*
+
 const COMMON_CONFIG = {
-  mode: 'development',
+  mode: "development",
 
   entry: {
-    app: './app.js'
+    app: "./app.js"
   },
 
   output: {
-    library: 'App'
+    library: "App"
   },
 
   module: {
@@ -15,10 +31,10 @@ const COMMON_CONFIG = {
         // Transpile ES6 to ES5 with babel
         // Remove if your app does not use JSX or you don't need to support old browsers
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: [/node_modules/],
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react']
+          presets: ["@babel/preset-env", "@babel/preset-react"]
         }
       }
     ]
@@ -34,7 +50,7 @@ function addProdConfig(config) {
   config.plugins = config.plugins || [];
 
   return Object.assign(config, {
-    mode: 'production'
+    mode: "production"
   });
 }
 
@@ -56,3 +72,4 @@ module.exports = env => {
 
   return config;
 };
+*/
