@@ -62,7 +62,7 @@ switch (mode) {
     runBrowserTest({
       server: {
         command: 'webpack-dev-server',
-        arguments: ['--config', config.webpack.configPath, '--env', 'mode=test']
+        arguments: ['--config', config.webpack.configPath, '--env.mode=test']
       },
       headless: mode === 'browser-headless'
     });
@@ -72,7 +72,7 @@ switch (mode) {
     runBrowserTest({
       server: {
         command: 'webpack-dev-server',
-        arguments: ['--config', config.webpack.configPath, '--env', 'mode=bench']
+        arguments: ['--config', config.webpack.configPath, '--env.mode=bench']
       }
     });
     break;
@@ -85,8 +85,7 @@ switch (mode) {
           arguments: [
             '--config',
             config.webpack.configPath,
-            '--env',
-            `mode=${mode.replace('-browser', '').replace('-headless', '')}`
+            `--env.mode=${mode.replace('-browser', '').replace('-headless', '')}`
           ]
         },
         headless: /\bheadless\b/.test(mode)

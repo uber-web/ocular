@@ -1,7 +1,7 @@
-/** @typedef {import('./get-webpack-config')} types */
+/** @typedef {import('./get-ocular-config')} types */
 
 const {resolve} = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = null; // require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const getOcularConfig = require('./get-ocular-config');
 
@@ -9,14 +9,15 @@ const COMMON_CONFIG = {
   mode: 'development',
 
   devServer: {
-    // stats: {
-    //   warnings: false
-    // }
+    stats: {
+      warnings: false
+    }
   },
 
-  resolve: {},
+  resolve: {
+  },
 
-  devtool: 'inline-source-map',
+  devtool: 'inline-source-maps',
 
   module: {
     rules: [
@@ -29,9 +30,11 @@ const COMMON_CONFIG = {
     ]
   },
 
-  // node: {
-  //   fs: 'empty'
-  // },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    child_process: 'empty'
+  },
 
   plugins: [new HtmlWebpackPlugin()]
 };
@@ -49,59 +52,62 @@ module.exports = function getWebpackConfig(env = {}, opts = {}) {
   COMMON_CONFIG.resolve.alias = config.aliases;
 
   switch (env.mode) {
-    case 'size':
-      return Object.assign({}, COMMON_CONFIG, {
-        mode: 'production',
 
-        entry: getEntryPoints('size', config),
+  case 'size':
+    return Object.assign({}, COMMON_CONFIG, {
+      mode: 'production',
 
-        resolve: Object.assign({}, COMMON_CONFIG.resolve, {
-          mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
-        }),
+      entry: getEntryPoints('size', config),
 
-        devtool: false,
+      resolve: Object.assign({}, COMMON_CONFIG.resolve, {
+        mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
+      }),
 
-        plugins: []
-      });
+      devtool: false,
 
-    case 'analyze':
-    case 'analyze-dev':
-      return Object.assign({}, COMMON_CONFIG, {
-        mode: 'development',
+      plugins: []
+    });
 
-        entry: getEntryPoints('size', config),
+  case 'analyze':
+  case 'analyze-dev':
+    return Object.assign({}, COMMON_CONFIG, {
+      mode: 'development',
 
-        devtool: false,
+      entry: getEntryPoints('size', config),
 
-        plugins: [new BundleAnalyzerPlugin()]
-      });
+      devtool: false,
 
-    case 'analyze-prod':
-      return Object.assign({}, COMMON_CONFIG, {
-        mode: 'production',
+      plugins: [new BundleAnalyzerPlugin()]
+    });
+    break;
+  
+  case 'analyze-prod':
+    return Object.assign({}, COMMON_CONFIG, {
+      mode: 'production',
 
-        entry: getEntryPoints('size', config),
+      entry: getEntryPoints('size', config),
 
-        devtool: false,
+      devtool: false,
 
-        plugins: [new BundleAnalyzerPlugin()]
-      });
+      plugins: [new BundleAnalyzerPlugin()]
+    });
+    break;
 
-    case 'bench':
-    case 'test':
-    default:
-      return Object.assign({}, COMMON_CONFIG, {
-        entry: getEntryPoints(`${env.mode}-browser`, config)
-      });
+  case 'bench':
+  case 'test':
+  default:
+    return Object.assign({}, COMMON_CONFIG, {
+      entry: getEntryPoints(`${env.mode}-browser`, config)
+    });
   }
 };
 
 // HELPERS
 
-function getEntryPoints(entryKey, config) {
-  let entry = config.entry[entryKey] || {};
+function getEntryPoints(key, config) {
+  let entry = config.entry[key] || {};
   if (typeof entry === 'string') {
-    entry = {[entryKey]: entry};
+    entry = {[key]: entry};
   }
   for (const key in entry) {
     entry[key] = resolve(entry[key]);
