@@ -32,7 +32,7 @@ const GOOD_CONFIG = {
   webpack: {}
 };
 
-test('validateConfig', t => {
+test('gatsby-theme-ocular#validateConfig', t => {
   t.deepEquals(
     validateConfig(GOOD_CONFIG, CONFIG_SCHEMA),
     [],

@@ -2,13 +2,7 @@
 
 // The following targets are designed to support the most commonly used evergreen browsers.
 // As of Feb 2021 they all support async function, async iterator, and spread operator.
-const TARGETS = [
-  '>0.2%',
-  'maintained node versions',
-  'not ie 11',
-  'not dead',
-  'not chrome 49'
-];
+const TARGETS = ['>0.2%', 'maintained node versions', 'not ie 11', 'not dead', 'not chrome 49'];
 
 const DEFAULT_CONFIG = {
   comments: false
@@ -17,35 +11,38 @@ const DEFAULT_CONFIG = {
 const ENV_CONFIG = {
   es5: {
     presets: [
-      [ '@babel/env', {
-        targets: TARGETS,
-        modules: 'commonjs'
-      }]
+      [
+        '@babel/env',
+        {
+          targets: TARGETS,
+          modules: 'commonjs'
+        }
+      ]
     ],
-    plugins: [
-      '@babel/transform-runtime'
-    ]
+    plugins: ['@babel/transform-runtime']
   },
   esm: {
     presets: [
-      [ '@babel/env', {
-        targets: TARGETS,
-        modules: false
-      }]
+      [
+        '@babel/env',
+        {
+          targets: TARGETS,
+          modules: false
+        }
+      ]
     ],
-    plugins: [
-      ['@babel/transform-runtime', {useESModules: true}]
-    ]
+    plugins: [['@babel/transform-runtime', {useESModules: true}]]
   },
   test: {
     presets: [
-      [ '@babel/preset-env', {
-        targets: 'maintained node versions'
-      }]
+      [
+        '@babel/preset-env',
+        {
+          targets: 'maintained node versions'
+        }
+      ]
     ],
-    plugins: [
-      'istanbul'
-    ]
+    plugins: ['istanbul']
   }
 };
 

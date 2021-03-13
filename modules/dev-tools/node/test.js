@@ -3,6 +3,11 @@
 // Enables ES2015 import/export in Node.js
 const {resolve} = require('path');
 
+// Register module aliases
+const moduleAlias = require('module-alias');
+
+const getConfig = require('../config/ocular.config');
+
 // Browser test is opt-in by installing @probe.gl/test-utils
 let BrowserTestDriver = null;
 try {
@@ -11,14 +16,9 @@ try {
   BrowserTestDriver = null;
 }
 
-// Register module aliases
-const moduleAlias = require('module-alias');
-
-const getConfig = require('../config/ocular.config');
 const config = getConfig();
 moduleAlias.addAliases(config.aliases);
 
-/* global process */
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
 console.log(`Running ${mode} tests...`); // eslint-disable-line
 
@@ -28,7 +28,8 @@ function resolveEntry(key) {
 
 function runBrowserTest(opts) {
   if (BrowserTestDriver === null) {
-    console.log('\033[93m@probe.gl/test-utils is not installed, skipping browser test\033[0m');
+    console.log('@probe.gl/test-utils is not installed, skipping browser test');
+    // console.log('\033[93m@probe.gl/test-utils is not installed, skipping browser test\033[0m');
     process.exit(0);
   }
   const userConfig = config.browserTest || {};
@@ -61,7 +62,7 @@ switch (mode) {
     runBrowserTest({
       server: {
         command: 'webpack-dev-server',
-        arguments: ['--config', config.webpack.configPath, '--env.mode=test'],
+        arguments: ['--config', config.webpack.configPath, '--env', 'mode=test']
       },
       headless: mode === 'browser-headless'
     });
@@ -71,7 +72,7 @@ switch (mode) {
     runBrowserTest({
       server: {
         command: 'webpack-dev-server',
-        arguments: ['--config', config.webpack.configPath, '--env.mode=bench']
+        arguments: ['--config', config.webpack.configPath, '--env', 'mode=bench']
       }
     });
     break;
@@ -84,7 +85,8 @@ switch (mode) {
           arguments: [
             '--config',
             config.webpack.configPath,
-            `--env.mode=${mode.replace('-browser', '').replace('-headless', '')}`
+            '--env',
+            `mode=${mode.replace('-browser', '').replace('-headless', '')}`
           ]
         },
         headless: /\bheadless\b/.test(mode)
@@ -92,6 +94,6 @@ switch (mode) {
     } else if (mode in config.entry) {
       require(resolveEntry(mode));
     } else {
-      throw new Error `Unknown test mode ${mode}`;
+      throw new Error(`Unknown test mode ${mode}`);
     }
 }

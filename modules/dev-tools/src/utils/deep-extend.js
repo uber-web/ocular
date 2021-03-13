@@ -1,5 +1,5 @@
 // TODO - WIP
-module.exports = function deepExtend(target, extension, key = 'root') {
+module.exports = function deepExtend(target, extension, outerKey = 'root') {
   if (!isObject(target)) {
     return;
   }
@@ -17,8 +17,8 @@ module.exports = function deepExtend(target, extension, key = 'root') {
       newObject[key] = extension[key];
     }
   }
-}
+};
 
 function isObject(value) {
-  return value && typeof value == 'object';
+  return value && typeof value === 'object';
 }

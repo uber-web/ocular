@@ -19,7 +19,7 @@ run_test_script() {
   YARN_GLOBAL_DIR=`yarn global dir`
   CHROMIUM_EXECUTABLE=`node $MODULE_DIR/node/get-puppeteer-executable-path.js $YARN_GLOBAL_DIR`
 
-  BABEL_ENV=test PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $MODULE_DIR/node/test.js $1
+  (set -x; BABEL_ENV=test PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $MODULE_DIR/node/test.js $1)
 }
 
 run_full_test() {
@@ -31,7 +31,7 @@ run_full_test() {
 
 case $MODE in
   "")
-    echo "test [ 'full' | 'fast' | 'dist' | 'bench' | 'ci' | 'cover' ]"
+    echo "test [ 'full' | 'fast' | 'dist' | 'bench' | 'ci' | 'cover' | 'browser' | 'browser-headless' ]"
     echo "Running 'full' test by default"
     run_full_test
     ;;
@@ -43,6 +43,15 @@ case $MODE in
   "fast")
     ocular-lint pre-commit
     run_test_script node
+    ;;
+
+  "node")
+    run_test_script $MODE
+    ;;
+
+  "node-debug")
+    echo "Open chrome://inspect/#devices to attach debugger."
+    (set -x; node --inspect-brk $MODULE_DIR/node/test.js node)
     ;;
 
   "dist")
@@ -63,13 +72,26 @@ case $MODE in
     # ocular-metrics
     ;;
 
-  "node-debug")
-    echo "Open chrome://inspect/#devices to attach debugger."
-    (set -x; node --inspect-brk $MODULE_DIR/node/test.js node)
+  "browser")
+    run_test_script $MODE
+    ;;
+
+  "browser-headless")
+    run_test_script $MODE
+    ;;
+
+  "bench")
+    run_test_script $MODE
+    ;;
+
+  "bench-browser")
+    run_test_script $MODE
     ;;
 
   *)
     # default test
-    run_test_script $MODE
+    # echo "Error: unknown test mode $MODE"
+    # usage()
     ;;
+
   esac

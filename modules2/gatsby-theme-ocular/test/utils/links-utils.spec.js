@@ -23,7 +23,7 @@ const URL_INPUTS_RESULT = [
   'path1/path2/path3',
 ];
 
-test('removeURLPathPrefix', t => {
+test('gatsby-theme-ocular#removeURLPathPrefix', t => {
   t.deepEquals(
     removeURLPathPrefix(URL_INPUTS[0], HOME_PATH_DOCS),
     URL_INPUTS_RESULT[0]
