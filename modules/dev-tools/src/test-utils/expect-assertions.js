@@ -23,7 +23,7 @@ class TestCase {
 let currentTest;
 
 export function it(message, testfunc) {
-  test(message, t => {
+  test(message, (t) => {
     currentTest = t;
     testfunc();
     t.end();

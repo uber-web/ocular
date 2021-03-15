@@ -3,10 +3,10 @@ const DEFAULT_CONFIG = {
   semi: true,
   singleQuote: true,
   trailingComma: 'none',
-  bracketSpacing: false  
+  bracketSpacing: false
 };
 
 module.exports = function getPrettierConfig(options) {
   const config = DEFAULT_CONFIG;
   return config;
-}
+};

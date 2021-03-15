@@ -14,8 +14,8 @@ export function tapeEquals(t, a, b, msg, extra) {
     valid = equals(a, b);
   }
   t._assert(valid, {
-    message: msg || "should be equal",
-    operator: "equal",
+    message: msg || 'should be equal',
+    operator: 'equal',
     actual: a,
     expected: b,
     extra

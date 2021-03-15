@@ -11,10 +11,10 @@ console.log(executablePath);
 
 function getExecutablePath(dir) {
   try {
-    const puppeteer = require(dir ? `${dir}/node_modules/puppeteer` : 'puppeteer')
-    const executablePath = puppeteer.executablePath();
-    if (fs.existsSync(executablePath)) {
-      return executablePath;
+    const puppeteer = require(dir ? `${dir}/node_modules/puppeteer` : 'puppeteer');
+    const path = puppeteer.executablePath();
+    if (fs.existsSync(path)) {
+      return path;
     }
   } catch (err) {
     // ignore

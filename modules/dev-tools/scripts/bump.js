@@ -31,17 +31,17 @@ function bumpPackages(packages) {
     const devDependencies = content.devDependencies || {};
     const peerDependencies = content.peerDependencies || {};
 
-    for (const package of packages) {
-      if (dependencies[package.name]) {
-        dependencies[package.name] = `^${package.version}`;
+    for (const package_ of packages) {
+      if (dependencies[package_.name]) {
+        dependencies[package_.name] = `^${package_.version}`;
         changed = true;
       }
-      if (devDependencies[package.name]) {
-        devDependencies[package.name] = `^${package.version}`;
+      if (devDependencies[package_.name]) {
+        devDependencies[package_.name] = `^${package_.version}`;
         changed = true;
       }
-      if (peerDependencies[package.name]) {
-        peerDependencies[package.name] = `^${package.version}`;
+      if (peerDependencies[package_.name]) {
+        peerDependencies[package_.name] = `^${package_.version}`;
         changed = true;
       }
     }
@@ -78,13 +78,15 @@ function main() {
     const modules = JSON.parse(execSync(`npm search ${packageName} --json`, {encoding: 'utf8'}));
 
     if (modules) {
-      packages = packages.concat(modules.map(function (module) {
-        const version = getTargetVersion(packageAndVersion, module.name);
-        return {
-          name: module.name,
-          version
-        };
-      }));
+      packages = packages.concat(
+        modules.map(function (module) {
+          const version = getTargetVersion(packageAndVersion, module.name);
+          return {
+            name: module.name,
+            version
+          };
+        })
+      );
     }
   }
 

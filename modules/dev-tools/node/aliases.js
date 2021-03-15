@@ -24,9 +24,8 @@ function getSubmodules(packageRoot) {
   const parentPath = resolve(packageRoot, './modules');
 
   if (fs.existsSync(parentPath)) {
-    //monorepo
-    fs.readdirSync(parentPath)
-    .forEach(item => {
+    // monorepo
+    fs.readdirSync(parentPath).forEach((item) => {
       const itemPath = resolve(parentPath, item);
       const moduleInfo = getModuleInfo(itemPath);
       if (moduleInfo) {
@@ -60,4 +59,3 @@ function getAliases(mode = 'src', packageRoot = process.env.PWD) {
 }
 
 module.exports = getAliases;
-

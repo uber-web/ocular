@@ -4,16 +4,29 @@
   "version": "0.0.0",
   "workspaces": [
     "examples/*",
+    "modules2/*",
     "modules/*"
   ],
   "scripts": {
-    "bootstrap": "yarn",
-    "test": "(cd modules/gatsby-theme-ocular; yarn test;)",
-    "publish-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
-    "publish-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)"
+    "bootstrap": "yarn install-fast && ocular-bootstrap",
+    "install-fast": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn",
+    "build": "ocular-clean && ocular-build",
+    "clean": "ocular-clean",
+    "cover": "ocular-test cover",
+    "lint": "ocular-lint",
+    "test": "ocular-test",
+    "test-gatsby": "(cd modules/gatsby-theme-ocular; yarn test;)",
+    "publish-gatsby-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
+    "publish-gatsby-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)",
+    "pre-commit": "yarn lint",
+    "pre-push": "ocular-test fast"
   },
   "devDependencies": {
     "ocular-dev-tools": "0.4.0",
+    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1",
     "reify": "^0.20.12"
-  }
+  },
+  "pre-commit": "pre-commit",
+  "pre-push": "pre-push"
 }
