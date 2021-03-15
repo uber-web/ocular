@@ -17,7 +17,9 @@
     "test": "ocular-test",
     "test-gatsby": "(cd modules/gatsby-theme-ocular; yarn test;)",
     "publish-gatsby-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
-    "publish-gatsby-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)"
+    "publish-gatsby-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)",
+    "pre-commit": "yarn lint",
+    "pre-push": "ocular-test fast"
   },
   "devDependencies": {
     "ocular-dev-tools": "0.4.0",
