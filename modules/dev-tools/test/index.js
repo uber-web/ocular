@@ -1,1 +1,1 @@
-import './configuration.spec';
+import './lib/utils.spec';
