@@ -12,6 +12,8 @@ config.rules['no-process-exit'] = 0;
 
 config.env = {node: true};
 
+config.ignorePatterns = ['**/dist*/**/*.js'];
+
 // Uncomment to log the eslint config
 // console.debug(config);
 

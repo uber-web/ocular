@@ -25,7 +25,7 @@ function getSubmodules(packageRoot) {
 
   if (fs.existsSync(parentPath)) {
     // monorepo
-    fs.readdirSync(parentPath).forEach(item => {
+    fs.readdirSync(parentPath).forEach((item) => {
       const itemPath = resolve(parentPath, item);
       const moduleInfo = getModuleInfo(itemPath);
       if (moduleInfo) {

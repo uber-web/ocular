@@ -6,8 +6,8 @@ import {
   getPrettierConfig
 } from 'ocular-dev-tools';
 
-test('dev-tools#getConfig', t => {
-  const mockBabelApi = {cache: {using: () => {}}, env: env => env};
+test('dev-tools#getConfig', (t) => {
+  const mockBabelApi = {cache: {using: () => {}}, env: (env) => env};
   const mockWebpackEnv = {someWebpackStuff: null};
 
   let config = getESLintConfig();

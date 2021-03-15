@@ -81,5 +81,5 @@ module.exports = function getOcularConfig(options = {}) {
 // HELPERS
 
 function getValidPath(resolveOrder) {
-  return resolveOrder.find(path => fs.existsSync(path));
+  return resolveOrder.find((path) => fs.existsSync(path));
 }
