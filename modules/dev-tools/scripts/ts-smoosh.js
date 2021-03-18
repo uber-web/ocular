@@ -1,4 +1,4 @@
-const {smoosh} = require('./smoosh');
+const {smoosh} = require('../src/ts-smoosh/smoosh');
 
 // Given an array of `.js` files, smooshes their .d.ts declarations and
 // produces a .tsx file.

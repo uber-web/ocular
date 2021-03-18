@@ -29,7 +29,7 @@
     "ocular-metrics": "./scripts/metrics.sh",
     "ocular-publish": "./scripts/publish.sh",
     "ocular-bump": "./scripts/bump.js",
-    "ocular-tsify": "./src/ts-smoosh/bin.js"
+    "ocular-tsify": "./scripts/ts-smoosh.js"
   },
   "scripts": {
     "clean": "echo No build needed",
