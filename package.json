@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "examples/*",
-    "modules/*",
-    "modules2/*",
+    "modules/dev-tools",
     "website"
   ],
   "scripts": {
@@ -25,6 +23,7 @@
     "pre-push": "ocular-test fast"
   },
   "devDependencies": {
+    "deepmerge": "^4.2.2",
     "ocular-dev-tools": "1.0.0-alpha.1",
     "pre-commit": "^1.2.2",
     "pre-push": "^0.1.1",

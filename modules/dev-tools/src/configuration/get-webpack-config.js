@@ -3,7 +3,7 @@
 const {resolve} = require('path');
 const BundleAnalyzerPlugin = null; // require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const getOcularConfig = require('./get-ocular-config');
+const getOcularConfig = require('../helpers/get-ocular-config');
 
 const COMMON_CONFIG = {
   mode: 'development',

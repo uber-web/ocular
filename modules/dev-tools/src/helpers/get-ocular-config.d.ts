@@ -3,4 +3,4 @@
  * @param options.root - path to package root, default `pwd`
  * @param options.aliasMode - default `src`
  */
-export function getOcularConfig(options?: object): {[key: string]: any};
+export default function getOcularConfig(options?: object): {[key: string]: any};

@@ -1,11 +1,10 @@
-/** @typedef {import('./get-ocular-config')} types */
+/* @typedef {import('./get-ocular-config')} default */
 
 const fs = require('fs');
 const {resolve} = require('path');
 const getAliases = require('../../node/aliases');
 const {shallowMerge} = require('../utils/utils');
 
-/** @type {types['getOcularConfig']} */
 module.exports = function getOcularConfig(options = {}) {
   const packageRoot = options.root || process.env.PWD;
 
