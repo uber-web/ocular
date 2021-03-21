@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v1.0.0-alpha.2
+
+- feat(dev-tools): Add deepMerge export
+
 ## v1.0.0-alpha.1
 - feat: ocular-tsify using ts-smoosh (#357)
 - chore: Improve JSDoc (#354)

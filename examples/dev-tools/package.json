@@ -21,6 +21,6 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
-    "ocular-dev-tools": "1.0.0-alpha.1"
+    "ocular-dev-tools": "1.0.0-alpha.2"
   }
 }
