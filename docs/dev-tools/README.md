@@ -10,6 +10,16 @@ Contains developer targets for building, cleaning, linting, testing and publishi
 
 Note: flow is not currently integrated into ocular-dev-tools as we restrict its use to React related code bases.
 
+## Covered tools
+
+ocular installs the necessary dependencies and provides working default configurations for
+
+- eslint
+- prettier
+- babel
+- webpack
+
+Note that this list may grow over time.
 
 ## Installation
 
@@ -23,7 +33,7 @@ Your `package.json` should looks something like:
 
 ```json
   "devDependencies": {
-    "ocular-dev-tools": "*",
+    "ocular-dev-tools": "1.0.0-alpha",
     "reify": "^0.18.1",
     "@probe.gl/test-utils": "^3.0.0"
   }
@@ -50,17 +60,20 @@ To provide maximum control to the user, ocular build scripts use config files in
 
 #### babel
 
-If `.babelrc` or `babel.config.js` is found at the root of the package, it is used to transpile all source code. Otherwise, a default babel config is used.
+If `.babelrc.js` or `babel.config.js` is found at the root of the package, it is used to transpile all source code. Otherwise, a default babel config is used.
 
 You may extend the default babel config as follows:
 
 ```js
-// babel.config.js
-const getBabelConfig = require('ocular-dev-tools/config/babel.config');
+// babelrc.js
+const {getBabelConfig, deepMerge} = require('ocular-dev-tools');
 
 module.exports = api => {
-  const config = getBabelConfig(api);
+  const defaultConfig = getBabelConfig(api);
   // add custom settings
+  const config = deepMerge(defaultConfig, {
+    // overrides
+  });
   return config;
 };
 ```
@@ -72,17 +85,20 @@ If `webpack.config.js` is found at the root of the package, it is used to bundle
 You may extend the default webpack config as follows:
 
 ```js
-const getWebpackConfig = require('ocular-dev-tools/config/webpack.config');
+const {getWebpackConfig, deepMerge} = require('ocular-dev-tools');
 module.exports = env => {
-  const config = getWebpackConfig(env);
+  const defaultConfig = getWebpackConfig(env);
   // add custom settings
+  const config = deepMerge(defaultConfig, {
+    // overrides
+  });
   return config;
 };
 ```
 
 #### ocular-dev-tools.js
 
-A file `ocular-dev-tools.config.js` can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
+A file `ocularrc.js` can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
 
 - `lint`
   + `paths` (Arrray) - directories to include when linting. Default `['modules', 'src']`

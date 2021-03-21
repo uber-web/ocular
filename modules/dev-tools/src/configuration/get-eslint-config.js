@@ -7,7 +7,11 @@ const DEFAULT_CONFIG = {
   plugins: ['import'],
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2018
+    ecmaVersion: 2021
+  },
+  env: {
+    // Note: also sets ecmaVersion
+    es2021: true
   },
   globals: {
     globalThis: 'readonly',
@@ -20,6 +24,7 @@ const DEFAULT_CONFIG = {
     'no-inline-comments': 0,
     'no-multi-str': 0,
     'space-before-function-paren': 0,
+    'accessor-pairs': ['error', {getWithoutSet: false, setWithoutGet: false}],
     'import/no-unresolved': ['error'],
     'import/no-extraneous-dependencies': ['error', {devDependencies: false, peerDependencies: true}]
   },

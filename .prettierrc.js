@@ -1,8 +1,9 @@
-const {getPrettierConfig} = require('ocular-dev-tools');
+const {getPrettierConfig, deepMerge} = require('ocular-dev-tools');
 
-const config = getPrettierConfig({react: '16.8.2'});
+const defaultConfig = getPrettierConfig({react: '16.8.2'});
 
 // Make any changes to default config here
+const config = deepMerge(defaultConfig, {});
 
 // Uncomment to log the eslint config
 // console.debug(config);

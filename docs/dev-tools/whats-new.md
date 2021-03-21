@@ -2,7 +2,7 @@
 
 ## ocular-dev-tools
 
-### v0.4.0 (alpha)
+### v1.0.0 (alpha)
 
 Release Date: This release is still in development
 
@@ -25,14 +25,17 @@ Lockfile valid.
 
 #### **Functional entry points**
 
-Functional entry points can now be imported, instead of importing from subpaths.
+Functional entry points to get ocular default configurations for various build tools are now exported.
 
 ```js
-const {getESLintConfig} = require('ocular-dev-tools');
+const {getESLintConfig, deepMerge} = require('ocular-dev-tools');
 
-const config = getESLintConfig({react: '16.8.2'});
+const defaultConfig = getESLintConfig({react: '16.8.2'});
 
 // Make any changes to default config here
+const config = deepMerge(defaultConfig, {
+  // your overrides
+});
 
 module.exports = config;
 ```
