@@ -1,0 +1,106 @@
+{
+  "name": "gatsby-theme-ocular",
+  "description": "GatsbyJS theme handling markdown docs and examples for frameworks.",
+  "private": false,
+  "version": "1.2.4",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/ocular/"
+  },
+  "main": "index.js",
+  "bin": {
+    "ocular": "./bin/ocular.js"
+  },
+  "scripts": {
+    "start": "rm -fr .cache && gatsby develop --port 8001",
+    "develop": "gatsby develop --port 8001",
+    "dev": "npm run develop",
+    "serve": "gatsby serve",
+    "build": "gatsby build",
+    "build:pp": "gatsby build --prefix-paths",
+    "build:gh": "npm run clean && npm run build:pp && gh-pages -d public",
+    "clean": "rm -rf public && rm -rf .cache",
+    "lint:js": "eslint --ext .js,.jsx .",
+    "lint:md": "remark content/posts/",
+    "write-good": "write-good $(glob 'content/posts/**/*.md')",
+    "format:js": "prettier '**/*.{js,jsx}' --write",
+    "publish-beta": "yarn test && npm publish --tag beta",
+    "publish-prod": "yarn test && npm publish",
+    "lint": "eslint src",
+    "test": "node test/index.js"
+  },
+  "peerDependenciesComment": "Ensures website is using compatible version of gatsby",
+  "peerDependencies": {
+    "gatsby": "^2.3.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "sharp": "^0.22.1"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.6.6",
+    "@mdx-js/react": "^1.6.6",
+    "gatsby-cli": "^2.5.7",
+    "gatsby-image": "^2.0.38",
+    "gatsby-plugin-catch-links": "^2.0.13",
+    "gatsby-plugin-env-variables": "^1.0.1",
+    "gatsby-plugin-mdx": "^1.2.16",
+    "gatsby-plugin-offline": "^2.0.25",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-sharp": "^2.1.0",
+    "gatsby-plugin-styled-components": "^3.0.4",
+    "gatsby-remark-autolink-headers": "^2.0.16",
+    "gatsby-remark-copy-linked-files": "^2.0.11",
+    "gatsby-remark-embedded-codesandbox": "^1.2.0",
+    "gatsby-remark-frontmatter-defaults": "^0.0.2",
+    "gatsby-remark-images": "^3.0.12",
+    "gatsby-remark-prismjs": "^3.2.8",
+    "gatsby-remark-responsive-iframe": "^2.1.1",
+    "gatsby-source-filesystem": "^2.0.29",
+    "gatsby-transformer-json": "^2.1.6",
+    "gatsby-transformer-remark": "^2.3.8",
+    "gatsby-transformer-sharp": "^2.1.19",
+    "gh-pages": "^2.0.1",
+    "inquirer": "^6.3.1",
+    "lodash": "^4.17.4",
+    "lodash.debounce": "^4.0.8",
+    "lodash.template": "^4.5.0",
+    "moment": "^2.22.2",
+    "prismjs": "^1.15.0",
+    "probe.gl": "^3.0.1",
+    "prop-types": "^15.6.2",
+    "react-helmet": "^5.2.0",
+    "react-icons": "^2.2.7",
+    "react-responsive": "^6.0.1",
+    "rehype-react": "^4.0.1",
+    "slug": "^0.9.3",
+    "styled-components": "^4.1.0",
+    "url-join": "^4.0.0",
+    "validate.js": "^0.12.0",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "cli-glob": "^0.1.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.17.1",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.0",
+    "prettier": "^1.17.0",
+    "reify": "^0.20.12",
+    "remark-cli": "^6.0.0",
+    "remark-preset-lint-recommended": "^3.0.1",
+    "tape": "^5.2.2",
+    "tape-catch": "^1.0.6",
+    "write-good": "^0.13.1"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-lint-recommended"
+    ]
+  }
+}

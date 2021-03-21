@@ -3,7 +3,7 @@ const {resolve} = require('path');
 module.exports = {
   lint: {
     paths: ['modules'],
-    extensions: ['js']
+    extensions: ['js', 'jsx']
   },
 
   aliases: {

@@ -1,4 +1,4 @@
-/** @typedef {import('./get-ocular-config')} types */
+/** @typedef {import('./get-webpack-config')} types */
 
 const {resolve} = require('path');
 const BundleAnalyzerPlugin = null; // require('webpack-bundle-analyzer').BundleAnalyzerPlugin;

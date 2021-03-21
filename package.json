@@ -1,11 +1,12 @@
 {
-  "private": true,
   "name": "ocular-monorepo",
   "version": "0.0.0",
+  "private": true,
   "workspaces": [
     "examples/*",
+    "modules/*",
     "modules2/*",
-    "modules/*"
+    "website"
   ],
   "scripts": {
     "bootstrap": "yarn install-fast && ocular-bootstrap",
@@ -16,8 +17,10 @@
     "lint": "ocular-lint",
     "test": "ocular-test",
     "test-gatsby": "(cd modules/gatsby-theme-ocular; yarn test;)",
-    "publish-gatsby-beta": "(cd modules/gatsby-theme-ocular; npm run publish-beta)",
-    "publish-gatsby-prod": "(cd modules/gatsby-theme-ocular; npm run publish-prod)",
+    "publish-devtools-beta": "(cd modules/dev-tools; npm run publish-beta)",
+    "publish-devtools-prod": "(cd modules/dev-tools; npm run publish-prod)",
+    "publish-gatsby-beta": "(cd modules2/gatsby-theme-ocular; npm run publish-beta)",
+    "publish-gatsby-prod": "(cd modules2/gatsby-theme-ocular; npm run publish-prod)",
     "pre-commit": "yarn lint",
     "pre-push": "ocular-test fast"
   },

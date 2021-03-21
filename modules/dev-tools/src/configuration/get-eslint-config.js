@@ -22,7 +22,8 @@ const DEFAULT_CONFIG = {
     'space-before-function-paren': 0,
     'import/no-unresolved': ['error'],
     'import/no-extraneous-dependencies': ['error', {devDependencies: false, peerDependencies: true}]
-  }
+  },
+  ignorePatterns: ['node_modules', '**/dist*/**/*.js']
 };
 
 function getReactConfig(options) {
@@ -44,5 +45,6 @@ module.exports = function getESLintConfig(options) {
     config = {...config, ...getReactConfig(options)};
   }
 
+  // console.error(config);
   return config;
 };

@@ -12,7 +12,7 @@ config.rules['no-process-exit'] = 0;
 
 config.env = {node: true};
 
-config.ignorePatterns = ['**/dist*/**/*.js', 'modules/dev-tools/test/ts-smoosh/fixtures'];
+config.ignorePatterns.push('modules/dev-tools/test/ts-smoosh/fixtures');
 
 // Uncomment to log the eslint config
 // console.debug(config);
