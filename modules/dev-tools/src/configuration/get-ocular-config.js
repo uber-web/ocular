@@ -14,8 +14,9 @@ module.exports = function getOcularConfig(options = {}) {
   const config = {
     babel: {
       configPath: getValidPath([
-        resolve(packageRoot, './babel.config.js'),
+        resolve(packageRoot, './.babelrc.js'),
         resolve(packageRoot, './.babelrc'),
+        resolve(packageRoot, './babel.config.js'),
         resolve(__dirname, './babel.config.js')
       ]),
       extensions: ['.es6', '.js', '.es', '.jsx', '.mjs']
@@ -44,9 +45,32 @@ module.exports = function getOcularConfig(options = {}) {
     }
   };
 
-  let userConfig = {};
+  const userConfig = getUserConfig(packageRoot, options);
 
-  let userConfigPath = resolve(packageRoot, './ocular-dev-tools.config.js');
+  shallowMerge(config, userConfig);
+
+  // const aliasMode = userConfig.aliasMode || options.aliasMode;
+
+  // User's aliases need to come first, due to module-alias resolve order
+  Object.assign(config.aliases, getAliases(userConfig.aliasMode, packageRoot));
+
+  return config;
+};
+
+// HELPERS
+
+/**
+ * TODO better error messages
+ * @param {string} packageRoot
+ * @param {object} options
+ * @returns
+ */
+function getUserConfig(packageRoot, options) {
+  let userConfig = null;
+
+  let userConfigPath;
+
+  userConfigPath = resolve(packageRoot, './.ocularrc.js');
   if (fs.existsSync(userConfigPath)) {
     userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
@@ -60,7 +84,7 @@ module.exports = function getOcularConfig(options = {}) {
       userConfig = userConfig(options);
     }
   }
-  userConfigPath = resolve(packageRoot, './.ocularrc.js');
+  userConfigPath = resolve(packageRoot, './ocular-dev-tools.config.js');
   if (fs.existsSync(userConfigPath)) {
     userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
@@ -68,17 +92,12 @@ module.exports = function getOcularConfig(options = {}) {
     }
   }
 
-  shallowMerge(config, userConfig);
+  if (!userConfig) {
+    throw new Error('No valid user config found in .ocularrc.js');
+  }
 
-  // const aliasMode = userConfig.aliasMode || options.aliasMode;
-
-  // User's aliases need to come first, due to module-alias resolve order
-  Object.assign(config.aliases, getAliases(userConfig.aliasMode, packageRoot));
-
-  return config;
-};
-
-// HELPERS
+  return userConfig;
+}
 
 function getValidPath(resolveOrder) {
   return resolveOrder.find((path) => fs.existsSync(path));

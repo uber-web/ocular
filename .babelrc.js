@@ -6,7 +6,7 @@ module.exports = (api) => {
   // Make any changes to default config here
 
   // Uncomment to log the config
-  // console.debug(config);
+  console.debug(config);
 
   return config;
 };
