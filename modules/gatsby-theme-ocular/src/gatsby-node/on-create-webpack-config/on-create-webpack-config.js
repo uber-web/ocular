@@ -99,10 +99,7 @@ class WebpackRule {
     // Uncomment to restrict to babel loaders only
     // const isBabelLoader = WebpackRule.isBabelLoader(rule);
 
-    const excludeNeedsReplace = WebpackRule.checkIfExcludes(
-      rule,
-      `node_modules/${MODULE_NAME}/`
-    );
+    const excludeNeedsReplace = WebpackRule.checkIfExcludes(rule, `node_modules/${MODULE_NAME}/`);
     // && (!WEBPACK_EXCLUDE_REGEXP || WebpackRule.checkIfIncludes(rule, WEBPACK_EXCLUDE_REGEXP));
 
     if (excludeNeedsReplace) {
@@ -122,8 +119,7 @@ class WebpackRule {
       // if (/site-query/.test(path)) {
       //   console.log('site-query filtered');
       // }
-      const isExcluded =
-        typeof exclude === 'function' ? exclude(path) : exclude.test(path);
+      const isExcluded = typeof exclude === 'function' ? exclude(path) : exclude.test(path);
       if (isExcluded && /.*\.css$/.test(path)) {
         log.log(4, 'Prevented exclusion of css', path)();
         return false;
@@ -139,19 +135,11 @@ class WebpackRule {
       }
 
       const {WEBPACK_EXCLUDE_REGEXP, WEBPACK_INCLUDE_REGEXP} = ocularOptions;
-      if (
-        !isExcluded &&
-        WEBPACK_INCLUDE_REGEXP &&
-        WEBPACK_INCLUDE_REGEXP.test(path)
-      ) {
+      if (!isExcluded && WEBPACK_INCLUDE_REGEXP && WEBPACK_INCLUDE_REGEXP.test(path)) {
         log.log(3, 'Webpack loaders will include file', path)();
         return true;
       }
-      if (
-        !isExcluded &&
-        WEBPACK_EXCLUDE_REGEXP &&
-        WEBPACK_EXCLUDE_REGEXP.test(path)
-      ) {
+      if (!isExcluded && WEBPACK_EXCLUDE_REGEXP && WEBPACK_EXCLUDE_REGEXP.test(path)) {
         log.log(3, 'Enforced webpack will exclude file', path)();
         return true;
       }
@@ -176,9 +164,7 @@ function getWebpackConfigOverrides(config, newConfig, ocularOptions) {
 
   const aliases =
     ocularOptions.WEBPACK_ALIAS ||
-    (ocularOptions.webpack &&
-      ocularOptions.webpack.resolve &&
-      ocularOptions.webpack.resolve.alias);
+    (ocularOptions.webpack && ocularOptions.webpack.resolve && ocularOptions.webpack.resolve.alias);
   Object.assign(newConfig.resolve.alias, aliases);
 
   return newConfig;
@@ -192,7 +178,7 @@ function onCreateWebpackConfig(opts, ocularOptions = global.ocularOptions) {
     // loaders,   // Object (map): set of preconfigured webpack config loaders
     // plugins,    // Object (map): A set of preconfigured webpack config plugins
     actions,
-    getConfig, // Function that returns the current webpack config
+    getConfig // Function that returns the current webpack config
   } = opts;
 
   const config = getConfig();

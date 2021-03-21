@@ -43,7 +43,7 @@ const DEBUGGING = process.argv.includes('--debug');
 
 const env = Object.assign(process.env, {
   DIR_PATH,
-  DEBUGGING,
+  DEBUGGING
 });
 
 const TEMPLATE_DIR = `${__dirname}/../website-template`;
@@ -57,7 +57,7 @@ const FILENAMES = [
   'gatsby-ssr.js',
   'package.json',
   '.gitignore',
-  '.eslintignore',
+  '.eslintignore'
 ];
 
 const OCULAR_CONFIG_TEMPLATE = require(`${TEMPLATE_DIR}/ocular-config-template.js`);
@@ -68,9 +68,7 @@ const OCULAR_CONFIG_TEMPLATE = require(`${TEMPLATE_DIR}/ocular-config-template.j
 const commands = {
   init() {
     if (inquirer === undefined) {
-      console.log(
-        'please install inquirer (ie yarn add inquirer, npm install inquirer'
-      );
+      console.log('please install inquirer (ie yarn add inquirer, npm install inquirer');
       return;
     }
     if (slug === undefined) {
@@ -82,37 +80,37 @@ const commands = {
         {
           name: 'name',
           message: 'What will be the name of your project?',
-          validate: (v) => Boolean(v) || 'You should provide a name.',
+          validate: (v) => Boolean(v) || 'You should provide a name.'
         },
         {
           type: 'list',
           choices: ['github', 'other'],
           name: 'type',
-          message: 'Where will your project be hosted?',
+          message: 'Where will your project be hosted?'
         },
         {
           name: 'org',
           message: 'Which organisation will host the repo?',
           validate: (v) => Boolean(v) || 'You should provide an org.',
-          when: ({type}) => type === 'github',
+          when: ({type}) => type === 'github'
         },
         {
           name: 'otherUrl',
           message: 'What is your project url?',
           validate: (v) => Boolean(v) || 'You should provide an url.',
-          when: ({type}) => type === 'other',
+          when: ({type}) => type === 'other'
         },
         {
           name: 'path',
           message: 'Where is the website folder relative to your main project?',
           default: '/website/',
-          validate: (v) => Boolean(v) || 'You should provide a path',
+          validate: (v) => Boolean(v) || 'You should provide a path'
         },
         {
           name: 'desc',
           message: 'Provide a basic description of your project',
-          validate: (v) => Boolean(v) || 'You should provide a description.',
-        },
+          validate: (v) => Boolean(v) || 'You should provide a description.'
+        }
       ])
       .then((result) => {
         result.websiteFolder = process.env.PWD;
@@ -152,7 +150,7 @@ const commands = {
     spawn(`gatsby`, [...(shouldOpen ? ['--open'] : [])], {
       cwd: __dirname,
       stdio: 'inherit',
-      env,
+      env
     });
   },
 
@@ -162,7 +160,7 @@ const commands = {
     spawn(`gatsby`, [], {
       cwd: __dirname,
       stdio: 'inherit',
-      env: Object.assign(env, {NODE_ENV: 'production'}),
+      env: Object.assign(env, {NODE_ENV: 'production'})
     });
   },
 
@@ -187,7 +185,7 @@ const commands = {
 
     You can provide the --debug flag to print the computed webpack config.
     `);
-  },
+  }
 };
 
 const command = process.argv[2];
@@ -201,14 +199,12 @@ return 1;
 function listDocs(docsSrcPath) {
   const queue = readdirSync(docsSrcPath).map((fileName) => ({
     fileName,
-    path: [],
+    path: []
   }));
   const docs = [];
   while (queue.length) {
     const {fileName, path} = queue.pop();
-    const fullPath = normalize(
-      [docsSrcPath].concat(path).concat(fileName).join('/')
-    );
+    const fullPath = normalize([docsSrcPath].concat(path).concat(fileName).join('/'));
 
     if (lstatSync(fullPath).isDirectory() === false) {
       if (extname(fileName) === '.md') {
@@ -217,7 +213,7 @@ function listDocs(docsSrcPath) {
         docs.push({
           docBaseName,
           slug,
-          path,
+          path
         });
       }
       // ignore non .md files
@@ -245,9 +241,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
         let location;
 
         // we'll create chapters in the TOC if needs be
-        const chapterKey = doc.path.length
-          ? sentence(doc.path[0])
-          : nameOfDefaultChapter;
+        const chapterKey = doc.path.length ? sentence(doc.path[0]) : nameOfDefaultChapter;
 
         if (!result.chapters.find((chapter) => chapter.title === chapterKey)) {
           result.chapters.push({title: chapterKey, entries: []});
@@ -256,9 +250,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
         // we'll update location depending on the path of each entry,
         // creating new sections as we go if needed
 
-        location = result.chapters.find(
-          (chapter) => chapter.title === chapterKey
-        );
+        location = result.chapters.find((chapter) => chapter.title === chapterKey);
         doc.path.slice(1).forEach((folder) => {
           const entryKey = sentence(folder);
           if (!location.entries.find((entry) => entry.title === entryKey)) {
@@ -273,7 +265,7 @@ function buildToc(docs, nameOfDefaultChapter = 'Overview', baseUrl = 'docs') {
       },
       {
         chapters: [],
-        id: 'table-of-contents',
+        id: 'table-of-contents'
       }
     );
 }

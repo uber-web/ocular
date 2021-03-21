@@ -3,7 +3,7 @@ export default function createTheme(primitives) {
     breakpoints: {
       small: 320,
       medium: 768,
-      large: 1280,
+      large: 1280
     },
 
     colors: {
@@ -90,7 +90,7 @@ export default function createTheme(primitives) {
       // Links
       linkText: primitives.primary400,
       linkVisited: primitives.primary500,
-      linkHover: primitives.primary600,
+      linkHover: primitives.primary600
     },
     typography: {
       font100: `normal 11px/16px ${primitives.primaryFontFamily}`,
@@ -106,7 +106,7 @@ export default function createTheme(primitives) {
       font800: `bold 40px/56px ${primitives.primaryFontFamily}`,
       font900: `bold 52px/68px ${primitives.primaryFontFamily}`,
       font1000: `normal 72px/96px ${primitives.primaryFontFamily}`,
-      font1100: `normal 96px/116px ${primitives.primaryFontFamily}`,
+      font1100: `normal 96px/116px ${primitives.primaryFontFamily}`
     },
     sizing: {
       scale0: '2px',
@@ -126,7 +126,7 @@ export default function createTheme(primitives) {
       scale1600: '64px',
       scale2400: '96px',
       scale3200: '128px',
-      scale4800: '192px',
+      scale4800: '192px'
     },
     lighting: {
       shadow400: '0 1px 4px hsla(0, 0%, 0%, 0.16)',
@@ -139,7 +139,7 @@ export default function createTheme(primitives) {
       overlay300: 'inset 0 0 0 1000px hsla(0, 0%, 0%, 0.12)',
       overlay400: 'inset 0 0 0 1000px hsla(0, 0%, 0%, 0.16)',
       overlay500: 'inset 0 0 0 1000px hsla(0, 0%, 0%, 0.2)',
-      overlay600: 'inset 0 0 0 1000px hsla(0, 0%, 0%, 0.24)',
+      overlay600: 'inset 0 0 0 1000px hsla(0, 0%, 0%, 0.24)'
     },
     borders: {
       border100: 'solid 1px hsla(0, 0%, 0%, 0.04)',
@@ -152,7 +152,7 @@ export default function createTheme(primitives) {
       radius200: '4px',
       radius300: '8px',
       radius400: '12px',
-      useRoundedCorners: true,
+      useRoundedCorners: true
     },
     animation: {
       timing100: '0.25s',
@@ -160,7 +160,7 @@ export default function createTheme(primitives) {
       timing700: '0.6s',
       easeOutCurve: 'cubic-bezier(.2, .8, .4, 1)',
       easeInCurve: 'cubic-bezier(.8, .2, .6, 1)',
-      easeInOutCurve: 'cubic-bezier(0.4, 0, 0.2, 1)',
-    },
+      easeInOutCurve: 'cubic-bezier(0.4, 0, 0.2, 1)'
+    }
   };
 }

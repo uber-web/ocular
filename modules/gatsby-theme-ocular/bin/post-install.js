@@ -29,24 +29,24 @@ const FILENAMES = [
   {
     dir: `${SOURCE_DIR}/website-template`,
     filename: 'gatsby-browser.js',
-    keepFresh: false,
+    keepFresh: false
   },
   {
     dir: `${SOURCE_DIR}/website-template`,
     filename: 'gatsby-config.js',
-    keepFresh: false,
+    keepFresh: false
   },
   {
     dir: `${SOURCE_DIR}/website-template`,
     filename: 'gatsby-ssr.js',
-    keepFresh: false,
+    keepFresh: false
   },
   // always keep site-query.jsx fresh
   {
     dir: `${SOURCE_DIR}`,
     filename: 'src/components/site-query.jsx',
-    keepFresh: true,
-  },
+    keepFresh: true
+  }
 ];
 
 for (const f of FILENAMES) {

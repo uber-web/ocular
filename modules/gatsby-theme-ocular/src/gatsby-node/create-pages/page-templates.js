@@ -22,5 +22,5 @@ module.exports = {
 
   EXAMPLE_GALLERY_PAGE_URL,
 
-  SEARCH_PAGE_URL,
+  SEARCH_PAGE_URL
 };

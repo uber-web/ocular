@@ -76,14 +76,12 @@ export const HeaderMenu = styled.div`
   overflow: hidden;
   min-width: 180px;
   max-height: ${(props) => (props.$collapsed ? 0 : props.$nbItems * 48)}px;
-  padding-bottom: ${(props) =>
-    props.$collapsed ? 0 : props.theme.sizing.scale800};
+  padding-bottom: ${(props) => (props.$collapsed ? 0 : props.theme.sizing.scale800)};
   top: ${(props) => props.theme.sizing.scale1600};
   left: ${(props) => props.theme.sizing.scale600};
   transition-property: max-height, padding-bottom;
   transition-duration: ${(props) => props.theme.animation.timing400};
-  transition-timing-function: ${(props) =>
-    props.theme.animation.easeInOutCurve};
+  transition-timing-function: ${(props) => props.theme.animation.easeInOutCurve};
   z-index: 100;
 
   ${isMobile} {
@@ -108,8 +106,7 @@ export const HeaderMenuBackground = styled.div`
 
 export const HeaderMenuLink = styled.a`
   display: block;
-  padding: ${(props) => props.theme.sizing.scale400}
-    ${(props) => props.theme.sizing.scale1600};
+  padding: ${(props) => props.theme.sizing.scale400} ${(props) => props.theme.sizing.scale1600};
   text-decoration: none;
   font: ${(props) => props.theme.typography.font300};
 
@@ -197,8 +194,7 @@ export const HeaderLinkContainer = styled.div`
 
   ${isMobile} {
     font: ${(props) => props.theme.typography.font500};
-    padding: ${(props) => props.theme.sizing.scale400}
-      ${(props) => props.theme.sizing.scale1000};
+    padding: ${(props) => props.theme.sizing.scale400} ${(props) => props.theme.sizing.scale1000};
   }
 `;
 

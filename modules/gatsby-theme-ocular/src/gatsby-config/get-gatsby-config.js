@@ -30,7 +30,7 @@ const defaults = {
   ADDITIONAL_LINKS: [],
   GA_TRACKING_ID: null,
   GITHUB_KEY: null,
-  webpack: {},
+  webpack: {}
 };
 
 function getRemarkPlugins(paddedConfig) {
@@ -46,8 +46,8 @@ function getRemarkPlugins(paddedConfig) {
     {
       resolve: 'gatsby-remark-images',
       options: {
-        maxWidth: 690,
-      },
+        maxWidth: 690
+      }
     },
     // Wraps iframes or objects (e.g. embedded YouTube videos) within markdown files
     // in a responsive elastic container with a fixed aspect ratio. This ensures that
@@ -65,8 +65,8 @@ function getRemarkPlugins(paddedConfig) {
       options: {
         offsetY: 64,
         removeAccents: true,
-        enableCustomId: true,
-      },
+        enableCustomId: true
+      }
     },
     {
       resolve: 'gatsby-remark-embedded-codesandbox',
@@ -78,12 +78,12 @@ function getRemarkPlugins(paddedConfig) {
           codemirror: 1,
           fontsize: 12,
           hidenavigation: 1,
-          view: 'split',
+          view: 'split'
         },
         getIframe: (url) =>
-          `<iframe src="${url}" style="width: 70vw; height: 70vh;" class="embedded-codesandbox" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>`,
-      },
-    },
+          `<iframe src="${url}" style="width: 70vw; height: 70vh;" class="embedded-codesandbox" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>`
+      }
+    }
   ];
 
   return remarkPlugins;
@@ -94,10 +94,7 @@ module.exports = function getGatsbyConfig(config) {
   log.priority = logLevel;
 
   log.log({color: COLOR.CYAN, priority: 0}, 'Loading gatsby config')();
-  log.log(
-    {color: COLOR.CYAN, priority: 4},
-    `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`
-  )();
+  log.log({color: COLOR.CYAN, priority: 4}, `GATSBY CONFIG ${JSON.stringify(config, null, 3)}`)();
 
   // TODO/javidhsueh: we might want to throw an error if the config is invalid
   // Right now we only print out warning/error messages
@@ -107,7 +104,7 @@ module.exports = function getGatsbyConfig(config) {
   // if they don't exist, we provide empty values so that the query won't fail
   const paddedConfig = {
     ...defaults,
-    ...config,
+    ...config
   };
   // validate the entire config and print the errors/warnings in the console
   validateConfig(paddedConfig, CONFIG_SCHEMA);
@@ -120,7 +117,7 @@ module.exports = function getGatsbyConfig(config) {
     siteMetadata: {
       config: paddedConfig,
 
-      siteUrl: urljoin(paddedConfig.PROJECT_URL, paddedConfig.PATH_PREFIX),
+      siteUrl: urljoin(paddedConfig.PROJECT_URL, paddedConfig.PATH_PREFIX)
     },
 
     plugins: [
@@ -143,19 +140,17 @@ module.exports = function getGatsbyConfig(config) {
         options: {
           extensions: [`.md`, `.mdx`],
           // These are sub-plugins for gatsby-plugin-mdx
-          gatsbyRemarkPlugins: remarkPlugins,
-        },
+          gatsbyRemarkPlugins: remarkPlugins
+        }
       },
 
       // Transforms JSON files in the data source into JSON nodes
-      'gatsby-transformer-json',
-    ],
+      'gatsby-transformer-json'
+    ]
   };
 
   // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
-  const docDirs = [paddedConfig.DOC_FOLDER]
-    .concat(paddedConfig.DOC_FOLDERS)
-    .filter(Boolean);
+  const docDirs = [paddedConfig.DOC_FOLDER].concat(paddedConfig.DOC_FOLDERS).filter(Boolean);
 
   if (docDirs.length > 0) {
     // Generates gatsby nodes for markdown files and JSON file in the in the docs folder
@@ -167,21 +162,12 @@ module.exports = function getGatsbyConfig(config) {
           path,
           // Ensure gatsby-source-filesystem doesn't pick up too many files in modules directory
           // https://www.gatsbyjs.org/packages/gatsby-source-filesystem/#options
-          ignore: [
-            '**/src/**',
-            '**/test/**',
-            '**/dist/**',
-            '**/package.json',
-            '**/*.js',
-          ],
-        },
+          ignore: ['**/src/**', '**/test/**', '**/dist/**', '**/package.json', '**/*.js']
+        }
       });
     }
   } else {
-    log.log(
-      {color: COLOR.YELLOW},
-      `DOC_FOLDERS not specified in gatsby-theme-ocular config}`
-    )();
+    log.log({color: COLOR.YELLOW}, `DOC_FOLDERS not specified in gatsby-theme-ocular config}`)();
   }
 
   if (paddedConfig.SOURCE) {
@@ -194,15 +180,12 @@ module.exports = function getGatsbyConfig(config) {
         resolve: 'gatsby-source-filesystem',
         options: {
           name: 'src',
-          path,
-        },
+          path
+        }
       });
     }
   } else {
-    log.log(
-      {color: COLOR.YELLOW},
-      `SOURCE not found in gatsby-theme-ocular config}`
-    )();
+    log.log({color: COLOR.YELLOW}, `SOURCE not found in gatsby-theme-ocular config}`)();
   }
 
   if (paddedConfig.THEME_OVERRIDES) {

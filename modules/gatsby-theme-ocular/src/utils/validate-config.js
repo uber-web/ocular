@@ -50,11 +50,7 @@ validate.validators.anyString = function anyString(value, options) {
  * @param  {String} key     The key of the array
  * @return {String|Array}   The validation result(a string or a list of strings). Return null if passes.
  */
-validate.validators.arrayValidate = function arrayValidate(
-  value,
-  options,
-  key
-) {
+validate.validators.arrayValidate = function arrayValidate(value, options, key) {
   const {allowEmpty, constraint} = options;
   if (!value && allowEmpty) {
     return null;
@@ -90,11 +86,7 @@ validate.validators.arrayValidate = function arrayValidate(
  * @param  {String} key     The key of the object
  * @return {String|Array}   The validation result(a string). Return null if passes.
  */
-validate.validators.objectValidate = function objectValidate(
-  value,
-  options,
-  key
-) {
+validate.validators.objectValidate = function objectValidate(value, options, key) {
   // check value is object
   if (!validate.isObject(value)) {
     return `${key} needs to be an object.`;
@@ -130,21 +122,15 @@ const WILL_DEPRECATED = ['DOC_FOLDER'];
 // validate the config and return a list of warnings.
 module.exports = function validateConfig(config, constraints) {
   // check unused/deprecated config
-  const unusedProperties = Object.keys(config).filter(
-    (key) => !constraints[key]
-  );
-  const deprecatedProperties = Object.keys(config).filter((key) =>
-    WILL_DEPRECATED.includes(key)
-  );
+  const unusedProperties = Object.keys(config).filter((key) => !constraints[key]);
+  const deprecatedProperties = Object.keys(config).filter((key) => WILL_DEPRECATED.includes(key));
   // check config, validate function will return a object with corresponding warnings.
   // ex: {GITHUB_KEY: ['must be provided if your project is hosted on GitHub.']}
   const messages = validate(config, constraints) || {};
   const allMessages = [
-    ...unusedProperties.map(
-      (key) => `${key} is not used in the gatsby config.`
-    ),
+    ...unusedProperties.map((key) => `${key} is not used in the gatsby config.`),
     ...deprecatedProperties.map((key) => `${key} will be deprecated soon.`),
-    ...Object.keys(messages).map((key) => messages[key].toString()),
+    ...Object.keys(messages).map((key) => messages[key].toString())
   ];
   // print out all warnings
   allMessages.forEach((message) =>

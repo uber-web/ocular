@@ -6,16 +6,14 @@ import {
   ExamplesGroup,
   ExampleCard,
   ExampleHeader,
-  ExampleTitle,
+  ExampleTitle
 } from '../styled/example';
 
 export default class Examples extends Component {
   renderExample({title, path, image}) {
     return (
       <ExampleCard key={title} to={`/${path}`}>
-        {image ? (
-          <img width="100%" src={withPrefix(image)} alt={title} />
-        ) : null}
+        {image ? <img width="100%" src={withPrefix(image)} alt={title} /> : null}
         <ExampleTitle>
           <span>{title}</span>
         </ExampleTitle>
@@ -26,12 +24,10 @@ export default class Examples extends Component {
   renderCategory(item) {
     if (item.entries) {
       return [
-        <ExampleHeader key={`${item.title}-header`}>
-          {item.title}
-        </ExampleHeader>,
+        <ExampleHeader key={`${item.title}-header`}>{item.title}</ExampleHeader>,
         <ExamplesGroup key={item.title}>
           {item.entries.map((entry) => this.renderExample(entry))}
-        </ExamplesGroup>,
+        </ExamplesGroup>
       ];
     }
     return this.renderExample(item);
@@ -39,23 +35,19 @@ export default class Examples extends Component {
 
   render() {
     const {
-      pageContext: {toc},
+      pageContext: {toc}
     } = this.props;
 
     if (toc.length === 1) {
       return (
         <MainExamples>
-          <ExamplesGroup>
-            {toc[0].entries.map((entry) => this.renderExample(entry))}
-          </ExamplesGroup>
+          <ExamplesGroup>{toc[0].entries.map((entry) => this.renderExample(entry))}</ExamplesGroup>
         </MainExamples>
       );
     }
 
     return (
-      <MainExamples>
-        {toc.map((exampleData) => this.renderCategory(exampleData))}
-      </MainExamples>
+      <MainExamples>{toc.map((exampleData) => this.renderCategory(exampleData))}</MainExamples>
     );
   }
 }

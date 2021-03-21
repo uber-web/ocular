@@ -3,5 +3,5 @@ function setOcularConfig(config) {
 }
 
 module.exports = {
-  setOcularConfig,
+  setOcularConfig
 };

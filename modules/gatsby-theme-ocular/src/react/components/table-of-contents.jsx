@@ -31,10 +31,7 @@ function isOpen(entry, expanded) {
   // be expanded.
   // either it's manually expanded, or it's on the active route and
   // it's not manually collapsed.
-  return (
-    expanded[entry.id] === true ||
-    (entry.childIsSelected && expanded[entry.id] !== false)
-  );
+  return expanded[entry.id] === true || (entry.childIsSelected && expanded[entry.id] !== false);
 }
 
 function updateHeights(tocEntries, expanded) {
@@ -80,20 +77,18 @@ function getTocState({chapters, slug, expanded}) {
   let queue = chapters.map((chapter, i) => ({
     ...chapter,
     id: [i],
-    parents: [],
+    parents: []
   }));
   while (queue.length) {
     const current = queue.shift();
     const {id} = current;
     entries[id] = {id};
 
-    const children = (current.chapters || current.entries || []).map(
-      (child, i) => ({
-        ...child,
-        id: id.concat(i),
-        parents: [...current.parents, id],
-      })
-    );
+    const children = (current.chapters || current.entries || []).map((child, i) => ({
+      ...child,
+      id: id.concat(i),
+      parents: [...current.parents, id]
+    }));
     if (children.length) {
       entries[id].children = children.map((c) => c.id);
     }
@@ -137,7 +132,7 @@ export default class TableOfContents extends PureComponent {
 
     this.state = {
       tocState,
-      expanded,
+      expanded
     };
     this.toggleEntry = this.toggleEntry.bind(this);
   }
@@ -155,7 +150,7 @@ export default class TableOfContents extends PureComponent {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         tocState,
-        expanded,
+        expanded
       });
     }
   }
@@ -174,7 +169,7 @@ export default class TableOfContents extends PureComponent {
 
     this.setState({
       tocState: updatedTocState,
-      expanded: updatedExpanded,
+      expanded: updatedExpanded
     });
   }
 
@@ -185,12 +180,6 @@ export default class TableOfContents extends PureComponent {
     if (!tree) {
       return null;
     }
-    return (
-      <ControlledToc
-        tree={tree}
-        tocState={tocState}
-        toggleEntry={this.toggleEntry}
-      />
-    );
+    return <ControlledToc tree={tree} tocState={tocState} toggleEntry={this.toggleEntry} />;
   }
 }

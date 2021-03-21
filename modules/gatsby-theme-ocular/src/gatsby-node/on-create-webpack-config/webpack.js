@@ -1,8 +1,6 @@
 const {onCreateWebpackConfig} = require('./on-create-webpack-config');
 
-module.exports.onCreateWebpackConfig = function onCreateWebpackConfigOverride(
-  opts
-) {
+module.exports.onCreateWebpackConfig = function onCreateWebpackConfigOverride(opts) {
   onCreateWebpackConfig(opts);
 
   const {
@@ -11,7 +9,7 @@ module.exports.onCreateWebpackConfig = function onCreateWebpackConfigOverride(
     // plugins, // Object (map): A set of preconfigured webpack config plugins
     // getConfig, // Function that returns the current webpack config
     loaders, // Object (map): set of preconfigured webpack config loaders
-    actions,
+    actions
   } = opts;
 
   console.log(`App rewriting gatsby webpack config`); // eslint-disable-line
@@ -36,9 +34,7 @@ module.exports.onCreateWebpackConfig = function onCreateWebpackConfigOverride(
     // Exclude all node_modules from transpilation, except for ocular
     exclude: (modulePath) =>
       /node_modules/.test(modulePath) &&
-      !/node_modules\/(ocular|ocular-gatsby|gatsby-theme-ocular)/.test(
-        modulePath
-      ),
+      !/node_modules\/(ocular|ocular-gatsby|gatsby-theme-ocular)/.test(modulePath)
   });
 
   // Omit the default rule where test === '\.jsx?$'
@@ -47,17 +43,17 @@ module.exports.onCreateWebpackConfig = function onCreateWebpackConfigOverride(
   if (stage === 'build-html') {
     rules.push({
       test: /mapbox-gl/,
-      use: loaders.null(),
+      use: loaders.null()
     });
   }
 
   const newConfig = {
     module: {
-      rules,
+      rules
     },
     node: {
-      fs: 'empty',
-    },
+      fs: 'empty'
+    }
   };
 
   // Completely replace the webpack config for the current stage.

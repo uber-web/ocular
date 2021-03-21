@@ -29,7 +29,7 @@ const GOOD_CONFIG = {
   ADDITIONAL_LINKS: [],
   GA_TRACKING_ID: null,
   GITHUB_KEY: null,
-  webpack: {},
+  webpack: {}
 };
 
 test('gatsby-theme-ocular#validateConfig', (t) => {
@@ -51,7 +51,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
       "Project image can't be blank,Project image should be the project's social media image",
       'Path prefix should be the prefix added to all paths on the site',
       "Additional links can't be blank",
-      'Webpack webpack needs to be an object.',
+      'Webpack webpack needs to be an object.'
     ],
     'Get all errors when config is empty'
   );
@@ -61,7 +61,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        DOC_FOLDER: './docs',
+        DOC_FOLDER: './docs'
       },
       CONFIG_SCHEMA
     ),
@@ -74,7 +74,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        logLevel: 6,
+        logLevel: 6
       },
       CONFIG_SCHEMA
     ),
@@ -87,7 +87,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        PROJECTS: [{name: 'Project 1', url: ''}],
+        PROJECTS: [{name: 'Project 1', url: ''}]
       },
       CONFIG_SCHEMA
     ),
@@ -100,7 +100,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        PROJECT_URL: null,
+        PROJECT_URL: null
       },
       CONFIG_SCHEMA
     ),
@@ -113,7 +113,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        ADDITIONAL_LINKS: [{index: 0, name: 'Blog', href: ''}],
+        ADDITIONAL_LINKS: [{index: 0, name: 'Blog', href: ''}]
       },
       CONFIG_SCHEMA
     ),
@@ -127,7 +127,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
       {
         ...GOOD_CONFIG,
         PROJECT_TYPE: 'github',
-        GITHUB_KEY: null,
+        GITHUB_KEY: null
       },
       CONFIG_SCHEMA
     ),
@@ -140,7 +140,7 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
       {
         ...GOOD_CONFIG,
         PROJECT_TYPE: '',
-        GITHUB_KEY: null,
+        GITHUB_KEY: null
       },
       CONFIG_SCHEMA
     ),
@@ -153,13 +153,11 @@ test('gatsby-theme-ocular#validateConfig', (t) => {
     validateConfig(
       {
         ...GOOD_CONFIG,
-        LINK_TO_GET_STARTED: 1,
+        LINK_TO_GET_STARTED: 1
       },
       CONFIG_SCHEMA
     ),
-    [
-      `Link to get started should be the path to the 'Get Started' doc. Defaults to '/docs/'`,
-    ],
+    [`Link to get started should be the path to the 'Get Started' doc. Defaults to '/docs/'`],
     `Check if LINK_TO_GET_STARTED is a valid string`
   );
 

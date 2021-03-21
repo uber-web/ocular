@@ -29,10 +29,7 @@ export default function SEO({config, path, pageContext}) {
 
   const isPost = Boolean(title);
   const siteURL = joinPath(config.PROJECT_URL, config.pathPrefix);
-  const image = joinPath(
-    siteURL,
-    config.PROJECT_IMAGE || config.PROJECT_ORG_LOGO
-  );
+  const image = joinPath(siteURL, config.PROJECT_IMAGE || config.PROJECT_ORG_LOGO);
   const postURL = joinPath(siteURL, path);
   title = title ? `${config.PROJECT_NAME} | ${title}` : config.PROJECT_NAME;
   description = description || config.PROJECT_DESC;
@@ -42,8 +39,8 @@ export default function SEO({config, path, pageContext}) {
       '@context': 'http://schema.org',
       '@type': 'WebSite',
       url: siteURL,
-      name: config.PROJECT_NAME,
-    },
+      name: config.PROJECT_NAME
+    }
   ];
   if (isPost) {
     schemaOrgJSONLD.push([
@@ -57,10 +54,10 @@ export default function SEO({config, path, pageContext}) {
             item: {
               '@id': postURL,
               name: title,
-              image,
-            },
-          },
-        ],
+              image
+            }
+          }
+        ]
       },
       {
         '@context': 'http://schema.org',
@@ -70,10 +67,10 @@ export default function SEO({config, path, pageContext}) {
         headline: title,
         image: {
           '@type': 'ImageObject',
-          url: image,
+          url: image
         },
-        description,
-      },
+        description
+      }
     ]);
   }
   return (
@@ -83,9 +80,7 @@ export default function SEO({config, path, pageContext}) {
       <meta name="image" content={image} />
 
       {/* Schema.org tags */}
-      <script type="application/ld+json">
-        {JSON.stringify(schemaOrgJSONLD)}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(schemaOrgJSONLD)}</script>
 
       {/* OpenGraph tags */}
       <meta property="og:url" content={isPost ? postURL : siteURL} />
@@ -93,17 +88,11 @@ export default function SEO({config, path, pageContext}) {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta
-        property="fb:app_id"
-        content={config.siteFBAppID ? config.siteFBAppID : ''}
-      />
+      <meta property="fb:app_id" content={config.siteFBAppID ? config.siteFBAppID : ''} />
 
       {/* Twitter Card tags */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta
-        name="twitter:creator"
-        content={config.userTwitter ? config.userTwitter : ''}
-      />
+      <meta name="twitter:creator" content={config.userTwitter ? config.userTwitter : ''} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />

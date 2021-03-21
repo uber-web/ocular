@@ -11,7 +11,7 @@ import {
   SearchResultItem,
   SearchResultLink,
   SearchResultHighlight,
-  SearchResultPager,
+  SearchResultPager
 } from '../styled/search';
 
 const RESULTS_PER_PAGE = 10;
@@ -30,9 +30,7 @@ function renderHighlightedText(lines, regex, lineNumber = 0) {
     return i % 2 === 0 ? (
       <span key={`${lineNumber}-${i}`}>{part}</span>
     ) : (
-      <SearchResultHighlight key={`${lineNumber}-${i}`}>
-        {part}
-      </SearchResultHighlight>
+      <SearchResultHighlight key={`${lineNumber}-${i}`}>{part}</SearchResultHighlight>
     );
   });
 }
@@ -44,7 +42,7 @@ export default class SearchPage extends React.Component {
       currentQuery: '',
       lastQuery: '',
       visibleResultsCount: RESULTS_PER_PAGE,
-      results: [],
+      results: []
     };
     this.findResults = debounce(this.findResults.bind(this), 250);
     this.handleChange = this.handleChange.bind(this);
@@ -92,10 +90,7 @@ export default class SearchPage extends React.Component {
           if (index >= 0) {
             priority = 100;
             let excerpt = node.excerpt.slice(index - 30);
-            excerpt =
-              excerpt
-                .slice(excerpt.indexOf(' ') + 1)
-                .slice(0, MAX_EXCERPT_LENGTH) + '...';
+            excerpt = excerpt.slice(excerpt.indexOf(' ') + 1).slice(0, MAX_EXCERPT_LENGTH) + '...';
             matches.push(excerpt);
           }
         }
@@ -109,7 +104,7 @@ export default class SearchPage extends React.Component {
       results,
       regex,
       visibleResultsCount: RESULTS_PER_PAGE,
-      lastQuery: currentQuery,
+      lastQuery: currentQuery
     });
   }
 
@@ -126,9 +121,7 @@ export default class SearchPage extends React.Component {
       if (!result.element) {
         result.element = (
           <SearchResultItem key={result.node.slug}>
-            <SearchResultLink to={`/${result.node.slug}`}>
-              {result.node.title}
-            </SearchResultLink>
+            <SearchResultLink to={`/${result.node.slug}`}>{result.node.title}</SearchResultLink>
             {renderHighlightedText(result.matches, regex)}
           </SearchResultItem>
         );
@@ -159,25 +152,19 @@ export default class SearchPage extends React.Component {
         <div>
           {currentQuery && !debouncing && (
             <div>
-              {results.length
-                ? `${results.length} articles found.`
-                : `No result for this query.`}
+              {results.length ? `${results.length} articles found.` : `No result for this query.`}
             </div>
           )}
 
           {!currentQuery && !debouncing && (
-            <div>
-              {pathContext.data
-                ? `${pathContext.data.length} articles indexed.`
-                : ''}
-            </div>
+            <div>{pathContext.data ? `${pathContext.data.length} articles indexed.` : ''}</div>
           )}
           <div>{this.renderResults()}</div>
           {visibleResultsCount < results.length && (
             <SearchResultPager
               onClick={() =>
                 this.setState({
-                  visibleResultsCount: visibleResultsCount + RESULTS_PER_PAGE,
+                  visibleResultsCount: visibleResultsCount + RESULTS_PER_PAGE
                 })
               }
             >
@@ -190,8 +177,6 @@ export default class SearchPage extends React.Component {
   }
 
   render() {
-    return (
-      <WebsiteConfigConsumer>{() => this.renderPage()}</WebsiteConfigConsumer>
-    );
+    return <WebsiteConfigConsumer>{() => this.renderPage()}</WebsiteConfigConsumer>;
   }
 }

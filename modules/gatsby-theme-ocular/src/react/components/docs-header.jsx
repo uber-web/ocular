@@ -20,10 +20,7 @@
 // THE SOFTWARE.
 
 import React, {Component} from 'react';
-import ControlledHeader, {
-  generateHeaderLinks,
-  propTypes,
-} from './header.component';
+import ControlledHeader, {generateHeaderLinks, propTypes} from './header.component';
 
 // we are exposing 2 header components.
 // 1 - DocsHeader, which will update the state of the top level layout.
@@ -40,7 +37,7 @@ export default class DocsHeader extends Component {
     // some of the links which are hardcoded should come from configuration
     // TODO - let's create the links server side, then pass them to the template as props.
     this.state = {
-      links: generateHeaderLinks(props),
+      links: generateHeaderLinks(props)
     };
   }
 

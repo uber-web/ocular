@@ -56,7 +56,7 @@ export default class Layout extends React.Component {
     super(props);
     this.state = {
       isMenuOpen: false,
-      isTocOpen: false,
+      isTocOpen: false
     };
   }
 
@@ -100,13 +100,9 @@ export default class Layout extends React.Component {
             isDocHeader
           />
         </HeaderContainer>
-        <TocContainer $isTocOpen={isTocOpen}>
-          {this.renderTOC(tableOfContents)}
-        </TocContainer>
+        <TocContainer $isTocOpen={isTocOpen}>{this.renderTOC(tableOfContents)}</TocContainer>
 
-        <BodyContainerToC>
-          {React.cloneElement(children, {config: config})}
-        </BodyContainerToC>
+        <BodyContainerToC>{React.cloneElement(children, {config: config})}</BodyContainerToC>
         {/* <Footer /> */}
       </Body>
     );
@@ -125,9 +121,7 @@ export default class Layout extends React.Component {
           />
         </HeaderContainer>
 
-        <BodyContainerFull>
-          {React.cloneElement(children, {config: config})}
-        </BodyContainerFull>
+        <BodyContainerFull>{React.cloneElement(children, {config: config})}</BodyContainerFull>
 
         {/* <Footer /> */}
       </Body>
@@ -169,14 +163,7 @@ export default class Layout extends React.Component {
             <Helmet>
               <title>{title}</title>
               {config.STYLESHEETS.map((url, i) => {
-                return (
-                  <link
-                    key={i}
-                    rel="stylesheet"
-                    href={withPrefix(url)}
-                    type="text/css"
-                  />
-                );
+                return <link key={i} rel="stylesheet" href={withPrefix(url)} type="text/css" />;
               })}
               <link rel="icon" type="img/ico" href="favicon.ico" />
             </Helmet>

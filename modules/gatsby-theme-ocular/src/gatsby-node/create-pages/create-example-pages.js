@@ -96,16 +96,13 @@ function queryExamplesData(graphql) {
       // matches public urls to paths of images
       const examplesWithImages = EXAMPLES.map((example) => ({
         ...example,
-        imageSrc: thumbnailsPublicUrls[example.image],
+        imageSrc: thumbnailsPublicUrls[example.image]
       }));
 
       return examplesWithImages;
     })
     .catch((error) => {
-      log.log(
-        {color: COLOR.BRIGHT_YELLOW},
-        `error in createPage query with images: ${error}`
-      )();
+      log.log({color: COLOR.BRIGHT_YELLOW}, `error in createPage query with images: ${error}`)();
       return graphql(`
         {
           site {
@@ -131,20 +128,12 @@ function queryExamplesData(graphql) {
     });
 }
 
-function createExampleGalleryPage(
-  examples,
-  examplesToc,
-  createPage,
-  ocularOptions
-) {
+function createExampleGalleryPage(examples, examplesToc, createPage, ocularOptions) {
   if (examples.length === 0) {
     return;
   }
   log.log({color: COLOR.CYAN, priority: 1}, `Creating examples page`)();
-  log.log(
-    {color: COLOR.RED, priority: 4},
-    `with data ${JSON.stringify(examples)}`
-  )();
+  log.log({color: COLOR.RED, priority: 4}, `with data ${JSON.stringify(examples)}`)();
 
   const componentUrl = PAGE_TEMPLATES['EXAMPLE_GALLERY_PAGE_URL'];
 
@@ -153,24 +142,16 @@ function createExampleGalleryPage(
     path: '/examples',
     context: {
       title: 'Examples',
-      toc: examplesToc,
-    },
+      toc: examplesToc
+    }
   });
 }
 
-function createIndividualExamplePages(
-  examples,
-  examplesToc,
-  createPage,
-  ocularOptions
-) {
+function createIndividualExamplePages(examples, examplesToc, createPage, ocularOptions) {
   examples.forEach((example) => {
     const exampleName = example.title;
 
-    log.log(
-      {color: COLOR.CYAN, priority: 1},
-      `Creating example page ${example.title}}`
-    )();
+    log.log({color: COLOR.CYAN, priority: 1}, `Creating example page ${example.title}}`)();
 
     const componentUrl = example.componentUrl;
 
@@ -182,8 +163,8 @@ function createIndividualExamplePages(
           title: `${example.title} Example`,
           slug: example.path,
           toc: examplesToc,
-          exampleConfig: example,
-        },
+          exampleConfig: example
+        }
       });
     }
   });
@@ -193,37 +174,27 @@ function createExamplesToc(examples) {
   const examplesByCategory = {};
 
   for (const example of examples) {
-    examplesByCategory[example.category] = examplesByCategory[
-      example.category
-    ] || {
+    examplesByCategory[example.category] = examplesByCategory[example.category] || {
       title: example.category,
-      entries: [],
+      entries: []
     };
 
     examplesByCategory[example.category].entries.push({
       title: example.title,
       path: example.path,
-      image: example.imageSrc,
+      image: example.imageSrc
     });
   }
 
   return Object.values(examplesByCategory);
 }
 
-module.exports = function createExamplePages(
-  {graphql, actions},
-  ocularOptions
-) {
+module.exports = function createExamplePages({graphql, actions}, ocularOptions) {
   const {createPage} = actions;
 
   return queryExamplesData(graphql).then((examples) => {
     const examplesToc = createExamplesToc(examples);
     createExampleGalleryPage(examples, examplesToc, createPage, ocularOptions);
-    createIndividualExamplePages(
-      examples,
-      examplesToc,
-      createPage,
-      ocularOptions
-    );
+    createIndividualExamplePages(examples, examplesToc, createPage, ocularOptions);
   });
 };

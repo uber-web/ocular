@@ -5,10 +5,8 @@ import {isMobile} from './body';
 export const Banner = styled.section`
   position: relative;
   height: 30rem;
-  background: ${(props) =>
-    props.theme.colors[props.colortheme === 'dark' ? 'mono900' : 'mono400']};
-  color: ${(props) =>
-    props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
+  background: ${(props) => props.theme.colors[props.colortheme === 'dark' ? 'mono900' : 'mono400']};
+  color: ${(props) => props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
   z-index: 0;
   ${isMobile} {
     height: 80vh;
@@ -71,25 +69,15 @@ export const GetStartedLink = styled(Link)`
   text-decoration: none;
   transition: background-color 250ms ease-in, color 250ms ease-in;
   border: solid 2px ${(props) => props.theme.colors.primary400};
-  color: ${(props) =>
-    props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
+  color: ${(props) => props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
   border-image: linear-gradient(
     to right,
-    ${(props) =>
-        props.theme.colors[
-          props.colortheme === 'dark' ? 'primary400' : 'primary700'
-        ]}
-      0%,
-    ${(props) =>
-        props.theme.colors[
-          props.colortheme === 'dark' ? 'primary100' : 'primary400'
-        ]}
-      100%
+    ${(props) => props.theme.colors[props.colortheme === 'dark' ? 'primary400' : 'primary700']} 0%,
+    ${(props) => props.theme.colors[props.colortheme === 'dark' ? 'primary100' : 'primary400']} 100%
   );
   border-image-slice: 2;
   &:visited {
-    color: ${(props) =>
-      props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
+    color: ${(props) => props.theme.colors[props.colortheme === 'dark' ? 'mono100' : 'mono900']};
   }
   &:active {
     color: ${(props) => props.theme.colors.mono100};

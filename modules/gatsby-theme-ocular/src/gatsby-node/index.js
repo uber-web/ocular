@@ -26,5 +26,5 @@ module.exports = {
   setFieldsOnGraphQLNodeType,
   onCreateNode,
   onCreateWebpackConfig,
-  createPages,
+  createPages
 };

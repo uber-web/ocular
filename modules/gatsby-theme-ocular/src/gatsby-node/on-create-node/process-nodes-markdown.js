@@ -84,17 +84,14 @@ module.exports.processNewMarkdownNode = function processNewMarkdownNode(
     if (nodeToEdit) {
       nodeToEdit.childMdx = {
         fields: {
-          slug: relPath,
+          slug: relPath
         },
         frontmatter: {
-          title: node.frontmatter.title,
-        },
+          title: node.frontmatter.title
+        }
       };
     }
-    log.log(
-      {priority: 4, color: COLOR.YELLOW},
-      `putting ${relPath} back in the TOC`
-    )();
+    log.log({priority: 4, color: COLOR.YELLOW}, `putting ${relPath} back in the TOC`)();
   }
 
   // while toc node isn't created, we can add the docs nodes to docNodes, which is used to add data to the TOC
@@ -157,7 +154,7 @@ function addSourceInstanceName(
   createNodeField({
     node,
     name: 'sourceName',
-    value: sourceInstanceName,
+    value: sourceInstanceName
   });
 
   // console.error('adding', sourceInstanceName, node.fields.sourceInstanceName)

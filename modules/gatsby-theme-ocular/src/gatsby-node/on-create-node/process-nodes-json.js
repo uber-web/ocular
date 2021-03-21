@@ -8,12 +8,7 @@ function processEntry(chapter, entry, docNodes, ocularOptions) {
   if (!entry.entry) {
     // TODO/ib - make probe's log.warn emit color
     // log.warn({color: COLOR.RED}, 'missing entry in chapter', chapter.title, entry)();
-    log.log(
-      {color: COLOR.RED},
-      'missing entry in chapter',
-      chapter.title,
-      entry
-    )();
+    log.log({color: COLOR.RED}, 'missing entry in chapter', chapter.title, entry)();
     return;
   }
   let relPath = entry.entry
@@ -39,12 +34,7 @@ function processEntry(chapter, entry, docNodes, ocularOptions) {
     // note - we don't need to have the entire docNode put in here.
     // the app will only use the fields/slug and frontmatter/title properties.
     entry.childMdx = docNode;
-    log.log(
-      {color: COLOR.CYAN, priority: 2},
-      'doc page',
-      chapter.title,
-      entry.entry
-    )();
+    log.log({color: COLOR.CYAN, priority: 2}, 'doc page', chapter.title, entry.entry)();
   }
 }
 
@@ -52,12 +42,7 @@ function traverseTableOfContents(chapters, docNodes, level, ocularOptions) {
   (chapters || []).forEach((chapter) => {
     chapter.level = level;
     if (chapter.chapters) {
-      traverseTableOfContents(
-        chapter.chapters,
-        docNodes,
-        level + 1,
-        ocularOptions
-      );
+      traverseTableOfContents(chapter.chapters, docNodes, level + 1, ocularOptions);
     }
     const entries = chapter.entries || [];
     (entries || []).forEach((entry) => {

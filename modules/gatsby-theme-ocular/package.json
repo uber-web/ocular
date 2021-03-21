@@ -98,10 +98,6 @@
   "keywords": [
     "gatsby"
   ],
-  "prettier": {
-    "bracketSpacing": false,
-    "singleQuote": true
-  },
   "remarkConfig": {
     "plugins": [
       "remark-preset-lint-recommended"

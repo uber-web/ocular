@@ -9,7 +9,7 @@ export default class GithubStars extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: cachedResponse,
+      response: cachedResponse
     };
   }
 
@@ -33,9 +33,7 @@ export default class GithubStars extends Component {
     return (
       <Fragment>
         {count}
-        <StarIcon
-          style={{marginLeft: '0.2rem', position: 'relative', top: -1}}
-        />
+        <StarIcon style={{marginLeft: '0.2rem', position: 'relative', top: -1}} />
       </Fragment>
     );
   }

@@ -25,7 +25,7 @@ import {
   BlockQuote,
   Table,
   TableHeaderCell,
-  TableBodyCell,
+  TableBodyCell
 } from '../styled/typography';
 
 import {parseLinks} from '../../utils/links-utils.js';
@@ -33,11 +33,7 @@ import {parseLinks} from '../../utils/links-utils.js';
 const CustomLinkWrapper = (path, relativeLinks, config) => {
   const CustomLink = ({href, ...props}) => {
     const updatedLink = parseLinks(href, path, relativeLinks, config);
-    return updatedLink ? (
-      <GatsbyA to={updatedLink} {...props} />
-    ) : (
-      <A href={href} {...props} />
-    );
+    return updatedLink ? <GatsbyA to={updatedLink} {...props} /> : <A href={href} {...props} />;
   };
   return CustomLink;
 };
@@ -52,10 +48,7 @@ const CustomPre = (props) => {
       {React.Children.map(children, (child) => {
         // this means a child of this <pre> element is a <code> element, or <code> element styled
         // by Styletron
-        if (
-          child.type === 'code' ||
-          child.type.displayName === 'Styled(code)'
-        ) {
+        if (child.type === 'code' || child.type.displayName === 'Styled(code)') {
           return <CodeBlock {...child.props} />;
         }
         // else we just clone the element as is
@@ -125,7 +118,7 @@ export default (props) => {
     th: TableHeaderCell,
     td: TableBodyCell,
     blockquote: BlockQuote,
-    a: relativeLinks ? CustomLinkWrapper(path, relativeLinks, config) : A,
+    a: relativeLinks ? CustomLinkWrapper(path, relativeLinks, config) : A
   };
 
   return (

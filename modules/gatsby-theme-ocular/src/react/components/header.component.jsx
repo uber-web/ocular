@@ -37,13 +37,13 @@ import {
   HeaderMenu,
   HeaderMenuLink,
   HeaderMenuBackground,
-  TocToggle,
+  TocToggle
 } from '../styled/header';
 
 // import GithubStars from './github-stars.jsx';
 
 export const propTypes = {
-  config: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 function GithubLink() {
@@ -96,19 +96,19 @@ export function generateHeaderLinks(props) {
 
   const githubLink = config.PROJECT_TYPE === 'github' && {
     href: `https://github.com/${config.PROJECT_ORG}/${config.PROJECT_NAME}`,
-    label: <GithubLink />,
+    label: <GithubLink />
   };
 
   const links = [
     exampleLink,
     {label: 'Documentation', to: config.HOME_PATH ? '/' : '/docs'},
-    {label: 'Search', to: '/search'},
+    {label: 'Search', to: '/search'}
   ];
 
   if (config.ADDITIONAL_LINKS && config.ADDITIONAL_LINKS.length > 0) {
     config.ADDITIONAL_LINKS.map((link) => ({
       ...link,
-      label: link.name,
+      label: link.name
     })).forEach((link) => {
       if (Number.isFinite(link.index)) {
         links.splice(link.index, 0, link);
@@ -144,7 +144,7 @@ const ControlledHeader = ({
   toggleToc,
   isTocOpen,
   isMenuOpen,
-  isSmallScreen,
+  isSmallScreen
 }) => {
   const {PROJECT_NAME, PROJECTS = [], HEADER_LINK_URL = '/'} = config;
 

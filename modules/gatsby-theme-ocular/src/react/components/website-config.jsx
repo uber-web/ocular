@@ -12,7 +12,7 @@ const defaultContextValue = {
   theme: {},
   // For passing data upwards
   data: {},
-  set: () => {},
+  set: () => {}
 };
 
 const {Provider, Consumer} = React.createContext(defaultContextValue);
@@ -25,7 +25,7 @@ export class WebsiteConfigProvider extends React.Component {
     this.state = {
       ...defaultContextValue,
       ...props.value,
-      set: this.setData,
+      set: this.setData
     };
   }
 
@@ -33,8 +33,8 @@ export class WebsiteConfigProvider extends React.Component {
     this.setState((state) => ({
       data: {
         ...state.data,
-        ...newData,
-      },
+        ...newData
+      }
     }));
   }
 

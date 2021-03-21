@@ -18,19 +18,15 @@ export default function wrapPage({element, props}) {
   const onQueryComplete = (data) => {
     const {
       site: {
-        siteMetadata: {config},
+        siteMetadata: {config}
       },
-      tableOfContents,
+      tableOfContents
     } = data;
 
     // console.log('StaticQuery result', config, tableOfContents);
 
     return (
-      <TopLevelLayout
-        {...props}
-        config={config}
-        tableOfContents={tableOfContents}
-      >
+      <TopLevelLayout {...props} config={config} tableOfContents={tableOfContents}>
         {element}
       </TopLevelLayout>
     );

@@ -22,13 +22,7 @@
 import React from 'react';
 import {Link} from 'gatsby';
 
-import {
-  TocChevron,
-  TocHeader,
-  TocLink,
-  TocEntry,
-  TocSubpages,
-} from '../styled/toc';
+import {TocChevron, TocHeader, TocLink, TocEntry, TocSubpages} from '../styled/toc';
 
 // sub components of the TOC
 
@@ -45,7 +39,7 @@ const SafeLink = ({
   id,
   name,
   path,
-  toggleEntry = () => {},
+  toggleEntry = () => {}
 }) => {
   // Gatsby <Link> element emmits warning if "external" links are used
   // "internal" links start with `/`
@@ -55,12 +49,7 @@ const SafeLink = ({
   }
 
   return (
-    <TocEntry
-      $depth={depth}
-      $index={index}
-      title={name}
-      onClick={() => toggleEntry(id)}
-    >
+    <TocEntry $depth={depth} $index={index} title={name} onClick={() => toggleEntry(id)}>
       {hasChildren && <TocChevron $depth={depth} $isTocOpen={isTocOpen} />}
       {!path || typeof path !== 'string' ? (
         <TocHeader $depth={depth}>{name}</TocHeader>
@@ -105,7 +94,7 @@ const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
               index: idx,
               route: childRoute,
               tocState,
-              toggleEntry,
+              toggleEntry
             });
           })}
         </TocSubpages>
@@ -117,16 +106,13 @@ const renderRoute = ({route, id, index, depth, tocState, toggleEntry}) => {
 
   const remark = route.childMdx;
   // first syntax is toc for documentation, second is toc for examples
-  const name =
-    (remark && remark.frontmatter && remark.frontmatter.title) || route.title;
+  const name = (remark && remark.frontmatter && remark.frontmatter.title) || route.title;
   const target = (remark && remark.fields && remark.fields.slug) || route.path;
   return (
     <div key={index}>
       <li>
         <SafeLink
-          active={
-            tocState[updatedId] && tocState[updatedId].isSelected === true
-          }
+          active={tocState[updatedId] && tocState[updatedId].isSelected === true}
           depth={depth}
           name={name}
           path={target}
@@ -146,7 +132,7 @@ const ControlledToc = ({tree, tocState, toggleEntry}) => {
           depth: 0,
           tocState,
           toggleEntry,
-          id: [],
+          id: []
         })
       )}
     </>

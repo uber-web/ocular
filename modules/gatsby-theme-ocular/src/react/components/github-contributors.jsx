@@ -55,7 +55,7 @@ export default class GithubContributors extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: cachedResponse,
+      response: cachedResponse
     };
   }
 
@@ -89,11 +89,7 @@ export default class GithubContributors extends Component {
                   href={contributor.html_url}
                   key={contributor.id}
                 >
-                  <ContribImage
-                    src={contributor.avatar_url}
-                    width="100%"
-                    alt={contributor.login}
-                  />
+                  <ContribImage src={contributor.avatar_url} width="100%" alt={contributor.login} />
                   <div>{contributor.login}</div>
                 </ContribLink>
               )

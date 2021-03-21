@@ -4,7 +4,7 @@ import {
   PanelContent,
   PanelTitle,
   PanelExpander,
-  SourceLink,
+  SourceLink
 } from '../styled/example';
 
 export default class InfoPanel extends PureComponent {
@@ -21,9 +21,7 @@ export default class InfoPanel extends PureComponent {
       <PanelContainer>
         <PanelTitle onClick={() => this.setState({isExpanded: !isExpanded})}>
           <div>{title}</div>
-          <PanelExpander $expanded={isExpanded}>
-            {isExpanded ? '✕' : 'i'}
-          </PanelExpander>
+          <PanelExpander $expanded={isExpanded}>{isExpanded ? '✕' : 'i'}</PanelExpander>
         </PanelTitle>
         <PanelContent $expanded={isExpanded}>{children}</PanelContent>
         <SourceLink $expanded={isExpanded} href={sourceLink} target="_new">

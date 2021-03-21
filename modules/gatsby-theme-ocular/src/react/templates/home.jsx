@@ -35,7 +35,7 @@ import {
   GetStartedLink,
   Footer,
   FooterText,
-  FooterLogo,
+  FooterLogo
 } from '../styled/home';
 
 function renderPage({config, theme = 'dark', HeroExample, content, children}) {
@@ -43,9 +43,7 @@ function renderPage({config, theme = 'dark', HeroExample, content, children}) {
   return (
     <>
       <Banner colortheme={theme}>
-        <HeroExampleContainer>
-          {HeroExample && <HeroExample />}
-        </HeroExampleContainer>
+        <HeroExampleContainer>{HeroExample && <HeroExample />}</HeroExampleContainer>
         <BannerContainer>
           <ProjectName>{config.PROJECT_NAME}</ProjectName>
           <p>{config.PROJECT_DESC}</p>
@@ -65,9 +63,7 @@ function renderPage({config, theme = 'dark', HeroExample, content, children}) {
       {config.PROJECT_TYPE === 'github' && (
         <Section>
           <Container>
-            <GithubContributors
-              project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`}
-            />
+            <GithubContributors project={`${config.PROJECT_ORG}/${config.PROJECT_NAME}`} />
           </Container>
         </Section>
       )}
@@ -97,7 +93,7 @@ export default class IndexPage extends Component {
               HeroExample,
               theme,
               content: pageContext && pageContext.content,
-              children,
+              children
             })
           }
         </WebsiteConfigConsumer>

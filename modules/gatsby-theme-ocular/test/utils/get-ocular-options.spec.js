@@ -8,14 +8,14 @@ const GOOD_CONFIG = {
     'gatsby-plugin-random',
     {
       resolve: 'gatsby-plugin-noop',
-      options: {doNothingFast: true},
+      options: {doNothingFast: true}
     },
     {
       resolve: 'gatsby-theme-ocular',
-      options: OPTIONS,
+      options: OPTIONS
     },
-    'gatsby-plugin-xyz',
-  ],
+    'gatsby-plugin-xyz'
+  ]
 };
 
 test('getOcularOptions', (t) => {

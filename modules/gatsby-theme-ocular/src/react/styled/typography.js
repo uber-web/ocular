@@ -78,10 +78,9 @@ export const InlineCode = styled.code`
   background-color: ${(props) => props.theme.colors.mono200};
   border-radius: ${(props) => props.theme.sizing.scale100};
   padding: 0 5px;
-  font-family: Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono',
-    'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-    'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L',
-    'Courier New', Courier, monospace;
+  font-family: Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+    'Nimbus Mono L', 'Courier New', Courier, monospace;
   font-size: 0.9em;
   margin: 1px 0;
   line-height: calc(1.5em / 0.9 - 2px);
@@ -90,10 +89,9 @@ export const InlineCode = styled.code`
 `;
 
 export const CodeBlock = styled.code`
-  font-family: Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono',
-    'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-    'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L',
-    'Courier New', Courier, monospace;
+  font-family: Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+    'Nimbus Mono L', 'Courier New', Courier, monospace;
   font-size: 0.9em;
   direction: ltr;
   text-align: left;
@@ -192,8 +190,7 @@ export const BlockQuote = styled.blockquote`
   background-color: ${(props) => props.theme.colors.warning100};
   margin-inline-start: 0;
   margin-inline-end: 0;
-  padding: ${(props) => props.theme.sizing.scale400}
-    ${(props) => props.theme.sizing.scale600};
+  padding: ${(props) => props.theme.sizing.scale400} ${(props) => props.theme.sizing.scale600};
 `;
 
 export const Table = styled.table`

@@ -52,7 +52,7 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
     const rootFolder = ocularOptions.ROOT_FOLDER;
     const pathToSlug = result.data.allMdx.edges.map(({node}) => ({
       source: node.fileAbsolutePath,
-      target: node.fields.slug,
+      target: node.fields.slug
     }));
 
     result.data.allMdx.edges.forEach((edge) => {
@@ -64,7 +64,7 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
           rootFolder,
           edge,
           relativeLinks,
-          ocularOptions,
+          ocularOptions
         });
       });
 
@@ -80,8 +80,8 @@ function createDocMarkdownPages({graphql, actions}, ocularOptions) {
           title: edge.node.frontmatter.title,
           description: edge.node.fields.excerpt,
           slug: edge.node.fields.path,
-          toc: 'docs',
-        },
+          toc: 'docs'
+        }
       });
     });
   });
