@@ -1,3 +1,5 @@
+const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
+
 const DEFAULT_OPTIONS = {
   react: false
 };
@@ -7,11 +9,11 @@ const DEFAULT_CONFIG = {
   plugins: ['import'],
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2021
+    ecmaVersion: 2020
   },
   env: {
     // Note: also sets ecmaVersion
-    es2021: true
+    es2020: true
   },
   globals: {
     globalThis: 'readonly',
@@ -28,7 +30,53 @@ const DEFAULT_CONFIG = {
     'import/no-unresolved': ['error'],
     'import/no-extraneous-dependencies': ['error', {devDependencies: false, peerDependencies: true}]
   },
-  ignorePatterns: ['node_modules', '**/dist*/**/*.js']
+  ignorePatterns: ['node_modules', '**/dist*/**/*.js'],
+  overrides: [
+    {
+      // babel-eslint can process TS files, but it doesn't understand types
+      // typescript-eslint has some more advanced rules with type checking
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        sourceType: 'module', // we want to use ES modules
+        project: './tsconfig.json'
+      },
+      plugins: ['@typescript-eslint'],
+      rules: {
+        ...typescriptConfigs['eslint-recommended'].rules,
+        ...typescriptConfigs.recommended.rules,
+        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+        indent: ['warn', 2, {SwitchCase: 1}],
+        quotes: ['warn', 'single'],
+        'no-process-env': 'off',
+        '@typescript-eslint/no-unused-vars': ['warn'],
+        '@typescript-eslint/no-explicit-any': 0,
+        '@typescript-eslint/switch-exhaustiveness-check': ['error'],
+        // Some of JS rules don't always work correctly in TS and
+        // hence need to be reimported as TS rules
+        'no-redeclare': 'off',
+        '@typescript-eslint/no-redeclare': ['warn'],
+        'no-shadow': 'off',
+        '@typescript-eslint/no-shadow': ['warn'],
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': ['error'],
+        'no-dupe-class-members': 'off',
+        '@typescript-eslint/no-dupe-class-members': ['error']
+      }
+    },
+    {
+      // We can lint through code examples in Markdown as well,
+      // but we don't need to enable all of the rules there
+      files: ['**/*.md'],
+      rules: {
+        'no-undef': 'off',
+        'no-unused-vars': 'off',
+        'no-unused-expressions': 'off',
+        'no-console': 'off',
+        'padded-blocks': 'off'
+      }
+    }
+  ]
 };
 
 function getReactConfig(options) {

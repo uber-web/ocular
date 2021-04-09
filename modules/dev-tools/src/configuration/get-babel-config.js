@@ -53,8 +53,11 @@ ENV_CONFIG.development = ENV_CONFIG.es5;
 module.exports = function getBabelConfig(api, options = {}) {
   api.cache.using(() => process.env.BABEL_ENV);
   const config = {...DEFAULT_CONFIG, ...ENV_CONFIG[api.env()]};
+  config.presets = config.presets || [];
   if (options.react) {
-    config.presets = (config.presets || []).concat(['@babel/preset-react']);
+    config.presets.push('@babel/preset-react');
   }
+  // TODO add flag?
+  config.presets.push('@babel/preset-typescript');
   return config;
 };
