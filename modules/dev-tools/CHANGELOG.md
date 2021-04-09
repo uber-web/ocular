@@ -1,6 +1,10 @@
 # CHANGELOG (ocular-dev-tools)
 
-## v1.0.0-alpha.2
+## v1.0.0-alpha.3
+
+- feat(dev-tools): Add typescript support (#361)
+
+## v1.0.0-alpha.3
 
 - feat(dev-tools): Add deepMerge export
 
