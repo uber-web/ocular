@@ -1,4 +1,3 @@
-
 const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
 
 const DEFAULT_OPTIONS = {
@@ -10,11 +9,11 @@ const DEFAULT_CONFIG = {
   plugins: ['import'],
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2021
+    ecmaVersion: 2020
   },
   env: {
     // Note: also sets ecmaVersion
-    es2021: true
+    es2020: true
   },
   globals: {
     globalThis: 'readonly',
@@ -39,7 +38,7 @@ const DEFAULT_CONFIG = {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        sourceType: 'module',   // we want to use ES modules
+        sourceType: 'module', // we want to use ES modules
         project: './tsconfig.json'
       },
       plugins: ['@typescript-eslint'],
