@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v1.0.0-alpha.4
+
+- chore: Move deepmerge dep to dev-tools
+
 ## v1.0.0-alpha.3
 
 - feat(dev-tools): Add typescript support (#361)
