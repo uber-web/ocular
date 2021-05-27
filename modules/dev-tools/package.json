@@ -33,6 +33,8 @@
     "ocular-tsify": "./scripts/ts-smoosh.js"
   },
   "scripts": {
+    "bootstrap": "yarn install-fast && ocular-bootstrap",
+    "install-fast": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn",
     "clean": "echo No build needed",
     "build": "echo No build needed",
     "lint": "npm run lint-yarn",
