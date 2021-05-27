@@ -13,7 +13,7 @@
     "clean": "ocular-clean",
     "cover": "ocular-test cover",
     "lint": "ocular-lint",
-    "test": "ocular-test",
+    "test": "ocular-test node",
     "test-gatsby": "(cd modules/gatsby-theme-ocular; yarn test;)",
     "publish-devtools-beta": "(cd modules/dev-tools; npm run publish-beta)",
     "publish-devtools-prod": "(cd modules/dev-tools; npm run publish-prod)",
