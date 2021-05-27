@@ -1,4 +1,7 @@
-// Configurations
+// Ocular Configuration
+export {default as getOcularConfig} from './helpers/get-ocular-config';
+
+// JS Tool Configurations
 export {getESLintConfig} from './configuration/get-eslint-config';
 export {getPrettierConfig} from './configuration/get-prettier-config';
 export {getBabelConfig} from './configuration/get-babel-config';
