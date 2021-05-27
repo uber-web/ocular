@@ -2,7 +2,8 @@
 
 ## v1.0.0-alpha.5
 
-- feat: export getOcularConfig
+- feat(dev-tools): export getOcularConfig (#363)
+- chore: Add github CI (#364)
 
 ## v1.0.0-alpha.4
 
