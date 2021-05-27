@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v1.0.0-alpha.5
+
+- feat: export getOcularConfig
+
 ## v1.0.0-alpha.4
 
 - chore: Move deepmerge dep to dev-tools
