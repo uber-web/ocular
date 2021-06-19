@@ -76,6 +76,13 @@ function getUserConfig(packageRoot, options) {
       userConfig = userConfig(options);
     }
   }
+  userConfigPath = resolve(packageRoot, './.ocularrc.cjs');
+  if (fs.existsSync(userConfigPath)) {
+    userConfig = require(userConfigPath);
+    if (typeof userConfig === 'function') {
+      userConfig = userConfig(options);
+    }
+  }
   userConfigPath = resolve(packageRoot, './ocular.config.js');
   if (fs.existsSync(userConfigPath)) {
     userConfig = require(userConfigPath);
