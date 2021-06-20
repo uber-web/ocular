@@ -85,7 +85,7 @@ function getUserConfig(packageRoot, options) {
       userConfig = userConfig(options);
     }
   }
-  // Backeward compatibility
+  // Backward compatibility
   userConfigPath = resolve(packageRoot, './ocular.config.js');
   if (fs.existsSync(userConfigPath)) {
     userConfig = require(userConfigPath);
