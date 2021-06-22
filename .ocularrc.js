@@ -8,8 +8,7 @@ let ocularConfig = {
   },
 
   lint: {
-    paths: ['modules'],
-    extensions: ['js', 'jsx']
+    paths: ['modules']
   },
 
   aliases: {

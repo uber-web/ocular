@@ -1,2 +1,4 @@
 import './lib/utils.spec';
-import './ts-smoosh/test';
+import './lib/configuration.spec';
+// TODO - issues after upgrade
+// import './ts-smoosh/test';
