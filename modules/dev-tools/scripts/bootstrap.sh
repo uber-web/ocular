@@ -7,6 +7,10 @@ set -e
 yarn global add puppeteer
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn
 
+# update browserlist database
+npx browserslist@latest --update-db
+
+# prepare module directories
 PACKAGE_DIR=`pwd`
 ROOT_NODE_MODULES_DIR=$PACKAGE_DIR/node_modules
 
