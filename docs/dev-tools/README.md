@@ -98,7 +98,7 @@ module.exports = env => {
 
 #### ocular-dev-tools.js
 
-A file `ocularrc.js` can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
+A file `.ocularrc.js` (or `.ocularrc.cjs` for `type:module` projects) can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
 
 - `lint`
   + `paths` (Arrray) - directories to include when linting. Default `['modules', 'src']`

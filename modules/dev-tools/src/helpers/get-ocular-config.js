@@ -69,6 +69,7 @@ function getUserConfig(packageRoot, options) {
 
   let userConfigPath;
 
+  // Standard config file
   userConfigPath = resolve(packageRoot, './.ocularrc.js');
   if (fs.existsSync(userConfigPath)) {
     userConfig = require(userConfigPath);
@@ -76,6 +77,15 @@ function getUserConfig(packageRoot, options) {
       userConfig = userConfig(options);
     }
   }
+  // Compatibility with type:module packages
+  userConfigPath = resolve(packageRoot, './.ocularrc.cjs');
+  if (fs.existsSync(userConfigPath)) {
+    userConfig = require(userConfigPath);
+    if (typeof userConfig === 'function') {
+      userConfig = userConfig(options);
+    }
+  }
+  // Backward compatibility
   userConfigPath = resolve(packageRoot, './ocular.config.js');
   if (fs.existsSync(userConfigPath)) {
     userConfig = require(userConfigPath);
