@@ -2,7 +2,7 @@
 
 // The following targets are designed to support the most commonly used evergreen browsers.
 // As of Feb 2021 they all support async function, async iterator, and spread operator.
-const TARGETS = ['>0.2%', 'maintained node versions', 'not ie 11', 'not dead', 'not chrome 49'];
+const TARGETS = ['>0.2% and supports async-functions', 'maintained node versions', 'not dead'];
 
 const DEFAULT_CONFIG = {
   comments: false
