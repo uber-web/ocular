@@ -1,4 +1,4 @@
-const getOcularConfig = require('../src/helpers/get-ocular-config');
+const {getOcularConfig} = require('../src/helpers/get-ocular-config');
 
 const ocularConfig = getOcularConfig();
 

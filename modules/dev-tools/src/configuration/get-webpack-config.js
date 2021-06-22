@@ -3,7 +3,7 @@
 const {resolve} = require('path');
 const BundleAnalyzerPlugin = null; // require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const getOcularConfig = require('../helpers/get-ocular-config');
+const {getOcularConfig} = require('../helpers/get-ocular-config');
 
 const COMMON_CONFIG = {
   mode: 'development',
@@ -46,7 +46,7 @@ const MAIN_FIELDS = {
 };
 
 /** @type {types['getWebpackConfig']} */
-module.exports = function getWebpackConfig(env = {}, opts = {}) {
+module.exports.getWebpackConfig = function getWebpackConfig(env = {}, opts = {}) {
   const config = getOcularConfig(opts);
 
   COMMON_CONFIG.resolve.alias = config.aliases;

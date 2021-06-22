@@ -5,9 +5,10 @@ const log = require('./log');
 
 const prettier = require('prettier');
 // @ts-ignore
-const prettierConfig = require('../configuration/get-prettier-config')();
+const {getPrettierConfig} = require('../configuration/get-prettier-config');
 
 const suffix = 'ts';
+const prettierConfig = getPrettierConfig();
 
 /**
  * Writes the result of smooshing to a file

@@ -5,7 +5,7 @@ const {resolve} = require('path');
 const getAliases = require('../../node/aliases');
 const {shallowMerge} = require('../utils/utils');
 
-module.exports = function getOcularConfig(options = {}) {
+module.exports.getOcularConfig = function getOcularConfig(options = {}) {
   const packageRoot = options.root || process.env.PWD;
 
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
@@ -37,6 +37,7 @@ module.exports = function getOcularConfig(options = {}) {
     },
 
     webpack: {
+      version: 4,
       configPath: getValidPath([
         resolve(packageRoot, './webpack.config.js'),
         resolve(__dirname, './webpack.config.js')

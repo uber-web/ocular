@@ -1,5 +1,6 @@
 // Ocular Configuration
-export {default as getOcularConfig} from './helpers/get-ocular-config';
+export type {OcularConfig} from './helpers/get-ocular-config'
+export {getOcularConfig} from './helpers/get-ocular-config';
 
 // JS Tool Configurations
 export {getESLintConfig} from './configuration/get-eslint-config';

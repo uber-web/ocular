@@ -6,7 +6,7 @@ const {resolve} = require('path');
 // Register module aliases
 const moduleAlias = require('module-alias');
 
-const getOcularConfig = require('../src/helpers/get-ocular-config');
+const {getOcularConfig} = require('../src/helpers/get-ocular-config');
 
 // Browser test is opt-in by installing @probe.gl/test-utils
 let BrowserTestDriver = null;

@@ -6,7 +6,7 @@ const DEFAULT_CONFIG = {
   bracketSpacing: false
 };
 
-module.exports = function getPrettierConfig(options) {
+module.exports.getPrettierConfig = function getPrettierConfig(options) {
   const config = DEFAULT_CONFIG;
   return config;
 };
