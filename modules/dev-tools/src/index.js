@@ -1,13 +1,24 @@
+const {getOcularConfig} = require('./helpers/get-ocular-config');
+
+// JS Tool Configurations
+const {getBabelConfig} = require('./configuration/get-babel-config');
+const {getESLintConfig} = require('./configuration/get-eslint-config');
+const {getPrettierConfig} = require('./configuration/get-prettier-config');
+const {getWebpackConfig} = require('./configuration/get-webpack-config');
+
+// Utilities
+const deepMerge = require('deepmerge');
+
 module.exports = {
   // Ocular Configuration
-  getOcularConfig: require('./helpers/get-ocular-config'),
+  getOcularConfig,
 
   // JS Tool Configurations
-  getBabelConfig: require('./configuration/get-babel-config'),
-  getESLintConfig: require('./configuration/get-eslint-config'),
-  getPrettierConfig: require('./configuration/get-prettier-config'),
-  getWebpackConfig: require('./configuration/get-webpack-config'),
+  getBabelConfig,
+  getESLintConfig,
+  getPrettierConfig,
+  getWebpackConfig,
 
   // Utilities
-  deepMerge: require('deepmerge')
+  deepMerge
 };

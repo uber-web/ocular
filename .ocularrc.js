@@ -1,6 +1,12 @@
+/** @typedef {import('ocular-dev-tools').OcularConfig} OcularConfig */
 const {resolve} = require('path');
 
-module.exports = {
+/** @type {OcularConfig} */
+let ocularConfig = {
+  typescript: {
+    check: true
+  },
+
   lint: {
     paths: ['modules'],
     extensions: ['js', 'jsx']
@@ -18,3 +24,5 @@ module.exports = {
     size: 'test/size/import-nothing.js'
   }
 };
+
+module.exports = ocularConfig;

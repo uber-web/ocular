@@ -91,7 +91,7 @@ function getReactConfig(options) {
   };
 }
 
-module.exports = function getESLintConfig(options) {
+module.exports.getESLintConfig = function getESLintConfig(options) {
   options = {...DEFAULT_OPTIONS, ...options};
   let config = DEFAULT_CONFIG;
   if (options.react) {
