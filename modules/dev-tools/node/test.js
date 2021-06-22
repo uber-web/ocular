@@ -16,29 +16,17 @@ try {
   BrowserTestDriver = null;
 }
 
-const config = getOcularConfig();
-moduleAlias.addAliases(config.aliases);
+const ocularConfig = getOcularConfig();
+
+const webpackVersion = ocularConfig.webpack.version;
+const webpackConfigPath = ocularConfig.webpack.configPath; // Could we deduce version?
+const webpackCommand = webpackVersion === 5 ? 'webpack' : 'webpack-dev-server';
 
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
+
 console.log(`Running ${mode} tests...`); // eslint-disable-line
 
-function resolveEntry(key) {
-  return resolve(config.entry[key]);
-}
-
-function runBrowserTest(opts) {
-  if (BrowserTestDriver === null) {
-    console.log('@probe.gl/test-utils is not installed, skipping browser test');
-    // console.log('\033[93m@probe.gl/test-utils is not installed, skipping browser test\033[0m');
-    process.exit(0);
-  }
-  const userConfig = config.browserTest || {};
-  const options = Object.assign({}, opts, userConfig, {
-    server: Object.assign({}, opts.server, userConfig.server),
-    browser: Object.assign({}, opts.browser, userConfig.browser)
-  });
-  return new BrowserTestDriver().run(options);
-}
+moduleAlias.addAliases(ocularConfig.aliases);
 
 switch (mode) {
   case 'cover':
@@ -61,8 +49,11 @@ switch (mode) {
   case 'browser-headless':
     runBrowserTest({
       server: {
-        command: 'webpack-dev-server',
-        arguments: ['--config', config.webpack.configPath, '--env.mode=test']
+        command: webpackCommand,
+        arguments:
+          webpackVersion === 5
+            ? ['serve', '--config', webpackConfigPath, '--env', 'mode=test']
+            : ['--config', webpackConfigPath, '--env.mode=test']
       },
       headless: mode === 'browser-headless'
     });
@@ -71,28 +62,49 @@ switch (mode) {
   case 'bench-browser':
     runBrowserTest({
       server: {
-        command: 'webpack-dev-server',
-        arguments: ['--config', config.webpack.configPath, '--env.mode=bench']
+        command: webpackCommand,
+        arguments:
+          webpackVersion === 5
+            ? ['serve', '--config', webpackConfigPath, '--env', 'mode=bench']
+            : ['--config', webpackConfigPath, '--env.mode=bench']
       }
     });
     break;
 
   default:
     if (/\bbrowser\b/.test(mode)) {
+      const testMode = mode.replace('-browser', '').replace('-headless', '');
       runBrowserTest({
         server: {
-          command: 'webpack-dev-server',
-          arguments: [
-            '--config',
-            config.webpack.configPath,
-            `--env.mode=${mode.replace('-browser', '').replace('-headless', '')}`
-          ]
+          command: webpackCommand,
+          arguments:
+            webpackVersion === 5
+              ? ['serve', '--config', webpackConfigPath, `--env`, `mode=${testMode}`]
+              : ['--config', webpackConfigPath, `--env.mode=${testMode}`]
         },
         headless: /\bheadless\b/.test(mode)
       });
-    } else if (mode in config.entry) {
+    } else if (mode in ocularConfig.entry) {
       require(resolveEntry(mode));
     } else {
       throw new Error(`Unknown test mode ${mode}`);
     }
+}
+
+function resolveEntry(key) {
+  return resolve(ocularConfig.entry[key]);
+}
+
+function runBrowserTest(opts) {
+  if (BrowserTestDriver === null) {
+    console.log('@probe.gl/test-utils is not installed, skipping browser test');
+    // console.log('\033[93m@probe.gl/test-utils is not installed, skipping browser test\033[0m');
+    process.exit(0);
+  }
+  const userConfig = ocularConfig.browserTest || {};
+  const options = Object.assign({}, opts, userConfig, {
+    server: Object.assign({}, opts.server, userConfig.server),
+    browser: Object.assign({}, opts.browser, userConfig.browser)
+  });
+  return new BrowserTestDriver().run(options);
 }
