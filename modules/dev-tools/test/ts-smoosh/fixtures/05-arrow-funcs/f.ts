@@ -1,8 +1,8 @@
 export type State = {
-  a: string
+  a: string;
 };
 export type Action = {
-  payload: string
+  payload: string;
 };
 
 export const createMapUpdater = (state: State, action: Action): State => {

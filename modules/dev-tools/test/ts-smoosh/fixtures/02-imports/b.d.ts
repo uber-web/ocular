@@ -1,2 +1,1 @@
-
-export type MyFn = (a: number, b: number) => number
+export type MyFn = (a: number, b: number) => number;

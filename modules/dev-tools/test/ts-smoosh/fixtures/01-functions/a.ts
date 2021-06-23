@@ -6,7 +6,7 @@ export function foo(
   bar: string,
   baz: number
 ): {
-  boo: number
+  boo: number;
 } {
   return {boo: baz};
 }

@@ -1,8 +1,8 @@
-## TS Smoosh
+# TS Smoosh
 
 Combine type decls with related source files.
 
-# Use
+## Use
 
 Given a JavaScript file (or list of files) like so:
 
@@ -13,6 +13,7 @@ $ node ts-smoosh/bin ./src/some-file.js
 Will produce `.ts` files using nearby `.d.ts` files.
 
 # Supported syntax
+
 ts-smoosh parses `.d.ts` file, collects type declarations and runs typescript parser on `.js` file, injects types wherever a `JsDoc` type declaration is available. It supports most of the common `JSDoc` type declarations we use.
 
 ### 1. Type imports
@@ -80,11 +81,12 @@ $ node test
 
 Test cases live in various directories in `./tests`. Tests run by comparing the output against golden master `.tsx` files. To update the masters, run `node ts-smoosh/bin ./test/0X-dir/somefile.js`.
 
-# Known issues 
+# Known issues
 
 Here are some limitations and drawbacks of the scripts
 
 #### 1. Missing empty line inside functions
+
 Typescript compiler [doesn't preserve empty lines](https://github.com/microsoft/TypeScript/issues/843). When ts-smoosh injects types into functions, it will replace the existing JSDoc comment with an empty line, but empty lines inside the functions will be missing. So are empty lines between variable declarations that does not have JSDoc types. More improvements can be made such as insert empty before return statements.
 
 #### 2. Mixed import and export statement.
@@ -92,7 +94,9 @@ Typescript compiler [doesn't preserve empty lines](https://github.com/microsoft/
 When type decl are injected, they might come between import statements. Some manual cleanup is required.
 
 #### 3. Unsupported JSDoc `@returns` `@params` tags
+
 Only type declarations with the `@type` tag are supported. Some functions use separate tags such as below, future work can be done to support it.
+
 ```js
 /**
  * Currently not supported
@@ -102,8 +106,6 @@ Only type declarations with the `@type` tag are supported. Some functions use se
  */
 function defaultLayersForGeoKey(dataset, geoKey) {...}
 ```
-
-
 
 # Notes
 
