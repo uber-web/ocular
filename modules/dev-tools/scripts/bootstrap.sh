@@ -8,6 +8,7 @@ yarn global add puppeteer
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn
 
 # update browserlist database
+echo "Updating browserlist"
 npx browserslist@latest --update-db
 
 # prepare module directories
