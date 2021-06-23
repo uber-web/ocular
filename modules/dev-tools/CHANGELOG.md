@@ -1,6 +1,6 @@
 # CHANGELOG (ocular-dev-tools)
 
-## v1.0.0-alpha.5
+## v1.0.0-alpha.6
 
 - feat(dev-tools): Add typescript build support (#372)
 - chore: prettier fixes (#373)
