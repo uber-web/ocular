@@ -25,6 +25,6 @@ const config = deepMerge(defaultConfig, {
 });
 
 // Uncomment to log the eslint config
-console.debug(JSON.stringify(config, null, 2));
+// console.debug(JSON.stringify(config, null, 2));
 
 module.exports = config;

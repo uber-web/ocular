@@ -1,16 +1,16 @@
 /** Helper type to typecheck ocular config in applications */
 type OcularConfig = {
-  aliases?: {[module: string]: string},
+  aliases?: {[module: string]: string};
 
   babel?: {
     configPath?: string;
     extensions?: string[];
-  },
+  };
 
   lint?: {
-    paths?: string[],
+    paths?: string[];
     extensions?: string[];
-  },
+  };
 
   webpack?: {
     version?: number;
@@ -29,21 +29,21 @@ type OcularConfig = {
     'bench-browser'?: string;
     size?: string;
   };
-}
+};
 
 /** Internal type to typecheck resolved ocular config inside ocular-dev-tools */
 type MaterializedOcularConfig = {
-  aliases: {[module: string]: string},
+  aliases: {[module: string]: string};
 
   babel: {
     configPath: string;
     extensions: string[];
-  },
+  };
 
   lint: {
-    paths: string[],
+    paths: string[];
     extensions: string[];
-  },
+  };
 
   webpack: {
     version: number;
@@ -62,14 +62,14 @@ type MaterializedOcularConfig = {
     'bench-browser': string;
     size: string;
   };
-}
+};
 
 /**
  * Returns a default ocular config object
  * @param options.root - path to package root, default `pwd`
  * @param options.aliasMode - default `src`
  */
- export function getOcularConfig(options?: {
+export function getOcularConfig(options?: {
   root?: string;
   aliasMode?: string;
 }): MaterializedOcularConfig;
