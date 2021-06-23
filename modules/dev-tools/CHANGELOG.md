@@ -2,6 +2,18 @@
 
 ## v1.0.0-alpha.5
 
+- feat(dev-tools): Add typescript build support (#372)
+- chore: prettier fixes (#373)
+- babel targets: explicit support for async functions in ESM, reduces runtime dependencies. (#366)
+- chore(docs): Split docs per module (#371)
+- feat(dev-tools): Partial webpack 5 support (#370)
+- chore(dev-tools): update browser list on bootstrap (#367)
+- chore(dev-tools): improve typings (#369)
+- fix(dev-tools): Fix Node 16 build (#368)
+- fix(dev-tools): For ES Modules, look also for .ocularrc.cjs (#365)
+
+## v1.0.0-alpha.5
+
 - feat(dev-tools): export getOcularConfig (#363)
 - chore: Add github CI (#364)
 
