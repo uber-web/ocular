@@ -88,6 +88,12 @@
     "webpack-dev-server": "^3.1.14",
     "webpack": "^4.28.4"
   },
+  "dependencies-webpack4-comment": {
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack": "5.38.1",
+    "webpack-cli": "4.7.0",
+    "webpack-dev-server": "4.0.0-beta.3"
+  },
   "devDependencies": {
     "@probe.gl/test-utils": "^3.0.2",
     "math.gl": "^3.0.0"

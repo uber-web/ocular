@@ -1,22 +1,17 @@
 /** @typedef {import('./get-webpack-config')} types */
 
 const {resolve} = require('path');
-const BundleAnalyzerPlugin = null; // require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {getOcularConfig} = require('../helpers/get-ocular-config');
 
+/** Common fields for Webpack 4 and 5 */
 const COMMON_CONFIG = {
   mode: 'development',
 
-  devServer: {
-    stats: {
-      warnings: false
-    }
-  },
-
   resolve: {},
 
-  devtool: 'inline-source-maps',
+  devtool: 'inline-source-map',
 
   module: {
     rules: [
@@ -29,14 +24,22 @@ const COMMON_CONFIG = {
     ]
   },
 
+  plugins: [new HtmlWebpackPlugin()]
+};
+
+/** Fields used by Webpack 4 only */
+const WEBPACK4_CONFIG = {
   node: {
     fs: 'empty',
     net: 'empty',
     // eslint-disable-next-line camelcase
     child_process: 'empty'
   },
-
-  plugins: [new HtmlWebpackPlugin()]
+  devServer: {
+    stats: {
+      warnings: false
+    }
+  }
 };
 
 const MAIN_FIELDS = {
@@ -47,16 +50,17 @@ const MAIN_FIELDS = {
 
 /** @type {types['getWebpackConfig']} */
 module.exports.getWebpackConfig = function getWebpackConfig(env = {}, opts = {}) {
-  const config = getOcularConfig(opts);
+  const ocularConfig = getOcularConfig(opts);
 
-  COMMON_CONFIG.resolve.alias = config.aliases;
+  const webpackConfig = {...COMMON_CONFIG};
+  webpackConfig.resolve.alias = ocularConfig.aliases;
 
   switch (env.mode) {
     case 'size':
-      return Object.assign({}, COMMON_CONFIG, {
+      Object.assign(webpackConfig, {
         mode: 'production',
 
-        entry: getEntryPoints('size', config),
+        entry: getEntryPoints('size', ocularConfig),
 
         resolve: Object.assign({}, COMMON_CONFIG.resolve, {
           mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
@@ -66,37 +70,49 @@ module.exports.getWebpackConfig = function getWebpackConfig(env = {}, opts = {})
 
         plugins: []
       });
+      break;
 
     case 'analyze':
     case 'analyze-dev':
-      return Object.assign({}, COMMON_CONFIG, {
+      Object.assign(webpackConfig, {
         mode: 'development',
 
-        entry: getEntryPoints('size', config),
+        entry: getEntryPoints('size', ocularConfig),
 
         devtool: false,
 
         plugins: [new BundleAnalyzerPlugin()]
       });
+      break;
 
     case 'analyze-prod':
-      return Object.assign({}, COMMON_CONFIG, {
+      Object.assign(webpackConfig, {
         mode: 'production',
 
-        entry: getEntryPoints('size', config),
+        entry: getEntryPoints('size', ocularConfig),
 
         devtool: false,
 
         plugins: [new BundleAnalyzerPlugin()]
       });
+      break;
 
     case 'bench':
     case 'test':
     default:
-      return Object.assign({}, COMMON_CONFIG, {
-        entry: getEntryPoints(`${env.mode}-browser`, config)
+      Object.assign(webpackConfig, {
+        entry: getEntryPoints(`${env.mode}-browser`, ocularConfig)
       });
   }
+
+  // webpack 4 specifics
+  if (ocularConfig.webpack.version !== 5) {
+    Object.assign(webpackConfig, WEBPACK4_CONFIG);
+    // TODO - check if this is correct.
+    webpackConfig.devtool = 'inline-source-maps';
+  }
+
+  return webpackConfig;
 };
 
 // HELPERS
