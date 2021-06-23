@@ -11,7 +11,11 @@ While highly configurable ocular-dev-tools is very opinionated in choice of tool
 
 ## About gatsby-theme-ocular
 
+<<<<<<< HEAD
 The vis.gl team needed a system to build documentation websites with the least amount of friction. Our first use case has been the websites for the various visualization projects such as [deck.gl](https://deck.gl) [luma.gl](https://luma.gl) or [loaders.gl](https://loaders.gl). 
+=======
+The vis.gl team needed a system to build documentation websites with the least amount of friction. Our first use case has been the websites for the various visualization projects such as [deck.gl](https://deck.gl) [luma.gl](https://luma.gl) or [loaders.gl](https://loaders.gl).
+>>>>>>> chore(docs): Split docs per module
 
 We wanted: 
 - to organize documentation files with a table of contents, navigation and search;

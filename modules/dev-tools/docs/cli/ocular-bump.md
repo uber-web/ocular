@@ -9,14 +9,14 @@ This script helps replace packages with specified version inside a repo. Replace
 
 For monerepos, you can use the package name to bump all the modules to the corresponding version.
 
-Given a `package-name`, `modules` to bump are the results from `npm search [package-name]` 
+Given a `package-name`, `modules` to bump are the results from `npm search [package-name]`
 
 - deck.gl: `ocular-bump deck.gl` or `ocular-bump deck.gl=beta`
 - luma.gl: `ocular-bump luma.gl` or `ocular-bump luma.gl=beta`
 - math.gl: `ocular-bump math.gl` or `ocular-bump math.gl=beta`
 - probe.gl: `ocular-bump probe.gl` or `ocular-bump probe.gl=beta`
 
-## Examples 
+## Examples
 
 ```shell script
 

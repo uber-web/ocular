@@ -11,7 +11,8 @@ module.exports = {
       logLevel: 1,
 
       DOC_FOLDERS: [
-        `${__dirname}/../docs/`
+        `${__dirname}/../docs/`,
+        `${__dirname}/../modules/`
       ],
       ROOT_FOLDER: `${__dirname}/../`,
       SOURCE: [
@@ -43,12 +44,12 @@ module.exports = {
       DOCS,
 
       EXAMPLES: [
-        {
-          title: 'Minimal Example',
-          path: 'examples/minimal/',
-          image: 'images/hero.jpg',
-          componentUrl: resolve('../examples/minimal/app.js')
-        }
+        // {
+        //   title: 'Minimal Example',
+        //   path: 'examples/minimal',
+        //   image: 'images/hero.jpg',
+        //   componentUrl: resolve(__dirname, '../examples/minimal/app.js')
+        // }
       ],
 
       // THEME_OVERRIDES: require('./src/theme.json'),

@@ -1,6 +1,6 @@
 # What's New
 
-## ocular-dev-tools
+`ocular-dev-tools` release details are available in the [CHANGELOG](https://github.com/uber-web/ocular/blob/master/modules/dev-tools/CHANGELOG.md)
 
 ### v1.0.0 (alpha)
 

@@ -16,16 +16,16 @@
           "title": "Overview",
           "entries": [
             {
-              "entry": "docs/dev-tools"
+              "entry": "modules/dev-tools/docs/"
             },
             {
-              "entry": "docs/dev-tools/whats-new"
+              "entry": "modules/dev-tools/docs/whats-new"
             },
             {
-              "entry": "docs/dev-tools/upgrade-guide"
+              "entry": "modules/dev-tools/docs/upgrade-guide"
             },
             {
-              "entry": "docs/dev-tools/faq"
+              "entry": "modules/dev-tools/docs/faq"
             }
           ]
         },
@@ -33,19 +33,16 @@
           "title": "Configuration Guide",
           "entries": [
             {
-              "entry": "docs/dev-tools"
+              "entry": "modules/dev-tools/docs/"
             },
             {
-              "entry": "docs/dev-tools/developer-guide/command-line-interface"
+              "entry": "modules/dev-tools/docs/developer-guide/command-line-interface"
             },
             {
-              "entry": "docs/dev-tools/developer-guide/configuring-tests"
+              "entry": "modules/dev-tools/docs/developer-guide/configuring-tests"
             },
             {
-              "entry": "docs/dev-tools/developer-guide/webpack-config"
-            },
-            {
-              "entry": "docs/dev-tools/developer-guide/aliases"
+              "entry": "modules/dev-tools/docs/developer-guide/aliases"
             }
           ]
         },
@@ -53,28 +50,45 @@
           "title": "Command Line Reference",
           "entries": [
             {
-              "entry": "docs/dev-tools/cli/ocular-bootstrap"
+              "entry": "modules/dev-tools/docs/cli/ocular-bootstrap"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-build"
+              "entry": "modules/dev-tools/docs/cli/ocular-build"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-clean"
+              "entry": "modules/dev-tools/docs/cli/ocular-clean"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-lint"
+              "entry": "modules/dev-tools/docs/cli/ocular-lint"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-metrics"
+              "entry": "modules/dev-tools/docs/cli/ocular-metrics"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-publish"
+              "entry": "modules/dev-tools/docs/cli/ocular-publish"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-test"
+              "entry": "modules/dev-tools/docs/cli/ocular-test"
             },
             {
-              "entry": "docs/dev-tools/cli/ocular-bump"
+              "entry": "modules/dev-tools/docs/cli/ocular-bump"
+            }
+          ]
+        },
+        {
+          "title": "API Reference",
+          "entries": [
+            {
+              "entry": "modules/dev-tools/docs/api-reference/get-babel-config"
+            },
+            {
+              "entry": "modules/dev-tools/docs/api-reference/get-eslint-config"
+            },
+            {
+              "entry": "modules/dev-tools/docs/api-reference/get-prettier-config"
+            },
+            {
+              "entry": "modules/dev-tools/docs/api-reference/get-webpack-config"
             }
           ]
         }
@@ -87,16 +101,16 @@
           "title": "Overview",
           "entries": [
             {
-              "entry": "docs/gatsby-theme-ocular"
+              "entry": "modules/gatsby-theme-ocular/docs"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/get-started"
+              "entry": "modules/gatsby-theme-ocular/docs/get-started"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/whats-new"
+              "entry": "modules/gatsby-theme-ocular/docs/whats-new"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/upgrade-guide"
+              "entry": "modules/gatsby-theme-ocular/docs/upgrade-guide"
             }
           ]
         },
@@ -104,10 +118,27 @@
           "title": "Creating content",
           "entries": [
             {
-              "entry": "docs/gatsby-theme-ocular/creating-content/writing-documentation"
+              "entry": "modules/gatsby-theme-ocular/docs"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/creating-content/interactive-examples"
+              "entry": "modules/gatsby-theme-ocular/docs/get-started"
+            },
+            {
+              "entry": "modules/gatsby-theme-ocular/docs/whats-new"
+            },
+            {
+              "entry": "modules/gatsby-theme-ocular/docs/upgrade-guide"
+            }
+          ]
+        },
+        {
+          "title": "Creating content",
+          "entries": [
+            {
+              "entry": "modules/gatsby-theme-ocular/docs/creating-content/writing-documentation"
+            },
+            {
+              "entry": "modules/gatsby-theme-ocular/docs/creating-content/interactive-examples"
             }
           ]
         },
@@ -115,13 +146,13 @@
           "title": "Developer Guide",
           "entries": [
             {
-              "entry": "docs/gatsby-theme-ocular/developer-guide/configuring"
+              "entry": "modules/gatsby-theme-ocular/docs/developer-guide/configuring"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/developer-guide/deploying"
+              "entry": "modules/gatsby-theme-ocular/docs/developer-guide/deploying"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/developer-guide/debugging"
+              "entry": "modules/gatsby-theme-ocular/docs/developer-guide/debugging"
             }
           ]
         },
@@ -129,10 +160,10 @@
           "title": "API Reference",
           "entries": [
             {
-              "entry": "docs/gatsby-theme-ocular/api-reference/options"
+              "entry": "modules/gatsby-theme-ocular/docs/api-reference/options"
             },
             {
-              "entry": "docs/gatsby-theme-ocular/api-reference/generated-pages"
+              "entry": "modules/gatsby-theme-ocular/docs/api-reference/generated-pages"
             }
           ]
         }
