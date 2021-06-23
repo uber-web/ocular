@@ -18,12 +18,12 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
         resolve(packageRoot, './babel.config.js'),
         resolve(__dirname, './babel.config.js')
       ]),
-      extensions: ['.es6', '.js', '.es', '.jsx', '.mjs']
+      extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
     },
 
     lint: {
       paths: IS_MONOREPO ? ['modules'] : ['src'],
-      extensions: ['js', 'md']
+      extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx', 'd.ts']
     },
 
     aliases: {},

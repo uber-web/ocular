@@ -9,9 +9,26 @@ const DEFAULT_CONFIG = {
   comments: false
 };
 
+const COMMON_PRESETS = [
+  // Accepts typescript syntax
+  // Note that this still has limits (requires typescript isolated modules)
+  '@babel/preset-typescript'
+];
+
+const COMMON_PLUGINS = [
+  // webpack 4 cannot parse the most recent JS syntax
+  '@babel/plugin-proposal-optional-chaining',
+  '@babel/plugin-proposal-nullish-coalescing-operator',
+  // typescript syntax supports the class properties proposal,
+  // but we also need to let babel know how to transpile these
+  '@babel/plugin-proposal-class-properties'
+];
+
 const ENV_CONFIG = {
+  // fully transpiled build
   es5: {
     presets: [
+      ...COMMON_PRESETS,
       [
         '@babel/env',
         {
@@ -20,10 +37,12 @@ const ENV_CONFIG = {
         }
       ]
     ],
-    plugins: ['@babel/transform-runtime']
+    plugins: [...COMMON_PLUGINS, '@babel/transform-runtime']
   },
+  // es module style build
   esm: {
     presets: [
+      ...COMMON_PRESETS,
       [
         '@babel/env',
         {
@@ -32,10 +51,16 @@ const ENV_CONFIG = {
         }
       ]
     ],
-    plugins: [['@babel/transform-runtime', {useESModules: true}]]
+    plugins: [
+      ...COMMON_PLUGINS,
+      // TODO - we likely do not need runtime transforms for the esm setting
+      ['@babel/transform-runtime', {useESModules: true}]
+    ]
   },
+  // coverage build (node only)
   test: {
     presets: [
+      ...COMMON_PRESETS,
       [
         '@babel/preset-env',
         {
@@ -43,7 +68,7 @@ const ENV_CONFIG = {
         }
       ]
     ],
-    plugins: ['istanbul']
+    plugins: [...COMMON_PLUGINS, 'istanbul']
   }
 };
 
@@ -58,7 +83,5 @@ module.exports.getBabelConfig = function getBabelConfig(api, options = {}) {
   if (options.react) {
     config.presets.push('@babel/preset-react');
   }
-  // TODO add flag?
-  config.presets.push('@babel/preset-typescript');
   return config;
 };

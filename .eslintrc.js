@@ -6,6 +6,10 @@ const defaultConfig = getESLintConfig({react: '16.8.2'});
 
 // We are importing ourselves
 const config = deepMerge(defaultConfig, {
+  parserOptions: {
+    project: ['./tsconfig.json']
+  },
+
   rules: {
     'import/no-extraneous-dependencies': 0,
     'no-console': 0,
@@ -17,10 +21,10 @@ const config = deepMerge(defaultConfig, {
     node: true
   },
 
-  ignorePatterns: ['modules/gatsby-theme-ocular', 'modules/dev-tools/test/ts-smoosh/fixtures']
+  ignorePatterns: ['modules/gatsby-theme-ocular']
 });
 
 // Uncomment to log the eslint config
-// console.debug(config);
+// console.debug(JSON.stringify(config, null, 2));
 
 module.exports = config;
