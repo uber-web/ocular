@@ -1,5 +1,8 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v0.3.1
+- babel targets: explicit support for async functions in ESM, reduces runtime dependencies. (#366)
+
 ## v0.3.0
 - Change build targets (#349)
 
