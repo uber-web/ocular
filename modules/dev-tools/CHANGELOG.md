@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v1.0.0-alpha.7
+
+- chore(dev-tools): dependencies (#374)
+
 ## v1.0.0-alpha.6
 
 - feat(dev-tools): Add typescript build support (#372)
