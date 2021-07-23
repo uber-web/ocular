@@ -73,6 +73,7 @@ function getUserConfig(packageRoot, options) {
   // Standard config file
   userConfigPath = resolve(packageRoot, './.ocularrc.js');
   if (fs.existsSync(userConfigPath)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
       userConfig = userConfig(options);
@@ -81,6 +82,7 @@ function getUserConfig(packageRoot, options) {
   // Compatibility with type:module packages
   userConfigPath = resolve(packageRoot, './.ocularrc.cjs');
   if (fs.existsSync(userConfigPath)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
       userConfig = userConfig(options);
@@ -89,6 +91,7 @@ function getUserConfig(packageRoot, options) {
   // Backward compatibility
   userConfigPath = resolve(packageRoot, './ocular.config.js');
   if (fs.existsSync(userConfigPath)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
       userConfig = userConfig(options);
@@ -96,6 +99,7 @@ function getUserConfig(packageRoot, options) {
   }
   userConfigPath = resolve(packageRoot, './ocular-dev-tools.config.js');
   if (fs.existsSync(userConfigPath)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
       userConfig = userConfig(options);

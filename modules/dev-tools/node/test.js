@@ -11,6 +11,7 @@ const {getOcularConfig} = require('../src/helpers/get-ocular-config');
 // Browser test is opt-in by installing @probe.gl/test-utils
 let BrowserTestDriver = null;
 try {
+  // eslint-disable-next-line global-require, import/no-dynamic-require
   BrowserTestDriver = require('@probe.gl/test-utils').BrowserTestDriver;
 } catch (error) {
   BrowserTestDriver = null;
@@ -31,17 +32,22 @@ moduleAlias.addAliases(ocularConfig.aliases);
 switch (mode) {
   case 'cover':
   case 'node':
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     require(resolveEntry('test')); // Run the tests
     break;
 
   case 'dist':
-    const distConfig = getOcularConfig({aliasMode: 'dist'});
-    // Load deck.gl itself from the dist folder
-    moduleAlias.addAliases(distConfig.aliases);
-    require(resolveEntry('test')); // Run the tests
+    {
+      const distConfig = getOcularConfig({aliasMode: 'dist'});
+      // Load deck.gl itself from the dist folder
+      moduleAlias.addAliases(distConfig.aliases);
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      require(resolveEntry('test')); // Run the tests
+    }
     break;
 
   case 'bench':
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     require(resolveEntry('bench')); // Run the benchmarks
     break;
 
@@ -85,6 +91,7 @@ switch (mode) {
         headless: /\bheadless\b/.test(mode)
       });
     } else if (mode in ocularConfig.entry) {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
       require(resolveEntry(mode));
     } else {
       throw new Error(`Unknown test mode ${mode}`);
@@ -102,9 +109,11 @@ function runBrowserTest(opts) {
     process.exit(0);
   }
   const userConfig = ocularConfig.browserTest || {};
-  const options = Object.assign({}, opts, userConfig, {
-    server: Object.assign({}, opts.server, userConfig.server),
-    browser: Object.assign({}, opts.browser, userConfig.browser)
-  });
+  const options = {
+    ...opts,
+    ...userConfig,
+    server: {...opts.server, ...userConfig.server},
+    browser: {...opts.browser, ...userConfig.browser}
+  };
   return new BrowserTestDriver().run(options);
 }

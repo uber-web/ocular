@@ -5,7 +5,7 @@ const DEFAULT_OPTIONS = {
 };
 
 const DEFAULT_CONFIG = {
-  extends: ['uber-es2015', 'prettier', 'prettier/react', 'plugin:import/errors'],
+  extends: ['airbnb', 'prettier', 'plugin:import/errors'],
   plugins: ['import'],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -25,13 +25,21 @@ const DEFAULT_CONFIG = {
     __VERSION__: 'readonly'
   },
   rules: {
-    'guard-for-in': 0,
-    'generator-star-spacing': 0,
-    'func-names': 0,
-    'no-inline-comments': 0,
-    'no-multi-str': 0,
-    'space-before-function-paren': 0,
+    'guard-for-in': 'off',
+    'generator-star-spacing': 'off',
+    'func-names': 'off',
+    'no-case-declarations': 'warn',
+    'no-inline-comments': 'off',
+    'no-multi-str': 'off',
+    'no-restricted-syntax': 'off', // Allow for...in
+    'no-param-reassign': 'warn',
+    'no-plusplus': 'off',
+    'no-underscore-dangle': 'off',
+    'no-use-before-define': 'off',
+    'no-unused-vars': ['warn', {vars: 'all', args: 'none', ignoreRestSiblings: false}],
+    'space-before-function-paren': 'off',
     'accessor-pairs': ['error', {getWithoutSet: false, setWithoutGet: false}],
+    'import/prefer-default-export': 'off',
     'import/no-unresolved': ['error'],
     'import/no-extraneous-dependencies': ['error', {devDependencies: false, peerDependencies: true}]
   },
@@ -56,6 +64,11 @@ const DEFAULT_CONFIG = {
       },
       plugins: ['@typescript-eslint'],
       rules: {
+        // typescript rules
+        ...typescriptConfigs['eslint-recommended'].rules,
+        ...typescriptConfigs.recommended.rules,
+        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+
         // Standard rules
 
         // We still have some issues with import resolution
@@ -69,12 +82,6 @@ const DEFAULT_CONFIG = {
         quotes: ['warn', 'single'],
         'no-process-env': 'off',
 
-        // typescript rules
-
-        ...typescriptConfigs['eslint-recommended'].rules,
-        ...typescriptConfigs.recommended.rules,
-        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
-
         // Some of JS rules don't always work correctly in TS and
         // hence need to be reimported as TS rules
         'no-redeclare': 'off',
@@ -85,10 +92,17 @@ const DEFAULT_CONFIG = {
         // TODO - These rules are sometimes not found?
         // '@typescript-eslint/no-shadow': ['warn'],
         // '@typescript-eslint/no-redeclare': ['warn'],
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {vars: 'all', args: 'none', ignoreRestSiblings: false}
+        ],
 
         // We use function hoisting to put exports at top of file
         '@typescript-eslint/no-use-before-define': 'off',
         '@typescript-eslint/no-dupe-class-members': ['error'],
+
+        // some day we will hopefully be able to enable this rule
+        '@typescript-eslint/no-explicit-any': 'off',
 
         // We encourage explicit typing, e.g `field: string = ''`
         '@typescript-eslint/no-inferrable-types': 'off',
@@ -100,14 +114,11 @@ const DEFAULT_CONFIG = {
         '@typescript-eslint/no-unsafe-return': ['warn'],
         '@typescript-eslint/no-unsafe-call': ['warn'],
 
-        // some day we will hopefully be able to enable this rule
-        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/ban-ts-comment': ['warn'],
         '@typescript-eslint/ban-types': ['warn'],
         '@typescript-eslint/no-unsafe-member-access': ['warn'],
         '@typescript-eslint/no-unsafe-assignment': ['warn'],
         '@typescript-eslint/no-var-requires': ['warn'],
-        '@typescript-eslint/no-unused-vars': ['warn'],
         '@typescript-eslint/switch-exhaustiveness-check': ['error'],
         '@typescript-eslint/no-floating-promises': ['warn'],
         '@typescript-eslint/await-thenable': ['warn'],
@@ -135,8 +146,13 @@ const DEFAULT_CONFIG = {
 
 function getReactConfig(options) {
   return {
-    extends: ['uber-es2015', 'uber-jsx', 'prettier', 'prettier/react', 'plugin:import/errors'],
-    plugins: ['import', 'react'],
+    extends: [
+      ...DEFAULT_CONFIG.extends,
+      'plugin:react/recommended'
+      // 'plugin:react-hooks/recommended',
+      // 'prettier/react'
+    ],
+    plugins: [...DEFAULT_CONFIG.plugins, 'react', 'react-hooks'],
     settings: {
       react: {
         version: options.react
@@ -146,10 +162,11 @@ function getReactConfig(options) {
 }
 
 module.exports.getESLintConfig = function getESLintConfig(options) {
-  options = {...DEFAULT_OPTIONS, ...options};
+  const mergedOptions = {...DEFAULT_OPTIONS, ...options};
   let config = DEFAULT_CONFIG;
-  if (options.react) {
-    config = {...config, ...getReactConfig(options)};
+  if (mergedOptions.react) {
+    // @ts-expect-error
+    config = {...config, ...getReactConfig(mergedOptions)};
   }
 
   // console.error(config);

@@ -6,15 +6,19 @@ class TestCase {
     this.t = t;
     this.result = result;
   }
+
   toBe(value) {
     this.t.equals(value);
   }
+
   toEqual(value) {
     tapeEquals(this.t, this.result, value);
   }
+
   toEqualEpsilon(value, epsilon) {
     tapeEqualsEpsilon(this.t, this.result, value, epsilon);
   }
+
   toThrow() {
     this.t.throws(() => this.result());
   }

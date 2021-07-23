@@ -79,7 +79,7 @@ function main() {
 
     if (modules) {
       packages = packages.concat(
-        modules.map(function (module) {
+        modules.map((module) => {
           const version = getTargetVersion(packageAndVersion, module.name);
           return {
             name: module.name,

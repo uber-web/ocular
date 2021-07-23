@@ -1,7 +1,7 @@
 /** @typedef {import('./get-webpack-config')} types */
 
 const {resolve} = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {getOcularConfig} = require('../helpers/get-ocular-config');
 
@@ -62,9 +62,7 @@ module.exports.getWebpackConfig = function getWebpackConfig(env = {}, opts = {})
 
         entry: getEntryPoints('size', ocularConfig),
 
-        resolve: Object.assign({}, COMMON_CONFIG.resolve, {
-          mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm
-        }),
+        resolve: {...COMMON_CONFIG.resolve, mainFields: MAIN_FIELDS[env.dist] || MAIN_FIELDS.esm},
 
         devtool: false,
 

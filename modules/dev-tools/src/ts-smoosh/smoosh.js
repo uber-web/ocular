@@ -1,9 +1,9 @@
 const ts = require('typescript');
 const fs = require('fs');
 const path = require('path');
+const prettier = require('prettier');
 const log = require('./log');
 
-const prettier = require('prettier');
 // @ts-ignore
 const {getPrettierConfig} = require('../configuration/get-prettier-config');
 
@@ -170,6 +170,7 @@ function enrichJs(jsFile, dts) {
         if (kind.endsWith('Declaration')) {
           if (kind === 'FunctionDeclaration') {
             const typeSource = findSource(node);
+            // eslint-disable-next-line no-param-reassign
             delete node.jsDoc;
             if (typeSource) {
               return ts.factory.updateFunctionDeclaration(
@@ -196,7 +197,8 @@ function enrichJs(jsFile, dts) {
               );
             }
             return node;
-          } else if (kind === 'VariableDeclaration') {
+          }
+          if (kind === 'VariableDeclaration') {
             const typeSource = findSource(node);
             if (typeSource) {
               // Account for the case where the d.ts file is a fn decl,
@@ -300,6 +302,7 @@ function getIdentifierName(node) {
 // Removing JSDoc comments post-hoc with a regex is less-than-ideal, but it does not
 // appear that there is a way to update nodes returned from the typescript compiler
 // with respect to JSDocs. I see APIs for creating new nodes, but no way to attach em to arbitrary fields.
+// eslint-disable-next-line no-useless-escape
 const RE = /^[ ]*\/?\*?\*?[ ]*\@(type|typedef)(.*)$/gm;
 function withoutJSDoc(text) {
   return text.replace(RE, '');

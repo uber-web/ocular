@@ -5,6 +5,7 @@ const fs = require('fs');
 function getModuleInfo(path) {
   if (fs.lstatSync(path).isDirectory()) {
     try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
       const packageInfo = require(resolve(path, 'package.json'));
       return {
         name: packageInfo.name,

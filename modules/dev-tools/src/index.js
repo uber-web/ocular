@@ -1,3 +1,4 @@
+const deepMerge = require('deepmerge');
 const {getOcularConfig} = require('./helpers/get-ocular-config');
 
 // JS Tool Configurations
@@ -7,7 +8,6 @@ const {getPrettierConfig} = require('./configuration/get-prettier-config');
 const {getWebpackConfig} = require('./configuration/get-webpack-config');
 
 // Utilities
-const deepMerge = require('deepmerge');
 
 module.exports = {
   // Ocular Configuration
