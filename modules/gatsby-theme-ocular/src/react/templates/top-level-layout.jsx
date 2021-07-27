@@ -151,7 +151,7 @@ export default class Layout extends React.Component {
     const theme = this.getTheme();
     let title = config.PROJECT_NAME;
     if (pageContext.title) {
-      title += ` | ${pageContext.title}`;
+      title = `${pageContext.title} | ${title}`;
     }
 
     return (
