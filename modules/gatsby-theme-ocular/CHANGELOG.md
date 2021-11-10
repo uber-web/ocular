@@ -2,7 +2,7 @@
 
 ##
 
-- fix(gatsby): Ignore tsconfig.json
+- fix(gatsby): Ignore tsconfig.json (#379)
 - chore(gatsby): Reorder page title (#377)
 - chore: align gatsby module with dev-tools (#359)
 
