@@ -1,5 +1,12 @@
 # CHANGELOG (gatsby-theme-ocular)
 
+##
+
+- fix(gatsby): Ignore tsconfig.json (#379)
+- chore(gatsby): Reorder page title (#377)
+- chore: align gatsby module with dev-tools (#359)
+
+
 ## 1.2.4
 
 - Fix `createDocPages` not returning a Promise (#342)

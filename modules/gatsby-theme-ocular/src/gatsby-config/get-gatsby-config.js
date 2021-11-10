@@ -4,6 +4,15 @@ const {log, COLOR} = require('../utils/log');
 const validateConfig = require('../utils/validate-config');
 const CONFIG_SCHEMA = require('./config-schema');
 
+const GATSBY_SOURCE_IGNORE_FILES = [
+  '**/src/**',
+  '**/test/**',
+  '**/dist/**',
+  '**/package.json',
+  '**/tsconfig.json',
+  '**/*.js'
+];
+
 const defaults = {
   logLevel: 3,
   DOC_FOLDERS: [],
@@ -162,7 +171,7 @@ module.exports = function getGatsbyConfig(config) {
           path,
           // Ensure gatsby-source-filesystem doesn't pick up too many files in modules directory
           // https://www.gatsbyjs.org/packages/gatsby-source-filesystem/#options
-          ignore: ['**/src/**', '**/test/**', '**/dist/**', '**/package.json', '**/*.js']
+          ignore: GATSBY_SOURCE_IGNORE_FILES
         }
       });
     }
