@@ -1,5 +1,17 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v1.0.0-alpha.8
+
+yarn 3 fixes
+
+- fix: Fix error codes returned by ocular-test, ocular-lint, etc (fork#7)
+    - Fix error codes returned by ocular-test, ocular-lint, etc
+    - Drop node 12 from test matrix
+- chore: Run bash scripts using Node (fork#6)
+- Fix package.json format (fork#5)
+- Remove browserslist update from bootstrap (fork#3)
+- ESLint and prettier upgrade (fork#2)
+
 ## v1.0.0-alpha.7
 
 - chore(dev-tools): dependencies (#374)
