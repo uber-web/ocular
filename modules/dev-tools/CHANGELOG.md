@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.2
+
+- Try fix missing Chromium error
+
 ## v2.0.0-alpha.1
 
 - Update test harness to use ts-node and vite #405
