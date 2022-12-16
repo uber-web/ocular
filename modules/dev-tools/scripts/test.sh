@@ -15,7 +15,7 @@ usage() {
 }
 
 run_test_script() {
-  (set -x; BABEL_ENV=test node $MODULE_DIR/node/test.js $1)
+  (set -x; ts-node $MODULE_DIR/node/test.js $1)
 }
 
 run_full_test() {
@@ -55,7 +55,7 @@ case $MODE in
     ;;
 
   "cover")
-    (set -x; NODE_ENV=test BABEL_ENV=test npx nyc node $MODULE_DIR/node/test.js cover)
+    (set -x; npx nyc ts-node $MODULE_DIR/node/test.js cover)
     (set -x; npx nyc report --reporter=lcov)
     ;;
 

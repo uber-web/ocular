@@ -1,5 +1,7 @@
 /** Helper type to typecheck ocular config in applications */
 type OcularConfig = {
+  root?: string;
+
   aliases?: {[module: string]: string};
 
   babel?: {
@@ -12,7 +14,7 @@ type OcularConfig = {
     extensions?: string[];
   };
 
-  webpack?: {
+  vite?: {
     version?: number;
     configPath?: string;
   };
@@ -27,12 +29,14 @@ type OcularConfig = {
     'test-browser'?: string;
     bench?: string;
     'bench-browser'?: string;
-    size?: string;
+    size?: string[];
   };
 };
 
 /** Internal type to typecheck resolved ocular config inside ocular-dev-tools */
 type MaterializedOcularConfig = {
+  root: string;
+
   aliases: {[module: string]: string};
 
   babel: {
@@ -45,7 +49,7 @@ type MaterializedOcularConfig = {
     extensions: string[];
   };
 
-  webpack: {
+  vite: {
     version: number;
     configPath: string;
   };
@@ -60,7 +64,7 @@ type MaterializedOcularConfig = {
     'test-browser': string;
     bench: string;
     'bench-browser': string;
-    size: string;
+    size: string[];
   };
 };
 

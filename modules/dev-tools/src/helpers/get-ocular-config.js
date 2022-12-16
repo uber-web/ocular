@@ -11,12 +11,13 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
 
   const config = {
+    root: packageRoot,
+
     babel: {
       configPath: getValidPath([
         resolve(packageRoot, './.babelrc.js'),
         resolve(packageRoot, './.babelrc'),
-        resolve(packageRoot, './babel.config.js'),
-        resolve(__dirname, './babel.config.js')
+        resolve(packageRoot, './babel.config.js')
       ]),
       extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
     },
@@ -36,11 +37,11 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
       size: 'test/size'
     },
 
-    webpack: {
+    vite: {
       version: 4,
       configPath: getValidPath([
-        resolve(packageRoot, './webpack.config.js'),
-        resolve(__dirname, './webpack.config.js')
+        resolve(packageRoot, './vite.config.js'),
+        resolve(__dirname, '../configuration/vite.config.js')
       ])
     }
   };
@@ -49,10 +50,15 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
 
   shallowMerge(config, userConfig);
 
-  // const aliasMode = userConfig.aliasMode || options.aliasMode;
+  // Backward compatibility
+  if (typeof userConfig.entry.size === 'string') {
+    userConfig.entry.size = [userConfig.entry.size];
+  }
+
+  const aliasMode = userConfig.aliasMode || options.aliasMode;
 
   // User's aliases need to come first, due to module-alias resolve order
-  Object.assign(config.aliases, getAliases(userConfig.aliasMode, packageRoot));
+  Object.assign(config.aliases, getAliases(aliasMode, packageRoot));
 
   return config;
 };

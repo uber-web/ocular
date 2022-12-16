@@ -4,7 +4,7 @@
 const {resolve} = require('path');
 
 // Register module aliases
-const moduleAlias = require('module-alias');
+const tsConfigPaths = require('tsconfig-paths');
 
 const {getOcularConfig} = require('../src/helpers/get-ocular-config');
 
@@ -18,15 +18,12 @@ try {
 
 const ocularConfig = getOcularConfig();
 
-const webpackVersion = ocularConfig.webpack.version;
-const webpackConfigPath = ocularConfig.webpack.configPath; // Could we deduce version?
-const webpackCommand = webpackVersion === 5 ? 'webpack' : 'webpack-dev-server';
+const viteConfigPath = ocularConfig.vite.configPath;
 
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
 
 console.log(`Running ${mode} tests...`); // eslint-disable-line
-
-moduleAlias.addAliases(ocularConfig.aliases);
+registerModuleAlias(ocularConfig.aliases);
 
 switch (mode) {
   case 'cover':
@@ -37,7 +34,7 @@ switch (mode) {
   case 'dist':
     const distConfig = getOcularConfig({aliasMode: 'dist'});
     // Load deck.gl itself from the dist folder
-    moduleAlias.addAliases(distConfig.aliases);
+    registerModuleAlias(distConfig.aliases);
     require(resolveEntry('test')); // Run the tests
     break;
 
@@ -49,11 +46,8 @@ switch (mode) {
   case 'browser-headless':
     runBrowserTest({
       server: {
-        command: webpackCommand,
-        arguments:
-          webpackVersion === 5
-            ? ['serve', '--config', webpackConfigPath, '--env', 'mode=test']
-            : ['--config', webpackConfigPath, '--env.mode=test']
+        command: 'vite',
+        arguments: ['--config', viteConfigPath, '--mode', 'test']
       },
       headless: mode === 'browser-headless'
     });
@@ -62,11 +56,8 @@ switch (mode) {
   case 'bench-browser':
     runBrowserTest({
       server: {
-        command: webpackCommand,
-        arguments:
-          webpackVersion === 5
-            ? ['serve', '--config', webpackConfigPath, '--env', 'mode=bench']
-            : ['--config', webpackConfigPath, '--env.mode=bench']
+        command: 'vite',
+        arguments: ['--config', viteConfigPath, '--mode', 'bench']
       }
     });
     break;
@@ -76,11 +67,8 @@ switch (mode) {
       const testMode = mode.replace('-browser', '').replace('-headless', '');
       runBrowserTest({
         server: {
-          command: webpackCommand,
-          arguments:
-            webpackVersion === 5
-              ? ['serve', '--config', webpackConfigPath, `--env`, `mode=${testMode}`]
-              : ['--config', webpackConfigPath, `--env.mode=${testMode}`]
+          command: 'vite',
+          arguments: ['--config', viteConfigPath, '--mode', testMode]
         },
         headless: /\bheadless\b/.test(mode)
       });
@@ -89,6 +77,21 @@ switch (mode) {
     } else {
       throw new Error(`Unknown test mode ${mode}`);
     }
+}
+
+/** Convert ocular alias object to TS config paths object */
+function registerModuleAlias(aliases) {
+  const result = {};
+  for (const key in aliases) {
+    result[key] = [aliases[key]];
+    if (!key.endsWith('*')) {
+      result[`${key}/*`] = [`${aliases[key]}/*`];
+    }
+  }
+  tsConfigPaths.register({
+    baseUrl: '.',
+    paths: result
+  });
 }
 
 function resolveEntry(key) {
