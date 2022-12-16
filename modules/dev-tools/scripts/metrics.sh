@@ -9,8 +9,10 @@ DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
 WORKING_DIR=`pwd`
 TMP_DIR=$WORKING_DIR/tmp
 
-# Get webpack config path
-WEBPACK_CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".webpack.configPath"`
+# Get size metric entry point
+ENTRY_POINTS=`node $DEV_TOOLS_DIR/node/get-config.js ".entry.size"`
+IFS=','
+read -a ENTRY_POINTS_ARR <<< "$ENTRY_POINTS"
 
 # Get name from package.json
 module=`node -e "console.log(require('./package.json').name)"`
@@ -54,13 +56,12 @@ print_size() {
 }
 
 build_bundle() {
-  DIST=$1
-  (set -x; NODE_ENV=production webpack --config $WEBPACK_CONFIG --output-path "$TMP_DIR" --display errors-only --env.mode=size --env.dist=$DIST)
-}
-
-print_bundle_size() {
-  build_bundle $1
-  print_size $1
+  if [ "$2" == es5 ]; then
+    DIST=main
+  else
+    DIST=module
+  fi
+  (esbuild $1 --outdir="$TMP_DIR" --bundle --minify --main-fields=$DIST --log-level=error)
 }
 
 # Main Script
@@ -74,8 +75,14 @@ mkdir $TMP_DIR
 
 print_size_header
 
-print_bundle_size es5
-print_bundle_size esm
-print_bundle_size es6
+for f in "${ENTRY_POINTS_ARR[@]}"; do
+  build_bundle $f es5
+done
+print_size es5
+
+for f in "${ENTRY_POINTS_ARR[@]}"; do
+  build_bundle $f esm
+done
+print_size esm
 
 rm -rf $TMP_DIR
