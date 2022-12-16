@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.1
+
+- Update test harness to use ts-node and vite #405
+
 ## v1.0.0-alpha.8
 
 yarn 3 fixes
