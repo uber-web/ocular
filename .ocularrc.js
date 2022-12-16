@@ -16,8 +16,8 @@ let ocularConfig = {
   },
 
   entry: {
-    test: 'test/node.js',
-    'test-browser': 'test/browser.js',
+    test: 'test/node.ts',
+    'test-browser': 'test/browser.ts',
     bench: 'test/bench/node.js',
     'bench-browser': 'test/bench/browser.js',
     size: 'test/size/import-nothing.js'
