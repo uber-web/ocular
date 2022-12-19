@@ -4,17 +4,24 @@ import {createHtmlPlugin} from 'vite-plugin-html';
 import {NodeGlobalsPolyfillPlugin} from '@esbuild-plugins/node-globals-polyfill';
 import {NodeModulesPolyfillPlugin} from '@esbuild-plugins/node-modules-polyfill';
 
-const ocularConfig = getOcularConfig();
+const ocularConfig = getOcularConfig({aliasMode: 'browser'});
 
 export default defineConfig(({mode}) => {
+  const entryPoint = ocularConfig.entry[`${mode}-browser`];
+
   return {
-    plugins: [
-      createHtmlPlugin({
-        minify: false,
-        entry: ocularConfig.entry[`${mode}-browser`]
-      })
-    ],
+    plugins: entryPoint.endsWith('.html')
+      ? []
+      : [
+          // If entry is a js/ts file, create a virtual html
+          createHtmlPlugin({
+            minify: false,
+            entry: ocularConfig.entry[`${mode}-browser`]
+          })
+        ],
     optimizeDeps: {
+      // Disable crawling the whole repo
+      entries: entryPoint.endsWith('.html') ? [entryPoint] : [],
       // Polyfill for Node environment (required by tape-promise)
       esbuildOptions: {
         define: {
@@ -23,8 +30,7 @@ export default defineConfig(({mode}) => {
         },
         plugins: [
           NodeGlobalsPolyfillPlugin({
-            process: true,
-            buffer: true
+            process: true
           }),
           NodeModulesPolyfillPlugin()
         ]
