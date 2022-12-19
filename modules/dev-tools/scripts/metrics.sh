@@ -13,6 +13,7 @@ TMP_DIR=$WORKING_DIR/tmp
 ENTRY_POINTS=`node $DEV_TOOLS_DIR/node/get-config.js ".entry.size"`
 IFS=','
 read -a ENTRY_POINTS_ARR <<< "$ENTRY_POINTS"
+IFS=' '
 
 # Get name from package.json
 module=`node -e "console.log(require('./package.json').name)"`
@@ -57,9 +58,9 @@ print_size() {
 
 build_bundle() {
   if [ "$2" == es5 ]; then
-    DIST=main
+    DIST="main,module"
   else
-    DIST=module
+    DIST="module,browser,main"
   fi
   (esbuild $1 --outdir="$TMP_DIR" --bundle --minify --main-fields=$DIST --log-level=error)
 }

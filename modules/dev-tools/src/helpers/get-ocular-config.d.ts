@@ -4,6 +4,8 @@ type OcularConfig = {
 
   aliases?: {[module: string]: string};
 
+  nodeAliases?: {[module: string]: string};
+
   babel?: {
     configPath?: string;
     extensions?: string[];
@@ -36,6 +38,7 @@ type OcularConfig = {
 /** Internal type to typecheck resolved ocular config inside ocular-dev-tools */
 type MaterializedOcularConfig = {
   root: string;
+  ocularPath: string;
 
   aliases: {[module: string]: string};
 

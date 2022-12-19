@@ -7,11 +7,13 @@ const {shallowMerge} = require('../utils/utils');
 
 module.exports.getOcularConfig = function getOcularConfig(options = {}) {
   const packageRoot = options.root || process.env.PWD;
+  const ocularRoot = resolve(__dirname, '../..');
 
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
 
   const config = {
     root: packageRoot,
+    ocularPath: ocularRoot,
 
     babel: {
       configPath: getValidPath([
@@ -41,7 +43,7 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
       version: 4,
       configPath: getValidPath([
         resolve(packageRoot, './vite.config.js'),
-        resolve(__dirname, '../configuration/vite.config.js')
+        resolve(ocularRoot, 'src/configuration/vite.config.js')
       ])
     }
   };
@@ -59,6 +61,10 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
 
   // User's aliases need to come first, due to module-alias resolve order
   Object.assign(config.aliases, getAliases(aliasMode, packageRoot));
+
+  if (aliasMode && !aliasMode.includes('browser')) {
+    Object.assign(config.aliases, userConfig.nodeAliases);
+  }
 
   return config;
 };

@@ -40,7 +40,7 @@ function getSubmodules(packageRoot) {
   return submodules;
 }
 
-function getAliases(mode = 'src', packageRoot = process.env.PWD) {
+function getAliases(mode, packageRoot = process.env.PWD) {
   const aliases = {};
   const submodules = getSubmodules(packageRoot);
 
@@ -51,7 +51,7 @@ function getAliases(mode = 'src', packageRoot = process.env.PWD) {
       const subPath = packageInfo.main && packageInfo.main.replace('/index.js', '');
       aliases[moduleName] = subPath ? resolve(path, subPath) : path;
     } else {
-      aliases[moduleName] = resolve(path, mode); // e.g 'src'
+      aliases[moduleName] = resolve(path, 'src');
     }
   }
 

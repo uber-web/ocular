@@ -16,11 +16,9 @@ try {
   BrowserTestDriver = null;
 }
 
-const ocularConfig = getOcularConfig();
-
-const viteConfigPath = ocularConfig.vite.configPath;
-
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
+const ocularConfig = getOcularConfig({aliasMode: mode});
+const viteConfigPath = ocularConfig.vite.configPath;
 
 console.log(`Running ${mode} tests...`); // eslint-disable-line
 registerModuleAlias(ocularConfig.aliases);
@@ -28,18 +26,12 @@ registerModuleAlias(ocularConfig.aliases);
 switch (mode) {
   case 'cover':
   case 'node':
-    require(resolveEntry('test')); // Run the tests
-    break;
-
   case 'dist':
-    const distConfig = getOcularConfig({aliasMode: 'dist'});
-    // Load deck.gl itself from the dist folder
-    registerModuleAlias(distConfig.aliases);
-    require(resolveEntry('test')); // Run the tests
+    require(resolveNodeEntry('test')); // Run the tests
     break;
 
   case 'bench':
-    require(resolveEntry('bench')); // Run the benchmarks
+    require(resolveNodeEntry('bench')); // Run the benchmarks
     break;
 
   case 'browser':
@@ -49,6 +41,7 @@ switch (mode) {
         command: 'vite',
         arguments: ['--config', viteConfigPath, '--mode', 'test']
       },
+      url: resolveBrowserEntry('test'),
       headless: mode === 'browser-headless'
     });
     break;
@@ -58,7 +51,8 @@ switch (mode) {
       server: {
         command: 'vite',
         arguments: ['--config', viteConfigPath, '--mode', 'bench']
-      }
+      },
+      url: resolveBrowserEntry('bench')
     });
     break;
 
@@ -70,10 +64,11 @@ switch (mode) {
           command: 'vite',
           arguments: ['--config', viteConfigPath, '--mode', testMode]
         },
+        url: resolveBrowserEntry(testMode),
         headless: /\bheadless\b/.test(mode)
       });
     } else if (mode in ocularConfig.entry) {
-      require(resolveEntry(mode));
+      require(resolveNodeEntry(mode));
     } else {
       throw new Error(`Unknown test mode ${mode}`);
     }
@@ -83,9 +78,10 @@ switch (mode) {
 function registerModuleAlias(aliases) {
   const result = {};
   for (const key in aliases) {
-    result[key] = [aliases[key]];
-    if (!key.endsWith('*')) {
-      result[`${key}/*`] = [`${aliases[key]}/*`];
+    const alias = aliases[key];
+    result[key] = [alias];
+    if (!alias.match(/(\/\*|\.jsx?|\.tsx?|\.cjs)$/)) {
+      result[`${key}/*`] = [`${alias}/*`];
     }
   }
   tsConfigPaths.register({
@@ -94,8 +90,16 @@ function registerModuleAlias(aliases) {
   });
 }
 
-function resolveEntry(key) {
+function resolveNodeEntry(key) {
   return resolve(ocularConfig.entry[key]);
+}
+
+function resolveBrowserEntry(key) {
+  const fileName = ocularConfig.entry[`${key}-browser`];
+  if (fileName.endsWith('.html')) {
+    return fileName;
+  }
+  return '';
 }
 
 function runBrowserTest(opts) {
