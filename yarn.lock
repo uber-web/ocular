@@ -2948,6 +2948,13 @@
   dependencies:
     "@babel/runtime" "^7.0.0"
 
+"@probe.gl/env@3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/env/-/env-3.5.4.tgz#faddd1232f607b634fa9f00502b40706e143426d"
+  integrity sha512-MtMINUpcPzAp8upQNbm5U1Hp+/EQ8yw0tXccg5Aiz7cl92LsMopDPtgXnCRv2whzcayioHAdg4YIhNPY5fFxMQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
 "@probe.gl/log@3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@probe.gl/log/-/log-3.5.2.tgz#e33103f6151c30431c4bfe63f1341bc0d9febe94"
@@ -2956,6 +2963,14 @@
     "@babel/runtime" "^7.0.0"
     "@probe.gl/env" "3.5.2"
 
+"@probe.gl/log@3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/log/-/log-3.5.4.tgz#106c863032242ba1232d7a1afc4acd9905305305"
+  integrity sha512-jnyr6aAdW4PbS55izskE8crpb52hJ/bQwqeJeQywK6sm7Jhh9im2RFbPrjs8CIEVDBqrcwJ1Rm1hEvTKNhKSmA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@probe.gl/env" "3.5.4"
+
 "@probe.gl/stats@3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@probe.gl/stats/-/stats-3.5.2.tgz#8ee41f73199182fddb8e40221da967414eaea619"
@@ -2963,13 +2978,13 @@
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-"@probe.gl/test-utils@^3.0.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@probe.gl/test-utils/-/test-utils-3.5.2.tgz#22ef9b8d5e3ff8eb89d9e658d643c901eb53f333"
-  integrity sha512-h82sbwQuhUKcXFZQIm+CzvxJ3QveOSd/ogH9DyLukbSnu6mFsFCE5Y6snrJ/eN/sz8TEwDrPJ0DtjjdOpiJVVA==
+"@probe.gl/test-utils@^3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/test-utils/-/test-utils-3.5.4.tgz#8e79b2eb68b07865d79708e1cf7895f0616ed88e"
+  integrity sha512-NV0esSd6YBDsyMuBkJblCIqtW+XNn3pmDhBe6jPR05xQZo40zcp4xJr/6Nxsw/ZRJU3qeIdG9j3doK+WriTpog==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@probe.gl/log" "3.5.2"
+    "@probe.gl/log" "3.5.4"
     pixelmatch "^4.0.2"
     puppeteer "*"
 
