@@ -15,7 +15,7 @@ test('dev-tools#getConfig', (t) => {
   t.equals(typeof config, 'object');
 
   config = getBabelConfig(mockBabelApi);
-  t.equals(typeof config, 'object');
+  t.equals(typeof config, 'function');
 
   t.end();
 });

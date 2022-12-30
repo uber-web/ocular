@@ -1,3 +1,6 @@
+/** @typedef {import('./get-prettier-config')} types */
+const deepMerge = require('deepmerge');
+
 const DEFAULT_CONFIG = {
   printWidth: 100,
   semi: true,
@@ -6,7 +9,15 @@ const DEFAULT_CONFIG = {
   bracketSpacing: false
 };
 
-module.exports.getPrettierConfig = function getPrettierConfig(options) {
-  const config = DEFAULT_CONFIG;
+/** @type {types['getPrettierConfig']} */
+module.exports.getPrettierConfig = function getPrettierConfig(options = {}) {
+  let config = {...DEFAULT_CONFIG};
+  if (options.overrides) {
+    config = deepMerge(config, options.overrides);
+  }
+  if (options.debug) {
+    // eslint-disable-next-line
+    console.log(config);
+  }
   return config;
 };

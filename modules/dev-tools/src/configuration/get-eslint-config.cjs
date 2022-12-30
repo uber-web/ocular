@@ -1,4 +1,5 @@
 const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
+const deepMerge = require('deepmerge');
 
 const DEFAULT_OPTIONS = {
   react: false
@@ -145,13 +146,20 @@ function getReactConfig(options) {
   };
 }
 
-module.exports.getESLintConfig = function getESLintConfig(options) {
+module.exports.getESLintConfig = function getESLintConfig(options = {}) {
   options = {...DEFAULT_OPTIONS, ...options};
-  let config = DEFAULT_CONFIG;
+
+  let config = {...DEFAULT_CONFIG};
   if (options.react) {
-    config = {...config, ...getReactConfig(options)};
+    config = deepMerge(config, getReactConfig(options));
+  }
+  if (options.overrides) {
+    config = deepMerge(config, options.overrides);
+  }
+  if (options.debug) {
+    // eslint-disable-next-line
+    console.log(config);
   }
 
-  // console.error(config);
   return config;
 };
