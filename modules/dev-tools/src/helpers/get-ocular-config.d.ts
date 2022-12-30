@@ -2,6 +2,8 @@
 type OcularConfig = {
   root?: string;
 
+  esm?: boolean;
+
   aliases?: {[module: string]: string};
 
   nodeAliases?: {[module: string]: string};
@@ -31,7 +33,7 @@ type OcularConfig = {
     'test-browser'?: string;
     bench?: string;
     'bench-browser'?: string;
-    size?: string[];
+    size?: string[] | string;
   };
 };
 
@@ -39,6 +41,7 @@ type OcularConfig = {
 type MaterializedOcularConfig = {
   root: string;
   ocularPath: string;
+  esm: boolean;
 
   aliases: {[module: string]: string};
 

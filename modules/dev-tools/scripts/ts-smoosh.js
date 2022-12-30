@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const {smoosh} = require('../src/ts-smoosh/smoosh');
+import {smoosh} from '../src/ts-smoosh/smoosh.js';
 
 // Given an array of `.js` files, smooshes their .d.ts declarations and
 // produces a .tsx file.

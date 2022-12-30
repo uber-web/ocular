@@ -1,0 +1,116 @@
+// Launch script for various Node test configurations
+import fs from 'fs';
+import {resolve} from 'path';
+
+import {getOcularConfig} from './helpers/get-ocular-config.js';
+
+import {BrowserTestDriver} from '@probe.gl/test-utils';
+
+import shell from 'shelljs';
+
+const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
+const ocularConfig = await getOcularConfig({aliasMode: mode});
+const viteConfigPath = ocularConfig.vite.configPath;
+
+console.log(`Running ${mode} tests...`); // eslint-disable-line
+
+switch (mode) {
+  case 'cover':
+  case 'node':
+  case 'dist':
+    runNodeTest(resolveNodeEntry('test')); // Run the tests
+    break;
+
+  case 'bench':
+    runNodeTest(resolveNodeEntry('bench')); // Run the benchmarks
+    break;
+
+  case 'browser':
+  case 'browser-headless':
+    await runBrowserTest({
+      server: {
+        command: 'vite',
+        arguments: ['--config', viteConfigPath, '--mode', 'test']
+      },
+      url: resolveBrowserEntry('test'),
+      headless: mode === 'browser-headless'
+    });
+    break;
+
+  case 'bench-browser':
+    await runBrowserTest({
+      server: {
+        command: 'vite',
+        arguments: ['--config', viteConfigPath, '--mode', 'bench']
+      },
+      url: resolveBrowserEntry('bench')
+    });
+    break;
+
+  default:
+    if (/\bbrowser\b/.test(mode)) {
+      const testMode = mode.replace('-browser', '').replace('-headless', '');
+      await runBrowserTest({
+        server: {
+          command: 'vite',
+          arguments: ['--config', viteConfigPath, '--mode', testMode]
+        },
+        url: resolveBrowserEntry(testMode),
+        headless: /\bheadless\b/.test(mode)
+      });
+    } else if (mode in ocularConfig.entry) {
+      runNodeTest(resolveNodeEntry(mode));
+    } else {
+      throw new Error(`Unknown test mode ${mode}`);
+    }
+}
+
+function resolveNodeEntry(key) {
+  // @ts-expect-error key may not exist
+  const entry = ocularConfig.entry[key];
+  if (typeof entry === 'string') {
+    return resolve(entry);
+  }
+  throw new Error(`Cannot find entry point ${key} in ocular config.`);
+}
+
+function resolveBrowserEntry(key) {
+  const fileName = ocularConfig.entry[`${key}-browser`];
+  if (typeof fileName === 'string' && fileName.endsWith('.html')) {
+    return fileName;
+  } else if (fileName) {
+    return 'index.html';
+  }
+  throw new Error(`Cannot find entry point ${key}-browser in ocular config.`);
+}
+
+function runNodeTest(entry) {
+  // Save module alias
+  fs.writeFileSync(
+    resolve(ocularConfig.ocularPath, '.alias.json'),
+    JSON.stringify(ocularConfig.aliases)
+  );
+
+  if (ocularConfig.esm) {
+    shell.exit(
+      shell.exec(
+        `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/src/helpers/esm-loader.js" node "${entry}"`
+      ).code
+    );
+  } else {
+    shell.exit(
+      shell.exec(`ts-node -r "${ocularConfig.ocularPath}/src/helpers/cjs-register.cjs" "${entry}"`)
+        .code
+    );
+  }
+}
+
+function runBrowserTest(opts) {
+  const userConfig = ocularConfig.browserTest || {};
+  return new BrowserTestDriver().run({
+    ...opts,
+    ...userConfig,
+    server: {...opts.server, ...userConfig.server},
+    browser: {...opts.browser, ...userConfig.browser}
+  });
+}

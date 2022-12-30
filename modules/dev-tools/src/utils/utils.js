@@ -1,4 +1,6 @@
-function shallowMerge(base, override) {
+import fs from 'fs';
+
+export function shallowMerge(base, override) {
   for (const key in override) {
     if (base[key] && typeof base[key] === 'object') {
       Object.assign(base[key], override[key]);
@@ -9,6 +11,11 @@ function shallowMerge(base, override) {
   return base;
 }
 
-module.exports = {
-  shallowMerge
-};
+export function getValidPath(...resolveOrder) {
+  for (const path of resolveOrder) {
+    if (fs.existsSync(path)) {
+      return path;
+    }
+  }
+  return null;
+}

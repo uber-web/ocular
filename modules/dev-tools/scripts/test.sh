@@ -7,7 +7,8 @@ BASEDIR=$(dirname "$0")
 
 MODE=$1
 
-MODULE_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+MODULE_DIR=$(dirname $0)/..
+TEST_SCRIPT=$MODULE_DIR/src/test.js
 
 usage() {
   # TODO: Add more specific url
@@ -17,9 +18,9 @@ usage() {
 run_test_script() {
   # get Chromium executable path
   YARN_GLOBAL_DIR=`yarn global dir`
-  CHROMIUM_EXECUTABLE=`node $MODULE_DIR/node/get-puppeteer-executable-path.js $YARN_GLOBAL_DIR`
+  CHROMIUM_EXECUTABLE=`node $MODULE_DIR/src/helpers/get-puppeteer-executable-path.cjs $YARN_GLOBAL_DIR`
 
-  (set -x; PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE ts-node $MODULE_DIR/node/test.js $1)
+  (set -x; PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $TEST_SCRIPT $1)
 }
 
 run_full_test() {
@@ -51,7 +52,7 @@ case $MODE in
 
   "node-debug")
     echo "Open chrome://inspect/#devices to attach debugger."
-    (set -x; node --inspect-brk $MODULE_DIR/node/test.js node)
+    (set -x; node --inspect-brk $TEST_SCRIPT node)
     ;;
 
   "dist")
@@ -59,7 +60,7 @@ case $MODE in
     ;;
 
   "cover")
-    (set -x; npx nyc ts-node $MODULE_DIR/node/test.js cover)
+    (set -x; npx nyc node $TEST_SCRIPT cover)
     (set -x; npx nyc report --reporter=lcov)
     ;;
 

@@ -1,13 +1,14 @@
 /* @typedef {import('./get-ocular-config')} default */
 
-const fs = require('fs');
-const {resolve} = require('path');
-const getAliases = require('../../node/aliases');
-const {shallowMerge} = require('../utils/utils');
+import fs from 'fs';
+import {resolve} from 'path';
+import getAliases, {getModuleInfo} from './aliases.js';
+import {shallowMerge, getValidPath} from '../utils/utils.js';
 
-module.exports.getOcularConfig = function getOcularConfig(options = {}) {
+export async function getOcularConfig(options = {}) {
   const packageRoot = options.root || process.env.PWD;
-  const ocularRoot = resolve(__dirname, '../..');
+  const scriptPath = new URL(import.meta.url).pathname;
+  const ocularRoot = resolve(scriptPath, '../../..');
 
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
 
@@ -15,12 +16,16 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
     root: packageRoot,
     ocularPath: ocularRoot,
 
+    esm: getModuleInfo(packageRoot).packageInfo.type === 'module',
+
     babel: {
-      configPath: getValidPath([
-        resolve(packageRoot, './.babelrc.js'),
+      configPath: getValidPath(
         resolve(packageRoot, './.babelrc'),
-        resolve(packageRoot, './babel.config.js')
-      ]),
+        resolve(packageRoot, './.babelrc.js'),
+        resolve(packageRoot, './.babelrc.cjs'),
+        resolve(packageRoot, './babel.config.js'),
+        resolve(packageRoot, './babel.config.cjs')
+      ),
       extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
     },
 
@@ -32,23 +37,24 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
     aliases: {},
 
     entry: {
-      test: 'test/index',
-      'test-browser': 'test/browser',
-      bench: 'test/bench/index',
-      'bench-browser': 'test/bench/browser',
-      size: 'test/size'
+      test: 'test/index.ts',
+      'test-browser': 'test/browser.ts',
+      bench: 'test/bench/index.ts',
+      'bench-browser': 'test/bench/browser.ts',
+      size: 'test/size.ts'
     },
 
     vite: {
       version: 4,
-      configPath: getValidPath([
+      configPath: getValidPath(
         resolve(packageRoot, './vite.config.js'),
+        resolve(packageRoot, './vite.config.cjs'),
         resolve(ocularRoot, 'src/configuration/vite.config.js')
-      ])
+      )
     }
   };
 
-  const userConfig = getUserConfig(packageRoot, options);
+  const userConfig = await getUserConfig(packageRoot, options);
 
   shallowMerge(config, userConfig);
 
@@ -67,7 +73,7 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
   }
 
   return config;
-};
+}
 
 // HELPERS
 
@@ -77,50 +83,31 @@ module.exports.getOcularConfig = function getOcularConfig(options = {}) {
  * @param {object} options
  * @returns
  */
-function getUserConfig(packageRoot, options) {
+async function getUserConfig(packageRoot, options) {
   let userConfig = null;
 
-  let userConfigPath;
+  const userConfigPath = getValidPath(
+    resolve(packageRoot, './.ocularrc.js'),
+    resolve(packageRoot, './.ocularrc.cjs'),
+    resolve(packageRoot, './.ocular.config.js'),
+    resolve(packageRoot, './.ocular.config.cjs'),
+    // deprecated
+    resolve(packageRoot, './ocular-dev-tools.config.js')
+  );
 
-  // Standard config file
-  userConfigPath = resolve(packageRoot, './.ocularrc.js');
-  if (fs.existsSync(userConfigPath)) {
-    userConfig = require(userConfigPath);
-    if (typeof userConfig === 'function') {
-      userConfig = userConfig(options);
+  if (userConfigPath) {
+    userConfig = await import(userConfigPath);
+    if (userConfig.default) {
+      userConfig = userConfig.default;
     }
-  }
-  // Compatibility with type:module packages
-  userConfigPath = resolve(packageRoot, './.ocularrc.cjs');
-  if (fs.existsSync(userConfigPath)) {
-    userConfig = require(userConfigPath);
     if (typeof userConfig === 'function') {
-      userConfig = userConfig(options);
-    }
-  }
-  // Backward compatibility
-  userConfigPath = resolve(packageRoot, './ocular.config.js');
-  if (fs.existsSync(userConfigPath)) {
-    userConfig = require(userConfigPath);
-    if (typeof userConfig === 'function') {
-      userConfig = userConfig(options);
-    }
-  }
-  userConfigPath = resolve(packageRoot, './ocular-dev-tools.config.js');
-  if (fs.existsSync(userConfigPath)) {
-    userConfig = require(userConfigPath);
-    if (typeof userConfig === 'function') {
-      userConfig = userConfig(options);
+      userConfig = await userConfig(options);
     }
   }
 
   if (!userConfig) {
-    throw new Error('No valid user config found in .ocularrc.js');
+    throw new Error('No valid user config found');
   }
 
   return userConfig;
-}
-
-function getValidPath(resolveOrder) {
-  return resolveOrder.find((path) => fs.existsSync(path));
 }

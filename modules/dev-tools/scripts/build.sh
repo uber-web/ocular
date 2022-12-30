@@ -2,10 +2,10 @@
 
 set -e
 
-DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
-CONFIG=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.configPath"`
-MODULES=`node $DEV_TOOLS_DIR/node/get-config.js ".modules" | sed -E "s/,/ /g"`
-EXTENSIONS=`node $DEV_TOOLS_DIR/node/get-config.js ".babel.extensions"`
+DEV_TOOLS_DIR=$(dirname $0)/..
+CONFIG=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.configPath"`
+MODULES=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".modules" | sed -E "s/,/ /g"`
+EXTENSIONS=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.extensions"`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|esm ]]; then

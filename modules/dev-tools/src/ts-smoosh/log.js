@@ -33,10 +33,8 @@ function log(color) {
   };
 }
 
-module.exports = {
-  logSuccess: log(Colors.FgGreen),
-  logOk: log(Colors.FgCyan),
-  logError: log(Colors.FgRed),
-  logProgress: log(Colors.FgBlue),
-  logStep: log(Colors.FgMagenta)
-};
+export const logSuccess = log(Colors.FgGreen);
+export const logOk = log(Colors.FgCyan);
+export const logError = log(Colors.FgRed);
+export const logProgress = log(Colors.FgBlue);
+export const logStep = log(Colors.FgMagenta);

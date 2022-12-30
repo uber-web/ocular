@@ -16,26 +16,22 @@ ocular installs the necessary dependencies and provides working default configur
 
 - eslint
 - prettier
-- babel
-- webpack
+- ts-node
+- vite
 
 Note that this list may grow over time.
 
 ## Installation
 
 ```bash
-yarn add ocular-dev-tools reify -D
-# optionally enable browser tests
-yarn add @probe.gl/test-utils -D
+yarn add ocular-dev-tools
 ```
 
 Your `package.json` should looks something like:
 
 ```json
   "devDependencies": {
-    "ocular-dev-tools": "1.0.0-alpha",
-    "reify": "^0.18.1",
-    "@probe.gl/test-utils": "^3.0.0"
+    "ocular-dev-tools": "^2.0.0-alpha"
   }
 ```
 
@@ -66,7 +62,7 @@ You may extend the default babel config as follows:
 
 ```js
 // babelrc.js
-const {getBabelConfig, deepMerge} = require('ocular-dev-tools');
+const {getBabelConfig, deepMerge} = require('ocular-dev-tools/configuration');
 
 module.exports = api => {
   const defaultConfig = getBabelConfig(api);
@@ -78,27 +74,13 @@ module.exports = api => {
 };
 ```
 
-#### webpack
+#### vite
 
-If `webpack.config.js` is found at the root of the package, it is used to bundle browser tests and metrics collection. Otherwise, a default webpack config is used.
+If `vite.config.js` is found at the root of the package, it is used to bundle units tests and benchmark tests for the browser. Otherwise, a default vite config is used.
 
-You may extend the default webpack config as follows:
+#### .ocularrc.js
 
-```js
-const {getWebpackConfig, deepMerge} = require('ocular-dev-tools');
-module.exports = env => {
-  const defaultConfig = getWebpackConfig(env);
-  // add custom settings
-  const config = deepMerge(defaultConfig, {
-    // overrides
-  });
-  return config;
-};
-```
-
-#### ocular-dev-tools.js
-
-A file `.ocularrc.js` (or `.ocularrc.cjs` for `type:module` projects) can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
+A file `.ocularrc.js` can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
 
 - `lint`
   + `paths` (Arrray) - directories to include when linting. Default `['modules', 'src']`
@@ -107,9 +89,21 @@ A file `.ocularrc.js` (or `.ocularrc.cjs` for `type:module` projects) can be pla
   + `extensions` - List of file extensions (prefixed with `.`) that `babel` will process. Default `['.es6', '.js', '.es', '.jsx', '.mjs']`
 - `aliases` (Object) - additional [module aliases](https://www.npmjs.com/package/module-alias) to use in tests. Default {}.
 - `entry` (Object) - entry points for tests.
-  + `test` (String) - unit test entry point. Default `./test/index`.
-  + `test-browser` (String|[Object](https://webpack.js.org/concepts/entry-points/)) - unit test browser entry point. Default `./test/browser`.
-  + `bench` (String) - benchmark entry point. Default `./test/bench/index`.
-  + `bench-browser` (String|[Object](https://webpack.js.org/concepts/entry-points/)) - benchmark browser entry point. Default `./test/bench/browser`.
-  + `size` (String|[Object](https://webpack.js.org/concepts/entry-points/)) - metrics entry points. Default `./test/size`.
+  + `test` (String) - unit test entry point. Can be a `.js` or `.ts` file. Default `./test/index.ts`.
+  + `test-browser` (String) - unit test browser entry point. Can be a `.js`, `.ts` or `.html` file.  Default `./test/browser.ts`.
+  + `bench` (String) - benchmark entry point. Can be a `.js` or `.ts` file. Default `./test/bench/index.ts`.
+  + `bench-browser` (String) - benchmark browser entry point. Can be a `.js`, `.ts` or `.html` file. Default `./test/bench/browser.ts`.
+  + `size` (String | String[]) - metrics entry point(s). Can be a `.js` or `.ts` file. Default `./test/size.ts`.
 - `browserTest` (Object) - options for browser tests. Passed to [BrowserTestDriver.run](https://uber-web.github.io/probe.gl/#/documentation/api-reference-testing/browsertestdriver).
+
+
+## ESM Repo
+
+ocular-dev-tools v2.0 can be used in a ESM repo. When enabled, all imports/exports are handled with Node.js's native [ESM](https://nodejs.org/api/esm.html#introduction) support, instead of being transpiled to commonjs.
+
+To enable ESM mode:
+
+- Add `type: 'module'` to the root `package.json` and each submodule's `package.json`s.
+- Add `compilerOptions.module: 'esnext'` to `tsconfig.json`.
+- ES5-style `require()` and `module.exports` must be removed from all `.js` files. Some dev dependencies, for example babel and eslint, may not support ESM syntax. In this case, rename the config files to use the `.cjs` extension so that they can be imported successfully.
+- When importing directly from a non-TypeScript file, the file extension must be specified. E.g. `import './init'` now becomes `import './init.js'`.

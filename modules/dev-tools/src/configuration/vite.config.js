@@ -4,9 +4,8 @@ import {createHtmlPlugin} from 'vite-plugin-html';
 import {NodeGlobalsPolyfillPlugin} from '@esbuild-plugins/node-globals-polyfill';
 import {NodeModulesPolyfillPlugin} from '@esbuild-plugins/node-modules-polyfill';
 
-const ocularConfig = getOcularConfig({aliasMode: 'browser'});
-
-export default defineConfig(({mode}) => {
+export default defineConfig(async ({mode}) => {
+  const ocularConfig = await getOcularConfig({aliasMode: 'browser'});
   const entryPoint = ocularConfig.entry[`${mode}-browser`];
 
   return {

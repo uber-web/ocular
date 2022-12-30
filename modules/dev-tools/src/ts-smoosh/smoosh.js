@@ -1,11 +1,11 @@
-const ts = require('typescript');
-const fs = require('fs');
-const path = require('path');
-const log = require('./log');
+import ts from 'typescript';
+import fs from 'fs';
+import path from 'path';
+import * as log from './log.js';
 
-const prettier = require('prettier');
+import prettier from 'prettier';
 // @ts-ignore
-const {getPrettierConfig} = require('../configuration/get-prettier-config');
+import {getPrettierConfig} from '../configuration/get-prettier-config.cjs';
 
 const suffix = 'ts';
 const prettierConfig = getPrettierConfig();
@@ -13,7 +13,7 @@ const prettierConfig = getPrettierConfig();
 /**
  * Writes the result of smooshing to a file
  */
-function smoosh(base, options = {}) {
+export function smoosh(base, options = {}) {
   const smooshedSrc = returnSmooshed(base, options);
 
   const outputFile = `./${base}.${suffix}`;
@@ -24,7 +24,7 @@ function smoosh(base, options = {}) {
 
 const declDoesntExist = {typeAliases: [], declarations: [], imports: []};
 
-function returnSmooshed(base, options = {}) {
+export function returnSmooshed(base, options = {}) {
   const dtsFile = `${base}.d.ts`;
   // TODO(btford): log a warning here?
   const decls = fs.existsSync(dtsFile) ? parseDts(dtsFile) : declDoesntExist;
@@ -311,8 +311,3 @@ function replaceExportDeclareType(text) {
   const reI = /^export declare interface /gm;
   return text.replace(reT, 'export type ').replace(reI, 'export interface ');
 }
-
-module.exports = {
-  smoosh,
-  returnSmooshed
-};

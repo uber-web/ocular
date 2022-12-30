@@ -2,6 +2,7 @@
   "name": "ocular-monorepo",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "workspaces": [
     "modules/dev-tools",
     "website"
@@ -23,6 +24,7 @@
     "pre-push": "ocular-test fast"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "pre-commit": "^1.2.2",
     "pre-push": "^0.1.1"
   },
