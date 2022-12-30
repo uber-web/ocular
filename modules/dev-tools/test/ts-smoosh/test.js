@@ -1,9 +1,9 @@
-const fs = require('fs');
-const assert = require('assert').strict;
-const path = require('path');
+import fs from 'fs';
+import assert from 'assert';
+import path from 'path';
 
-const log = require('../../src/ts-smoosh/log');
-const {returnSmooshed} = require('../../src/ts-smoosh/smoosh');
+import * as log from '../../src/ts-smoosh/log.js';
+import {returnSmooshed} from '../../src/ts-smoosh/smoosh.js';
 
 // eslint-disable-next-line no-undef
 const args = process.argv.slice(3);

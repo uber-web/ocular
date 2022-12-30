@@ -5,12 +5,12 @@
 
 export PATH=$PATH:node_modules/.bin
 
-DEV_TOOLS_DIR=`node -e "require('ocular-dev-tools/node/module-dir')()"`
+DEV_TOOLS_DIR=$(dirname $0)/..
 WORKING_DIR=`pwd`
 TMP_DIR=$WORKING_DIR/tmp
 
 # Get size metric entry point
-ENTRY_POINTS=`node $DEV_TOOLS_DIR/node/get-config.js ".entry.size"`
+ENTRY_POINTS=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".entry.size"`
 IFS=','
 read -a ENTRY_POINTS_ARR <<< "$ENTRY_POINTS"
 IFS=' '

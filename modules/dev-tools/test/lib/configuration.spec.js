@@ -1,5 +1,9 @@
 import test from 'tape-promise/tape';
-import {getBabelConfig, getESLintConfig, getPrettierConfig} from 'ocular-dev-tools';
+import {
+  getBabelConfig,
+  getESLintConfig,
+  getPrettierConfig
+} from '../../src/configuration/index.cjs';
 
 test('dev-tools#getConfig', (t) => {
   const mockBabelApi = {cache: {using: () => {}}, env: (env) => env};

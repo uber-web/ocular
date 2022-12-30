@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const {resolve} = require('path');
-const glob = require('glob');
-const {execSync} = require('child_process');
+import fs from 'fs';
+import {resolve} from 'path';
+import glob from 'glob';
+import {execSync} from 'child_process';
 
 const packageJsonFiles = glob.sync(resolve('**/package.json'), {ignore: '**/node_modules/**'});
 console.log(packageJsonFiles);

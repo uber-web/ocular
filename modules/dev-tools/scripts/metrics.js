@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-const shell = require('shelljs');
-const path = require('path');
+import shell from 'shelljs';
+import {join} from 'path';
 
+const scriptDir = new URL(import.meta.url).pathname;
 // Runs the bash script and forward the arguments, exiting with the same code
 shell.exit(
-  shell.exec(`${path.resolve(__dirname, './metrics.sh')} ${process.argv.slice(2).join(' ')}`).code
+  shell.exec(`${join(scriptDir, '../metrics.sh')} ${process.argv.slice(2).join(' ')}`).code
 );

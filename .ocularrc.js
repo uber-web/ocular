@@ -1,5 +1,5 @@
 /** @typedef {import('ocular-dev-tools').OcularConfig} OcularConfig */
-const {resolve} = require('path');
+import {resolve} from 'path';
 
 /** @type {OcularConfig} */
 let ocularConfig = {
@@ -12,7 +12,7 @@ let ocularConfig = {
   },
 
   aliases: {
-    test: resolve(__dirname, 'test')
+    test: resolve('./test')
   },
 
   entry: {
@@ -24,4 +24,4 @@ let ocularConfig = {
   }
 };
 
-module.exports = ocularConfig;
+export default ocularConfig;
