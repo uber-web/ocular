@@ -54,30 +54,6 @@ After installing you can set up your build scripts in package.json as follows:
 
 To provide maximum control to the user, ocular build scripts use config files in the framework repo. In cases where such files allow for importing other templates, ocular provides exports that can be used, if not it provides a template that the user can copy into the frameworks root directory.
 
-#### babel
-
-If `.babelrc.js` or `babel.config.js` is found at the root of the package, it is used to transpile all source code. Otherwise, a default babel config is used.
-
-You may extend the default babel config as follows:
-
-```js
-// babelrc.js
-const {getBabelConfig, deepMerge} = require('ocular-dev-tools/configuration');
-
-module.exports = api => {
-  const defaultConfig = getBabelConfig(api);
-  // add custom settings
-  const config = deepMerge(defaultConfig, {
-    // overrides
-  });
-  return config;
-};
-```
-
-#### vite
-
-If `vite.config.js` is found at the root of the package, it is used to bundle units tests and benchmark tests for the browser. Otherwise, a default vite config is used.
-
 #### .ocularrc.js
 
 A file `.ocularrc.js` can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
@@ -95,6 +71,55 @@ A file `.ocularrc.js` can be placed at the root of the package to customize the 
   + `bench-browser` (String) - benchmark browser entry point. Can be a `.js`, `.ts` or `.html` file. Default `./test/bench/browser.ts`.
   + `size` (String | String[]) - metrics entry point(s). Can be a `.js` or `.ts` file. Default `./test/size.ts`.
 - `browserTest` (Object) - options for browser tests. Passed to [BrowserTestDriver.run](https://uber-web.github.io/probe.gl/#/documentation/api-reference-testing/browsertestdriver).
+
+
+#### babel
+
+You may extend the default eslint config with a `.babelrc.js` or `babel.config.js` at the project root:
+
+```js
+// .babelrc.js
+const {getBabelConfig} = require('ocular-dev-tools/configuration');
+
+module.exports = getBabelConfig({
+  react: true,
+  // specify custom configs
+  overrides: {}
+});
+```
+
+#### eslint
+
+You may extend the default eslint config with a `.eslintrc.js` or `eslint.config.js` at the project root:
+
+```js
+// .eslintrc.js
+const {getEslintConfig} = require('ocular-dev-tools/configuration');
+
+module.exports = getEslintConfig({
+  react: '18.0',
+  // specify custom configs
+  overrides: {}
+});
+```
+
+#### prettier
+
+You may extend the default eslint config with a `.prettier.js` or `prettier.config.js` at the project root:
+
+```js
+// .prettier.js
+const {getPrettierConfig} = require('ocular-dev-tools/configuration');
+
+module.exports = getPrettierConfig({
+  // specify custom configs
+  overrides: {}
+});
+```
+
+#### vite
+
+If `vite.config.js` is found at the root of the package, it is used to bundle units tests and benchmark tests for the browser. Otherwise, a default vite config is used.
 
 
 ## ESM Repo
