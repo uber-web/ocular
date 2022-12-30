@@ -49,7 +49,7 @@ export default function getAliases(mode, packageRoot = process.env.PWD) {
     const {path, packageInfo} = submodules[moduleName];
     aliases[`${moduleName}/test`] = resolve(path, 'test');
     if (mode === 'dist') {
-      const subPath = packageInfo.main && packageInfo.main.replace('/index.js', '');
+      const subPath = packageInfo.main && packageInfo.main.replace(/\/[^\/]+$/, '');
       aliases[moduleName] = subPath ? resolve(path, subPath) : path;
     } else {
       aliases[moduleName] = resolve(path, 'src');
