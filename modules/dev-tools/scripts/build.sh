@@ -6,6 +6,7 @@ DEV_TOOLS_DIR=$(dirname $0)/..
 CONFIG=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.configPath"`
 MODULES=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".modules" | sed -E "s/,/ /g"`
 EXTENSIONS=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.extensions"`
+IS_ESM=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".esm"`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|esm ]]; then
@@ -19,6 +20,18 @@ build_src() {
   TARGET=$2
   check_target $TARGET
   (set -x; BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS)
+}
+
+build_module_esm() {
+  build_src dist esm-strict
+
+  if [ -e "src/index.ts" ]; then
+    ENTRY=src/index.ts
+  else
+    ENTRY=src/index.js
+  fi
+
+  esbuild $ENTRY --bundle --packages=external --format=cjs --target=es2015 --outfile=dist/index.cjs
 }
 
 build_module() {
@@ -69,7 +82,11 @@ build_monorepo() {
     if [ -e "${D}/package.json" ]; then
       echo -e "\033[1mBuilding $D\033[0m"
       cd $D
-      build_module `echo $TARGET | sed -e 's/,/ /g'`
+      if [ "$IS_ESM" = "true" ]; then
+        build_module_esm
+      else
+        build_module `echo $TARGET | sed -e 's/,/ /g'`
+      fi
       echo ""
     elif [ ! -e "${D}" ]; then
       echo -e "\033[1mWarning: skipping $D because it doesn't match any file.\033[0m"

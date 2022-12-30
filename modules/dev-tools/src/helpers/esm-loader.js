@@ -17,6 +17,8 @@ export function resolve(specifier, context, defaultResolver) {
   if (mappedSpecifier) {
     if (mappedSpecifier.match(/(\/\*|\.jsx?|\.tsx?|\.cjs)$/)) {
       specifier = pathToFileURL(mappedSpecifier).pathname;
+    } else if (mappedSpecifier.includes('/dist/')) {
+      specifier = `${pathToFileURL(mappedSpecifier)}.js`;
     } else {
       specifier = `${pathToFileURL(mappedSpecifier)}.ts`;
     }

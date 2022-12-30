@@ -58,18 +58,24 @@ const ENV_CONFIG = {
       ['@babel/transform-runtime', {useESModules: true}]
     ]
   },
-  // coverage build (node only)
-  test: {
+
+  'esm-strict': {
     presets: [
       ...COMMON_PRESETS,
       [
-        '@babel/preset-env',
+        '@babel/env',
         {
-          targets: 'maintained node versions'
+          targets: ESM_TARGETS,
+          modules: false
         }
       ]
     ],
-    plugins: [...COMMON_PLUGINS, 'istanbul']
+    plugins: [
+      ...COMMON_PLUGINS,
+      "babel-plugin-add-import-extension",
+      // TODO - we likely do not need runtime transforms for the esm setting
+      ['@babel/transform-runtime', {useESModules: true}]
+    ]
   }
 };
 

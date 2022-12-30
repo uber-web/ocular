@@ -4,7 +4,7 @@ set -e
 
 clean() {
   if [ -z "$1" ]; then
-    (set -x; rm -fr dist && mkdir -p dist/es5 dist/esm)
+    (set -x; rm -fr dist && mkdir -p dist)
   elif [ "$1" = "all" ]; then
     (set -x; rm -fr dist)
   else
