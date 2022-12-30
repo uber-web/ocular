@@ -1,12 +1,15 @@
 {
-  "all": "true",
+  "all": true,
   "sourceMap": false,
   "instrument": true,
   "include": [
-    "src/**/*.js",
-    "modules/**/src/**/*.js"
+    "src/**/*.+(js|jsx|cjs|mjs|ts|tsx)",
+    "modules/**/src/**/*.+(js|jsx|cjs|mjs|ts|tsx)"
   ],
   "exclude": [
-    "**/deprecated"
+    "**/deprecated",
+    "**/wip",
+    "**/*.spec.+(js|ts)",
+    "**/*.d.ts"
   ]
 }
