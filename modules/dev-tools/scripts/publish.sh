@@ -30,9 +30,9 @@ if [ -d "modules" ]; then
       # cd-version argument: increase <prerelease> version
       if [ -z "$TAG" ]
       then
-        (set -x; lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease)
+        (set -x; lerna publish --force-publish --exact --npm-tag beta --cd-version prerelease --no-commit-hooks)
       else
-        (set -x; lerna publish --force-publish --exact --npm-tag $TAG --cd-version prerelease)
+        (set -x; lerna publish --force-publish --exact --npm-tag $TAG --cd-version prerelease --no-commit-hooks)
       fi
       ;;
 
@@ -40,9 +40,9 @@ if [ -d "modules" ]; then
       if [ -z "$TAG" ]
       then
         # latest
-        (set -x; lerna publish --force-publish --exact --cd-version patch)
+        (set -x; lerna publish --force-publish --exact --cd-version patch --no-commit-hooks)
       else
-        (set -x; lerna publish --force-publish --exact --npm-tag $TAG --cd-version patch)
+        (set -x; lerna publish --force-publish --exact --npm-tag $TAG --cd-version patch --no-commit-hooks)
       fi
       ;;
 
