@@ -6,6 +6,7 @@ DEV_TOOLS_DIR=$(dirname $0)/..
 CONFIG=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.configPath"`
 MODULES=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".modules" | sed -E "s/,/ /g"`
 EXTENSIONS=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.extensions"`
+TS_PROJECT=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".typescript.project"`
 IS_ESM=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".esm"`
 
 check_target() {
@@ -95,6 +96,10 @@ build_monorepo() {
     fi
   ); done
 }
+
+if [ ! -z "$TS_PROJECT" ]; then
+  tsc -b $TS_PROJECT
+fi
 
 if [ -d "modules" ]; then
   build_monorepo $*

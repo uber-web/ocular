@@ -28,6 +28,10 @@ export async function getOcularConfig(options = {}) {
       extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
     },
 
+    typescript: {
+      project: ''
+    },
+
     lint: {
       paths: IS_MONOREPO ? ['modules'] : ['src'],
       extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx', 'd.ts']
