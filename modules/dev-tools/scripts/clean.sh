@@ -24,3 +24,5 @@ if [ -d "modules" ]; then
 else
   clean $1
 fi
+
+find . -name tsconfig.tsbuildinfo -exec rm {} \;

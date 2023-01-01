@@ -13,6 +13,10 @@ type OcularConfig = {
     extensions?: string[];
   };
 
+  typescript?: {
+    project: string;
+  };
+
   lint?: {
     paths?: string[];
     extensions?: string[];
@@ -48,6 +52,10 @@ type MaterializedOcularConfig = {
   babel: {
     configPath: string;
     extensions: string[];
+  };
+
+  typescript: {
+    project: string;
   };
 
   lint: {
