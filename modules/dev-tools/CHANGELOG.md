@@ -1,5 +1,13 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.4
+
+- support for ESM repos
+
+## v2.0.0-alpha.3
+
+- edge case handling and more flexible configs (#406)
+
 ## v2.0.0-alpha.2
 
 - Try fix missing Chromium error
