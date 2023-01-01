@@ -1,5 +1,6 @@
 const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
 const deepMerge = require('deepmerge');
+const {getValidPath} = require('../utils/utils.cjs');
 
 const DEFAULT_OPTIONS = {
   react: false
@@ -14,7 +15,13 @@ const DEFAULT_CONFIG = {
     // @babel/eslint-parser issues https://github.com/babel/babel/issues/11975
     requireConfigFile: false,
     babelOptions: {
-      configFile: './babel.config.js'
+      configFile: getValidPath(
+        './.babelrc',
+        './.babelrc.js',
+        './.babelrc.cjs',
+        './babel.config.js',
+        './babel.config.cjs'
+      )
     }
   },
   env: {
