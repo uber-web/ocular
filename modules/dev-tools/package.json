@@ -2,7 +2,7 @@
   "name": "ocular-dev-tools",
   "description": "Dev tools for our Javascript frameworks",
   "license": "MIT",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "type": "module",
   "keywords": [
     "javascript"
@@ -18,7 +18,7 @@
     "CHANGELOG.md"
   ],
   "exports": {
-    ".": "./index.js",
+    ".": "./src/index.js",
     "./configuration": "./src/configuration/index.cjs"
   },
   "types": "./src/index.d.ts",
