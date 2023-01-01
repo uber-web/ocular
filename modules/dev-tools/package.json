@@ -2,7 +2,7 @@
   "name": "ocular-dev-tools",
   "description": "Dev tools for our Javascript frameworks",
   "license": "MIT",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "type": "module",
   "keywords": [
     "javascript"
@@ -13,7 +13,6 @@
   },
   "files": [
     "src",
-    "config",
     "scripts",
     "templates",
     "CHANGELOG.md"
@@ -23,7 +22,7 @@
     "./configuration": "./src/configuration/index.cjs"
   },
   "types": "./src/index.d.ts",
-  "main": "./src/index.cjs",
+  "main": "./src/index.js",
   "bin": {
     "ocular-bootstrap": "./scripts/bootstrap.js",
     "ocular-build": "./scripts/build.js",

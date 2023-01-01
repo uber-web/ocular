@@ -1,5 +1,12 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.5
+
+- Suppress commit hooks in lerna publish (#413)
+- Add Typescript build commands (#412)
+- eslintrc auto determine babel config path (#411)
+- Drop import assertion for better compatibility (#410)
+
 ## v2.0.0-alpha.4
 
 - support for ESM repos
