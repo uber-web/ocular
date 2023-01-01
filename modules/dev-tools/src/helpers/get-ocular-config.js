@@ -7,8 +7,7 @@ import {shallowMerge, getValidPath} from '../utils/utils.js';
 
 export async function getOcularConfig(options = {}) {
   const packageRoot = options.root || process.env.PWD;
-  const scriptPath = new URL(import.meta.url).pathname;
-  const ocularRoot = resolve(scriptPath, '../../..');
+  const ocularRoot = resolve(cwd(), '../..');
 
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
 
@@ -110,4 +109,9 @@ async function getUserConfig(packageRoot, options) {
   }
 
   return userConfig;
+}
+
+function cwd() {
+  const scriptPath = new URL(import.meta.url).pathname;
+  return resolve(scriptPath, '..');
 }
