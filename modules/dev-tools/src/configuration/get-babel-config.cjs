@@ -76,7 +76,23 @@ const ENV_CONFIG = {
       // TODO - we likely do not need runtime transforms for the esm setting
       ['@babel/transform-runtime', {useESModules: true}]
     ]
-  }
+  },
+
+  bundle: {
+    presets: [
+      ...COMMON_PRESETS,
+      [
+        '@babel/env',
+        {
+          targets: ESM_TARGETS,
+          modules: false
+        }
+      ]
+    ],
+    plugins: [
+      '@babel/transform-runtime'
+    ]
+  },
 };
 
 // Ensure we have an entry for the default BABEL_ENV
@@ -85,7 +101,9 @@ ENV_CONFIG.development = ENV_CONFIG.es5;
 /** @type {types['getBabelConfig']} */
 module.exports.getBabelConfig = function getBabelConfig(options = {}) {
   return (api) => {
-    api.cache.using(() => process.env.BABEL_ENV);
+    if (api.cache) {
+      api.cache.using(() => process.env.BABEL_ENV);
+    }
 
     let config = {
       ...DEFAULT_CONFIG,

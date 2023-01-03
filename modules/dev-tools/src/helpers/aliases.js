@@ -47,7 +47,12 @@ export default function getAliases(mode, packageRoot = process.env.PWD) {
 
   for (const moduleName in submodules) {
     const {path, packageInfo} = submodules[moduleName];
-    aliases[`${moduleName}/test`] = resolve(path, 'test');
+
+    const testPath = resolve(path, 'test');
+    if (fs.existsSync(testPath)) {
+      aliases[`${moduleName}/test`] = testPath;
+    }
+
     if (mode === 'dist') {
       const subPath = packageInfo.main && packageInfo.main.replace(/\/[^\/]+$/, '');
       aliases[moduleName] = subPath ? resolve(path, subPath) : path;
