@@ -28,6 +28,10 @@ export async function getOcularConfig(options = {}) {
       extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
     },
 
+    bundle: {
+      globals: {}
+    },
+
     typescript: {
       project: ''
     },

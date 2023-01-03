@@ -13,6 +13,14 @@ type OcularConfig = {
     extensions?: string[];
   };
 
+  bundle?: {
+    target?: string;
+    globalName?: string;
+    format?: string;
+    externals?: string[];
+    globals?: {[pattern: string]: string};
+  };
+
   typescript?: {
     project: string;
   };
@@ -52,6 +60,14 @@ type MaterializedOcularConfig = {
   babel: {
     configPath: string;
     extensions: string[];
+  };
+
+  bundle: {
+    target?: string;
+    globalName?: string;
+    format?: string;
+    externals?: string[];
+    globals: {[pattern: string]: string};
   };
 
   typescript: {

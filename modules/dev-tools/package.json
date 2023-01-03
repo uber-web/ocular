@@ -2,7 +2,7 @@
   "name": "ocular-dev-tools",
   "description": "Dev tools for our Javascript frameworks",
   "license": "MIT",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "type": "module",
   "keywords": [
     "javascript"
@@ -18,7 +18,7 @@
     "CHANGELOG.md"
   ],
   "exports": {
-    ".": "./index.js",
+    ".": "./src/index.js",
     "./configuration": "./src/configuration/index.cjs"
   },
   "types": "./src/index.d.ts",
@@ -26,6 +26,7 @@
   "bin": {
     "ocular-bootstrap": "./scripts/bootstrap.js",
     "ocular-build": "./scripts/build.js",
+    "ocular-bundle": "./scripts/bundle.js",
     "ocular-bump": "./scripts/bump.js",
     "ocular-clean": "./scripts/clean.js",
     "ocular-lint": "./scripts/lint.js",
@@ -72,6 +73,8 @@
     "coveralls": "^3.0.3",
     "deepmerge": "^4.2.2",
     "esbuild": "^0.16.7",
+    "esbuild-plugin-babel": "git+https://github.com/Pessimistress/esbuild-plugin-babel.git#patch-1",
+    "esbuild-plugin-external-global": "^1.0.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.7.0",
