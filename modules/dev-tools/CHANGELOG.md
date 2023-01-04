@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.6
+
+- Add ocular-bundle command (#414)
+
 ## v2.0.0-alpha.5
 
 - Suppress commit hooks in lerna publish (#413)
