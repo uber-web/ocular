@@ -11,7 +11,7 @@ for (let i = 1; i < process.argv.length; i++) {
   const arg = process.argv[i];
   if (arg.startsWith('--')) {
     const tokens = arg.slice(2).split('=');
-    env[tokens[0]] = tokens[1] || true;
+    env[tokens[0]] = tokens[1] === undefined ? true : tokens[1];
   } else if (!entryPoint && arg.match(/\.(js|ts|cjs|mjs|jsx|tsx)$/)) {
     entryPoint = arg;
   }
