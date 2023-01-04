@@ -1,12 +1,11 @@
 // Launch script for various Node test configurations
 import fs from 'fs';
 import {resolve} from 'path';
+import {execShellCommand} from './utils/shell.js';
 
 import {getOcularConfig} from './helpers/get-ocular-config.js';
 
 import {BrowserTestDriver} from '@probe.gl/test-utils';
-
-import shell from 'shelljs';
 
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
 const ocularConfig = await getOcularConfig({aliasMode: mode});
@@ -92,15 +91,12 @@ function runNodeTest(entry) {
   );
 
   if (ocularConfig.esm) {
-    shell.exit(
-      shell.exec(
-        `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/src/helpers/esm-loader.js" node "${entry}"`
-      ).code
+    execShellCommand(
+      `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/src/helpers/esm-loader.js" node "${entry}"`
     );
   } else {
-    shell.exit(
-      shell.exec(`ts-node -r "${ocularConfig.ocularPath}/src/helpers/cjs-register.cjs" "${entry}"`)
-        .code
+    execShellCommand(
+      `ts-node -r "${ocularConfig.ocularPath}/src/helpers/cjs-register.cjs" "${entry}"`
     );
   }
 }
