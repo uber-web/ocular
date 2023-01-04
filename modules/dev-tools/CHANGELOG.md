@@ -1,5 +1,10 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.7
+
+- clean up dependencies (#416)
+- Remove shelljs (#415)
+
 ## v2.0.0-alpha.6
 
 - Add ocular-bundle command (#414)
