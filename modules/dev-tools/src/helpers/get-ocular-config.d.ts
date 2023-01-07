@@ -16,7 +16,7 @@ type OcularConfig = {
   bundle?: {
     target?: string;
     globalName?: string;
-    format?: string;
+    format?: 'cjs' | 'esm' | 'umd' | 'iife';
     externals?: string[];
     globals?: {[pattern: string]: string};
   };
@@ -65,7 +65,7 @@ type MaterializedOcularConfig = {
   bundle: {
     target?: string;
     globalName?: string;
-    format?: string;
+    format?: 'cjs' | 'esm' | 'umd' | 'iife';
     externals?: string[];
     globals: {[pattern: string]: string};
   };
