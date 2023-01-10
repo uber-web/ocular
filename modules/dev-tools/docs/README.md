@@ -50,6 +50,19 @@ After installing you can set up your build scripts in package.json as follows:
 
 ## Usage
 
+### Command Line Tools
+
+| Typical Build Script | Ocular Script | Description |
+| --- | --- | --- |
+| [`ocular-bootstrap`](docs/dev-tools/cli/ocular-bootstrap) | `bootstrap` | Install dependencies for monorepos |
+| [`ocular-clean`](docs/dev-tools/cli/ocular-clean) | `clean` | Remove all transpiled files in preparation for a new build. |
+| [`ocular-build`](docs/dev-tools/cli/ocular-build) | `build` | Transpile all modules. |
+| [`ocular-lint`](docs/dev-tools/cli/ocular-lint) | `lint` | Run eslint & prettier on the code base. |
+| [`ocular-test`](docs/dev-tools/cli/ocular-test) | `test` | Run tests. |
+| [`ocular-metrics`](docs/dev-tools/cli/ocular-metrics) | `metrics` | Bundle the source and report the bundle size. |
+| [`ocular-publish`](docs/dev-tools/cli/ocular-publish) | `publish` | Publish the packages, create git tag and push. |
+
+
 ### Configuration
 
 To provide maximum control to the user, ocular build scripts use config files in the framework repo. In cases where such files allow for importing other templates, ocular provides exports that can be used, if not it provides a template that the user can copy into the frameworks root directory.
@@ -58,12 +71,22 @@ To provide maximum control to the user, ocular build scripts use config files in
 
 A file `.ocularrc.js` can be placed at the root of the package to customize the dev scripts. The config file may export a JSON object that contains the following keys, or a callback function that returns such object:
 
-- `lint`
+- `esm` (Boolean) - set if tests should run using Node.js's ES module resolution. By default `true` if and only if `type: "module"` is found in the root package.json.
+- `lint` - options to control eslint behavior
   + `paths` (Arrray) - directories to include when linting. Default `['modules', 'src']`
   + `extensions` (Array) - file extensions to include when linting. Default `['js', 'md']`
-- `babel`
+- `babel` - options to control babel behavior
   + `extensions` - List of file extensions (prefixed with `.`) that `babel` will process. Default `['.es6', '.js', '.es', '.jsx', '.mjs']`
-- `aliases` (Object) - additional [module aliases](https://www.npmjs.com/package/module-alias) to use in tests. Default {}.
+- `aliases` (Object) - Module aliases to use in tests. Any import from a submodule is mapped to its source. Use this object to define additional mappings, for example `"test-data": "./test/sample-data`.
+- `nodeAliases` (Object) - Module aliases to use in node tests only.
+- `typescript`
+  + `project` (String) - path to the project's tsconfig
+- `bundle` - options to control esbuild behavior
+  + `target` (String)
+  + `globalName` (String)
+  + `format` (String) - one of `cjs`, `esm`, `umd`, `iife`
+  + `externals` (String[])
+  + `globals` (Object) - import package from global variable.
 - `entry` (Object) - entry points for tests.
   + `test` (String) - unit test entry point. Can be a `.js` or `.ts` file. Default `./test/index.ts`.
   + `test-browser` (String) - unit test browser entry point. Can be a `.js`, `.ts` or `.html` file.  Default `./test/browser.ts`.
