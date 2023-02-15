@@ -1,6 +1,7 @@
 // Registers an alias for this module
 import {resolve} from 'path';
 import fs from 'fs';
+import {getValidPath} from '../utils/utils.js';
 
 export function getModuleInfo(path) {
   if (fs.lstatSync(path).isDirectory()) {
@@ -46,7 +47,7 @@ export default function getAliases(mode, packageRoot = process.env.PWD) {
   const submodules = getSubmodules(packageRoot);
 
   for (const moduleName in submodules) {
-    const {path, packageInfo} = submodules[moduleName];
+    const {path} = submodules[moduleName];
 
     const testPath = resolve(path, 'test');
     if (fs.existsSync(testPath)) {
@@ -54,8 +55,11 @@ export default function getAliases(mode, packageRoot = process.env.PWD) {
     }
 
     if (mode === 'dist') {
-      const subPath = packageInfo.main && packageInfo.main.replace(/\/[^\/]+$/, '');
-      aliases[moduleName] = subPath ? resolve(path, subPath) : path;
+      aliases[moduleName] = getValidPath(
+        resolve(path, 'dist/es5'),
+        resolve(path, 'dist/esm'),
+        resolve(path, 'dist')
+      );
     } else {
       aliases[moduleName] = resolve(path, 'src');
     }
