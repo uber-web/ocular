@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.8
+
+- Fix test dist alias resolution (#418)
+
 ## v2.0.0-alpha.7
 
 - clean up dependencies (#416)
