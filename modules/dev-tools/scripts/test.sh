@@ -2,6 +2,7 @@
 # Automated tests
 
 set -e
+# set -x # uncomment to debug
 
 BASEDIR=$(dirname "$0")
 
@@ -20,7 +21,7 @@ run_test_script() {
   YARN_GLOBAL_DIR=`yarn global dir`
   CHROMIUM_EXECUTABLE=`node $MODULE_DIR/src/helpers/get-puppeteer-executable-path.cjs $YARN_GLOBAL_DIR`
 
-  (set -x; PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $TEST_SCRIPT $1)
+  PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE node $TEST_SCRIPT $1
 }
 
 run_full_test() {
@@ -52,7 +53,7 @@ case $MODE in
 
   "node-debug")
     echo "Open chrome://inspect/#devices to attach debugger."
-    (set -x; node --inspect-brk $TEST_SCRIPT node)
+    node --inspect-brk $TEST_SCRIPT node
     ;;
 
   "dist")
@@ -60,8 +61,8 @@ case $MODE in
     ;;
 
   "cover")
-    (set -x; npx c8 node $TEST_SCRIPT cover)
-    (set -x; npx c8 report --reporter=lcov)
+    npx c8 node $TEST_SCRIPT cover
+    npx c8 report --reporter=lcov
     ;;
 
   "ci")

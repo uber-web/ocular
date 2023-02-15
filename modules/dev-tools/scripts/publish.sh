@@ -2,6 +2,7 @@
 # Script to publish modules
 
 set -e
+# set -x # uncomment to debug
 
 usage() {
   # TODO: Add more specific url
@@ -30,9 +31,9 @@ if [ -d "modules" ]; then
       # cd-version argument: increase <prerelease> version
       if [ -z "$TAG" ]
       then
-        (set -x; lerna publish prerelease --force-publish --exact --dist-tag beta --no-commit-hooks)
+        lerna publish prerelease --force-publish --exact --dist-tag beta --no-commit-hooks
       else
-        (set -x; lerna publish prerelease --force-publish --exact --dist-tag $TAG --no-commit-hooks)
+        lerna publish prerelease --force-publish --exact --dist-tag $TAG --no-commit-hooks
       fi
       ;;
 
@@ -40,9 +41,9 @@ if [ -d "modules" ]; then
       if [ -z "$TAG" ]
       then
         # latest
-        (set -x; lerna publish patch --force-publish --exact --no-commit-hooks)
+        lerna publish patch --force-publish --exact --no-commit-hooks
       else
-        (set -x; lerna publish patch --force-publish --exact --dist-tag $TAG --no-commit-hooks)
+        lerna publish patch --force-publish --exact --dist-tag $TAG --no-commit-hooks
       fi
       ;;
 
@@ -58,29 +59,29 @@ else
 
     "beta")
       # -f includes any changes in the version commit
-      (set -x; npm version prerelease --force)
+      npm version prerelease --force
       # push to branch
-      (set -x; git push && git push --tags)
+      git push && git push --tags
       if [ -z "$TAG" ]
       then
-        (set -x; npm publish --tag beta)
+        npm publish --tag beta
       else
-        (set -x; npm publish --tag $TAG)
+        npm publish --tag $TAG
       fi
       ;;
 
     "prod")
       # -f includes any changes in the version commit
-      (set -x; npm version patch --force)
+      npm version patch --force
       # push to branch
-      (set -x; git push && git push --tags)
+      git push && git push --tags
 
       if [ -z "$TAG" ]
       then
         # latest
-        (set -x; npm publish)
+        npm publish
       else
-        (set -x; npm publish --tag $TAG)
+        npm publish --tag $TAG
       fi
       ;;
 

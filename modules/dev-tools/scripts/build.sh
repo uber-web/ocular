@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+# set -x # uncomment to debug
 
 DEV_TOOLS_DIR=$(dirname $0)/..
 CONFIG=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.configPath"`
@@ -20,7 +21,7 @@ build_src() {
   OUT_DIR=$1
   TARGET=$2
   check_target $TARGET
-  (set -x; BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS)
+  BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS
 }
 
 build_module_esm() {

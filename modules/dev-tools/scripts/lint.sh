@@ -2,6 +2,7 @@
 # Script to check code styles
 
 set -e
+# set -x # uncomment to debug
 
 # Lint selected directories
 # lint.sh DIR1,DIR2
@@ -56,27 +57,27 @@ case $MODE in
           fi
       done
 
-      (set -x; npx prettier-check $FILES_LIST)
-      (set -x; npx eslint $FILES_LIST)
+      npx prettier-check $FILES_LIST
+      npx eslint $FILES_LIST
     fi
     ;;
 
   "fix")
     print_yellow "Running eslint in $DIRECTORIES..."
-    (set -x; npx eslint --fix "$DIRECTORIES/**/*.$EXTENSIONS")
+    npx eslint --fix "$DIRECTORIES/**/*.$EXTENSIONS"
 
     print_yellow "Running prettier in $DIRECTORIES..."
-    (set -x; npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN")
+    npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN"
     ;;
 
   *)
     print_yellow "Running eslint in $DIRECTORIES..."
-    (set -x; npx eslint "$DIRECTORIES/**/*.$EXTENSIONS")
+    npx eslint "$DIRECTORIES/**/*.$EXTENSIONS"
 
     print_yellow "Checking prettier code style in $DIRECTORIES..."
-    (set -x; npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN" ||
+    npx prettier-check  "$DIR_PATTERN" "$ROOT_PATTERN" ||
       (echo -e "\033[91mNot all files using prettier code style. This may be fixed by running\033[0m \033[1mnpm run lint fix\033[0m" &&
-      exit 1))
+      exit 1)
 
     ;;
   esac
