@@ -10,13 +10,13 @@ import ext from 'esbuild-plugin-external-global';
  * Get list of dependencies to exclude using esbuild-plugin-external-global
  * @param externalPackages string[]
  */
-function getExternalGlobalsAMD(externalPackages) {
-  const externals = {};
-  for (const packageName of externalPackages) {
-    externals[packageName] = `typeof require === 'function' ? require('${packageName}') : null`;
-  }
-  return externals;
-}
+// function getExternalGlobalsAMD(externalPackages) {
+//   const externals = {};
+//   for (const packageName of externalPackages) {
+//     externals[packageName] = `typeof require === 'function' ? require('${packageName}') : null`;
+//   }
+//   return externals;
+// }
 
 /**
  * Get list of dependencies to exclude using esbuild-plugin-external-global
@@ -159,7 +159,7 @@ export default async function getBundleConfig(opts) {
 
     case 'umd':
       Object.assign(config, umdWrapper(globalName));
-      externalGlobals = getExternalGlobalsAMD(externalPackages);
+      externalGlobals = getExternalGlobalsIIFE(externalPackages, ocularConfig.bundle.globals);
       break;
 
     case 'iife':
