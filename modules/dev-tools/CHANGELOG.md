@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.9
+
+- Fix umd bundle settings (#420)
+
 ## v2.0.0-alpha.8
 
 - Fix test dist alias resolution (#418)
