@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.10
+
+- Bump esbuild plugins versions (#422)
+
 ## v2.0.0-alpha.9
 
 - Fix umd bundle settings (#420)
