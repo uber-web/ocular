@@ -6,7 +6,7 @@ Create a `ocular-dev-tools` default babel config.
 
 ```js
 // babel.config.js
-const {getBabelConfig} = requre('ocular-dev-tools/configuration');
+const {getBabelConfig} = require('ocular-dev-tools/configuration');
 
 module.exports = getBabelConfig({
   /** Enable React preset */
