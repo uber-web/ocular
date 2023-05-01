@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.11
+
+- Set NODE_ENV during test
+
 ## v2.0.0-alpha.10
 
 - Bump esbuild plugins versions (#422)
