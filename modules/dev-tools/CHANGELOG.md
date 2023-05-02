@@ -4,6 +4,10 @@
 
 - Set NODE_ENV during test
 
+## v2.0.0-alpha.12
+
+- Start vite server from JS API (#424)
+
 ## v2.0.0-alpha.10
 
 - Bump esbuild plugins versions (#422)
