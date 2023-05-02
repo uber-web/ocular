@@ -6,6 +6,7 @@ import {execShellCommand} from './utils/shell.js';
 import {getOcularConfig} from './helpers/get-ocular-config.js';
 
 import {BrowserTestDriver} from '@probe.gl/test-utils';
+import {createServer} from 'vite';
 
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
 const ocularConfig = await getOcularConfig({aliasMode: mode});
@@ -28,21 +29,13 @@ switch (mode) {
   case 'browser-headless':
     await runBrowserTest({
       server: {
-        command: 'vite',
-        arguments: ['--config', viteConfigPath, '--mode', 'test']
+        start: createViteServer,
+        options: {
+          mode: 'test'
+        }
       },
       url: resolveBrowserEntry('test'),
       headless: mode === 'browser-headless'
-    });
-    break;
-
-  case 'bench-browser':
-    await runBrowserTest({
-      server: {
-        command: 'vite',
-        arguments: ['--config', viteConfigPath, '--mode', 'bench']
-      },
-      url: resolveBrowserEntry('bench')
     });
     break;
 
@@ -51,8 +44,10 @@ switch (mode) {
       const testMode = mode.replace('-browser', '').replace('-headless', '');
       await runBrowserTest({
         server: {
-          command: 'vite',
-          arguments: ['--config', viteConfigPath, '--mode', testMode]
+          start: createViteServer,
+          options: {
+            mode: testMode
+          }
         },
         url: resolveBrowserEntry(testMode),
         headless: /\bheadless\b/.test(mode)
@@ -109,4 +104,22 @@ function runBrowserTest(opts) {
     server: {...opts.server, ...userConfig.server},
     browser: {...opts.browser, ...userConfig.browser}
   });
+}
+
+async function createViteServer(config) {
+  const server = await createServer({
+    configFile: viteConfigPath,
+    mode: config.options?.mode,
+    server: {
+      port: config.port
+    }
+  });
+  await server.listen();
+
+  return {
+    url: server.resolvedUrls.local[0],
+    stop: () => {
+      server.close();
+    }
+  };
 }
