@@ -111,15 +111,15 @@ async function createViteServer(config) {
     configFile: viteConfigPath,
     mode: config.options?.mode,
     server: {
-      port: config.port,
-    },
+      port: config.port
+    }
   });
   await server.listen();
 
   return {
     url: server.resolvedUrls.local[0],
     stop: () => {
-      server.close()
+      server.close();
     }
   };
 }
