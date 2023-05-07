@@ -27,6 +27,10 @@ if [ -d "modules" ]; then
   ); done
 
   cd $PACKAGE_DIR
+else
+  packageName=`node -e "console.log(require('./package.json').name)"`
+  yarn link
+  yarn link $packageName
 fi
 
 # build the submodules
