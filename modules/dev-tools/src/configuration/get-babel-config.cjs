@@ -108,7 +108,7 @@ module.exports.getBabelConfig = function getBabelConfig(options = {}) {
       })
     }
     if (options.overrides) {
-      config = deepMerge(config, options.overrides);
+      config = deepMerge(config, {overrides: options.overrides});
     }
 
     if (options.debug) {

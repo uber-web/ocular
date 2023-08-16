@@ -5,6 +5,6 @@
  */
 export function getBabelConfig(options?: {
   react?: boolean;
-  overrides?: any;
+  overrides?: any[];
   debug?: boolean;
 }): (api: any) => {[key: string]: any};

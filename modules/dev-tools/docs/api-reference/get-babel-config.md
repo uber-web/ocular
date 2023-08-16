@@ -12,11 +12,11 @@ module.exports = getBabelConfig({
   /** Enable React preset */
   react: true,
   /** This will be deep merged with the default config */
-  overrides: {
+  overrides: [{
     plugins: [
       // custom plugins
     ]
-  },
+  }],
   /** Print full config JSON for inspection */
   debug: true
 });
