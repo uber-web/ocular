@@ -1,6 +1,7 @@
 const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
 const deepMerge = require('deepmerge');
 const {getValidPath} = require('../utils/utils.cjs');
+const {inspect} = require('util');
 
 const DEFAULT_OPTIONS = {
   react: false
@@ -165,7 +166,7 @@ module.exports.getESLintConfig = function getESLintConfig(options = {}) {
   }
   if (options.debug) {
     // eslint-disable-next-line
-    console.log(config);
+    console.log(inspect(config, {colors: true, depth: null}));
   }
 
   return config;
