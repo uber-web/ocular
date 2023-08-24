@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.14
+
+- Update babel config for esm target (#429)
+
 ## v2.0.0-alpha.13
 
 - Fix metrics import
