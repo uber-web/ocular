@@ -1,13 +1,26 @@
 /** @typedef {import('./get-babel-config')} types */
 const deepMerge = require('deepmerge');
+const {inspect} = require('util');
 
 // The following targets are designed to support the most commonly used evergreen browsers.
 // As of Feb 2021 they all support async function, async iterator, and spread operator.
 const ES5_TARGETS = ['>0.2%', 'maintained node versions', 'not ie 11', 'not dead', 'not chrome 49'];
 const ESM_TARGETS = ['>0.2% and supports async-functions', 'maintained node versions', 'not dead'];
+// Reduce verbosity
+const ESM_PLUGIN_BLACKLIST = [
+  // Template literals are supported in all latest versions of environments
+  '@babel/plugin-transform-template-literals'
+];
 
 const DEFAULT_CONFIG = {
-  comments: false
+  comments: false,
+  // These settings reduce the verbosity of transpile outputs
+  assumptions: {
+    // When declaring classes, assume that methods don't shadow getters on the superclass and that the program doesn't depend on methods being non-enumerable.
+    setClassMethods: true,
+    // When using public class fields, assume that they don't shadow any getter in the current class, in its subclasses or in its superclass.
+    setPublicClassFields: true
+  }
 };
 
 const COMMON_PRESETS = [
@@ -41,6 +54,7 @@ const ENV_CONFIG = {
         '@babel/env',
         {
           targets: ESM_TARGETS,
+          exclude: ESM_PLUGIN_BLACKLIST,
           modules: false
         }
       ]
@@ -59,6 +73,7 @@ const ENV_CONFIG = {
         '@babel/env',
         {
           targets: ESM_TARGETS,
+          exclude: ESM_PLUGIN_BLACKLIST,
           modules: false
         }
       ]
@@ -112,8 +127,7 @@ module.exports.getBabelConfig = function getBabelConfig(options = {}) {
     }
 
     if (options.debug) {
-      // eslint-disable-next-line
-      console.log(config);
+      console.log(inspect(config, {colors: true, depth: null}));
     }
 
     return config;
