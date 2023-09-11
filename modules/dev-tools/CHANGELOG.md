@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.15
+
+- Support building esm module with multiple entry points (#430)
+
 ## v2.0.0-alpha.14
 
 - Update babel config for esm target (#429)
