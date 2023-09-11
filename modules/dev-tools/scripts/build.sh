@@ -26,13 +26,19 @@ build_src() {
 build_module_esm() {
   build_src dist esm-strict
 
-  if [ -e "src/index.ts" ]; then
-    ENTRY=src/index.ts
-  else
-    ENTRY=src/index.js
-  fi
+  # build cjs bundles
+  CJS_ENTRIES=`node $DEV_TOOLS_DIR/src/helpers/get-cjs-entry-points.js | sed -E "s/,/ /g"`
 
-  esbuild $ENTRY --bundle --packages=external --format=cjs --target=es2015 --outfile=dist/index.cjs
+  for P in ${CJS_ENTRIES}; do (
+    if [ -e "src/${P}.ts" ]; then
+      ENTRY=src/${P}.ts
+    else
+      ENTRY=src/${P}.js
+    fi
+
+    echo "Bundling ${ENTRY}"
+    esbuild $ENTRY --bundle --packages=external --format=cjs --target=es2015 --outfile=dist/${P}.cjs
+  ); done
 }
 
 build_module() {
@@ -52,7 +58,11 @@ build_module() {
 }
 
 build_unirepo() {
-  build_module
+  if [ "$IS_ESM" = "true" ]; then
+    build_module_esm
+  else
+    build_module
+  fi
 }
 
 build_monorepo() {
