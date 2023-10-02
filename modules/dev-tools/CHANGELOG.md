@@ -1,5 +1,10 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.16
+
+- Minor fix of ESM resolution (#431)
+- Change cjs entry point target (#432)
+
 ## v2.0.0-alpha.15
 
 - Support building esm module with multiple entry points (#430)
