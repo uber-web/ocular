@@ -18,12 +18,12 @@ const matchPath = createMatchPath(paths);
 export function resolve(specifier, context, defaultResolver) {
   const mappedSpecifier = matchPath(specifier);
   if (mappedSpecifier) {
-    if (mappedSpecifier.match(/(\/\*|\.jsx?|\.tsx?|\.cjs)$/)) {
+    if (mappedSpecifier.match(/(\/\*|\.jsx?|\.tsx?|\.cjs|\.json)$/)) {
       specifier = pathToFileURL(mappedSpecifier).pathname;
     } else if (mappedSpecifier.includes('/dist/')) {
       specifier = `${pathToFileURL(mappedSpecifier)}.js`;
     } else {
-      specifier = `${pathToFileURL(mappedSpecifier)}.ts`;
+      specifier = `${pathToFileURL(mappedSpecifier)}`;
     }
   }
   const result = resolveTs(specifier, context, defaultResolver);
