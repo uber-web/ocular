@@ -37,7 +37,7 @@ build_module_esm() {
     fi
 
     echo "Bundling ${ENTRY}"
-    esbuild $ENTRY --bundle --packages=external --format=cjs --target=es2015 --outfile=dist/${P}.cjs
+    esbuild $ENTRY --bundle --packages=external --format=cjs --target=node16 --outfile=dist/${P}.cjs
   ); done
 }
 
