@@ -112,7 +112,7 @@ export default async function getBundleConfig(opts) {
     babelConfig = {
       filter: /src|bundle/,
       config: {
-        presets: ['@babel/preset-typescript']
+        presets: ['@babel/preset-typescript', '@babel/preset-react']
       }
     };
   } else {
