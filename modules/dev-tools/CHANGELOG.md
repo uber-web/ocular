@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.17
+
+- Add react support to dev bundle (#433)
+
 ## v2.0.0-alpha.16
 
 - Minor fix of ESM resolution (#431)
