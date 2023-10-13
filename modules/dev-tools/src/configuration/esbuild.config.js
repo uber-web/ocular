@@ -37,18 +37,20 @@ function getExternalGlobalsIIFE(externalPackages, mapping) {
 }
 
 /** Evaluate root babel config */
-async function getBabelConfigProd(configPath, target) {
+async function getBabelConfig(configPath, env, target) {
   let config = await import(configPath);
   if (config.default) {
     config = config.default;
   }
   if (typeof config === 'function') {
     config = config({
-      env: () => 'bundle'
+      env: () => env
     });
   }
-  if (target) {
-    config.presets.find((item) => item[0] === '@babel/env')[1].targets = target;
+  const envPreset = config.presets.find((item) => item[0] === '@babel/env');
+  if (target && envPreset) {
+    envPreset[1] = envPreset[1] || {};
+    envPreset[1].targets = target;
   }
   return config;
 }
@@ -107,20 +109,15 @@ export default async function getBundleConfig(opts) {
     sourcemap = false
   } = opts;
 
-  let babelConfig;
-  if (devMode) {
-    babelConfig = {
-      filter: /src|bundle/,
-      config: {
-        presets: ['@babel/preset-typescript', '@babel/preset-react']
+  const babelConfig = devMode
+    ? {
+        filter: /src|bundle/,
+        config: await getBabelConfig(ocularConfig.babel.configPath, 'bundle-dev', target)
       }
-    };
-  } else {
-    babelConfig = {
-      filter: /src|bundle|esm/,
-      config: await getBabelConfigProd(ocularConfig.babel.configPath, target)
-    };
-  }
+    : {
+        filter: /src|bundle|esm/,
+        config: await getBabelConfig(ocularConfig.babel.configPath, 'bundle', target)
+      };
 
   let externalPackages = Object.keys(packageInfo.peerDependencies || {});
   if (typeof externals === 'string') {

@@ -96,11 +96,12 @@ const ENV_CONFIG = {
           modules: false
         }
       ]
-    ],
-    plugins: [
-      '@babel/transform-runtime'
     ]
   },
+
+  'bundle-dev': {
+    presets: [...COMMON_PRESETS]
+  }
 };
 
 // Ensure we have an entry for the default BABEL_ENV
