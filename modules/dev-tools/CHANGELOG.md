@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.18
+
+- bundle command always merges babel config (#435)
+
 ## v2.0.0-alpha.17
 
 - Add react support to dev bundle (#433)
