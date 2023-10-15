@@ -35,7 +35,7 @@ switch (mode) {
         }
       },
       url: resolveBrowserEntry('test'),
-      headless: mode === 'browser-headless'
+      headless: mode === 'browser-headless' ? 'new' : false
     });
     break;
 
