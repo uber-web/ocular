@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.19
+
+- fix(dev-tools) use new headless mode in browser tests (#436)
+
 ## v2.0.0-alpha.18
 
 - bundle command always merges babel config (#435)
