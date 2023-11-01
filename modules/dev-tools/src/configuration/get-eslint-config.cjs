@@ -65,7 +65,13 @@ const DEFAULT_CONFIG = {
       },
       plugins: ['@typescript-eslint'],
       rules: {
-        // Standard rules
+        // typescript-eslint 6.0
+        '@typescript-eslint/no-unsafe-argument': 0,
+        '@typescript-eslint/no-redundant-type-constituents': 0,
+        '@typescript-eslint/no-unsafe-enum-comparison': 1,
+        '@typescript-eslint/no-duplicate-type-constituents': 1,
+        '@typescript-eslint/no-base-to-string': 1,
+        '@typescript-eslint/no-loss-of-precision': 1,
 
         // We still have some issues with import resolution
         'import/named': 0,
