@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "modules/dev-tools",
-    "website"
+    "modules/dev-tools"
   ],
   "scripts": {
     "bootstrap": "yarn install-fast && ocular-bootstrap",
@@ -15,11 +14,8 @@
     "cover": "ocular-test cover",
     "lint": "ocular-lint",
     "test": "ocular-test node",
-    "test-gatsby": "(cd modules/gatsby-theme-ocular; yarn test;)",
     "publish-devtools-beta": "(cd modules/dev-tools; npm run publish-beta)",
     "publish-devtools-prod": "(cd modules/dev-tools; npm run publish-prod)",
-    "publish-gatsby-beta": "(cd modules2/gatsby-theme-ocular; npm run publish-beta)",
-    "publish-gatsby-prod": "(cd modules2/gatsby-theme-ocular; npm run publish-prod)",
     "pre-commit": "yarn lint",
     "pre-push": "ocular-test fast"
   },
