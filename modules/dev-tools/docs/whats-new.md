@@ -16,7 +16,7 @@ dev-tools (ib/log-commands *)$ yarn lint fix
 yarn run v1.22.5
 $ ocular-lint fix
 Running prettier in ./src...
-+ npx prettier --loglevel warn --write './src/**/*.js' '*.js'
++ npx prettier --log-level warn --write './src/**/*.js' '*.js'
 Running eslint in ./src...
 + npx eslint --fix './src/**/*.js'
 Lockfile valid.
