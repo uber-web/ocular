@@ -107,7 +107,11 @@ const {getBabelConfig} = require('ocular-dev-tools/configuration');
 module.exports = getBabelConfig({
   react: true,
   // specify custom configs
-  overrides: {}
+  overrides: {
+    overrides: [
+      // babel overrides api
+    ]
+  }
 });
 ```
 
