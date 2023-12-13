@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "react/jsx-no-undef": 2,
+    "react/no-unknown-property": 1,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 2,
+    "react/self-closing-comp": 2,
+    "react/sort-comp": 1,
+    "react/jsx-wrap-multilines": 2,
+    "react/display-name": 1,
+    "react/no-danger": 1,
+    "react/no-deprecated": 1,
+    "react/no-direct-mutation-state": 1,
+    "react/jsx-indent": [
+      1,
+      2
+    ],
+    "react/jsx-no-target-blank": 1,
+    "react/forbid-prop-types": [
+      1,
+      {
+        "forbid": [
+          "any",
+          "array"
+        ]
+      }
+    ]
+  }
+}

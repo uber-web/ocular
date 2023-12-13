@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "no-continue": 2,
+    "func-style": [
+      2,
+      "declaration",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "lines-around-comment": [
+      0,
+      {
+        "beforeBlockComment": true,
+        "afterBlockComment": false,
+        "beforeLineComment": false,
+        "afterLineComment": false,
+        "allowBlockStart": true,
+        "allowBlockEnd": true
+      }
+    ],
+    "quote-props": [
+      2,
+      "as-needed"
+    ],
+    "sort-vars": 2,
+    "wrap-regex": 2
+  }
+}

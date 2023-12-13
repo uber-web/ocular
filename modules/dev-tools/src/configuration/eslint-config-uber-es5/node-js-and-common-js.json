@@ -1,0 +1,27 @@
+{
+  "rules": {
+    "no-mixed-requires": [
+      2,
+      false
+    ],
+    "no-new-require": 2,
+    "no-path-concat": 2,
+    "no-process-env": 2,
+    "no-process-exit": 2,
+    "no-restricted-modules": 0,
+    "no-sync": 0,
+    "callback-return": [
+      2,
+      [
+        "callback",
+        "cb",
+        "next",
+        "done"
+      ]
+    ],
+    "handle-callback-err": [
+      2,
+      "^(err|error|anySpecificError)$"
+    ]
+  }
+}

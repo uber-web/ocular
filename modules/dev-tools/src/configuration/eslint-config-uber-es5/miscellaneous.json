@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "no-native-reassign": 2,
+    "no-negated-in-lhs": 2,
+    "no-reserved-keys": 0,
+    "no-spaced-func": 2
+  }
+}

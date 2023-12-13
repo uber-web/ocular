@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "accessor-pairs": [
+      2,
+      {
+        "getWithoutSet": true
+      }
+    ]
+  }
+}

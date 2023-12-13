@@ -2,13 +2,21 @@ const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
 const deepMerge = require('deepmerge');
 const {getValidPath} = require('../utils/utils.cjs');
 const {inspect} = require('util');
+const {resolve} = require('path');
+
+const localRules = (path) => resolve(__dirname, path);
 
 const DEFAULT_OPTIONS = {
   react: false
 };
 
 const DEFAULT_CONFIG = {
-  extends: ['uber-es2015', 'prettier', 'prettier/react', 'plugin:import/errors'],
+  extends: [
+    localRules('./eslint-config-uber-es2015/eslintrc.cjs'),
+    'prettier',
+    'prettier/react',
+    'plugin:import/errors'
+  ],
   plugins: ['import'],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -150,7 +158,12 @@ const DEFAULT_CONFIG = {
 
 function getReactConfig(options) {
   return {
-    extends: ['uber-es2015', 'uber-jsx', 'prettier', 'prettier/react', 'plugin:import/errors'],
+    extends: [
+      localRules('./eslint-config-uber-jsx/eslintrc.es2015.cjs'),
+      'prettier',
+      'prettier/react',
+      'plugin:import/errors'
+    ],
     plugins: ['import', 'react'],
     settings: {
       react: {

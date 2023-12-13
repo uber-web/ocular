@@ -72,8 +72,6 @@
     "esbuild-plugin-external-global": "^1.0.1",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^6.7.0",
-    "eslint-config-uber-es2015": "^3.0.0",
-    "eslint-config-uber-jsx": "^3.3.3",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.1.2",
