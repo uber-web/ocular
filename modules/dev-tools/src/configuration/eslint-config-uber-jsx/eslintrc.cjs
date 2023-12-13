@@ -19,19 +19,17 @@
 // THE SOFTWARE.
 
 module.exports = {
-  "extends": [
-    "../eslint-config-uber-es5/eslintrc.cjs",
-    "./best-practices.json",
-    "./miscellaneous.json",
-    "./stylistic-issues.json"
+  extends: [
+    '../eslint-config-uber-es2015/eslintrc.cjs',
+    './best-practices.json',
+    './miscellaneous.json',
+    './stylistic-issues.json'
   ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+      experimentalObjectRestSpread: true
     }
   },
-  "plugins": [
-    "react"
-  ]
-}
+  plugins: ['react']
+};

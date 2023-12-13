@@ -29,19 +29,19 @@ module.exports = {
     './stylistic-issues.json',
     './variables.json'
   ],
-  'parser': 'espree', // TODO: remove?
-  'env': {
-    'browser': false,
-    'node': false,
-    'amd': false,
-    'mocha': false,
-    'jasmine': false,
-    'es6': false
+  parser: 'espree', // TODO: remove?
+  env: {
+    browser: false,
+    node: false,
+    amd: false,
+    mocha: false,
+    jasmine: false,
+    es6: false
   },
-  'globals': {
-    '__dirname': false,
-    '__filename': false,
-    'require': false,
-    'module': false
+  globals: {
+    __dirname: false,
+    __filename: false,
+    require: false,
+    module: false
   }
 };
