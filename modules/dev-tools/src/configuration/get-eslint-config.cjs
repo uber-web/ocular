@@ -159,7 +159,7 @@ const DEFAULT_CONFIG = {
 function getReactConfig(options) {
   return {
     extends: [
-      localRules('./eslint-config-uber-jsx/eslintrc.es2015.cjs'),
+      localRules('./eslint-config-uber-jsx/eslintrc.cjs'),
       'prettier',
       'prettier/react',
       'plugin:import/errors'
