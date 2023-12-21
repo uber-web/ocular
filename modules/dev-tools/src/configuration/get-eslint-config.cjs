@@ -73,6 +73,11 @@ const DEFAULT_CONFIG = {
       },
       plugins: ['@typescript-eslint'],
       rules: {
+
+        ...typescriptConfigs['eslint-recommended'].rules,
+        ...typescriptConfigs.recommended.rules,
+        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+
         // typescript-eslint 6.0
         '@typescript-eslint/no-unsafe-argument': 0,
         '@typescript-eslint/no-redundant-type-constituents': 0,
@@ -94,9 +99,7 @@ const DEFAULT_CONFIG = {
 
         // typescript rules
 
-        ...typescriptConfigs['eslint-recommended'].rules,
-        ...typescriptConfigs.recommended.rules,
-        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+
 
         // Some of JS rules don't always work correctly in TS and
         // hence need to be reimported as TS rules
