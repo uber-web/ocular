@@ -2,13 +2,21 @@ const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
 const deepMerge = require('deepmerge');
 const {getValidPath} = require('../utils/utils.cjs');
 const {inspect} = require('util');
+const {resolve} = require('path');
+
+const localRules = (path) => resolve(__dirname, path);
 
 const DEFAULT_OPTIONS = {
   react: false
 };
 
 const DEFAULT_CONFIG = {
-  extends: ['uber-es2015', 'prettier', 'prettier/react', 'plugin:import/errors'],
+  extends: [
+    localRules('./eslint-config-uber-es2015/eslintrc.cjs'),
+    'prettier',
+    'prettier/react',
+    'plugin:import/errors'
+  ],
   plugins: ['import'],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -65,7 +73,18 @@ const DEFAULT_CONFIG = {
       },
       plugins: ['@typescript-eslint'],
       rules: {
-        // Standard rules
+
+        ...typescriptConfigs['eslint-recommended'].rules,
+        ...typescriptConfigs.recommended.rules,
+        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+
+        // typescript-eslint 6.0
+        '@typescript-eslint/no-unsafe-argument': 0,
+        '@typescript-eslint/no-redundant-type-constituents': 0,
+        '@typescript-eslint/no-unsafe-enum-comparison': 1,
+        '@typescript-eslint/no-duplicate-type-constituents': 1,
+        '@typescript-eslint/no-base-to-string': 1,
+        '@typescript-eslint/no-loss-of-precision': 1,
 
         // We still have some issues with import resolution
         'import/named': 0,
@@ -80,9 +99,7 @@ const DEFAULT_CONFIG = {
 
         // typescript rules
 
-        ...typescriptConfigs['eslint-recommended'].rules,
-        ...typescriptConfigs.recommended.rules,
-        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+
 
         // Some of JS rules don't always work correctly in TS and
         // hence need to be reimported as TS rules
@@ -144,7 +161,12 @@ const DEFAULT_CONFIG = {
 
 function getReactConfig(options) {
   return {
-    extends: ['uber-es2015', 'uber-jsx', 'prettier', 'prettier/react', 'plugin:import/errors'],
+    extends: [
+      localRules('./eslint-config-uber-jsx/eslintrc.cjs'),
+      'prettier',
+      'prettier/react',
+      'plugin:import/errors'
+    ],
     plugins: ['import', 'react'],
     settings: {
       react: {
