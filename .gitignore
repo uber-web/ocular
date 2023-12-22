@@ -16,3 +16,5 @@ website-test/*
 
 .reify-cache
 modules/dev-tools/.alias.json
+coverage/
+.nyc_output/
