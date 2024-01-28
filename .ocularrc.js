@@ -7,6 +7,8 @@ let ocularConfig = {
     check: true
   },
 
+  babel: false,
+
   lint: {
     paths: ['modules']
   },

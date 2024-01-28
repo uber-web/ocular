@@ -19,7 +19,9 @@
   ],
   "exports": {
     ".": "./src/index.js",
-    "./configuration": "./src/configuration/index.cjs"
+    "./configuration": "./src/configuration/index.cjs",
+    "./ts-transform-version-inline": "./ts-transform-version-inline/index.cjs",
+    "./ts-transform-append-extension": "./ts-transform-append-extension/index.cjs"
   },
   "types": "./src/index.d.ts",
   "main": "./src/index.js",
@@ -86,6 +88,7 @@
     "tape-promise": "^4.0.0",
     "typescript": "^5.2.2",
     "ts-node": "~10.9.0",
+    "ts-patch": "^3.1.2",
     "tsconfig-paths": "^4.1.1",
     "url": "^0.11.0",
     "vite": "^4.0.1",

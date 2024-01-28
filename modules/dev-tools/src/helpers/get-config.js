@@ -18,7 +18,7 @@ configPath
   .split('.')
   .filter(Boolean)
   .forEach((path) => {
-    config = config[path];
+    config = config ? config[path] : undefined;
   });
 
 if (config === undefined) {

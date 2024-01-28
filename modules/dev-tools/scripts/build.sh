@@ -20,25 +20,15 @@ build_src() {
   OUT_DIR=$1
   TARGET=$2
   check_target $TARGET
-  (set -x; BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS)
+
+  if [ ! -z "$CONFIG" ]; then
+    (set -x; BABEL_ENV=$TARGET npx babel src --config-file $CONFIG --out-dir $OUT_DIR --copy-files --source-maps --extensions $EXTENSIONS)
+  fi
 }
 
 build_module_esm() {
   build_src dist esm-strict
-
-  # build cjs bundles
-  CJS_ENTRIES=`node $DEV_TOOLS_DIR/src/helpers/get-cjs-entry-points.js | sed -E "s/,/ /g"`
-
-  for P in ${CJS_ENTRIES}; do (
-    if [ -e "src/${P}.ts" ]; then
-      ENTRY=src/${P}.ts
-    else
-      ENTRY=src/${P}.js
-    fi
-
-    echo "Bundling ${ENTRY}"
-    esbuild $ENTRY --bundle --packages=external --format=cjs --target=node16 --outfile=dist/${P}.cjs
-  ); done
+  node $DEV_TOOLS_DIR/src/build-cjs.js
 }
 
 build_module() {
@@ -108,7 +98,7 @@ build_monorepo() {
 }
 
 if [ ! -z "$TS_PROJECT" ]; then
-  tsc -b $TS_PROJECT
+  tspc -b $TS_PROJECT --verbose
 fi
 
 if [ -d "modules" ]; then

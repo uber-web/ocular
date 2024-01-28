@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import esbuild from 'esbuild';
-import getBuildConfig from '../src/configuration/esbuild.config.js';
+import {getBundleConfig} from '../src/configuration/get-esbuild-config.js';
 
 // Parse command line arguments
 let entryPoint;
@@ -17,7 +17,7 @@ for (let i = 1; i < process.argv.length; i++) {
   }
 }
 
-const buildConfig = await getBuildConfig({
+const buildConfig = await getBundleConfig({
   ...env,
   input: entryPoint
 });

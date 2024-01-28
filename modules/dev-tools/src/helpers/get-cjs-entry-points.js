@@ -1,16 +1,7 @@
 import fs from 'fs';
 import {basename} from 'path';
 
-try {
-  const entryPoints = await getCJSEntryPoints();
-  console.log(entryPoints.join(','));
-} catch (ex) {
-  console.error('Error reading package entry points');
-  console.error(ex);
-  process.exit(1);
-}
-
-function getCJSEntryPoints() {
+export function getCJSEntryPoints() {
   const packageInfo = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 
   if (packageInfo.exports) {
