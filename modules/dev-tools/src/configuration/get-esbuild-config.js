@@ -77,6 +77,7 @@ export async function getCJSExportConfig(opts) {
     outfile: opts.output,
     bundle: true,
     format: 'cjs',
+    // Node 16 is out of support, kept for compatibility. Move to 18?
     target: 'node16',
     packages: 'external',
     sourcemap: true,

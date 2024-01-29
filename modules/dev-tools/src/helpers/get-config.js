@@ -1,3 +1,9 @@
+/**
+ * Used by command line scripts to print a field from the local ocular config.
+   Path is period separated.
+   Example:
+   $ node get-config.js ".babel.configPath"
+ */
 import {getOcularConfig} from '../helpers/get-ocular-config.js';
 
 let ocularConfig;
