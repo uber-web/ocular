@@ -3,7 +3,6 @@ import fs from 'fs';
 import {join} from 'path';
 import util from 'util';
 import {getOcularConfig} from '../helpers/get-ocular-config.js';
-import babel from 'esbuild-plugin-babel';
 import ext from 'esbuild-plugin-external-global';
 
 /**
@@ -34,25 +33,6 @@ function getExternalGlobalsIIFE(externalPackages, mapping) {
     }
   }
   return externals;
-}
-
-/** Evaluate root babel config */
-async function getBabelConfig(configPath, env, target) {
-  let config = await import(configPath);
-  if (config.default) {
-    config = config.default;
-  }
-  if (typeof config === 'function') {
-    config = config({
-      env: () => env
-    });
-  }
-  const envPreset = config.presets.find((item) => item[0] === '@babel/env');
-  if (target && envPreset) {
-    envPreset[1] = envPreset[1] || {};
-    envPreset[1].targets = target;
-  }
-  return config;
 }
 
 // esbuild does not support umd format
@@ -86,38 +66,52 @@ function umdWrapper(libName) {
   };
 }
 
+/**
+ *
+ * @param {String} opts.input - path to entry point
+ * @param {String} opts.output - output file path
+ */
+export async function getCJSExportConfig(opts) {
+  return {
+    entryPoints: [opts.input],
+    outfile: opts.output,
+    bundle: true,
+    format: 'cjs',
+    // Node 16 is out of support, kept for compatibility. Move to 18?
+    target: 'node16',
+    packages: 'external',
+    sourcemap: true,
+    logLevel: 'info'
+  };
+}
+
 /* eslint-disable max-statements,complexity */
-export default async function getBundleConfig(opts) {
+export async function getBundleConfig(opts) {
   // This script must be executed in a submodule's directory
   const packageRoot = process.cwd();
   const packageInfo = JSON.parse(fs.readFileSync(join(packageRoot, 'package.json'), 'utf-8'));
+
+  const devMode = opts.env === 'dev';
+
   const ocularConfig = await getOcularConfig({
-    root: join(packageRoot, '../..')
+    root: join(packageRoot, '../..'),
+    aliasMode: devMode ? 'src' : 'dist'
   });
 
   opts = {...ocularConfig.bundle, ...opts};
-  const devMode = opts.env === 'dev';
 
   const {
     input,
     output = devMode ? './dist/dist.dev.js' : './dist.min.js',
     format = 'iife',
-    target,
+    target = ['esnext'],
     externals,
     globalName,
     debug,
     sourcemap = false
   } = opts;
 
-  const babelConfig = devMode
-    ? {
-        filter: /src|bundle/,
-        config: await getBabelConfig(ocularConfig.babel.configPath, 'bundle-dev', target)
-      }
-    : {
-        filter: /src|bundle|esm/,
-        config: await getBabelConfig(ocularConfig.babel.configPath, 'bundle', target)
-      };
+  let babelConfig;
 
   let externalPackages = Object.keys(packageInfo.peerDependencies || {});
   if (typeof externals === 'string') {
@@ -134,10 +128,10 @@ export default async function getBundleConfig(opts) {
     minify: !devMode,
     alias: ocularConfig.aliases,
     platform: 'browser',
-    target: ['esnext'],
+    target,
     logLevel: 'info',
     sourcemap,
-    plugins: [babel(babelConfig)]
+    plugins: []
   };
   if (globalName) {
     config.globalName = globalName;

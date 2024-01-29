@@ -11,22 +11,27 @@ export async function getOcularConfig(options = {}) {
 
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
 
+  const userConfig = await getUserConfig(packageRoot, options);
+
   const config = {
     root: packageRoot,
     ocularPath: ocularRoot,
 
     esm: getModuleInfo(packageRoot).packageInfo.type === 'module',
 
-    babel: {
-      configPath: getValidPath(
-        resolve(packageRoot, './.babelrc'),
-        resolve(packageRoot, './.babelrc.js'),
-        resolve(packageRoot, './.babelrc.cjs'),
-        resolve(packageRoot, './babel.config.js'),
-        resolve(packageRoot, './babel.config.cjs')
-      ),
-      extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
-    },
+    babel:
+      userConfig.babel !== false
+        ? {
+            configPath: getValidPath(
+              resolve(packageRoot, './.babelrc'),
+              resolve(packageRoot, './.babelrc.js'),
+              resolve(packageRoot, './.babelrc.cjs'),
+              resolve(packageRoot, './babel.config.js'),
+              resolve(packageRoot, './babel.config.cjs')
+            ),
+            extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
+          }
+        : null,
 
     bundle: {
       globals: {}
@@ -60,8 +65,6 @@ export async function getOcularConfig(options = {}) {
       )
     }
   };
-
-  const userConfig = await getUserConfig(packageRoot, options);
 
   shallowMerge(config, userConfig);
 
