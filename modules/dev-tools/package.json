@@ -92,7 +92,7 @@
     "ts-patch": "^3.1.2",
     "tsconfig-paths": "^4.1.1",
     "url": "^0.11.0",
-    "vite": "^4.0.1",
+    "vite": "^4.5.2",
     "vite-plugin-html": "^3.2.0"
   },
   "dependencies_pin_comments": [
