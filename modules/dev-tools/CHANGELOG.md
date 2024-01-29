@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.21
+
+- ESM module build command improvements (#446)
+
 ## v2.0.0-alpha.20
 
 - Bump major versions of tooling: prettier to 3.x, eslint to 8.5.x, typescript to 5.2.2 (#437)
