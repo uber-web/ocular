@@ -66,7 +66,7 @@ case $MODE in
     (set -x; npx eslint --fix "$DIRECTORIES/**/*.$EXTENSIONS")
 
     print_yellow "Running prettier in $DIRECTORIES..."
-    (set -x; npx prettier --loglevel warn --write "$DIR_PATTERN" "$ROOT_PATTERN")
+    (set -x; npx prettier --log-level warn --write "$DIR_PATTERN" "$ROOT_PATTERN")
     ;;
 
   *)

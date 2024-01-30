@@ -105,12 +105,6 @@
     "webpack-cli": "4.7.0",
     "webpack-dev-server": "4.0.0-beta.3"
   },
-  "devDependencies": {
-    "math.gl": "^3.0.0"
-  },
-  "peerDependencies": {
-    "math.gl": "^3.0.0"
-  },
   "engines": {
     "node": ">= 14.8"
   }
