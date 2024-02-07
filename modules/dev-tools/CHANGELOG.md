@@ -1,5 +1,10 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.23
+
+- Remove smoosh script (#448)
+- Remove puppeteer global install (#447)
+
 ## v2.0.0-alpha.21
 
 - ESM module build command improvements (#446)
