@@ -35,8 +35,7 @@
     "ocular-lint": "./scripts/lint.js",
     "ocular-metrics": "./scripts/metrics.js",
     "ocular-publish": "./scripts/publish.js",
-    "ocular-test": "./scripts/test.js",
-    "ocular-tsify": "./scripts/ts-smoosh.js"
+    "ocular-test": "./scripts/test.js"
   },
   "scripts": {
     "bootstrap": "yarn install-fast && ocular-bootstrap",
