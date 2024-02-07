@@ -31,7 +31,8 @@ Your `package.json` should looks something like:
 
 ```json
   "devDependencies": {
-    "ocular-dev-tools": "^2.0.0-alpha"
+    "ocular-dev-tools": "^2.0.0-alpha",
+    "puppeteer": "^22.0.0"
   }
 ```
 
@@ -39,7 +40,7 @@ After installing you can set up your build scripts in package.json as follows:
 
 ```json
   "scripts": {
-    "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
+    "bootstrap": "yarn & ocular-bootstrap",
     "build": "ocular-clean && ocular-build",
     "lint": "ocular-lint",
     "metrics": "ocular-metrics",

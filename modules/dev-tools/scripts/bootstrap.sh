@@ -4,8 +4,7 @@
 set -e
 
 # install dependencies
-yarn global add puppeteer
-PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn
+yarn
 
 # prepare module directories
 PACKAGE_DIR=`pwd`

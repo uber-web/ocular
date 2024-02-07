@@ -16,11 +16,7 @@ usage() {
 }
 
 run_test_script() {
-  # get Chromium executable path
-  YARN_GLOBAL_DIR=`yarn global dir`
-  CHROMIUM_EXECUTABLE=`node $MODULE_DIR/src/helpers/get-puppeteer-executable-path.cjs $YARN_GLOBAL_DIR`
-
-  (set -x; PUPPETEER_EXECUTABLE_PATH=$CHROMIUM_EXECUTABLE NODE_ENV=test node $TEST_SCRIPT $1)
+  (set -x; NODE_ENV=test node $TEST_SCRIPT $1)
 }
 
 run_full_test() {
