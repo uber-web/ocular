@@ -16,6 +16,30 @@ console.log(`Running ${mode} tests...`); // eslint-disable-line
 
 switch (mode) {
   case 'cover':
+    if (ocularConfig.coverage.test === 'node') {
+      runNodeTest(resolveNodeEntry('test'), 'npx c8');
+    } else {
+      await runBrowserTest({
+        server: {
+          start: createViteServer,
+          options: {
+            mode: 'test'
+          }
+        },
+        url: resolveBrowserEntry('test'),
+        headless: true,
+        onStart: async ({page}) => {
+          await page.coverage.startJSCoverage({includeRawScriptCoverage: true});
+        },
+        onFinish: async ({page, isSuccessful}) => {
+          const coverage = await page.coverage.stopJSCoverage();
+          if (!isSuccessful) return;
+          writeCoverage(coverage);
+        }
+      });
+    }
+    break;
+
   case 'node':
   case 'dist':
     runNodeTest(resolveNodeEntry('test')); // Run the tests
@@ -35,7 +59,7 @@ switch (mode) {
         }
       },
       url: resolveBrowserEntry('test'),
-      headless: mode === 'browser-headless' ? 'new' : false
+      headless: mode === 'browser-headless'
     });
     break;
 
@@ -78,7 +102,7 @@ function resolveBrowserEntry(key) {
   throw new Error(`Cannot find entry point ${key}-browser in ocular config.`);
 }
 
-function runNodeTest(entry) {
+function runNodeTest(entry, command = '') {
   // Save module alias
   fs.writeFileSync(
     resolve(ocularConfig.ocularPath, '.alias.json'),
@@ -87,11 +111,11 @@ function runNodeTest(entry) {
 
   if (ocularConfig.esm) {
     execShellCommand(
-      `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/src/helpers/esm-loader.js" node "${entry}"`
+      `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/src/helpers/esm-loader.js" ${command} node "${entry}"`
     );
   } else {
     execShellCommand(
-      `ts-node -r "${ocularConfig.ocularPath}/src/helpers/cjs-register.cjs" "${entry}"`
+      `${command} ts-node -r "${ocularConfig.ocularPath}/src/helpers/cjs-register.cjs" "${entry}"`
     );
   }
 }
@@ -122,4 +146,32 @@ async function createViteServer(config) {
       server.close();
     }
   };
+}
+
+/** Write raw coverage data to disk for c8 to report */
+function writeCoverage(coverage) {
+  // c8 default output directory
+  const outputDir = './coverage/tmp';
+  const outputFile = `${outputDir}/coverage-${Date.now()}`;
+
+  fs.rmSync(outputDir, {force: true, recursive: true});
+  fs.mkdirSync(outputDir);
+
+  // Convert Chrome coverage format to v8
+  let idx = 0;
+  for (const cov of coverage) {
+    const it = cov.rawScriptCoverage;
+    const filePath = it.url.replace(/^http:\/\/localhost:\d+\//, '');
+
+    // Excluded directories
+    if (filePath.match(/(^|\/)(node_modules|test|@vite)\//)) continue;
+
+    // Remap file url to path on local disk
+    it.url = resolve(filePath);
+
+    fs.writeFileSync(`${outputFile}-${idx++}.json`, JSON.stringify({result: [it]}), 'utf8');
+  }
+
+  // Print coverage to console
+  execShellCommand('npx c8 report --reporter=text');
 }

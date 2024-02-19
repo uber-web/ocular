@@ -35,6 +35,10 @@ type OcularConfig = {
     configPath?: string;
   };
 
+  coverage?: {
+    test?: 'node' | 'browser';
+  };
+
   browserTest?: {
     server?: string;
     browser?: string;
@@ -82,6 +86,10 @@ type MaterializedOcularConfig = {
   vite: {
     version: number;
     configPath: string;
+  };
+
+  coverage: {
+    test: 'node' | 'browser';
   };
 
   browserTest?: {
