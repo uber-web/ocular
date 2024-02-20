@@ -13,6 +13,7 @@ module.exports = getESLintConfig({
     rules: {
       'import/no-extraneous-dependencies': 0,
       'no-console': 0,
+      'no-continue': 0,
       'no-process-env': 0,
       'no-process-exit': 0
     },

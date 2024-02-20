@@ -46,6 +46,10 @@ export async function getOcularConfig(options = {}) {
       extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx', 'd.ts']
     },
 
+    coverage: {
+      test: 'node'
+    },
+
     aliases: {},
 
     entry: {

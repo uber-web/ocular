@@ -56,7 +56,8 @@ case $MODE in
     ;;
 
   "cover")
-    (set -x; npx c8 node $TEST_SCRIPT cover)
+    run_test_script cover
+    # (set -x; npx c8 node $TEST_SCRIPT cover)
     (set -x; npx c8 report --reporter=lcov)
     ;;
 
