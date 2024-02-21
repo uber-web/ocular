@@ -22,10 +22,8 @@
   "devDependencies": {
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "pre-commit": "^1.2.2",
-    "pre-push": "^0.1.1"
-  },
-  "resolutions": {
-    "istanbul-lib-instrument": "4.0.3"
+    "pre-push": "^0.1.1",
+    "ts-morph": "^21.0.0"
   },
   "pre-commit": "pre-commit",
   "pre-push": "pre-push",
