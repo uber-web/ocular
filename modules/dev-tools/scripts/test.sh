@@ -8,7 +8,7 @@ BASEDIR=$(dirname "$0")
 MODE=$1
 
 MODULE_DIR=$(dirname $0)/..
-TEST_SCRIPT=$MODULE_DIR/src/test.js
+TEST_SCRIPT=$MODULE_DIR/dist/test.js
 
 usage() {
   # TODO: Add more specific url
@@ -16,7 +16,7 @@ usage() {
 }
 
 run_test_script() {
-  (set -x; NODE_ENV=test ts-node $TEST_SCRIPT $1)
+  (set -x; NODE_ENV=test node $TEST_SCRIPT $1)
 }
 
 run_full_test() {
@@ -48,7 +48,7 @@ case $MODE in
 
   "node-debug")
     echo "Open chrome://inspect/#devices to attach debugger."
-    (set -x; ts-node --inspect-brk $TEST_SCRIPT node)
+    (set -x; node --inspect-brk $TEST_SCRIPT node)
     ;;
 
   "dist")

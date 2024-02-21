@@ -15,12 +15,11 @@
     "baseUrl": ".",
     "skipLibCheck": true
   },
-  "exclude":[
-    "test",
-    "templates",
-    "node_modules"
+  "include": [
+    "modules",
+    "test"
   ],
-  "references": [
-    {"path": "modules/dev-tools"}
+  "exclude":[
+    "node_modules"
   ]
 }

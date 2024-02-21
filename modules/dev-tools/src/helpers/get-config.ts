@@ -4,9 +4,9 @@
    Example:
    $ node get-config.js ".babel.configPath"
  */
-import {getOcularConfig} from './get-ocular-config.js';
+import {getOcularConfig, MaterializedOcularConfig} from './get-ocular-config.js';
 
-let ocularConfig;
+let ocularConfig: MaterializedOcularConfig;
 try {
   ocularConfig = await getOcularConfig();
 } catch (ex) {
@@ -17,8 +17,7 @@ try {
 
 const configPath = process.argv[2] || '';
 
-/** @type {any} */
-let config = ocularConfig;
+let config: any = ocularConfig;
 
 configPath
   .split('.')

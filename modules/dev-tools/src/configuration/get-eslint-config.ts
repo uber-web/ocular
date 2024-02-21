@@ -1,15 +1,15 @@
 import eslint from '@typescript-eslint/eslint-plugin';
 import deepMerge from 'deepmerge';
-import {getValidPath, packageDir} from '../utils/utils';
+import {getValidPath, ocularRoot} from '../utils/utils.js';
 import {inspect} from 'util';
 import {resolve} from 'path';
 
 const typescriptConfigs = eslint.configs;
-const localRules = (path) => resolve(packageDir, '../src/configuration', path);
+const localRules = (path) => resolve(ocularRoot, 'src/configuration', path);
 
 const DEFAULT_OPTIONS = {
   react: false
-};
+} as const;
 
 const DEFAULT_CONFIG = {
   extends: [
@@ -174,7 +174,9 @@ function getReactConfig(options) {
   };
 }
 
-export function getESLintConfig(options = {}) {
+export function getESLintConfig(
+  options: {react?: string | false; overrides?: any; debug?: boolean} = {}
+) {
   options = {...DEFAULT_OPTIONS, ...options};
 
   let config = {...DEFAULT_CONFIG};

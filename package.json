@@ -9,7 +9,7 @@
   "scripts": {
     "bootstrap": "yarn install-fast && ocular-bootstrap",
     "install-fast": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn",
-    "build": "ocular-clean && ocular-build",
+    "build": "ocular-clean && tspc -b modules/dev-tools/tsconfig.json && ocular-build",
     "clean": "ocular-clean",
     "cover": "ocular-test cover",
     "lint": "ocular-lint",

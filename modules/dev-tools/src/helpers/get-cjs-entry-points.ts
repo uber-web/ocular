@@ -1,13 +1,20 @@
 import fs from 'fs';
+import type {PackageJson} from '../utils/types.js';
 
-export function getCJSEntryPoints() {
-  const packageInfo = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+export function getCJSEntryPoints(): {
+  inputFile: string;
+  outputFile: string;
+}[] {
+  const packageInfo = JSON.parse(fs.readFileSync('package.json', 'utf-8')) as PackageJson;
 
   if (packageInfo.exports) {
-    const result = [];
+    const result: {
+      inputFile: string;
+      outputFile: string;
+    }[] = [];
     for (const key in packageInfo.exports) {
       const entry = packageInfo.exports[key];
-      let outputFile;
+      let outputFile: string = '';
       if (typeof entry === 'string') {
         outputFile = entry;
       } else if (entry.require) {
@@ -16,9 +23,9 @@ export function getCJSEntryPoints() {
         outputFile = entry.default;
       }
       if (outputFile && outputFile.endsWith('.cjs')) {
-        let inputFile;
+        let inputFile: string;
 
-        if (entry.import) {
+        if (typeof entry === 'object' && entry.import) {
           inputFile = entry.import;
         } else {
           inputFile = outputFile.replace('.cjs', '.js');
@@ -30,5 +37,5 @@ export function getCJSEntryPoints() {
   }
 
   // Default entry
-  return ['index'];
+  return [{inputFile: './dist/index.js', outputFile: './dist.index.cjs'}];
 }
