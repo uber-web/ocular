@@ -9,12 +9,12 @@ MODE=$1
 
 DEV_TOOLS_DIR=$(dirname $0)/..
 
-DIRECTORIES=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".lint.paths"`
+DIRECTORIES=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".lint.paths"`
 if [[ $DIRECTORIES == *","* ]]; then
   DIRECTORIES={$DIRECTORIES}
 fi
 
-EXTENSIONS=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".lint.extensions"`
+EXTENSIONS=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".lint.extensions"`
 if [[ $EXTENSIONS == *","* ]]; then
   EXTENSIONS={$EXTENSIONS}
 fi

@@ -3,11 +3,11 @@
 set -e
 
 DEV_TOOLS_DIR=$(dirname $0)/..
-CONFIG=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.configPath"`
-MODULES=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".modules" | sed -E "s/,/ /g"`
-EXTENSIONS=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.extensions"`
-TS_PROJECT=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".typescript.project"`
-IS_ESM=`node $DEV_TOOLS_DIR/src/helpers/get-config.js ".esm"`
+CONFIG=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.configPath"`
+MODULES=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".modules" | sed -E "s/,/ /g"`
+EXTENSIONS=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".babel.extensions"`
+TS_PROJECT=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".typescript.project"`
+IS_ESM=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".esm"`
 
 check_target() {
   if [[ ! "$1" =~ ^es5|esm ]]; then
@@ -28,7 +28,7 @@ build_src() {
 
 build_module_esm() {
   build_src dist esm-strict
-  node $DEV_TOOLS_DIR/src/build-cjs.js
+  node $DEV_TOOLS_DIR/dist/build-cjs.js
 }
 
 build_module() {

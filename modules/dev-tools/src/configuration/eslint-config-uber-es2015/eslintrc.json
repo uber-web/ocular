@@ -17,22 +17,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-module.exports = {
-  extends: [
-    './best-practices.json',
-    './ecmascript-6.json',
-    './miscellaneous.json',
-    './stylistic-issues.json',
-    '../eslint-config-uber-es5/eslintrc.cjs'
+{
+  "extends": [
+    "./best-practices.json",
+    "./ecmascript-6.json",
+    "./miscellaneous.json",
+    "./stylistic-issues.json",
+    "../eslint-config-uber-es5/eslintrc.json"
   ],
-  env: {
-    es6: true
+  "env": {
+    "es6": true
   },
-  parserOptions: {
-    sourceType: 'module',
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
     }
   }
-};
+}

@@ -1,5 +1,5 @@
 /** @typedef {import('./get-prettier-config')} types */
-const deepMerge = require('deepmerge');
+import deepMerge from 'deepmerge';
 
 const DEFAULT_CONFIG = {
   printWidth: 100,
@@ -10,7 +10,7 @@ const DEFAULT_CONFIG = {
 };
 
 /** @type {types['getPrettierConfig']} */
-module.exports.getPrettierConfig = function getPrettierConfig(options = {}) {
+export function getPrettierConfig(options = {}) {
   let config = {...DEFAULT_CONFIG};
   if (options.overrides) {
     config = deepMerge(config, options.overrides);
@@ -20,4 +20,4 @@ module.exports.getPrettierConfig = function getPrettierConfig(options = {}) {
     console.log(config);
   }
   return config;
-};
+}

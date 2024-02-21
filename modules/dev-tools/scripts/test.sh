@@ -8,7 +8,7 @@ BASEDIR=$(dirname "$0")
 MODE=$1
 
 MODULE_DIR=$(dirname $0)/..
-TEST_SCRIPT=$MODULE_DIR/src/test.js
+TEST_SCRIPT=$MODULE_DIR/dist/test.js
 
 usage() {
   # TODO: Add more specific url

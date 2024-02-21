@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {execShellCommand} from '../src/utils/shell.js';
+import {execShellCommand} from './shell.js';
 import {join} from 'path';
 
 const scriptDir = new URL(import.meta.url).pathname;

@@ -4,14 +4,13 @@ import {getCJSEntryPoints} from './helpers/get-cjs-entry-points.js';
 import {getCJSExportConfig} from './configuration/get-esbuild-config.js';
 
 async function main() {
-  for (const fileName of getCJSEntryPoints()) {
-    const inputPath = `./dist/${fileName}.js`;
+  for (const entry of getCJSEntryPoints()) {
     try {
-      await fs.stat(inputPath);
+      await fs.stat(entry.inputFile);
 
       const esbuildConfig = await getCJSExportConfig({
-        input: inputPath,
-        output: `dist/${fileName}.cjs`
+        input: entry.inputFile,
+        output: entry.outputFile
       });
       const result = await esbuild.build(esbuildConfig);
       if (result.errors.length > 0) {
@@ -19,7 +18,7 @@ async function main() {
       }
     } catch {
       // File does not exist
-      console.error(`\x1b[33mCannot find file ${inputPath}\x1b[0m`);
+      console.error(`\x1b[33mCannot find file ${entry.inputFile}\x1b[0m`);
     }
   }
 }

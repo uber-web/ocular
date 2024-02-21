@@ -15,14 +15,26 @@
     "src",
     "scripts",
     "templates",
-    "ts-plugins",
+    "dist",
     "CHANGELOG.md"
   ],
   "exports": {
-    ".": "./src/index.js",
-    "./configuration": "./src/configuration/index.cjs",
-    "./ts-transform-version-inline": "./ts-plugins/ts-transform-version-inline/index.cjs",
-    "./ts-transform-append-extension": "./ts-plugins/ts-transform-append-extension/index.cjs"
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./src/index.js"
+    },
+    "./configuration": {
+      "require": "./dist/configuration/index.cjs",
+      "import": "./src/configuration/index.js"
+    },
+    "./ts-transform-version-inline": {
+      "require": "./dist/ts-plugins/ts-transform-version-inline/index.cjs",
+      "import": "./dist/ts-plugins/ts-transform-version-inline/index.js"
+    },
+    "./ts-transform-append-extension": {
+      "require": "./dist/ts-plugins/ts-transform-append-extension/index.cjs",
+      "import": "./dist/ts-plugins/ts-transform-append-extension/index.js"
+    }
   },
   "types": "./src/index.d.ts",
   "main": "./src/index.js",
@@ -40,7 +52,7 @@
   "scripts": {
     "bootstrap": "yarn install-fast && ocular-bootstrap",
     "clean": "echo No build needed",
-    "build": "tsc && find ./ts-plugins -depth -name \"*.js\" -exec sh -c 'f=\"{}\"; mv -- \"$f\" \"${f%.js}.cjs\"' \\;",
+    "build": "(cd ../.. && ocular-build)",
     "lint": "npm run lint-yarn",
     "lint-yarn": "!(grep -q unpm.u yarn.lock) || (echo 'Please rebuild yarn file using public npmrc' && false)",
     "publish-prod": "npm run build && npm run test && npm run test dist && npm publish",

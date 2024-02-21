@@ -1,6 +1,6 @@
 /** @typedef {import('./get-babel-config')} types */
-const deepMerge = require('deepmerge');
-const {inspect} = require('util');
+import deepMerge from 'deepmerge';
+import {inspect} from 'util';
 
 // The following targets are designed to support the most commonly used evergreen browsers.
 // As of Feb 2021 they all support async function, async iterator, and spread operator.
@@ -80,7 +80,7 @@ const ENV_CONFIG = {
     ],
     plugins: [
       ...COMMON_PLUGINS,
-      "babel-plugin-add-import-extension",
+      'babel-plugin-add-import-extension',
       // TODO - we likely do not need runtime transforms for the esm setting
       ['@babel/transform-runtime', {useESModules: true}]
     ]
@@ -108,7 +108,7 @@ const ENV_CONFIG = {
 ENV_CONFIG.development = ENV_CONFIG.es5;
 
 /** @type {types['getBabelConfig']} */
-module.exports.getBabelConfig = function getBabelConfig(options = {}) {
+export function getBabelConfig(options = {}) {
   return (api) => {
     if (api.cache) {
       api.cache.using(() => process.env.BABEL_ENV);
@@ -121,7 +121,7 @@ module.exports.getBabelConfig = function getBabelConfig(options = {}) {
     if (options.react) {
       config = deepMerge(config, {
         presets: ['@babel/preset-react']
-      })
+      });
     }
     if (options.overrides) {
       config = deepMerge(config, options.overrides);
@@ -133,4 +133,4 @@ module.exports.getBabelConfig = function getBabelConfig(options = {}) {
 
     return config;
   };
-};
+}

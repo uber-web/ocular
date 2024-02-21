@@ -1,10 +1,11 @@
-const typescriptConfigs = require('@typescript-eslint/eslint-plugin').configs;
-const deepMerge = require('deepmerge');
-const {getValidPath} = require('../utils/utils.cjs');
-const {inspect} = require('util');
-const {resolve} = require('path');
+import eslint from '@typescript-eslint/eslint-plugin';
+import deepMerge from 'deepmerge';
+import {getValidPath, packageDir} from '../utils/utils';
+import {inspect} from 'util';
+import {resolve} from 'path';
 
-const localRules = (path) => resolve(__dirname, path);
+const typescriptConfigs = eslint.configs;
+const localRules = (path) => resolve(packageDir, '../src/configuration', path);
 
 const DEFAULT_OPTIONS = {
   react: false
@@ -12,7 +13,7 @@ const DEFAULT_OPTIONS = {
 
 const DEFAULT_CONFIG = {
   extends: [
-    localRules('./eslint-config-uber-es2015/eslintrc.cjs'),
+    localRules('./eslint-config-uber-es2015/eslintrc.json'),
     'prettier',
     'prettier/react',
     'plugin:import/errors'
@@ -73,7 +74,6 @@ const DEFAULT_CONFIG = {
       },
       plugins: ['@typescript-eslint'],
       rules: {
-
         ...typescriptConfigs['eslint-recommended'].rules,
         ...typescriptConfigs.recommended.rules,
         ...typescriptConfigs['recommended-requiring-type-checking'].rules,
@@ -98,8 +98,6 @@ const DEFAULT_CONFIG = {
         'no-process-env': 'off',
 
         // typescript rules
-
-
 
         // Some of JS rules don't always work correctly in TS and
         // hence need to be reimported as TS rules
@@ -162,7 +160,7 @@ const DEFAULT_CONFIG = {
 function getReactConfig(options) {
   return {
     extends: [
-      localRules('./eslint-config-uber-jsx/eslintrc.cjs'),
+      localRules('./eslint-config-uber-jsx/eslintrc.json'),
       'prettier',
       'prettier/react',
       'plugin:import/errors'
@@ -176,7 +174,7 @@ function getReactConfig(options) {
   };
 }
 
-module.exports.getESLintConfig = function getESLintConfig(options = {}) {
+export function getESLintConfig(options = {}) {
   options = {...DEFAULT_OPTIONS, ...options};
 
   let config = {...DEFAULT_CONFIG};
@@ -192,4 +190,4 @@ module.exports.getESLintConfig = function getESLintConfig(options = {}) {
   }
 
   return config;
-};
+}

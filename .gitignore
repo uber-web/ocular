@@ -18,3 +18,4 @@ website-test/*
 modules/dev-tools/.alias.json
 coverage/
 .nyc_output/
+tsconfig.tsbuildinfo

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import esbuild from 'esbuild';
-import {getBundleConfig} from '../src/configuration/get-esbuild-config.js';
+import {getBundleConfig} from '../dist/configuration/get-esbuild-config.js';
 
 // Parse command line arguments
 let entryPoint;
