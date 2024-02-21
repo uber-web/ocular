@@ -36,7 +36,11 @@ export default function (
       let packageVersion: string | null;
 
       function visit(node: Node): Node {
-        if (ts.isIdentifier(node) && node.getText() === identifier) {
+        if (
+          ts.isIdentifier(node) &&
+          !ts.isPropertyAccessExpression(node.parent) &&
+          node.getText() === identifier
+        ) {
           if (packageVersion === undefined) {
             packageVersion = getPackageVersion(sourceFile.fileName);
           }
