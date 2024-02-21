@@ -1,5 +1,5 @@
 import {defineConfig} from 'vite';
-import {getOcularConfig} from '../helpers/get-ocular-config';
+import {getOcularConfig} from '../helpers/get-ocular-config.js';
 import {createHtmlPlugin} from 'vite-plugin-html';
 import {NodeGlobalsPolyfillPlugin} from '@esbuild-plugins/node-globals-polyfill';
 import {NodeModulesPolyfillPlugin} from '@esbuild-plugins/node-modules-polyfill';

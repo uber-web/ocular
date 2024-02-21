@@ -10,7 +10,7 @@ WORKING_DIR=`pwd`
 TMP_DIR=$WORKING_DIR/tmp
 
 # Get size metric entry point
-ENTRY_POINTS=`ts-node $DEV_TOOLS_DIR/src/helpers/get-config.js ".entry.size"`
+ENTRY_POINTS=`node $DEV_TOOLS_DIR/dist/helpers/get-config.js ".entry.size"`
 IFS=','
 read -a ENTRY_POINTS_ARR <<< "$ENTRY_POINTS"
 IFS=' '

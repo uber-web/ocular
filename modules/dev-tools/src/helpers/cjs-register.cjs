@@ -2,6 +2,7 @@
  * Support module alias in CJS mode
  */
 const tsConfigPaths = require('tsconfig-paths');
+// @ts-expect-error
 const paths = require('../../.alias.json');
 
 tsConfigPaths.register({

@@ -1,4 +1,5 @@
 import test from 'tape-promise/tape';
+// @ts-expect-error Aliased import
 import {getBabelConfig, getESLintConfig, getPrettierConfig} from 'ocular-dev-tools/configuration';
 
 test('dev-tools#getConfig', (t) => {

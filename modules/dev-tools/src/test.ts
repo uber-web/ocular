@@ -1,7 +1,7 @@
 // Launch script for various Node test configurations
 import fs from 'fs';
 import {resolve} from 'path';
-import {execShellCommand} from './utils/shell.js';
+import {execShellCommand} from './utils/utils.js';
 
 import {getOcularConfig} from './helpers/get-ocular-config.js';
 
@@ -83,8 +83,7 @@ switch (mode) {
     }
 }
 
-function resolveNodeEntry(key) {
-  // @ts-expect-error key may not exist
+function resolveNodeEntry(key: string): string {
   const entry = ocularConfig.entry[key];
   if (typeof entry === 'string') {
     return resolve(entry);
@@ -92,7 +91,7 @@ function resolveNodeEntry(key) {
   throw new Error(`Cannot find entry point ${key} in ocular config.`);
 }
 
-function resolveBrowserEntry(key) {
+function resolveBrowserEntry(key: string): string {
   const fileName = ocularConfig.entry[`${key}-browser`];
   if (typeof fileName === 'string' && fileName.endsWith('.html')) {
     return fileName;
@@ -102,7 +101,7 @@ function resolveBrowserEntry(key) {
   throw new Error(`Cannot find entry point ${key}-browser in ocular config.`);
 }
 
-function runNodeTest(entry, command = '') {
+function runNodeTest(entry: string, command: string = '') {
   // Save module alias
   fs.writeFileSync(
     resolve(ocularConfig.ocularPath, '.alias.json'),
@@ -111,11 +110,11 @@ function runNodeTest(entry, command = '') {
 
   if (ocularConfig.esm) {
     execShellCommand(
-      `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/src/helpers/esm-loader.js" ${command} node "${entry}"`
+      `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/dist/helpers/esm-loader.js" ${command} node "${entry}"`
     );
   } else {
     execShellCommand(
-      `${command} ts-node -r "${ocularConfig.ocularPath}/src/helpers/cjs-register.cjs" "${entry}"`
+      `${command} ts-node -r "${ocularConfig.ocularPath}/dist/helpers/cjs-register.cjs" "${entry}"`
     );
   }
 }
@@ -141,7 +140,7 @@ async function createViteServer(config) {
   await server.listen();
 
   return {
-    url: server.resolvedUrls.local[0],
+    url: server.resolvedUrls?.local[0],
     stop: () => {
       server.close();
     }

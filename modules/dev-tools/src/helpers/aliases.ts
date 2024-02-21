@@ -2,12 +2,19 @@
 import {resolve} from 'path';
 import fs from 'fs';
 import {getValidPath} from '../utils/utils.js';
+import type {PackageJson} from '../utils/types.js';
 
-export function getModuleInfo(path) {
+type ModuleInfo = {
+  name: string;
+  path: string;
+  packageInfo: PackageJson;
+};
+
+export function getModuleInfo(path: string): ModuleInfo | null {
   if (fs.lstatSync(path).isDirectory()) {
     try {
       const packageInfoText = fs.readFileSync(resolve(path, 'package.json'), 'utf-8');
-      const packageInfo = JSON.parse(packageInfoText);
+      const packageInfo = JSON.parse(packageInfoText) as PackageJson;
       return {
         name: packageInfo.name,
         path,
@@ -21,8 +28,8 @@ export function getModuleInfo(path) {
 }
 
 // Get information of all submodules
-function getSubmodules(packageRoot) {
-  const submodules = {};
+function getSubmodules(packageRoot: string): {[name: string]: ModuleInfo} {
+  const submodules: Record<string, ModuleInfo> = {};
   const parentPath = resolve(packageRoot, './modules');
 
   if (fs.existsSync(parentPath)) {
@@ -36,14 +43,19 @@ function getSubmodules(packageRoot) {
     });
   } else {
     const moduleInfo = getModuleInfo(packageRoot);
-    submodules[moduleInfo.name] = moduleInfo;
+    if (moduleInfo) {
+      submodules[moduleInfo.name] = moduleInfo;
+    }
   }
 
   return submodules;
 }
 
-export default function getAliases(mode, packageRoot = process.env.PWD) {
-  const aliases = {};
+export default function getAliases(
+  mode: string,
+  packageRoot: string = process.env.PWD!
+): Record<string, string> {
+  const aliases: Record<string, string> = {};
   const submodules = getSubmodules(packageRoot);
 
   for (const moduleName in submodules) {
@@ -59,7 +71,7 @@ export default function getAliases(mode, packageRoot = process.env.PWD) {
         resolve(path, 'dist/es5'),
         resolve(path, 'dist/esm'),
         resolve(path, 'dist')
-      );
+      )!;
     } else {
       aliases[moduleName] = resolve(path, 'src');
     }

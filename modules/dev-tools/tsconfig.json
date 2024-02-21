@@ -2,8 +2,11 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "noImplicitAny": false,
     "allowJs": true,
     "checkJs": false,
+    "declaration": true,
+    "declarationMap": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

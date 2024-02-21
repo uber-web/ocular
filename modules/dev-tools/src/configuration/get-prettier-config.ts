@@ -1,4 +1,3 @@
-/** @typedef {import('./get-prettier-config')} types */
 import deepMerge from 'deepmerge';
 
 const DEFAULT_CONFIG = {
@@ -9,8 +8,7 @@ const DEFAULT_CONFIG = {
   bracketSpacing: false
 };
 
-/** @type {types['getPrettierConfig']} */
-export function getPrettierConfig(options = {}) {
+export function getPrettierConfig(options: {overrides?: any; debug?: boolean} = {}) {
   let config = {...DEFAULT_CONFIG};
   if (options.overrides) {
     config = deepMerge(config, options.overrides);

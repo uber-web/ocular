@@ -4,14 +4,21 @@ module.exports = getESLintConfig({
   react: '16.8.2',
   overrides: {
     parserOptions: {
-      project: ['./tsconfig.json'],
-      babelOptions: {
-        configFile: './babel.config.cjs'
+      project: ['./tsconfig.json']
+    },
+
+    settings: {
+      // Ensure eslint finds typescript files
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
+        }
       }
     },
 
     rules: {
       'import/no-extraneous-dependencies': 0,
+      'import/no-unresolved': 0,
       'no-console': 0,
       'no-continue': 0,
       'no-process-env': 0,
@@ -21,24 +28,6 @@ module.exports = getESLintConfig({
     env: {
       node: true
     },
-
-    overrides: [
-      {
-        // may use aliases/dev dependencies
-        files: [
-          '**/test/**/*.js',
-          '**/test/**/*.ts'
-        ],
-        globals: {
-          process: true
-        },
-        rules: {
-          'import/no-unresolved': 0,
-          'import/no-extraneous-dependencies': 0,
-          'no-process-env': 0
-        }
-      }
-    ],
 
     ignorePatterns: ['modules/gatsby-theme-ocular']
   }

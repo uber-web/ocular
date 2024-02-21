@@ -1,4 +1,3 @@
-/** @typedef {import('./get-babel-config')} types */
 import deepMerge from 'deepmerge';
 import {inspect} from 'util';
 
@@ -31,7 +30,7 @@ const COMMON_PRESETS = [
 
 const COMMON_PLUGINS = [];
 
-const ENV_CONFIG = {
+const ENV_CONFIG: any = {
   // fully transpiled build
   es5: {
     presets: [
@@ -107,8 +106,13 @@ const ENV_CONFIG = {
 // Ensure we have an entry for the default BABEL_ENV
 ENV_CONFIG.development = ENV_CONFIG.es5;
 
-/** @type {types['getBabelConfig']} */
-export function getBabelConfig(options = {}) {
+export function getBabelConfig(
+  options: {
+    react?: boolean;
+    overrides?: any;
+    debug?: boolean;
+  } = {}
+) {
   return (api) => {
     if (api.cache) {
       api.cache.using(() => process.env.BABEL_ENV);

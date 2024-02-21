@@ -20,12 +20,14 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
-      "import": "./src/index.js"
+      "import": "./dist/index.js"
     },
     "./configuration": {
+      "types": "./dist/configuration/index.d.ts",
       "require": "./dist/configuration/index.cjs",
-      "import": "./src/configuration/index.js"
+      "import": "./dist/configuration/index.js"
     },
     "./ts-transform-version-inline": {
       "require": "./dist/ts-plugins/ts-transform-version-inline/index.cjs",
@@ -36,8 +38,8 @@
       "import": "./dist/ts-plugins/ts-transform-append-extension/index.js"
     }
   },
-  "types": "./src/index.d.ts",
-  "main": "./src/index.js",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
   "bin": {
     "ocular-bootstrap": "./scripts/bootstrap.js",
     "ocular-build": "./scripts/build.js",

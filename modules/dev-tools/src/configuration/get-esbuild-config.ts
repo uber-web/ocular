@@ -4,6 +4,7 @@ import {join} from 'path';
 import util from 'util';
 import {getOcularConfig} from '../helpers/get-ocular-config.js';
 import ext from 'esbuild-plugin-external-global';
+import type {BuildOptions} from 'esbuild';
 
 /**
  * Get list of dependencies to exclude using esbuild-plugin-external-global
@@ -22,8 +23,8 @@ import ext from 'esbuild-plugin-external-global';
  * @param externalPackages string[]
  * @param mapping {[pattern: string]: replacement}
  */
-function getExternalGlobalsIIFE(externalPackages, mapping) {
-  const externals = {};
+function getExternalGlobalsIIFE(externalPackages: string[], mapping: Record<string, string>) {
+  const externals: Record<string, string> = {};
   for (const packageName of externalPackages) {
     for (const key in mapping) {
       if (packageName.search(key) === 0) {
@@ -38,7 +39,7 @@ function getExternalGlobalsIIFE(externalPackages, mapping) {
 // esbuild does not support umd format
 // Work around from https://github.com/evanw/esbuild/issues/819
 // Template: https://webpack.js.org/configuration/output/#type-umd
-function umdWrapper(libName) {
+function umdWrapper(libName: string | undefined) {
   return {
     format: 'iife',
     globalName: '__exports__',
@@ -66,12 +67,11 @@ function umdWrapper(libName) {
   };
 }
 
-/**
- *
- * @param {String} opts.input - path to entry point
- * @param {String} opts.output - output file path
- */
-export async function getCJSExportConfig(opts) {
+/** Returns esbuild config for building .cjs bundles */
+export async function getCJSExportConfig(opts: {
+  input: string;
+  output: string;
+}): Promise<BuildOptions> {
   return {
     entryPoints: [opts.input],
     outfile: opts.output,
@@ -85,8 +85,22 @@ export async function getCJSExportConfig(opts) {
   };
 }
 
+type BundleOptions = {
+  input: string;
+  env?: 'dev' | 'prod';
+  output?: string;
+  format?: 'iife' | 'cjs' | 'esm' | 'umd';
+  target?: string[];
+  externals?: string[];
+  globalName?: string;
+  globals?: {[pattern: string]: string};
+  debug?: boolean;
+  sourcemap?: boolean;
+};
+
 /* eslint-disable max-statements,complexity */
-export async function getBundleConfig(opts) {
+/** Returns esbuild config for building standalone bundles */
+export async function getBundleConfig(opts: BundleOptions): Promise<BuildOptions> {
   // This script must be executed in a submodule's directory
   const packageRoot = process.cwd();
   const packageInfo = JSON.parse(fs.readFileSync(join(packageRoot, 'package.json'), 'utf-8'));
@@ -115,15 +129,16 @@ export async function getBundleConfig(opts) {
 
   let externalPackages = Object.keys(packageInfo.peerDependencies || {});
   if (typeof externals === 'string') {
-    externalPackages = externalPackages.concat(externals.split(','));
+    externalPackages = externalPackages.concat((externals as string).split(','));
   } else if (Array.isArray(externals)) {
     externalPackages = externalPackages.concat(externals);
   }
 
-  const config = {
+  const config: BuildOptions = {
     entryPoints: [input],
     outfile: output,
     bundle: true,
+    // @ts-expect-error umd is not supported by esbuild, will be overwritten below
     format,
     minify: !devMode,
     alias: ocularConfig.aliases,
@@ -161,13 +176,13 @@ export async function getBundleConfig(opts) {
       break;
   }
   if (externalGlobals) {
-    config.plugins.unshift(ext.externalGlobalPlugin(externalGlobals));
+    config.plugins!.unshift(ext.externalGlobalPlugin(externalGlobals));
   }
 
   if (debug) {
     const printableConfig = {
       ...config,
-      plugins: config.plugins.map((item) => {
+      plugins: config.plugins!.map((item) => {
         return {
           name: item.name,
           options: item.name === 'babel' ? babelConfig : externalGlobals
