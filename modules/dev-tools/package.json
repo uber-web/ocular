@@ -52,14 +52,9 @@
     "ocular-test": "./scripts/test.js"
   },
   "scripts": {
-    "bootstrap": "yarn install-fast && ocular-bootstrap",
-    "clean": "echo No build needed",
     "build": "(cd ../.. && ocular-build)",
-    "lint": "npm run lint-yarn",
-    "lint-yarn": "!(grep -q unpm.u yarn.lock) || (echo 'Please rebuild yarn file using public npmrc' && false)",
-    "publish-prod": "npm run build && npm run test && npm run test dist && npm publish",
-    "publish-beta": "npm run build && npm run test && npm run test dist && npm publish --tag beta",
-    "test": "echo Please help add tests"
+    "publish-prod": "npm run build && npm publish",
+    "publish-beta": "npm run build && npm publish --tag beta"
   },
   "dependencies": {
     "@babel/cli": "^7.14.5",
@@ -75,15 +70,11 @@
     "@probe.gl/test-utils": "^4.0.6",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
-    "babel-loader": "8.2.2",
-    "babel-plugin-add-import-extension": "^1.6.0",
-    "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-version-inline": "^1.0.0",
     "c8": "^7.12.0",
     "coveralls": "^3.0.3",
     "deepmerge": "^4.2.2",
     "esbuild": "^0.16.7",
-    "esbuild-plugin-babel": "git+https://github.com/Pessimistress/esbuild-plugin-babel.git#patch-1",
     "esbuild-plugin-external-global": "^1.0.1",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^6.7.0",
@@ -107,22 +98,8 @@
     "vite": "^4.0.1",
     "vite-plugin-html": "^3.2.0"
   },
-  "dependencies_pin_comments": [
-    "Note: tape 4.12 and higher no longer compares 0 and -0 equally",
-    "Note: prettier >2.3.0 breaks on typescript import type"
-  ],
-  "dependencies-webpack5-todo": {
-    "webpack-bundle-analyzer": "^4.4.1",
-    "webpack": "5.38.1",
-    "webpack-cli": "4.7.0",
-    "webpack-dev-server": "4.0.0-beta.3"
-  },
   "devDependencies": {
-    "math.gl": "^3.0.0",
     "puppeteer": "^22.0.0"
-  },
-  "peerDependencies": {
-    "math.gl": "^3.0.0"
   },
   "engines": {
     "node": ">= 18"
