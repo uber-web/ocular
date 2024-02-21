@@ -13,12 +13,14 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "paths": {
-    }
+    "skipLibCheck": true
   },
   "exclude":[
     "test",
     "templates",
     "node_modules"
+  ],
+  "references": [
+    {"path": "modules/dev-tools"}
   ]
 }

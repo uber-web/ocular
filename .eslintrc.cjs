@@ -22,6 +22,24 @@ module.exports = getESLintConfig({
       node: true
     },
 
+    overrides: [
+      {
+        // may use aliases/dev dependencies
+        files: [
+          '**/test/**/*.js',
+          '**/test/**/*.ts'
+        ],
+        globals: {
+          process: true
+        },
+        rules: {
+          'import/no-unresolved': 0,
+          'import/no-extraneous-dependencies': 0,
+          'no-process-env': 0
+        }
+      }
+    ],
+
     ignorePatterns: ['modules/gatsby-theme-ocular']
   }
 });

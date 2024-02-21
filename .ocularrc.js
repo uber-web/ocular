@@ -4,7 +4,7 @@ import {resolve} from 'path';
 /** @type {OcularConfig} */
 let ocularConfig = {
   typescript: {
-    check: true
+    project: 'tsconfig.json'
   },
 
   babel: false,

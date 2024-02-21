@@ -7,11 +7,11 @@ import path from 'path';
 import fs from 'fs';
 import {pathToFileURL} from 'url';
 import {resolve as resolveTs, getFormat, transformSource, load} from 'ts-node/esm';
-import {getValidPath} from '../utils/utils.js';
+import {getValidPath, packageDir} from '../utils/utils.js';
 export {getFormat, transformSource, load};
 
 // Load alias from file
-const pathJSON = fs.readFileSync(path.resolve(cwd(), '../../.alias.json'), 'utf-8');
+const pathJSON = fs.readFileSync(path.resolve(packageDir, '../.alias.json'), 'utf-8');
 const paths = JSON.parse(pathJSON);
 const matchPath = createMatchPath(paths);
 
@@ -75,9 +75,4 @@ function createMatchPath(aliases) {
     }
     return null;
   };
-}
-
-function cwd() {
-  const scriptPath = new URL(import.meta.url).pathname;
-  return path.resolve(scriptPath, '..');
 }

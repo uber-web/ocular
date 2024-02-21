@@ -1,5 +1,4 @@
 import fs from 'fs';
-import {basename} from 'path';
 
 export function getCJSEntryPoints() {
   const packageInfo = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
@@ -7,10 +6,24 @@ export function getCJSEntryPoints() {
   if (packageInfo.exports) {
     const result = [];
     for (const key in packageInfo.exports) {
-      const cjsEntry = packageInfo.exports[key].require;
-      if (cjsEntry) {
-        const fileName = basename(cjsEntry.default || cjsEntry, '.cjs');
-        result.push(fileName);
+      const entry = packageInfo.exports[key];
+      let outputFile;
+      if (typeof entry === 'string') {
+        outputFile = entry;
+      } else if (entry.require) {
+        outputFile = entry.require;
+      } else if (entry.default) {
+        outputFile = entry.default;
+      }
+      if (outputFile && outputFile.endsWith('.cjs')) {
+        let inputFile;
+
+        if (entry.import) {
+          inputFile = entry.import;
+        } else {
+          inputFile = outputFile.replace('.cjs', '.js');
+        }
+        result.push({inputFile, outputFile});
       }
     }
     return result;

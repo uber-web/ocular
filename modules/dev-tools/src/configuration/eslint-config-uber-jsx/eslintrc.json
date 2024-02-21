@@ -18,30 +18,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-'use strict';
-module.exports = {
-  extends: [
-    './best-practices.json',
-    './errors.cjs',
-    './miscellaneous.json',
-    './node-js-and-common-js.json',
-    './strict-mode.json',
-    './stylistic-issues.json',
-    './variables.json'
+{
+  "extends": [
+    "../eslint-config-uber-es2015/eslintrc.json",
+    "./best-practices.json",
+    "./miscellaneous.json",
+    "./stylistic-issues.json"
   ],
-  parser: 'espree', // TODO: remove?
-  env: {
-    browser: false,
-    node: false,
-    amd: false,
-    mocha: false,
-    jasmine: false,
-    es6: false
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
   },
-  globals: {
-    __dirname: false,
-    __filename: false,
-    require: false,
-    module: false
-  }
-};
+  "plugins": ["react"]
+}

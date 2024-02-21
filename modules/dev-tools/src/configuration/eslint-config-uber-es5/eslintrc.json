@@ -18,18 +18,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-module.exports = {
-  extends: [
-    '../eslint-config-uber-es2015/eslintrc.cjs',
-    './best-practices.json',
-    './miscellaneous.json',
-    './stylistic-issues.json'
+{
+  "extends": [
+    "./best-practices.json",
+    "./errors.json",
+    "./miscellaneous.json",
+    "./node-js-and-common-js.json",
+    "./strict-mode.json",
+    "./stylistic-issues.json",
+    "./variables.json"
   ],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-      experimentalObjectRestSpread: true
-    }
+  "parser": "espree", // TODO: remove?
+  "env": {
+    "browser": false,
+    "node": false,
+    "amd": false,
+    "mocha": false,
+    "jasmine": false,
+    "es6": false
   },
-  plugins: ['react']
-};
+  "globals": {
+    "__dirname": false,
+    "__filename": false,
+    "require": false,
+    "module": false
+  }
+}

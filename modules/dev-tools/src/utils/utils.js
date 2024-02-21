@@ -1,4 +1,16 @@
 import fs from 'fs';
+import {resolve, dirname} from 'path';
+import {fileURLToPath} from 'node:url';
+
+export const packageDir = (function () {
+  let dir;
+  try {
+    dir = __dirname;
+  } catch (e) {
+    dir = dirname(fileURLToPath(import.meta.url));
+  }
+  return resolve(dir, '..');
+})();
 
 export function shallowMerge(base, override) {
   for (const key in override) {

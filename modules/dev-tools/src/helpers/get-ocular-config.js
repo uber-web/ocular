@@ -3,11 +3,11 @@
 import fs from 'fs';
 import {resolve} from 'path';
 import getAliases, {getModuleInfo} from './aliases.js';
-import {shallowMerge, getValidPath} from '../utils/utils.js';
+import {shallowMerge, getValidPath, packageDir} from '../utils/utils.js';
 
 export async function getOcularConfig(options = {}) {
   const packageRoot = options.root || process.env.PWD;
-  const ocularRoot = resolve(cwd(), '../..');
+  const ocularRoot = resolve(packageDir, '..');
 
   const IS_MONOREPO = fs.existsSync(resolve(packageRoot, './modules'));
 
@@ -65,7 +65,7 @@ export async function getOcularConfig(options = {}) {
       configPath: getValidPath(
         resolve(packageRoot, './vite.config.js'),
         resolve(packageRoot, './vite.config.cjs'),
-        resolve(ocularRoot, 'src/configuration/vite.config.js')
+        resolve(ocularRoot, 'dist/configuration/vite.config.js')
       )
     }
   };
@@ -124,9 +124,4 @@ async function getUserConfig(packageRoot, options) {
   }
 
   return userConfig;
-}
-
-function cwd() {
-  const scriptPath = new URL(import.meta.url).pathname;
-  return resolve(scriptPath, '..');
 }
