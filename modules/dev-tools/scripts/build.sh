@@ -28,7 +28,7 @@ build_src() {
 
 build_module_esm() {
   build_src dist esm-strict
-  node $DEV_TOOLS_DIR/dist/build-cjs.js
+  ts-node $DEV_TOOLS_DIR/src/build-cjs.js
 }
 
 build_module() {
