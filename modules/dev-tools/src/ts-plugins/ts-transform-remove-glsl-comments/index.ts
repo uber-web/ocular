@@ -14,14 +14,7 @@
    }
  */
 import * as path from 'path';
-import type {
-  Program,
-  TransformationContext,
-  SourceFile,
-  Node,
-  NoSubstitutionTemplateLiteral,
-  TemplateLiteralToken
-} from 'typescript';
+import type {Program, TransformationContext, SourceFile, Node} from 'typescript';
 import type {TransformerExtras, PluginConfig} from 'ts-patch';
 import minimatch from 'minimatch';
 
@@ -30,7 +23,6 @@ const INLINE_COMMENT_REGEX = /\s*\/\/.*[\n\r]/g;
 const BLOCK_COMMENT_REGEX = /\s*\/\*(\*(?!\/)|[^*])*\*\//g;
 const WHITESPACE_REGEX = /\s*[\n\r]\s*/gm;
 const DEFAULT_PATTERNS = [];
-const COMMENT_TAG = '@shader GLSL';
 
 type RemoveGLSLCommentsPluginConfig = PluginConfig & {
   /** Glob patterns of shader files to include. */
