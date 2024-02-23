@@ -1,5 +1,15 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.24
+
+- feat(dev-tools): add ts-transform-remove-glsl-comments (#455)
+- Add tests for TypeScript plugins (#452)
+- chore(dev-tools): clean up package.json (#454)
+- chore(test-utils): Migrate to typescript (#453)
+- Use ocular-build to build dev-tools (#451)
+- Add option to report code coverage against browser test (#450)
+- fix: prettier log level (#449)
+
 ## v2.0.0-alpha.23
 
 - Remove smoosh script (#448)
