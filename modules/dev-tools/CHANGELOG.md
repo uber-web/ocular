@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.25
+
+- Revert changes to headless mode
+
 ## v2.0.0-alpha.24
 
 - feat(dev-tools): add ts-transform-remove-glsl-comments (#455)
