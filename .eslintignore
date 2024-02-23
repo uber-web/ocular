@@ -1,2 +1,3 @@
 dist/
+test/
 test-case-*.ts

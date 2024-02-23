@@ -11,6 +11,8 @@ import {createServer} from 'vite';
 const mode = process.argv.length >= 3 ? process.argv[2] : 'default';
 const ocularConfig = await getOcularConfig({aliasMode: mode});
 const viteConfigPath = ocularConfig.vite.configPath;
+// c8 default directory for coverage data
+const CoverageTempDir = './coverage/tmp';
 
 console.log(`Running ${mode} tests...`); // eslint-disable-line
 
@@ -29,6 +31,7 @@ switch (mode) {
         url: resolveBrowserEntry('test'),
         headless: 'new',
         onStart: async ({page}) => {
+          clearCoverage();
           await page.coverage.startJSCoverage({includeRawScriptCoverage: true});
         },
         onFinish: async ({page, isSuccessful}) => {
@@ -147,14 +150,14 @@ async function createViteServer(config) {
   };
 }
 
+function clearCoverage() {
+  fs.rmSync(CoverageTempDir, {force: true, recursive: true});
+  fs.mkdirSync(CoverageTempDir, {recursive: true});
+}
+
 /** Write raw coverage data to disk for c8 to report */
 function writeCoverage(coverage) {
-  // c8 default output directory
-  const outputDir = './coverage/tmp';
-  const outputFile = `${outputDir}/coverage-${Date.now()}`;
-
-  fs.rmSync(outputDir, {force: true, recursive: true});
-  fs.mkdirSync(outputDir);
+  const outputFile = `${CoverageTempDir}/coverage-${Date.now()}`;
 
   // Convert Chrome coverage format to v8
   let idx = 0;
@@ -164,13 +167,41 @@ function writeCoverage(coverage) {
 
     // Excluded directories
     if (filePath.match(/(^|\/)(node_modules|test|@vite)\//)) continue;
-
     // Remap file url to path on local disk
-    it.url = resolve(filePath);
+    const fileUrl = `file://${resolve(filePath)}`;
+    it.url = fileUrl;
 
-    fs.writeFileSync(`${outputFile}-${idx++}.json`, JSON.stringify({result: [it]}), 'utf8');
+    const sourcemapCache = {};
+    const [generatedSource, sourcemapDataUrl] = cov.text.split(/\/\/# sourceMappingURL=/);
+    if (sourcemapDataUrl) {
+      // Save source mapping for c8 reporter
+      sourcemapCache[fileUrl] = {
+        lineLengths: generatedSource.split('\n').map((l) => l.length),
+        data: sourcemapFromDataUrl(sourcemapDataUrl)
+      };
+    }
+
+    fs.writeFileSync(
+      `${outputFile}-${idx++}.json`,
+      JSON.stringify({
+        result: [it],
+        'source-map-cache': sourcemapCache
+      }),
+      'utf8'
+    );
   }
 
   // Print coverage to console
   execShellCommand('npx c8 report --reporter=text');
+}
+
+function sourcemapFromDataUrl(url: string): string | null {
+  const [format, data] = url.split(',');
+  const base64 = format.endsWith('base64');
+  const decodedData = base64 ? Buffer.from(data, 'base64').toString('utf8') : data;
+  try {
+    return JSON.parse(decodedData);
+  } catch (err) {
+    return null;
+  }
 }
