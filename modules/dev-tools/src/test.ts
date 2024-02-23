@@ -27,7 +27,7 @@ switch (mode) {
           }
         },
         url: resolveBrowserEntry('test'),
-        headless: true,
+        headless: 'new',
         onStart: async ({page}) => {
           await page.coverage.startJSCoverage({includeRawScriptCoverage: true});
         },
@@ -59,7 +59,7 @@ switch (mode) {
         }
       },
       url: resolveBrowserEntry('test'),
-      headless: mode === 'browser-headless'
+      headless: mode === 'browser-headless' ? 'new' : false
     });
     break;
 
@@ -74,7 +74,7 @@ switch (mode) {
           }
         },
         url: resolveBrowserEntry(testMode),
-        headless: /\bheadless\b/.test(mode)
+        headless: /\bheadless\b/.test(mode) ? 'new' : false
       });
     } else if (mode in ocularConfig.entry) {
       runNodeTest(resolveNodeEntry(mode));
