@@ -78,7 +78,8 @@ export default function (
           // First child is the tag identifier
           node.getChildAt(0).getText() === 'glsl'
         ) {
-          return replaceShaderString(node);
+          // Strip the template tag
+          return replaceShaderString(node.getChildAt(1));
         }
         if (isShaderFile && ts.isTemplateLiteral(node)) {
           return replaceShaderString(node);

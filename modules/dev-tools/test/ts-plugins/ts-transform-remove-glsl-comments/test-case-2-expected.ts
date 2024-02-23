@@ -5,12 +5,12 @@ export default {
     useFloatColors: false
   }),
   inject: {
-    'vs:DECKGL_FILTER_COLOR': glsl `
+    'vs:DECKGL_FILTER_COLOR': `
   picking_setPickingColor(geometry.pickingColor);
   `,
     'fs:DECKGL_FILTER_COLOR': {
       order: 99,
-      injection: glsl `
+      injection: `
   color = picking_filterHighlightColor(color);
   color = picking_filterPickingColor(color);
     `
