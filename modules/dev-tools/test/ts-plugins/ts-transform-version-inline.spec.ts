@@ -1,5 +1,5 @@
 import test from 'tape-promise/tape';
-import {transpile} from './test-transformer.js';
+import {transpile, assertSourceEqual} from './test-transformer.js';
 // @ts-expect-error Aliased import, remapped to valid path in esm-loader
 import versionInline from 'ocular-dev-tools/ts-plugins/ts-transform-version-inline';
 
@@ -32,7 +32,7 @@ test('ts-transform-version-inline', (t) => {
       config: testCase.config
     });
 
-    t.is(result.trim(), testCase.output, testCase.title);
+    t.is(assertSourceEqual(result, testCase.output), true, testCase.title);
   }
 
   t.end();
