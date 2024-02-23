@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.26
+
+- Fix coverage reporting format
+
 ## v2.0.0-alpha.25
 
 - Revert changes to headless mode
