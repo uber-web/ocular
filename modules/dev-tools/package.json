@@ -40,6 +40,10 @@
     "./ts-transform-remove-glsl-comments": {
       "require": "./dist/ts-plugins/ts-transform-remove-glsl-comments/index.cjs",
       "import": "./dist/ts-plugins/ts-transform-remove-glsl-comments/index.js"
+    },
+    "./ts-transform-inline-webgl-constants": {
+      "require": "./dist/ts-plugins/ts-transform-inline-webgl-constants/index.cjs",
+      "import": "./dist/ts-plugins/ts-transform-inline-webgl-constants/index.js"
     }
   },
   "types": "./dist/index.d.ts",

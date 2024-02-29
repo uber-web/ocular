@@ -2185,6 +2185,11 @@
   dependencies:
     call-bind "^1.0.2"
 
+"@luma.gl/constants@^9.0.0-beta":
+  version "9.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@luma.gl/constants/-/constants-9.0.0-beta.5.tgz#12e558319f7f08bf2416067ca0a991721cc82092"
+  integrity sha512-nQP/3MGwZuFuoCCs7xAvduTlCn3bkcqm7UZcTDFGhqoUAPZFS8zcGe/JVwVH53I4YzV1qJFc+/+noUQc2si3IQ==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
