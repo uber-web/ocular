@@ -98,7 +98,7 @@ build_monorepo() {
 }
 
 if [ ! -z "$TS_PROJECT" ]; then
-  tspc -b $TS_PROJECT --verbose
+  npx tspc -b $TS_PROJECT --verbose
 fi
 
 if [ -d "modules" ]; then

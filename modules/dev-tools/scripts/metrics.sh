@@ -62,7 +62,7 @@ build_bundle() {
   else
     DIST="module,browser,main"
   fi
-  (esbuild $1 --outdir="$TMP_DIR" --bundle --minify --main-fields=$DIST --log-level=error)
+  (npx esbuild $1 --outdir="$TMP_DIR" --bundle --minify --main-fields=$DIST --log-level=error)
 }
 
 # Main Script
