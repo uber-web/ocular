@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.28
+
+- Fix commands with yarn 4 (#457)
+
 ## v2.0.0-alpha.27
 
 - Add ts-transform-inline-webgl-constants (#456)
