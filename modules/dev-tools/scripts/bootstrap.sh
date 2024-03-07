@@ -33,6 +33,6 @@ else
 fi
 
 # build the submodules unless `nobuild` argment is passed
-#if [[ ! "$1" = "nobuild" ]]; then
-npm run build
-#fi
+if [[ ! "$1" = "nobuild" ]]; then
+  npm run build
+fi
