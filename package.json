@@ -28,5 +28,8 @@
   },
   "pre-commit": "pre-commit",
   "pre-push": "pre-push",
-  "dependencies": {}
+  "volta": {
+    "node": "20.11.1",
+    "yarn": "1.22.21"
+  }
 }

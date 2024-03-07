@@ -32,5 +32,7 @@ else
   yarn link $packageName
 fi
 
-# build the submodules
-npm run build
+# build the submodules unless `nobuild` argment is passed
+if [[ ! "$1" = "nobuild" ]]; then
+  npm run build
+fi

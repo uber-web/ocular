@@ -51,8 +51,8 @@
   "bin": {
     "ocular-bootstrap": "./scripts/bootstrap.js",
     "ocular-build": "./scripts/build.js",
-    "ocular-bundle": "./scripts/bundle.js",
     "ocular-bump": "./scripts/bump.js",
+    "ocular-bundle": "./scripts/bundle.js",
     "ocular-clean": "./scripts/clean.js",
     "ocular-lint": "./scripts/lint.js",
     "ocular-metrics": "./scripts/metrics.js",
@@ -99,10 +99,10 @@
     "prettier-check": "2.0.0",
     "tape": "^4.11.0",
     "tape-promise": "^4.0.0",
-    "typescript": "^5.2.2",
     "ts-node": "~10.9.0",
     "ts-patch": "^3.1.2",
     "tsconfig-paths": "^4.1.1",
+    "typescript": "^5.2.2",
     "vite": "^4.0.1",
     "vite-plugin-html": "^3.2.0"
   },
