@@ -27,6 +27,5 @@
     "ts-morph": "^21.0.0"
   },
   "pre-commit": "pre-commit",
-  "pre-push": "pre-push",
-  "dependencies": {}
+  "pre-push": "pre-push"
 }
