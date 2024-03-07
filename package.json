@@ -27,5 +27,9 @@
     "ts-morph": "^21.0.0"
   },
   "pre-commit": "pre-commit",
-  "pre-push": "pre-push"
+  "pre-push": "pre-push",
+  "volta": {
+    "node": "20.11.1",
+    "yarn": "1.22.21"
+  }
 }
