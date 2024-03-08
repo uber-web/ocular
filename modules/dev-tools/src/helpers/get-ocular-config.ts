@@ -59,9 +59,9 @@ export type OcularConfig = {
 
   entry?: {
     test?: string;
-    'test-browser'?: string;
+    'test-browser'?: `${string}.html`;
     bench?: string;
-    'bench-browser'?: string;
+    'bench-browser'?: `${string}.html`;
     size?: string[] | string;
   };
 };
@@ -114,9 +114,9 @@ export type MaterializedOcularConfig = {
 
   entry: {
     test: string;
-    'test-browser': string;
+    'test-browser': `${string}.html`;
     bench: string;
-    'bench-browser': string;
+    'bench-browser': `${string}.html`;
     size: string[];
   };
 };
@@ -174,9 +174,9 @@ export async function getOcularConfig(
 
     entry: {
       test: 'test/index.ts',
-      'test-browser': 'test/browser.ts',
+      'test-browser': 'test/index.html',
       bench: 'test/bench/index.ts',
-      'bench-browser': 'test/bench/browser.ts',
+      'bench-browser': 'test/bench/index.html',
       size: ['test/size.ts']
     },
 
