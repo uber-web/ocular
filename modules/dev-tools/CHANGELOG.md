@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.29
+
+- fix(dev-tools): remove log prefix (#459)
+
 ## v2.0.0-alpha.28
 
 - Fix commands with yarn 4 (#457)
