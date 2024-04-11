@@ -4,7 +4,7 @@ import {join} from 'path';
 import util from 'util';
 import {getOcularConfig} from '../helpers/get-ocular-config.js';
 import ext from 'esbuild-plugin-external-global';
-import type {BuildOptions} from 'esbuild';
+import type {BuildOptions, Plugin} from 'esbuild';
 
 /**
  * Get list of dependencies to exclude using esbuild-plugin-external-global
@@ -67,6 +67,26 @@ function umdWrapper(libName: string | undefined) {
   };
 }
 
+/**
+ * ESBuild plugin to inline important ESM-only dependencies, for CJS compatibility.
+ * Reference: https://github.com/evanw/esbuild/issues/3442
+ */
+const inlineESMOnly = (): Plugin => {
+  const packageRoot = process.cwd();
+  const root = join(packageRoot, '../..');
+
+  return {
+    name: 'inline-esm-only',
+    setup(build) {
+      // TODO: Detect ESM-only from package.json, instead of hard-coding package names?
+      build.onResolve({filter: /^@mapbox\/tiny\-sdf$/}, () => {
+        const path = join(root, 'node_modules/@mapbox/tiny-sdf/index.js');
+        return {path, external: false};
+      });
+    }
+  };
+};
+
 /** Returns esbuild config for building .cjs bundles */
 export async function getCJSExportConfig(opts: {
   input: string;
@@ -81,7 +101,8 @@ export async function getCJSExportConfig(opts: {
     target: 'node16',
     packages: 'external',
     sourcemap: true,
-    logLevel: 'info'
+    logLevel: 'info',
+    plugins: [inlineESMOnly()]
   };
 }
 
