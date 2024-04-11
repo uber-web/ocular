@@ -73,14 +73,13 @@ function umdWrapper(libName: string | undefined) {
  */
 const inlineESMOnly = (): Plugin => {
   const packageRoot = process.cwd();
-  const root = join(packageRoot, '../..');
 
   return {
     name: 'inline-esm-only',
     setup(build) {
       // TODO: Detect ESM-only from package.json, instead of hard-coding package names?
       build.onResolve({filter: /^@mapbox\/tiny\-sdf$/}, () => {
-        const path = join(root, 'node_modules/@mapbox/tiny-sdf/index.js');
+        const path = join(packageRoot, 'node_modules/@mapbox/tiny-sdf/index.js');
         return {path, external: false};
       });
     }
