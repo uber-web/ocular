@@ -2,6 +2,7 @@ node_modules/
 dist/
 
 .idea/
+.nx/
 yarn-error.log
 .DS_Store
 .vscode/
