@@ -8,7 +8,7 @@ usage() {
   open "https://uber-web.github.io/ocular/docs/dev-tools/cli/ocular-publish"
 }
 
-# beta, prod, version-beta or version-prod
+# beta, prod, version-only-beta, version-only-prod or from-git
 MODE=$1
 
 bumpVersion() {
@@ -47,7 +47,7 @@ publishToNPM() {
   fi
 }
 
-if [[ $MODE != "version-"* && $MODE != "help" ]]; then
+if [[ $MODE != "version-only-"* && $MODE != "help" ]]; then
   # will build and publish to NPM
   ocular-bootstrap
   ocular-test
@@ -59,11 +59,11 @@ case $MODE in
     usage
     ;;
 
-  "version-beta")
+  "version-only-beta")
     bumpVersion beta
     ;;
 
-  "version-prod")
+  "version-only-prod")
     bumpVersion prod
     ;;
 
@@ -88,6 +88,6 @@ case $MODE in
     ;;
 
   *)
-    echo -e "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta' | 'version-prod' | 'version-beta' | 'from-git']\033[0m"
+    echo -e "\033[91mUnknown publish mode. ocular-publish ['prod' | 'beta' | 'version-only-prod' | 'version-only-beta' | 'from-git']\033[0m"
     exit 1;;
 esac
