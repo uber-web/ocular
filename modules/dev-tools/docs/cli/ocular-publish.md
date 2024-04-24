@@ -18,6 +18,9 @@ npx ocular-publish [mode] [npm-tag]
 
 - `beta` - bump pre-release version and publish with beta flag.
 - `prod` - bump patch version and publish.
+- `version-only-beta` - bump pre-release version only.
+- `version-only-prod` - bump patch version only.
+- `from-git`: publish from the current git tag.
 
 ## npm-tag
 
