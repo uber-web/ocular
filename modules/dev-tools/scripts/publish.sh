@@ -20,7 +20,7 @@ bumpVersion() {
   fi
 
   if [ -d "modules" ]; then
-    (set -x; lerna version $versionType --force-publish --exact --no-commit-hooks)
+    (set -x; npx lerna version $versionType --force-publish --exact --no-commit-hooks)
   else
     # -f includes any changes in the version commit
     (set -x; npm version $versionType --force)
@@ -34,9 +34,9 @@ publishToNPM() {
   if [ -d "modules" ]; then
     if [ -z $tag ]; then
       # use default tag ('latest' or publishConfig.tag in package.json)
-      (set -x; lerna publish from-git --force-publish --no-commit-hooks)
+      (set -x; npx lerna publish from-git --force-publish --no-commit-hooks)
     else
-      (set -x; lerna publish from-git --force-publish --dist-tag $tag --no-commit-hooks)
+      (set -x; npx lerna publish from-git --force-publish --dist-tag $tag --no-commit-hooks)
     fi
   else
     if [ -z $tag ]; then
