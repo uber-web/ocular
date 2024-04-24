@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.30
+
+-  feat(dev-tools): add new modes to ocular-publish (#461)
+
 ## v2.0.0-alpha.29
 
 - fix(dev-tools): remove log prefix (#459)
