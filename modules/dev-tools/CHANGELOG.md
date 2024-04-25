@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.33
+
+- fix(dev-tools): skip interaction when running ocular-publish on CI
+
 ## v2.0.0-alpha.32
 
 - fix(dev-tools): switch to use lerna publish from-package

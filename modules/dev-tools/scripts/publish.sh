@@ -34,9 +34,9 @@ publishToNPM() {
   if [ -d "modules" ]; then
     if [ -z $tag ]; then
       # use default tag ('latest' or publishConfig.tag in package.json)
-      (set -x; npx lerna publish from-package --force-publish --no-commit-hooks)
+      (set -x; npx lerna publish from-package --force-publish --yes --no-commit-hooks)
     else
-      (set -x; npx lerna publish from-package --force-publish --dist-tag $tag --no-commit-hooks)
+      (set -x; npx lerna publish from-package --force-publish --yes --dist-tag $tag --no-commit-hooks)
     fi
   else
     if [ -z $tag ]; then
