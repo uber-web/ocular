@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.32
+
+- fix(dev-tools): switch to use lerna publish from-package
+
 ## v2.0.0-alpha.30
 
 -  feat(dev-tools): add new modes to ocular-publish (#461)

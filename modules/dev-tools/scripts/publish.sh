@@ -34,9 +34,9 @@ publishToNPM() {
   if [ -d "modules" ]; then
     if [ -z $tag ]; then
       # use default tag ('latest' or publishConfig.tag in package.json)
-      (set -x; npx lerna publish from-git --force-publish --no-commit-hooks)
+      (set -x; npx lerna publish from-package --force-publish --no-commit-hooks)
     else
-      (set -x; npx lerna publish from-git --force-publish --dist-tag $tag --no-commit-hooks)
+      (set -x; npx lerna publish from-package --force-publish --dist-tag $tag --no-commit-hooks)
     fi
   else
     if [ -z $tag ]; then
@@ -79,7 +79,7 @@ case $MODE in
 
   "from-git")
     # publish from existing tag
-    gitTag=$(git describe)
+    gitTag=$(git describe --tags)
     if [[ $gitTag == *"-"* ]]; then
       publishToNPM ${2:-beta}
     else
