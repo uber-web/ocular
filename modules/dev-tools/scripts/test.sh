@@ -25,7 +25,7 @@ run_test_script_pretty() {
 }
 
 generate_coverage_report() {
-  (set -x; npx c8 report --reporter=lcov)
+  (set -x; npx c8 report --reporter=text --reporter=lcov)
 }
 
 run_full_test() {

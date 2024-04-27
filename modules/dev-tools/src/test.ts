@@ -19,7 +19,7 @@ console.log(`Running ${mode} tests...`); // eslint-disable-line
 switch (mode) {
   case 'cover':
     if (ocularConfig.coverage.test === 'node') {
-      runNodeTest(resolveNodeEntry('test'), 'npx c8');
+      runNodeTest(resolveNodeEntry('test'), 'npx c8 --reporter=none');
     } else {
       await runBrowserTest({
         server: {
@@ -186,9 +186,6 @@ function writeCoverage(coverage) {
       'utf8'
     );
   }
-
-  // Print coverage to console
-  execShellCommand('npx c8 report --reporter=text');
 }
 
 function sourcemapFromDataUrl(url: string): string | null {
