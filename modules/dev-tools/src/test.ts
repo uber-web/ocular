@@ -109,7 +109,7 @@ function runNodeTest(entry: string, command: string = '') {
 
   if (ocularConfig.esm) {
     execShellCommand(
-      `NODE_OPTIONS="--experimental-modules --es-module-specifier-resolution=node --loader ${ocularConfig.ocularPath}/dist/helpers/esm-loader.js" ${command} node "${entry}"`
+      `${command} node --import "${ocularConfig.ocularPath}/dist/helpers/esm-register.js" --es-module-specifier-resolution=node "${entry}"`
     );
   } else {
     execShellCommand(
