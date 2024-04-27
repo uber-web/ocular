@@ -7,8 +7,9 @@ BASEDIR=$(dirname "$0")
 
 MODE=$1
 
-MODULE_DIR=$(dirname $0)/..
-TEST_SCRIPT=$MODULE_DIR/dist/test.js
+DEV_TOOLS_DIR=$(dirname $0)/..
+TEST_SCRIPT=$DEV_TOOLS_DIR/dist/test.js
+COVERAGE_TEST=`node $DEV_TOOLS_DIR/dist/helpers/get-config.js ".coverage.test"`
 
 usage() {
   # TODO: Add more specific url
@@ -19,10 +20,18 @@ run_test_script() {
   (set -x; NODE_ENV=test node $TEST_SCRIPT $1)
 }
 
+run_test_script_pretty() {
+  run_test_script $1 | tap-spec
+}
+
+generate_coverage_report() {
+  (set -x; npx c8 report --reporter=text --reporter=lcov)
+}
+
 run_full_test() {
   npm run lint
-  run_test_script node
-  run_test_script browser-headless
+  run_test_script_pretty node
+  run_test_script_pretty browser-headless
   ocular-metrics
 }
 
@@ -39,11 +48,11 @@ case $MODE in
 
   "fast")
     ocular-lint pre-commit
-    run_test_script node
+    run_test_script_pretty node
     ;;
 
   "node")
-    run_test_script $MODE
+    run_test_script_pretty node
     ;;
 
   "node-debug")
@@ -52,43 +61,34 @@ case $MODE in
     ;;
 
   "dist")
-    run_test_script dist
+    run_test_script_pretty dist
     ;;
 
   "cover")
-    run_test_script cover
-    (set -x; npx c8 report --reporter=lcov)
+    run_test_script_pretty cover
+    generate_coverage_report
     ;;
 
   "ci")
-    # run by Travis CI
+    # run by CI
     npm run lint
-    run_test_script browser-headless
-    ocular-test cover
-    # node test/start.js bench
-    # ocular-metrics
-    ;;
-
-  "browser")
-    run_test_script $MODE
+    if [ "$COVERAGE_TEST" == "browser" ]; then
+      run_test_script_pretty node
+    else
+      run_test_script_pretty browser-headless
+    fi
+    run_test_script_pretty cover
+    generate_coverage_report
+    ocular-metrics
     ;;
 
   "browser-headless")
-    run_test_script $MODE
-    ;;
-
-  "bench")
-    run_test_script $MODE
-    ;;
-
-  "bench-browser")
-    run_test_script $MODE
+    run_test_script_pretty browser-headless
     ;;
 
   *)
     # default test
-    # echo "Error: unknown test mode $MODE"
-    # usage()
+    run_test_script $MODE
     ;;
 
   esac
