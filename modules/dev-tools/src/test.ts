@@ -48,10 +48,6 @@ switch (mode) {
     runNodeTest(resolveNodeEntry('test')); // Run the tests
     break;
 
-  case 'bench':
-    runNodeTest(resolveNodeEntry('bench')); // Run the benchmarks
-    break;
-
   case 'browser':
   case 'browser-headless':
     await runBrowserTest({
