@@ -1,5 +1,5 @@
 /**
- * Support module alias in ESM mode
+ * Support module alias in ESM mode by implementing Node.js custom module resolver
  * tsconfig-paths does not work in ESM, see https://github.com/dividab/tsconfig-paths/issues/122
  * Adapted from https://github.com/TypeStrong/ts-node/discussions/1450
  */
@@ -8,6 +8,9 @@ import fs from 'fs';
 import {pathToFileURL} from 'url';
 import {getValidPath, ocularRoot} from '../utils/utils.js';
 
+/** Node.js resolve hook,
+ * https://nodejs.org/api/module.html#resolvespecifier-context-nextresolve
+ */
 type ResolveHook = (
   specifier: string,
   context: {
@@ -18,10 +21,9 @@ type ResolveHook = (
   nextResolve: ResolveHook
 ) => Promise<{
   url: string;
-  format?: 'builtin' | 'commonjs' | 'dynamic' | 'json' | 'module' | 'wasm';
+  format?: 'builtin' | 'commonjs' | 'json' | 'module' | 'wasm';
   shortCircuit?: boolean;
 }>;
-type AliasTest = (specifier: string) => string | null;
 
 // Load alias from file
 const pathJSON = fs.readFileSync(path.resolve(ocularRoot, '.alias.json'), 'utf-8');
@@ -43,7 +45,12 @@ export const resolve: ResolveHook = (specifier, context, nextResolver) => {
   return nextResolver(specifier);
 };
 
-/** Convert ocular alias object to TS config paths object */
+/** Checks if a path matches aliased pattern.
+ * If so, returns mapped path, otherwise returns null
+ */
+type AliasTest = (specifier: string) => string | null;
+
+/** Get alias mapping function from ocular config */
 function createMatchPath(aliases: Record<string, string>): AliasTest {
   const tests: AliasTest[] = [];
 
