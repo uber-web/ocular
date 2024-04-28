@@ -1,21 +1,36 @@
 /**
- * Support module alias in ESM mode
+ * Support module alias in ESM mode by implementing Node.js custom module resolver
  * tsconfig-paths does not work in ESM, see https://github.com/dividab/tsconfig-paths/issues/122
  * Adapted from https://github.com/TypeStrong/ts-node/discussions/1450
  */
 import path from 'path';
 import fs from 'fs';
 import {pathToFileURL} from 'url';
-import {resolve as resolveTs, getFormat, transformSource, load} from 'ts-node/esm';
 import {getValidPath, ocularRoot} from '../utils/utils.js';
-export {getFormat, transformSource, load};
+
+/** Node.js resolve hook,
+ * https://nodejs.org/api/module.html#resolvespecifier-context-nextresolve
+ */
+type ResolveHook = (
+  specifier: string,
+  context: {
+    conditions?: unknown;
+    importAssertions?: unknown;
+    parentURL: string;
+  },
+  nextResolve: ResolveHook
+) => Promise<{
+  url: string;
+  format?: 'builtin' | 'commonjs' | 'json' | 'module' | 'wasm';
+  shortCircuit?: boolean;
+}>;
 
 // Load alias from file
 const pathJSON = fs.readFileSync(path.resolve(ocularRoot, '.alias.json'), 'utf-8');
-const paths = JSON.parse(pathJSON);
+const paths: Record<string, string> = JSON.parse(pathJSON);
 const matchPath = createMatchPath(paths);
 
-export function resolve(specifier, context, defaultResolver) {
+export const resolve: ResolveHook = (specifier, context, nextResolver) => {
   const mappedSpecifier = matchPath(specifier);
   if (mappedSpecifier) {
     if (mappedSpecifier.match(/(\/\*|\.jsx?|\.tsx?|\.cjs|\.json)$/)) {
@@ -26,20 +41,25 @@ export function resolve(specifier, context, defaultResolver) {
       specifier = `${pathToFileURL(mappedSpecifier)}`;
     }
   }
-  const result = resolveTs(specifier, context, defaultResolver);
-  return result;
-}
+  // @ts-ignore
+  return nextResolver(specifier);
+};
 
-/** Convert ocular alias object to TS config paths object */
-function createMatchPath(aliases) {
-  const tests = [];
+/** Checks if a path matches aliased pattern.
+ * If so, returns mapped path, otherwise returns null
+ */
+type AliasTest = (specifier: string) => string | null;
+
+/** Get alias mapping function from ocular config */
+function createMatchPath(aliases: Record<string, string>): AliasTest {
+  const tests: AliasTest[] = [];
 
   for (const key in aliases) {
     const alias = aliases[key];
-    let testFunc;
+    let testFunc: AliasTest;
     if (key.includes('*')) {
       const regex = new RegExp(`^${key.replace('*', '(.+)')}`);
-      testFunc = (specifier) => {
+      testFunc = (specifier: string) => {
         const match = specifier.match(regex);
         if (match) {
           return specifier.replace(match[0], alias.replace('*', match[1]));
@@ -53,7 +73,7 @@ function createMatchPath(aliases) {
         defaultEntry = getValidPath(`${alias}/index.ts`, `${alias}/index.js`) || defaultEntry;
       }
 
-      testFunc = (specifier) => {
+      testFunc = (specifier: string) => {
         if (key === specifier) {
           return defaultEntry;
         }
@@ -66,7 +86,7 @@ function createMatchPath(aliases) {
     tests.push(testFunc);
   }
 
-  return (specifier) => {
+  return (specifier: string) => {
     for (const test of tests) {
       const result = test(specifier);
       if (result) {
