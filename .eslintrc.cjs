@@ -1,19 +1,9 @@
 const {getESLintConfig} = require('ocular-dev-tools/configuration');
 
 module.exports = getESLintConfig({
-  react: '16.8.2',
   overrides: {
     parserOptions: {
       project: ['./tsconfig.json']
-    },
-
-    settings: {
-      // Ensure eslint finds typescript files
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
-        }
-      }
     },
 
     rules: {

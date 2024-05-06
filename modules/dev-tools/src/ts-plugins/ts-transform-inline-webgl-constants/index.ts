@@ -10,7 +10,7 @@
       ]
    }
  */
-import type {Program, TransformationContext, SourceFile, Node, StringLiteral} from 'typescript';
+import type {Program, TransformationContext, SourceFile, Node} from 'typescript';
 import type {TransformerExtras, PluginConfig} from 'ts-patch';
 import {GL} from '@luma.gl/constants';
 

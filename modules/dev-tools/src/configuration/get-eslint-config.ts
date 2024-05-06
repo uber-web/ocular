@@ -1,37 +1,36 @@
-import eslint from '@typescript-eslint/eslint-plugin';
 import deepMerge from 'deepmerge';
 import {getValidPath, ocularRoot} from '../utils/utils.js';
 import {inspect} from 'util';
 import {resolve} from 'path';
 
-const typescriptConfigs = eslint.configs;
 const localRules = (path) => resolve(ocularRoot, 'src/configuration', path);
 
 const DEFAULT_OPTIONS = {
   react: false
 } as const;
 
+const babelConfig = getValidPath(
+  './.babelrc',
+  './.babelrc.js',
+  './.babelrc.cjs',
+  './babel.config.js',
+  './babel.config.cjs'
+);
+
 const DEFAULT_CONFIG = {
   extends: [
     localRules('./eslint-config-uber-es2015/eslintrc.json'),
     'prettier',
-    'prettier/react',
-    'plugin:import/errors'
+    'plugin:import/recommended'
   ],
   plugins: ['import'],
-  parser: '@babel/eslint-parser',
+  parser: babelConfig ? '@babel/eslint-parser' : '',
   parserOptions: {
     ecmaVersion: 2020,
     // @babel/eslint-parser issues https://github.com/babel/babel/issues/11975
     requireConfigFile: false,
     babelOptions: {
-      configFile: getValidPath(
-        './.babelrc',
-        './.babelrc.js',
-        './.babelrc.cjs',
-        './babel.config.js',
-        './babel.config.cjs'
-      )
+      configFile: babelConfig
     }
   },
   env: {
@@ -43,14 +42,14 @@ const DEFAULT_CONFIG = {
     __VERSION__: 'readonly'
   },
   rules: {
-    'guard-for-in': 0,
-    'generator-star-spacing': 0,
-    'func-names': 0,
-    'no-inline-comments': 0,
-    'no-multi-str': 0,
-    'space-before-function-paren': 0,
+    'guard-for-in': 'off',
+    'func-names': 'off',
+    'no-inline-comments': 'off',
+    'no-multi-str': 'off',
+    camelcase: 'warn',
+    // Let prettier handle this
+    indent: 'off',
     'accessor-pairs': ['error', {getWithoutSet: false, setWithoutGet: false}],
-    'import/no-unresolved': ['error'],
     'import/no-extraneous-dependencies': ['error', {devDependencies: false, peerDependencies: true}]
   },
   settings: {
@@ -72,72 +71,46 @@ const DEFAULT_CONFIG = {
         sourceType: 'module', // we want to use ES modules
         project: './tsconfig.json'
       },
+      extends: ['plugin:@typescript-eslint/recommended-type-checked'],
       plugins: ['@typescript-eslint'],
       rules: {
-        ...typescriptConfigs['eslint-recommended'].rules,
-        ...typescriptConfigs.recommended.rules,
-        ...typescriptConfigs['recommended-requiring-type-checking'].rules,
+        '@typescript-eslint/no-dupe-class-members': 'error',
+        '@typescript-eslint/switch-exhaustiveness-check': 'error',
 
-        // typescript-eslint 6.0
-        '@typescript-eslint/no-unsafe-argument': 0,
-        '@typescript-eslint/no-redundant-type-constituents': 0,
-        '@typescript-eslint/no-unsafe-enum-comparison': 1,
-        '@typescript-eslint/no-duplicate-type-constituents': 1,
-        '@typescript-eslint/no-base-to-string': 1,
-        '@typescript-eslint/no-loss-of-precision': 1,
-
-        // We still have some issues with import resolution
-        'import/named': 0,
-        'import/no-extraneous-dependencies': ['warn'],
-        // Warn instead of error
-        'max-params': ['warn'],
-        'no-undef': ['warn'],
-        camelcase: ['warn'],
-        indent: ['warn', 2, {SwitchCase: 1}],
-        quotes: ['warn', 'single'],
-        'no-process-env': 'off',
-
-        // typescript rules
-
-        // Some of JS rules don't always work correctly in TS and
-        // hence need to be reimported as TS rules
-        'no-redeclare': 'off',
-        'no-shadow': 'off',
-        'no-use-before-define': 'off',
-        'no-dupe-class-members': 'off',
-
-        // TODO - These rules are sometimes not found?
-        // '@typescript-eslint/no-shadow': ['warn'],
-        // '@typescript-eslint/no-redeclare': ['warn'],
-
+        // Rules disabled because they conflict with our preferred style
         // We use function hoisting to put exports at top of file
         '@typescript-eslint/no-use-before-define': 'off',
-        '@typescript-eslint/no-dupe-class-members': ['error'],
-
         // We encourage explicit typing, e.g `field: string = ''`
         '@typescript-eslint/no-inferrable-types': 'off',
+        // Allow noOp as default value for callbacks
+        '@typescript-eslint/no-empty-function': 'off',
 
-        '@typescript-eslint/no-empty-interface': ['warn'],
-        '@typescript-eslint/restrict-template-expressions': ['warn'],
-        '@typescript-eslint/explicit-module-boundary-types': ['warn'],
-        '@typescript-eslint/require-await': ['warn'],
-        '@typescript-eslint/no-unsafe-return': ['warn'],
-        '@typescript-eslint/no-unsafe-call': ['warn'],
+        // Rules downgraded because they are deemed acceptable
+        '@typescript-eslint/ban-ts-comment': [
+          'error',
+          {
+            'ts-expect-error': 'allow-with-description',
+            'ts-ignore': 'allow-with-description',
+            'ts-nocheck': 'allow-with-description',
+            'ts-check': false,
+            minimumDescriptionLength: 3
+          }
+        ],
+        '@typescript-eslint/no-floating-promises': 'warn',
+        '@typescript-eslint/restrict-template-expressions': 'warn',
+        '@typescript-eslint/no-empty-interface': 'warn',
+        '@typescript-eslint/require-await': 'warn',
 
-        // some day we will hopefully be able to enable this rule
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/ban-ts-comment': ['warn'],
-        '@typescript-eslint/ban-types': ['warn'],
-        '@typescript-eslint/no-unsafe-member-access': ['warn'],
-        '@typescript-eslint/no-unsafe-assignment': ['warn'],
-        '@typescript-eslint/no-var-requires': ['warn'],
-        '@typescript-eslint/no-unused-vars': ['warn'],
-        '@typescript-eslint/switch-exhaustiveness-check': ['error'],
-        '@typescript-eslint/no-floating-promises': ['warn'],
-        '@typescript-eslint/await-thenable': ['warn'],
-        '@typescript-eslint/no-misused-promises': ['warn'],
-        '@typescript-eslint/restrict-plus-operands': ['warn'],
-        '@typescript-eslint/no-empty-function': ['warn']
+        // Rules that restrict the use of `any`
+        // Might be too strict for our code base, but should be gradually enabled
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-unsafe-argument': 'warn',
+        '@typescript-eslint/no-unsafe-assignment': 'warn',
+        '@typescript-eslint/no-unsafe-call': 'warn',
+        '@typescript-eslint/no-unsafe-enum-comparison': 'warn',
+        '@typescript-eslint/no-unsafe-member-access': 'warn',
+        '@typescript-eslint/no-unsafe-return': 'warn',
+        '@typescript-eslint/explicit-module-boundary-types': 'warn'
       }
     },
     {
@@ -162,8 +135,7 @@ function getReactConfig(options) {
     extends: [
       localRules('./eslint-config-uber-jsx/eslintrc.json'),
       'prettier',
-      'prettier/react',
-      'plugin:import/errors'
+      'plugin:import/recommended'
     ],
     plugins: ['import', 'react'],
     settings: {

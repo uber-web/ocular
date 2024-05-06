@@ -41,7 +41,7 @@ export const resolve: ResolveHook = (specifier, context, nextResolver) => {
       specifier = `${pathToFileURL(mappedSpecifier)}`;
     }
   }
-  // @ts-ignore
+  // @ts-expect-error omitted arguments are populated by Node.js
   return nextResolver(specifier);
 };
 

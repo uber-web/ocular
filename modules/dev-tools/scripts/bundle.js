@@ -17,19 +17,23 @@ for (let i = 1; i < process.argv.length; i++) {
   }
 }
 
-const buildConfig = await getBundleConfig({
-  ...env,
-  input: entryPoint
-});
+run();
 
-if (env.watch) {
-  buildConfig.watch = true;
-  await esbuild.build(buildConfig);
-  /* eslint-disable no-console */
-  console.log('watching...');
-} else {
-  const result = await esbuild.build(buildConfig);
-  if (result.errors.length > 0) {
-    process.exit(1);
+async function run() {
+  const buildConfig = await getBundleConfig({
+    ...env,
+    input: entryPoint
+  });
+
+  if (env.watch) {
+    buildConfig.watch = true;
+    await esbuild.build(buildConfig);
+    /* eslint-disable no-console */
+    console.log('watching...');
+  } else {
+    const result = await esbuild.build(buildConfig);
+    if (result.errors.length > 0) {
+      process.exit(1);
+    }
   }
 }
