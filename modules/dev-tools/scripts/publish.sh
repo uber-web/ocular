@@ -78,7 +78,7 @@ case $MODE in
     ;;
 
   "prod")
-    bumpVersion beta
+    bumpVersion prod
     publishToNPM $2
     ;;
 
