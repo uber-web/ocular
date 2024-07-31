@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.34
+
+- fix(dev-tools): prod version (#469)
+
 ## v2.0.0-alpha.33
 
 - fix(dev-tools): skip interaction when running ocular-publish on CI
