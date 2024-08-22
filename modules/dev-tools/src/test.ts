@@ -43,6 +43,10 @@ switch (mode) {
     }
     break;
 
+  case 'node-debug':
+    runNodeTest(resolveNodeEntry('test'), '', true);
+    break;
+
   case 'node':
   case 'dist':
     runNodeTest(resolveNodeEntry('test')); // Run the tests
@@ -100,16 +104,18 @@ function resolveBrowserEntry(key: string): string {
   throw new Error(`Cannot find entry point ${key}-browser in ocular config.`);
 }
 
-function runNodeTest(entry: string, command: string = '') {
+function runNodeTest(entry: string, command: string = '', shouldInspect: boolean = false) {
   // Save module alias
   fs.writeFileSync(
     resolve(ocularConfig.ocularPath, '.alias.json'),
     JSON.stringify(ocularConfig.aliases)
   );
 
+  const inspectBrk = shouldInspect ? '--inspect-brk' : '';
+
   if (ocularConfig.esm) {
     execShellCommand(
-      `${command} node --import "${ocularConfig.ocularPath}/dist/helpers/esm-register.js" --es-module-specifier-resolution=node "${entry}"`
+      `${command} node ${inspectBrk} --import "${ocularConfig.ocularPath}/dist/helpers/esm-register.js" --es-module-specifier-resolution=node "${entry}"`
     );
   } else {
     execShellCommand(
