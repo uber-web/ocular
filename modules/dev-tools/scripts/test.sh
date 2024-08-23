@@ -57,7 +57,7 @@ case $MODE in
 
   "node-debug")
     echo "Open chrome://inspect/#devices to attach debugger."
-    (set -x; node --inspect-brk $TEST_SCRIPT node)
+    (set -x; node $TEST_SCRIPT node-debug)
     ;;
 
   "dist")
