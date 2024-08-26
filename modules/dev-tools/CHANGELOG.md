@@ -1,5 +1,9 @@
 # CHANGELOG (ocular-dev-tools)
 
+## v2.0.0-alpha.35
+
+- fix: test node-debug (#470
+
 ## v2.0.0-alpha.34
 
 - fix(dev-tools): prod version (#469)
